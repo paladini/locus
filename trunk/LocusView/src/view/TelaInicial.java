@@ -118,7 +118,7 @@ public class TelaInicial extends javax.swing.JFrame {
         String login = jTextField1.getText();
         String senha = jPasswordField1.getText();
         
-        if (gc.Login(login,senha)){
+        if (gc.login(login,senha)){
             jLabel4.setText("Sá porra deu certo!");
         }else{
             jLabel4.setText("Nome de usuário ou senha incorreto.");

@@ -17,13 +17,14 @@ import model.Conexao;
  */
 public class GerenciarConexao {
     
-    public boolean Login(String nome, String senha){
+    public boolean login(String nome, String senha){
         
         //BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
         ResultSet result = Conexao.logar(nome);
         Boolean retorno = false;
         
         try {
+            result.next();
             if (result != null){
                 if (result.getString("senha").contentEquals(senha)){
                     retorno = true;
