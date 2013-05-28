@@ -5,6 +5,8 @@
 package view;
 
 import control.GerenciarConexao;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
  *
@@ -110,25 +112,43 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         GerenciarConexao gc = new GerenciarConexao();
-        
+
         String login = jTextField1.getText();
         String senha = jPasswordField1.getText();
-        
+
         // Verifica no banco de dados se usuário e senha conferem. Se sim,
         // destroi a tela atual (dispose) e instancia a próxima tela do programa. 
-        if (gc.login(login,senha)){
-            dispose();
-            PrimeiraEntrada1 primeiraEntrada = new PrimeiraEntrada1();
-            primeiraEntrada.setVisible(true);
-            primeiraEntrada.setLocation(300,300);    
-            primeiraEntrada.setResizable(false);         
-            // jLabel4.setText("Sá porra deu certo!");
-        }else{
-            jLabel4.setText("Nome de usuário ou senha incorreto.");
+        int resultado = gc.login(login, senha);
+
+        /**
+         * Se retorno = 0: acesso não permitido Se retorno = 1: primeiro acesso,
+         * redirecionar para PrimeiraEntrada1; Se retorno = 2: acesso normal,
+         * redirecionar para MenuPrincipal;
+         */
+        switch (resultado) {
+            case 0:
+                jLabel4.setText("Nome de usuário ou senha incorreto.");
+                break;
+            case 1:
+                dispose();
+                PrimeiraEntrada1 primeiraEntrada = new PrimeiraEntrada1();
+                primeiraEntrada.setVisible(true);
+                primeiraEntrada.setLocationRelativeTo(null);
+                primeiraEntrada.setResizable(false);
+                break;
+            case 2:
+                dispose();
+                MenuPrincipal menuPrincipal = new MenuPrincipal();
+                menuPrincipal.setVisible(true);
+                menuPrincipal.setLocationRelativeTo(null);
+                menuPrincipal.setResizable(false);
+            default:
+                jLabel4.setText("Algo deu errado. Contate o operador do sistema");
+                break;
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -161,9 +181,15 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
                 
+                Login login = new Login();
+
+                // Deixa a tela no centro do monitor.
+                login.setVisible(true);
+                login.setLocationRelativeTo(null);
                 
+                // new Login().setVisible(true);
+
             }
         });
     }
