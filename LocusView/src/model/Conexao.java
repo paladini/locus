@@ -89,9 +89,24 @@ public class Conexao {
               statement.execute("update admin set nome_instituicao = '" +novoNome +"' where login=\"admin\" ;");
               sucesso = true;
           } catch (SQLException ex){
-              System.out.println("ex.getMessage()");
+              System.out.println(ex.getMessage());
           }
           return sucesso;
+      }
+      
+      /**
+       * Método para adicionar turnos ao banco de dados.
+       * Se o turno já existir no banco de dados, ele insere de novo e omite os warnings).
+       * @param turno 
+       */
+      public static void adicionarTurno(String turno){
+          Connection connection = Conexao.getConexao();
+          try{
+              Statement statement = connection.createStatement();
+              statement.execute("INSERT IGNORE INTO turno (descricao) values (\"" + turno +"\");");
+          } catch (SQLException ex){
+              System.out.println(ex.getMessage());
+          }
       }
     
 }
