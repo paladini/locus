@@ -4,12 +4,16 @@
  */
 package view;
 
+import control.GerenciarConexao;
+
 /**
  *
  * @author silvio
  */
 public class PrimeiraEntrada1 extends javax.swing.JFrame {
-
+    
+    GerenciarConexao gc = new GerenciarConexao();
+    
     /**
      * Creates new form PrimeiraEntrada1
      */
@@ -66,6 +70,11 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         jLabel17.setText("Turnos:");
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/próxima.fw.png"))); // NOI18N
+        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel20MouseClicked(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setText("Nome da Instituição:");
@@ -242,6 +251,25 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox8ActionPerformed
 
+    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
+        String nomeInstituicao = jTextField5.getText();
+        String senha = jPasswordField1.getText();
+        String turnos = "";
+        
+        if (jCheckBox6.getSelectedObjects()[0] != null){
+            turnos = turnos + "matutino";
+        }
+        if (jCheckBox7.getSelectedObjects()[0] != null){
+            turnos = turnos + "/" + "vespertino";
+        }
+        if (jCheckBox8.getSelectedObjects()[0] != null){
+            turnos = turnos + "/" + "noturno";
+        }
+        
+        gc.dadosBasicos(nomeInstituicao, senha, turnos);
+        
+    }//GEN-LAST:event_jLabel20MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -286,11 +314,6 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox7;
     private javax.swing.JCheckBox jCheckBox8;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -299,35 +322,8 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JCheckBox matutino;
-    private javax.swing.JCheckBox matutino1;
-    private javax.swing.JCheckBox noturno;
-    private javax.swing.JCheckBox noturno1;
-    private javax.swing.JCheckBox quarta;
-    private javax.swing.JCheckBox quarta1;
-    private javax.swing.JCheckBox quinta;
-    private javax.swing.JCheckBox quinta1;
-    private javax.swing.JCheckBox segunda;
-    private javax.swing.JCheckBox segunda1;
-    private javax.swing.JCheckBox sexta;
-    private javax.swing.JCheckBox sexta1;
-    private javax.swing.JCheckBox terca;
-    private javax.swing.JCheckBox terca1;
-    private javax.swing.JCheckBox vespertino;
-    private javax.swing.JCheckBox vespertino1;
     // End of variables declaration//GEN-END:variables
 }
