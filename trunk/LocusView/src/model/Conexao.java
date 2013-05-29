@@ -20,12 +20,12 @@ public class Conexao {
             // Carregando o JDBC Driver padrão  
             String driverName = "com.mysql.jdbc.Driver";                          
             Class.forName(driverName);  
-            String serverName = "10.3.63.160";    //caminho do servidor do BD  
+            String serverName = "10.3.60.83";    //caminho do servidor do BD  
             // Configurando a nossa conexão com um banco de dados//  
             String mydatabase ="locus";        //nome do seu banco de dados  
             String url = "jdbc:mysql://" + serverName + "/" + mydatabase;  
-            String username = "root";        //nome de um usuário de seu BD        
-            String password = "";      //sua senha de acesso  
+            String username = "usuarioremoto";        //nome de um usuário de seu BD        
+            String password = "123";      //sua senha de acesso  
             Connection connection = DriverManager.getConnection(url, username, password);  
             return connection;  
         } catch (ClassNotFoundException e) {  //Driver não encontrado  
