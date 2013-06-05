@@ -27,12 +27,12 @@ public class LoginDAO {
           ResultSet rs = null;
           try{ 
               Statement statement = connection.createStatement();
-              String query = "SELECT login,senha,ultimo_acesso FROM admin WHERE login='" +nome +"';";
+              String query = "SELECT login,senha,ultimo_acesso FROM admin WHERE login='" +login.getLogin() +"';";
               rs = statement.executeQuery(query);
           } catch (SQLException ex){
               System.out.println(ex.getMessage());
           }  
-          return rs;
+          return true;
       }
       
       /**

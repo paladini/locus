@@ -22,7 +22,7 @@ public class GerenciarConexao {
     public int login(String nome, String senha){
         
         //BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-        result = Conexao.logar(nome);
+        //result = Conexao.logar(nome);
         
         /**
          * Se retorno = 0: acesso não permitido
@@ -55,7 +55,7 @@ public class GerenciarConexao {
         Conexao.mudarInstituicao(nomeInstituicao);
         
         // Trocando senha
-        Conexao.mudarSenha(novaSenha);
+        //Conexao.mudarSenha(novaSenha);
         
         /**
          * Criar os turnos no banco de acordo com os checkboxes marcados.
