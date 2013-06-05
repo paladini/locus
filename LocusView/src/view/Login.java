@@ -125,6 +125,13 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        // Pegar Dados
+        
+        // Instanciar objeto
+        
+        // Instanciar ControleLogin 
+        // ControleLogin chama o LoginDAO
+        // Depois de tudo isso, retorna para a view, que trata a resposta
         Login login1 = new Login();
         
         GerenciarConexao gc = new GerenciarConexao();
