@@ -37,45 +37,14 @@ public class Conexao {
             return null;  
         }
       } 
-      
-      /**
-       * Verifica no banco de dados se a senha e o nome de usuário batem.
-       * @param nome Nome de usuário
-       * @param password Senha inserida pela usuário
-       * @return 
+
+      /*
+       *                  RETIRAR O CÓDIGO ABAIXO E CRIAR NAS CLASSES DAO
+       * 
+       * 
+       * 
        */
-      public static ResultSet logar(String nome){
-          Connection connection = Conexao.getConexao();
-          ResultSet rs = null;
-          try{ 
-              Statement statement = connection.createStatement();
-              String query = "SELECT login,senha,ultimo_acesso FROM admin WHERE login='" +nome +"';";
-              rs = statement.executeQuery(query);
-          } catch (SQLException ex){
-              System.out.println(ex.getMessage());
-          }  
-          return rs;
-      }
-      
-      /**
-       * Método para modificar a senha do administrador da Instituição
-       * @param novaSenha Nova senha de acesso
-       * @return 
-       */
-      public static Boolean mudarSenha(String novaSenha){
-          Connection connection = Conexao.getConexao();
-          boolean sucesso = false;
-          try{    
-              Statement statement = connection.createStatement();
-              statement.execute("update admin set senha = '" +novaSenha +"' where login=\"admin\" ;");
-              sucesso = true;
-          } catch (SQLException ex){
-              System.out.println("ex.getMessage()");
-          }
-          return sucesso;
- 
-      }
-      
+       
       /**
        * Método para mudar o nome da instituição.
        * @param novoNome Novo nome da instituição.
