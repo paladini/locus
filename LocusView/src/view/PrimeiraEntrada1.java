@@ -4,15 +4,11 @@
  */
 package view;
 
-import control.GerenciarConexao;
-
 /**
  *
  * @author silvio
  */
 public class PrimeiraEntrada1 extends javax.swing.JFrame {
-    
-    GerenciarConexao gc = new GerenciarConexao();
     
     /**
      * Creates new form PrimeiraEntrada1
@@ -256,17 +252,17 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         String senha = jPasswordField1.getText();
         String turnos = "";
         
-        if (jCheckBox6.getSelectedObjects()[0] != null){
-            turnos = turnos + "matutino";
-        }
-        if (jCheckBox7.getSelectedObjects()[0] != null){
-            turnos = turnos + "/" + "vespertino";
-        }
-        if (jCheckBox8.getSelectedObjects()[0] != null){
-            turnos = turnos + "/" + "noturno";
-        }
-        
-        gc.dadosBasicos(nomeInstituicao, senha, turnos);
+//        if (jCheckBox6.getSelectedObjects()[0] != null){
+//            turnos = turnos + "matutino";
+//        }
+//        if (jCheckBox7.getSelectedObjects()[0] != null){
+//            turnos = turnos + "/" + "vespertino";
+//        }
+//        if (jCheckBox8.getSelectedObjects()[0] != null){
+//            turnos = turnos + "/" + "noturno";
+//        }
+//        
+//        gc.dadosBasicos(nomeInstituicao, senha, turnos);
         
     }//GEN-LAST:event_jLabel20MouseClicked
 
