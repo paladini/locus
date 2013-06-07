@@ -125,9 +125,11 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         // Pegar Dados
+        String login = jTextField1.getText();
+        String senha = jPasswordField1.getText();
         
         // Instanciar objeto
-        
+        Login 
         // Instanciar ControleLogin 
         // ControleLogin chama o LoginDAO
         // Depois de tudo isso, retorna para a view, que trata a resposta
@@ -135,8 +137,7 @@ public class Login extends javax.swing.JFrame {
         
         //GerenciarConexao gc = new GerenciarConexao();
 
-        String login = jTextField1.getText();
-        String senha = jPasswordField1.getText();
+        
 
         // Verifica no banco de dados se usuário e senha conferem. Se sim,
         // destroi a tela atual (dispose) e instancia a próxima tela do programa. 

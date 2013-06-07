@@ -4,6 +4,9 @@
  */
 package view;
 
+import control.ControleEscola;
+import entidades.Escola;
+
 /**
  *
  * @author silvio
@@ -252,17 +255,26 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         String senha = jPasswordField1.getText();
         String turnos = "";
         
-//        if (jCheckBox6.getSelectedObjects()[0] != null){
-//            turnos = turnos + "matutino";
-//        }
-//        if (jCheckBox7.getSelectedObjects()[0] != null){
-//            turnos = turnos + "/" + "vespertino";
-//        }
-//        if (jCheckBox8.getSelectedObjects()[0] != null){
-//            turnos = turnos + "/" + "noturno";
-//        }
-//        
-//        gc.dadosBasicos(nomeInstituicao, senha, turnos);
+        if (jCheckBox6.getSelectedObjects()[0] != null){
+            turnos = turnos + "matutino";
+        }
+        if (jCheckBox7.getSelectedObjects()[0] != null){
+            turnos = turnos + "/" + "vespertino";
+        }
+        if (jCheckBox8.getSelectedObjects()[0] != null){
+            turnos = turnos + "/" + "noturno";
+        }
+        
+        // Criando objeto "Login";
+        Escola escola = new Escola();
+        
+        // Setando parâmetros
+        escola.setSenha(senha);
+        escola.setNomeEscola(nomeInstituicao);
+        
+        // Instanciando controle do Login
+//        ControleEscola ce = new ControleEscola();
+//        ce.login(escola);
         
     }//GEN-LAST:event_jLabel20MouseClicked
 
