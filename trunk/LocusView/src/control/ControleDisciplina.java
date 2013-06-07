@@ -4,6 +4,11 @@
  */
 package control;
 
+import entidades.Disciplina;
+import model.DisciplinaDAO;
+
+
+
 /**
  *
  * @author silvio
@@ -11,6 +16,11 @@ package control;
 public class ControleDisciplina {
     
     // Instanciando modelo do ControleCurso
+    // Instancia o modelo desse tipo de objeto
+    DisciplinaDAO modelo = new DisciplinaDAO();
     
+    public void adicionar(Disciplina disciplinaAdicionar){
+        modelo.insert(disciplinaAdicionar);
+    }
     
 }

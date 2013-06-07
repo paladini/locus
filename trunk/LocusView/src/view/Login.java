@@ -4,7 +4,6 @@
  */
 package view;
 
-import control.GerenciarConexao;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -134,41 +133,41 @@ public class Login extends javax.swing.JFrame {
         // Depois de tudo isso, retorna para a view, que trata a resposta
         Login login1 = new Login();
         
-        GerenciarConexao gc = new GerenciarConexao();
+        //GerenciarConexao gc = new GerenciarConexao();
 
         String login = jTextField1.getText();
         String senha = jPasswordField1.getText();
 
         // Verifica no banco de dados se usuário e senha conferem. Se sim,
         // destroi a tela atual (dispose) e instancia a próxima tela do programa. 
-        int resultado = gc.login(login, senha);
+        //int resultado = gc.login(login, senha);
 
         /**
          * Se retorno = 0: acesso não permitido Se retorno = 1: primeiro acesso,
          * redirecionar para PrimeiraEntrada1; Se retorno = 2: acesso normal,
          * redirecionar para MenuPrincipal;
          */
-        switch (resultado) {
-            case 0:
-                jLabel4.setText("Nome de usuário ou senha incorreto.");
-                break;
-            case 1:
-                dispose();
-                PrimeiraEntrada1 primeiraEntrada = new PrimeiraEntrada1();
-                primeiraEntrada.setVisible(true);
-                primeiraEntrada.setLocationRelativeTo(null);
-                primeiraEntrada.setResizable(false);
-                break;
-            case 2:
-                dispose();
-                MenuPrincipal menuPrincipal = new MenuPrincipal();
-                menuPrincipal.setVisible(true);
-                menuPrincipal.setLocationRelativeTo(null);
-                menuPrincipal.setResizable(false);
-            default:
-                jLabel4.setText("Algo deu errado. Contate o operador do sistema");
-                break;
-        }
+//        switch (resultado) {
+//            case 0:
+//                jLabel4.setText("Nome de usuário ou senha incorreto.");
+//                break;
+//            case 1:
+//                dispose();
+//                PrimeiraEntrada1 primeiraEntrada = new PrimeiraEntrada1();
+//                primeiraEntrada.setVisible(true);
+//                primeiraEntrada.setLocationRelativeTo(null);
+//                primeiraEntrada.setResizable(false);
+//                break;
+//            case 2:
+//                dispose();
+//                MenuPrincipal menuPrincipal = new MenuPrincipal();
+//                menuPrincipal.setVisible(true);
+//                menuPrincipal.setLocationRelativeTo(null);
+//                menuPrincipal.setResizable(false);
+//            default:
+//                jLabel4.setText("Algo deu errado. Contate o operador do sistema");
+//                break;
+//        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
