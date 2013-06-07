@@ -6,8 +6,8 @@ package control;
 
 /**
  *
- * @author fernando_paladini
+ * @author silvio
  */
-public class Login {
+public class ControleLogin {
     
 }

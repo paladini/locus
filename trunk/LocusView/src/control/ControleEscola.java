@@ -3,26 +3,27 @@
  * and open the template in the editor.
  */
 package control;
-//import org.jasypt.util.text.BasicPasswordEncryptor;
 
+import entidades.Escola;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Conexao;
+import model.EscolaDAO;
 
 /**
  *
  * @author silvio
  */
-public class GerenciarConexao {
+public class ControleEscola {
     
     ResultSet result; 
+    EscolaDAO modelo = new EscolaDAO();
     
-    public int login(String nome, String senha){
+    public int login(Escola escola){
         
         //BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-        //result = Conexao.logar(nome);
+        result = modelo.logar(escola);
         
         /**
          * Se retorno = 0: acesso não permitido
@@ -34,7 +35,7 @@ public class GerenciarConexao {
         try {
             result.next();
             if (result != null){
-                if (result.getString("senha").contentEquals(senha)){
+                if (result.getString("senha").contentEquals(escola.getSenha())){
                     if (result.getDate("ultimo_acesso") == null){
                         retorno = 1;
                     }else{
@@ -47,32 +48,6 @@ public class GerenciarConexao {
         }
         
         return retorno;
-    }
-    
-    public void dadosBasicos(String nomeInstituicao, String novaSenha, String turnos ){
-        
-        // Trocando nome da instituição
-        Conexao.mudarInstituicao(nomeInstituicao);
-        
-        // Trocando senha
-        //Conexao.mudarSenha(novaSenha);
-        
-        /**
-         * Criar os turnos no banco de acordo com os checkboxes marcados.
-        */
-        
-        if (turnos.contains("?")){
-            // Esse [^/] é o que chamamos de expressão regular, se quiserem pesquisem no Google sobre
-            String vetorTurnos[] = turnos.split("[^/]"); 
-            for (int i = 0; i < vetorTurnos.length; i++){
-                Conexao.adicionarTurno(vetorTurnos[i]);
-            }
-        }else{
-             Conexao.adicionarTurno(turnos);
-        }
-        
-        
-        
     }
     
 }
