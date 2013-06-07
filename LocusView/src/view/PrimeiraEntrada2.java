@@ -130,7 +130,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         
         // Pega nome do campo "jTextField1" e seta nome na disciplina
         disciplina.setNome(jTextField1.getText());
-        
+        jLabel3.setText(disciplina.getNome());
         // Chama método do controle para adicionar disciplina ao banco de dados
         cd.adicionar(disciplina);
         
