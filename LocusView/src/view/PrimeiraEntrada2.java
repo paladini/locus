@@ -5,7 +5,11 @@
 package view;
 
 import control.ControleDisciplina;
+import entidades.Curso;
 import entidades.Disciplina;
+import javax.swing.JTextArea;
+import model.CursoDAO;
+import model.DisciplinaDAO;
 
 /**
  *
@@ -52,9 +56,26 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField1.setToolTipText("Pesquise ou adicione uma disciplina...");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
+
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
+        // Retornando todas as disciplinas possíveis
+        //Disciplina disciplina = new Disciplina();
+        ControleDisciplina cd = new ControleDisciplina();
+        jTextArea1.setText(cd.consulta());
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/próxima.fw.png"))); // NOI18N
         jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -64,14 +85,13 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("  ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 27, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2))
@@ -113,7 +133,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
                     .addComponent(jTextField1)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel20)
                 .addGap(36, 36, 36))
@@ -129,16 +149,18 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         ControleDisciplina cd = new ControleDisciplina();
         
         // Pega nome do campo "jTextField1" e seta nome na disciplina
-        disciplina.setNome(jTextField1.getText());
-        jLabel3.setText(disciplina.getNome());
+        String nome = jTextField1.getText();
+        disciplina.setNome(nome);
+        
         // Chama método do controle para adicionar disciplina ao banco de dados
         cd.adicionar(disciplina);
-        
+
         // Limpa campo de nome da disciplina (deixa em branco)
         jTextField1.setText(null);
         
         // Cria texto dizendo que disciplina foi adicionada
         jLabel3.setText("Disciplina adicionada! ");
+        jTextArea1.setText(cd.consulta());
         
 
     }//GEN-LAST:event_jLabel5MouseClicked
@@ -146,6 +168,26 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
 
     }//GEN-LAST:event_jLabel20MouseClicked
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    /**
+     * Se alguma tecla for pressionada no campo de busca/adicionar Disciplinas
+     * Vai chamar esse método e fazer essas ações.
+     * @param evt 
+     */
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        
+        // Se existir algum texto no "jLabel3" (confirmação de que Disciplina foi inserida), vai limpar esse campo;
+        if (jLabel3.getText() != null){
+            jLabel3.setText(null); 
+        } 
+       
+        
+    }//GEN-LAST:event_jTextField1KeyTyped
 
     /**
      * @param args the command line arguments
@@ -178,6 +220,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PrimeiraEntrada2().setVisible(true);
+                
             }
         });
     }
