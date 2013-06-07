@@ -5,6 +5,7 @@
 package model;
 
 import entidades.Curso;
+import entidades.Disciplina;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,28 +17,8 @@ import java.util.ArrayList;
  * @author silvio
  */
 public class DisciplinaDAO {
-    
-    /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package model;
-
-import entidades.Curso;
-import entidades.Midia;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-/**
- *
- * @author luiz_malaquias
- */
-public class CursoDAO {
    
-    public ArrayList<Curso> select() {
+    public ArrayList<Disciplina> select() {
 
         Connection connection = Conexao.getConexao();
         try {
@@ -46,10 +27,10 @@ public class CursoDAO {
             PreparedStatement prest = connection.prepareStatement(sql);
             ResultSet rs = prest.executeQuery();
 
-            ArrayList<Curso> listaClientes = new ArrayList<Curso>();
+            ArrayList<Disciplina> listaClientes = new ArrayList<Disciplina>();
             while (rs.next()) {
-                Curso c = new Curso();
-                int id = rs.getInt("idCurso");
+                Disciplina c = new Disciplina();
+                int id = rs.getInt("idDisciplina");
                 String nome = rs.getString("nome");
                 c.setId(id);
                 c.setNome(nome);
@@ -64,13 +45,13 @@ public class CursoDAO {
         return null;
     }
 
-    public void insert(Curso curso) {
+    public void insert(Disciplina disciplina) {
         Connection connection = Conexao.getConexao();
         try {
             String sql = "INSERT INTO curso (nome) VALUES (?);";
             PreparedStatement prest = connection.prepareStatement(sql);
            
-            prest.setString(1,curso.getNome() );
+            prest.setString(1,disciplina.getNome() );
             
 
             prest.execute();
@@ -80,15 +61,15 @@ public class CursoDAO {
         }
     }
 
-    public void update(Curso cursoNovo, Curso cursoAntigo) {
+    public void update(Disciplina disciplinaNova, Disciplina disciplinaAntiga) {
         Connection connection = Conexao.getConexao();
         try {
 
             String sql = "UPDATE curso SET nome = ? WHERE nome like ?";
             //String sql = "UPDATE cliente SET nome = ? WHERE id = ?";
             PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, cursoNovo.getNome());
-            prest.setString(2, cursoAntigo.getNome());
+            prest.setString(1, disciplinaNova.getNome());
+            prest.setString(2, disciplinaAntiga.getNome());
             //prest.setInt(2,clienteAntigo.getId());
 
             prest.execute();
@@ -98,7 +79,7 @@ public class CursoDAO {
         }
     }
 
-    public void delete(DisciplinaDAO disciplinaAntiga) {
+    public void delete(Disciplina disciplinaAntiga) {
         Connection connection = Conexao.getConexao();
         try {
             String sql = "DELETE FROM curso WHERE nome = ?";
@@ -112,13 +93,4 @@ public class CursoDAO {
             System.out.println(ex.getMessage());
         }
     }
-    
-    
-    
-    
-   
-    
-}
-
-    
 }
