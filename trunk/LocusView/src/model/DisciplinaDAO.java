@@ -4,7 +4,6 @@
  */
 package model;
 
-import entidades.Curso;
 import entidades.Disciplina;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +22,7 @@ public class DisciplinaDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM curso";
+            String sql = "SELECT * FROM disciplina";
             PreparedStatement prest = connection.prepareStatement(sql);
             ResultSet rs = prest.executeQuery();
 
@@ -48,7 +47,7 @@ public class DisciplinaDAO {
     public void insert(Disciplina disciplina) {
         Connection connection = Conexao.getConexao();
         try {
-            String sql = "INSERT INTO curso (nome) VALUES (?);";
+            String sql = "INSERT INTO disciplina (nome) VALUES (?);";
             PreparedStatement prest = connection.prepareStatement(sql);
            
             prest.setString(1,disciplina.getNome() );
@@ -65,7 +64,7 @@ public class DisciplinaDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "UPDATE curso SET nome = ? WHERE nome like ?";
+            String sql = "UPDATE disciplina SET nome = ? WHERE nome like ?";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setString(1, disciplinaNova.getNome());
             prest.setString(2, disciplinaAntiga.getNome());
@@ -80,7 +79,7 @@ public class DisciplinaDAO {
     public void delete(Disciplina disciplinaAntiga) {
         Connection connection = Conexao.getConexao();
         try {
-            String sql = "DELETE FROM curso WHERE nome = ?";
+            String sql = "DELETE FROM disciplina WHERE nome = ?";
             //String sql = "UPDATE cliente SET nome = ? WHERE id = ?";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setString(1, disciplinaAntiga.getNome());
