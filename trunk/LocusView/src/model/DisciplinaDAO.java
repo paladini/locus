@@ -22,8 +22,41 @@ public class DisciplinaDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM disciplina order by nome";
+            String sql = "SELECT * FROM disciplina order by nome;";
             PreparedStatement prest = connection.prepareStatement(sql);
+            ResultSet rs = prest.executeQuery();
+
+            ArrayList<Disciplina> listaClientes = new ArrayList<Disciplina>();
+            while (rs.next()) {
+                Disciplina c = new Disciplina();
+                int id = rs.getInt("idDisciplina");
+                String nome = rs.getString("nome");
+                c.setId(id);
+                c.setNome(nome);
+                listaClientes.add(c);
+            }
+
+            connection.close();
+            return listaClientes;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+    
+    /**
+     * Faz uma consulta no banco de dados pesquisando pelos termos digitados até o momento.
+     * @param termos Termos digitados pelo usuário.
+     * @return 
+     */
+    public ArrayList<Disciplina> selectComTermos(String termos) {
+
+        Connection connection = Conexao.getConexao();
+        try {
+
+            String sql = "SELECT * FROM disciplina where nome like ?;";
+            PreparedStatement prest = connection.prepareStatement(sql);
+            prest.setString(1, termos + "%");
             ResultSet rs = prest.executeQuery();
 
             ArrayList<Disciplina> listaClientes = new ArrayList<Disciplina>();
@@ -52,7 +85,6 @@ public class DisciplinaDAO {
            
             prest.setString(1,disciplina.getNome() );
             
-
             prest.execute();
             connection.close();
         } catch (SQLException ex) {

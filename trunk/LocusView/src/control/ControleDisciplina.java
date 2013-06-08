@@ -30,13 +30,14 @@ public class ControleDisciplina {
      */
     public ArrayList<Disciplina> consulta(){
         return modelo.select();
-//        ArrayList<Disciplina> disciplinas = modelo.select();
-//        
-//        String nomesDisciplinas = "";
-//        for (Disciplina temp : disciplinas){
-//            nomesDisciplinas += temp.getNome() + "\n";
-//        }
-//        return nomesDisciplinas;
+    }
+    
+    /**
+     * Método para consultar as disciplinas com nomes que começam com os termos digitados pelo usuário.
+     * @return 
+     */
+    public ArrayList<Disciplina> consultaComTermos(String termo){
+        return modelo.selectComTermos(termo);
     }
             
     
