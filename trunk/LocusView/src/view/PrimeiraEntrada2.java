@@ -5,15 +5,10 @@
 package view;
 
 import control.ControleDisciplina;
-import entidades.Curso;
 import entidades.Disciplina;
 import java.awt.Font;
 import java.util.ArrayList;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
-import model.CursoDAO;
-import model.DisciplinaDAO;
 
 /**
  *
@@ -52,9 +47,16 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
      * Faz uma nova consulta no banco de dados, atualizando todas as disciplinas na lista de disciplinas.
      */
     private void recarregarDisciplinas(){
+        
+        // Variável "modelo" é o "modelo" da jTable1
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         
-        // Adiciona as disciplinas na tabela.
+        // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
+        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+        
+        // Instancia um novo ControleDisciplina
         ControleDisciplina cd = new ControleDisciplina();
         
         // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
