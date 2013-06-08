@@ -28,14 +28,15 @@ public class ControleDisciplina {
      * Método para consultar as disciplinas do banco de dados
      * @return 
      */
-    public String consulta(){
-        ArrayList<Disciplina> disciplinas = modelo.select();
-        
-        String nomesDisciplinas = "";
-        for (Disciplina temp : disciplinas){
-            nomesDisciplinas += temp.getNome() + "\n";
-        }
-        return nomesDisciplinas;
+    public ArrayList<Disciplina> consulta(){
+        return modelo.select();
+//        ArrayList<Disciplina> disciplinas = modelo.select();
+//        
+//        String nomesDisciplinas = "";
+//        for (Disciplina temp : disciplinas){
+//            nomesDisciplinas += temp.getNome() + "\n";
+//        }
+//        return nomesDisciplinas;
     }
             
     
