@@ -7,7 +7,11 @@ package view;
 import control.ControleDisciplina;
 import entidades.Curso;
 import entidades.Disciplina;
+import java.awt.Font;
+import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
 import model.CursoDAO;
 import model.DisciplinaDAO;
 
@@ -22,8 +26,48 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
      */
     public PrimeiraEntrada2() {
         initComponents();
+        
+        // Cria uma coluna para a tabela
+        Object colunas[] = { "Disciplinas" }; 
+        
+        // Cria um modelo e diz que ele tem uma coluna (e depois sobreescrevendo um método para não ser possível editar a table)
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0) { 
+            public boolean isCellEditable(int row, int col) {  
+                return false;  
+            } 
+        } ;  
+        
+        // Seta o modelo na tabela, seta uma nova fonte e aumenta o tamanho das linhas.
+        jTable1.setModel(modelo);  
+        jTable1.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        jTable1.setRowHeight(jTable1.getRowHeight()+10);
+        
+        // Atualiza as disciplinas exibidas
+        this.recarregarDisciplinas();
+        
+        
     }
 
+    /**
+     * Faz uma nova consulta no banco de dados, atualizando todas as disciplinas na lista de disciplinas.
+     */
+    private void recarregarDisciplinas(){
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        
+        // Adiciona as disciplinas na tabela.
+        ControleDisciplina cd = new ControleDisciplina();
+        
+        // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
+        ArrayList<Disciplina> consulta = cd.consulta();
+        
+        // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
+        // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
+        // e vai os chamando de "temp". 
+        for (Disciplina temp : consulta){
+            modelo.addRow(new String [] { temp.getNome() });
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,10 +82,10 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel20 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,14 +113,6 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-        // Retornando todas as disciplinas possíveis
-        //Disciplina disciplina = new Disciplina();
-        ControleDisciplina cd = new ControleDisciplina();
-        jTextArea1.setText(cd.consulta());
-
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/próxima.fw.png"))); // NOI18N
         jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -85,6 +121,24 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Disciplinas"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,16 +154,15 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel20)))
+                                .addComponent(jLabel20))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,10 +186,10 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
                     .addComponent(jTextField1)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jLabel20)
-                .addGap(36, 36, 36))
+                .addGap(119, 119, 119))
         );
 
         pack();
@@ -160,7 +213,9 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         
         // Cria texto dizendo que disciplina foi adicionada
         jLabel3.setText("Disciplina adicionada! ");
-        jTextArea1.setText(cd.consulta());
+        
+        // Atualiza a lista de disciplinas
+        this.recarregarDisciplinas();
         
 
     }//GEN-LAST:event_jLabel5MouseClicked
@@ -185,6 +240,8 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         if (jLabel3.getText() != null){
             jLabel3.setText(null); 
         } 
+        
+        
        
         
     }//GEN-LAST:event_jTextField1KeyTyped
@@ -220,9 +277,9 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PrimeiraEntrada2().setVisible(true);
-                
             }
         });
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -232,7 +289,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

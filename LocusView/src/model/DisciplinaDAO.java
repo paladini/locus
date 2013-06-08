@@ -22,7 +22,7 @@ public class DisciplinaDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM disciplina";
+            String sql = "SELECT * FROM disciplina order by nome";
             PreparedStatement prest = connection.prepareStatement(sql);
             ResultSet rs = prest.executeQuery();
 
