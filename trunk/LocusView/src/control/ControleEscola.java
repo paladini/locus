@@ -35,6 +35,8 @@ public class ControleEscola {
         int resultado = 0;
         for(Turno temp : escola.getTurnos()){
             if (modelo.adicionarTurno(temp.getNome())){
+                
+            }else{
                 resultado = 1;
             }
         }

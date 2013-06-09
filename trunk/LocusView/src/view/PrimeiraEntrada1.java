@@ -268,15 +268,15 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         
         // Setando turnos     
         if (jCheckBox6.isSelected()){
-            Turno matutino = new Turno();
+            Turno matutino = new Turno("Matutino");
             escola.adicionarTurno(matutino);
         }
         if (jCheckBox7.isSelected()){
-            Turno vespertino = new Turno();
+            Turno vespertino = new Turno("Vespertino");
             escola.adicionarTurno(vespertino);
         }
         if (jCheckBox8.isSelected()){
-            Turno noturno = new Turno();
+            Turno noturno = new Turno("Noturno");
             escola.adicionarTurno(noturno);
         }
 
