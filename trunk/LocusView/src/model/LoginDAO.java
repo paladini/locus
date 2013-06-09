@@ -18,6 +18,41 @@ import java.util.Date;
 public class LoginDAO {
     
     /**
+     * Modifica o "último acesso" para o horário atual.
+     * @return 
+     */
+    public Boolean ultimoAcesso(){
+        Connection connection = Conexao.getConexao();
+          try{    
+              Statement statement = connection.createStatement();
+              statement.execute("update admin set ultimo_acesso = now();");
+              return true;
+          } catch (SQLException ex){
+              System.out.println("ex.getMessage()");
+          }
+          return false;
+    }
+    
+    
+     /**
+       * Método para modificar a senha do administrador da Instituição
+       * @param novaSenha Nova senha de acesso
+       * @return 
+       */
+      public Boolean mudarSenha(String novaSenha){
+          Connection connection = Conexao.getConexao();
+          try{    
+              Statement statement = connection.createStatement();
+              statement.execute("update admin set senha = '" +novaSenha +"' where login=\"admin\" ;");
+              return true;
+          } catch (SQLException ex){
+              System.out.println("ex.getMessage()");
+          }
+          return false;
+ 
+      }
+    
+    /**
        * Verifica no banco de dados se a senha e o nome de usuário batem.
        * @param nome Nome de usuário
        * @param password Senha inserida pela usuário

@@ -17,6 +17,27 @@ public class ControleLogin {
     ResultSet result; 
     LoginDAO modelo = new LoginDAO();
     
+    
+    /**
+     * Método para realizar as mudanças na primeira entrada no sistema.
+     * @param login 
+     */
+    public int primeiraEntrada(Login login){
+        // Chama método para mudar a senha. Se for realizado com sucesso, continua e atualiza no banco o último acesso.
+        if (modelo.mudarSenha(login.getSenha())){
+            modelo.ultimoAcesso();
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+    
+    /**
+     * Método que autentica usuário e permite login no sistema.
+     * @param login
+     * @param senha
+     * @return 
+     */
     public int login(String login, String senha){
         
         //BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
