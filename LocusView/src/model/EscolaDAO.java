@@ -24,7 +24,7 @@ public class EscolaDAO {
           Connection connection = Conexao.getConexao();
           try{
               Statement statement = connection.createStatement();
-              statement.execute("update admin set nome_instituicao = '" +novoNome +"' where login=\"admin\" ;");
+              statement.execute("update admin set nome_escola = '" +novoNome +"' where login=\"admin\" ;");
               return true;
           } catch (SQLException ex){
               System.out.println(ex.getMessage());
