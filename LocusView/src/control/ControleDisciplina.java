@@ -16,6 +16,26 @@ public class ControleDisciplina {
     // Instancia o modelo desse tipo de objeto
     DisciplinaDAO modelo = new DisciplinaDAO();
     
+    
+    /**
+     * Método para atualizar disciplina no banco de dados.
+     * @param antiga
+     * @param nova 
+     */
+    public void atualizar(Disciplina nova, Disciplina antiga){
+        modelo.update(nova, antiga);
+    }
+    
+    
+    /**
+     * Método para remover disciplina no banco de dados
+     * @param disciplina 
+     */
+    public void remover(Disciplina disciplina){
+        modelo.delete(disciplina);
+    }
+    
+    
     /**
      * Método para adicionar uma disciplina ao banco de dados.
      * @param disciplinaAdicionar 
