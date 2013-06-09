@@ -13,10 +13,18 @@ import entidades.Disciplina;
  */
 public class EditarDisciplina extends javax.swing.JFrame {
 
+    
+    Disciplina disciplina;
+    Disciplina disciplinaNova;
+    
     /**
      * Creates new form EditarDisciplina
      */
     public EditarDisciplina(String nomeDisciplina) {
+        
+        // Não fechar todas as janelas ao fechar esta janela.
+        setDefaultCloseOperation(EditarDisciplina.DISPOSE_ON_CLOSE);
+        
         // Inicializa todos os componentes
         initComponents();
         
@@ -24,7 +32,7 @@ public class EditarDisciplina extends javax.swing.JFrame {
         ControleDisciplina cd = new ControleDisciplina();
         
         // Armazena a disciplina a ser editada
-        Disciplina disciplina = cd.consultaDisciplina(nomeDisciplina);
+        disciplina = cd.consultaDisciplina(nomeDisciplina);
         
         // Seta os valores para exibir ao usuário
         jTextField2.setText(disciplina.getNome());
@@ -62,13 +70,24 @@ public class EditarDisciplina extends javax.swing.JFrame {
         jLabel4.setText("Nome novo:");
 
         jTextField2.setEditable(false);
+        jTextField2.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Disciplina");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salvar.fw.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/excluir3.fw.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,6 +135,51 @@ public class EditarDisciplina extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        
+        // Instanciando gerenciar disciplina
+        ControleDisciplina cd = new ControleDisciplina();
+        
+        // Atualizando disciplina
+        String novaDisciplina = jTextField1.getText();
+        disciplinaNova = new Disciplina();
+        disciplinaNova.setNome(novaDisciplina);
+        
+        // Atualizando a disciplina
+        cd.atualizar(disciplinaNova, disciplina);
+        
+        // Fechando a janela
+        dispose();
+        
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // Instanciando gerenciar disciplina
+        ControleDisciplina cd = new ControleDisciplina();
+          
+        // Atualizando a disciplina
+        cd.remover(disciplina);
+        
+        // Fechando a janela
+        dispose();
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    public Disciplina getDisciplinaNova() {
+        return disciplinaNova;
+    }
+
+    public void setDisciplinaNova(Disciplina disciplinaNova) {
+        this.disciplinaNova = disciplinaNova;
+    }
 
     /**
      * @param args the command line arguments
