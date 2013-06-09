@@ -129,11 +129,11 @@ public class Login extends javax.swing.JFrame {
         String senha = jPasswordField1.getText();
         
         // Instanciar objeto
-        Login 
+        // Login 
         // Instanciar ControleLogin 
         // ControleLogin chama o LoginDAO
         // Depois de tudo isso, retorna para a view, que trata a resposta
-        Login login1 = new Login();
+        // Login login1 = new Login();
         
         //GerenciarConexao gc = new GerenciarConexao();
 
