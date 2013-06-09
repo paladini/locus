@@ -8,6 +8,7 @@ import control.ControleEscola;
 import control.ControleLogin;
 import entidades.Escola;
 import entidades.Login;
+import entidades.Turno;
 
 /**
  *
@@ -254,31 +255,39 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
         
-        // Pegando dados da tela
-        String nomeInstituicao = jTextField5.getText();
-        String senha = jPasswordField1.getText();
-        String turnos = "";
-        
-        if (jCheckBox6.getSelectedObjects()[0] != null){
-            turnos = turnos + "matutino";
-        }
-        if (jCheckBox7.getSelectedObjects()[0] != null){
-            turnos = turnos + "/" + "vespertino";
-        }
-        if (jCheckBox8.getSelectedObjects()[0] != null){
-            turnos = turnos + "/" + "noturno";
-        }
-        
         // Criando objeto "Escola" e "TelaLogin", além dos "controles";
         Escola escola = new Escola();
         Login login = new Login();
         ControleEscola ce = new ControleEscola();
         ControleLogin cl = new ControleLogin();
         
-        // Setando parâmetros
+        // Pegando dados da tela
+        String nomeInstituicao = jTextField5.getText();
+        String senha = jPasswordField1.getText();
+        
+        // Setando turnos e definindo no banco de dados.
+        if (jCheckBox6.getSelectedObjects()[0] != null){
+            Turno matutino = new Turno();
+            escola.adicionarTurno(matutino);
+        }
+        if (jCheckBox7.getSelectedObjects()[0] != null){
+            Turno vespertino = new Turno();
+            escola.adicionarTurno(vespertino);
+        }
+        if (jCheckBox8.getSelectedObjects()[0] != null){
+            Turno noturno = new Turno();
+            escola.adicionarTurno(noturno);
+        }
+        ce.adicionarTurnos();
+        
+        // Setando nova senha e definindo no banco de dados.
         login.setSenha(senha);
-        // escola.setSenha(senha);
-        // escola.setNomeEscola(nomeInstituicao);
+        cl.primeiraEntrada(login);
+        
+        // Setando nome da escola e definindo no banco de dados.
+        escola.setNomeEscola(nomeInstituicao);
+        ce.mudarNome(escola);
+        
         
     }//GEN-LAST:event_jLabel20MouseClicked
 
