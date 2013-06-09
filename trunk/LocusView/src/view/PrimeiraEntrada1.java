@@ -264,6 +264,7 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Pegando dados da tela
         String nomeInstituicao = jTextField5.getText();
         String senha = jPasswordField1.getText();
+        int resultado;
         
         // Setando turnos e definindo no banco de dados.
         if (jCheckBox6.getSelectedObjects()[0] != null){
@@ -278,7 +279,7 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
             Turno noturno = new Turno();
             escola.adicionarTurno(noturno);
         }
-        ce.adicionarTurnos();
+        ce.adicionarTurnos(escola);
         
         // Setando nova senha e definindo no banco de dados.
         login.setSenha(senha);
@@ -287,6 +288,7 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Setando nome da escola e definindo no banco de dados.
         escola.setNomeEscola(nomeInstituicao);
         ce.mudarNome(escola);
+        
         
         
     }//GEN-LAST:event_jLabel20MouseClicked

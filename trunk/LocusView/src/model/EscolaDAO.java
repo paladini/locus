@@ -22,15 +22,14 @@ public class EscolaDAO {
        */
       public boolean mudarInstituicao(String novoNome){ 
           Connection connection = Conexao.getConexao();
-          boolean sucesso = false;
           try{
               Statement statement = connection.createStatement();
               statement.execute("update admin set nome_instituicao = '" +novoNome +"' where login=\"admin\" ;");
-              sucesso = true;
+              return true;
           } catch (SQLException ex){
               System.out.println(ex.getMessage());
           }
-          return sucesso;
+          return false;
       }
       
       /**
@@ -38,14 +37,16 @@ public class EscolaDAO {
        * Se o turno já existir no banco de dados, ele insere de novo e omite os warnings).
        * @param turno 
        */
-      public void adicionarTurno(String turno){
+      public boolean adicionarTurno(String turno){
           Connection connection = Conexao.getConexao();
           try{
               Statement statement = connection.createStatement();
               statement.execute("INSERT IGNORE INTO turno (descricao) values (\"" + turno +"\");");
+              return true;
           } catch (SQLException ex){
               System.out.println(ex.getMessage());
           }
+          return false;
       }
     
 }
