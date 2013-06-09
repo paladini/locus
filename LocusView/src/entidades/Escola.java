@@ -28,7 +28,7 @@ public class Escola {
  
     // Métodos
     public void adicionarTurno(Turno turno){
-        turnos.add(turno);
+        getTurnos().add(turno);
     }
     
     public String getNomeEscola() {
