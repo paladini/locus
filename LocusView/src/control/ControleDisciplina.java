@@ -39,6 +39,15 @@ public class ControleDisciplina {
     public ArrayList<Disciplina> consultaComTermos(String termo){
         return modelo.selectComTermos(termo);
     }
+    
+    /**
+     * Método para retornar somente uma disciplina (para edição dela).
+     * @param termo
+     * @return 
+     */
+    public Disciplina consultaDisciplina(String termo){
+        return modelo.selectDisciplina(termo);
+    }
             
     
 }

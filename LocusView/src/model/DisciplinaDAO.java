@@ -17,6 +17,42 @@ import java.util.ArrayList;
  */
 public class DisciplinaDAO {
    
+    /**
+     * Faz consulta no banco de dados e retorna apenas uma disciplina com esse nome.
+     * @return 
+     */
+    public Disciplina selectDisciplina(String nomeDisciplina){
+        Connection connection = Conexao.getConexao();
+        try {
+
+            String sql = "SELECT * FROM disciplina where nome = ?;";
+            PreparedStatement prest = connection.prepareStatement(sql);
+            prest.setString(1, nomeDisciplina);
+            ResultSet rs = prest.executeQuery();
+
+            // Cria uma nova disciplina
+            Disciplina disciplina = new Disciplina();
+            
+            // Pega o primeiro registro do retorno da consulta
+            rs.next();
+            
+            // Pega os dados desse registro e guarda em variáveis
+            int id = rs.getInt("idDisciplina");
+            String nome = rs.getString("nome");
+            
+            // Seta os dados na disciplina criada
+            disciplina.setId(id);
+            disciplina.setNome(nome);
+
+            connection.close();
+            return disciplina;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+    
+    
     public ArrayList<Disciplina> select() {
 
         Connection connection = Conexao.getConexao();

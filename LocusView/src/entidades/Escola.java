@@ -14,19 +14,15 @@ public class Escola {
  
     // Atributos
     private String nomeEscola;
-    private String login;
-    private String senha;
-    private Date ultimoacesso;
+    
     
     // Construtores
     public Escola() {
     }
 
-    public Escola(String nomeEscola, String login, String senha, Date ultimoacesso) {
+    public Escola(String nomeEscola) {
         this.nomeEscola = nomeEscola;
-        this.login = login;
-        this.senha = senha;
-        this.ultimoacesso = ultimoacesso;
+        
     }
  
     // Métodos
@@ -37,30 +33,5 @@ public class Escola {
     public void setNomeEscola(String nomeEscola) {
         this.nomeEscola = nomeEscola;
     }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Date getUltimoacesso() {
-        return ultimoacesso;
-    }
-
-    public void setUltimoacesso(Date ultimoacesso) {
-        this.ultimoacesso = ultimoacesso;
-    }
-    
     
 }

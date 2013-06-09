@@ -7,7 +7,10 @@ package view;
 import control.ControleDisciplina;
 import entidades.Disciplina;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,7 +43,25 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         // Atualiza as disciplinas exibidas
         this.recarregarDisciplinas();
         
-        
+        // "Listener", para "escutar" um duplo clique nas linhas.
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable)e.getSource();
+                    int row = target.getSelectedRow();
+                    int column = target.getSelectedColumn();
+                    
+                    // Pega o nome da disciplina nessa posição
+                    String nomeDisciplina = (String) jTable1.getValueAt(row, column);
+                    
+                    // Instancia nova "view" chamada "editar". Em seguida exibe ela para o usuário centralizada.
+                    EditarDisciplina editar = new EditarDisciplina(nomeDisciplina);
+                    editar.setVisible(true);
+                    editar.setLocationRelativeTo(null);
+                    
+                }
+            }
+        });
     }
 
     /**
