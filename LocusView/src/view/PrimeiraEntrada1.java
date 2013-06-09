@@ -269,8 +269,8 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         Escola escola = new Escola();
         
         // Setando parâmetros
-        escola.setSenha(senha);
-        escola.setNomeEscola(nomeInstituicao);
+        // escola.setSenha(senha);
+        // escola.setNomeEscola(nomeInstituicao);
         
         // Instanciando controle do Login
 //        ControleEscola ce = new ControleEscola();

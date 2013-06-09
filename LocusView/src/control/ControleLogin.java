@@ -46,4 +46,27 @@ public class ControleLogin {
         return retorno;
     }
     
+//    public void dadosBasicos(String nomeInstituicao, String novaSenha, String turnos ){
+//        
+//        // Trocando nome da instituição
+//        Conexao.mudarInstituicao(nomeInstituicao);
+//        
+//        // Trocando senha
+//        //Conexao.mudarSenha(novaSenha);
+//        
+//        /**
+//         * Criar os turnos no banco de acordo com os checkboxes marcados.
+//        */
+//        
+//        if (turnos.contains("?")){
+//            // Esse [^/] é o que chamamos de expressão regular, se quiserem pesquisem no Google sobre
+//            String vetorTurnos[] = turnos.split("[^/]"); 
+//            for (int i = 0; i < vetorTurnos.length; i++){
+//                Conexao.adicionarTurno(vetorTurnos[i]);
+//            }
+//        }else{
+//             Conexao.adicionarTurno(turnos);
+//        }
+//    }
+    
 }
