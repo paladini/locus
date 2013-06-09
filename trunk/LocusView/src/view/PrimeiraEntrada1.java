@@ -266,16 +266,16 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         String senha = jPasswordField1.getText();
         int resultado = 0;
         
-        // Setando turnos
-        if (jCheckBox6.getSelectedObjects()[0] != null){
+        // Setando turnos     
+        if (jCheckBox6.isSelected()){
             Turno matutino = new Turno();
             escola.adicionarTurno(matutino);
         }
-        if (jCheckBox7.getSelectedObjects()[0] != null){
+        if (jCheckBox7.isSelected()){
             Turno vespertino = new Turno();
             escola.adicionarTurno(vespertino);
         }
-        if (jCheckBox8.getSelectedObjects()[0] != null){
+        if (jCheckBox8.isSelected()){
             Turno noturno = new Turno();
             escola.adicionarTurno(noturno);
         }
@@ -287,9 +287,9 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         escola.setNomeEscola(nomeInstituicao);
         
         // Salvando no banco e abrindo a nova tela.
-        if (ce.adicionarTurnos(escola) != 0){
-            if (ce.mudarNome(escola) != 0){
-                if (cl.primeiraEntrada(login) != 0){
+        if (ce.adicionarTurnos(escola) == 0){
+            if (ce.mudarNome(escola) == 0){
+                if (cl.primeiraEntrada(login) == 0){
                     dispose();
                     PrimeiraEntrada2 primeiraEntrada2 = new PrimeiraEntrada2();
                     primeiraEntrada2.setVisible(true);

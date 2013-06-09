@@ -29,8 +29,9 @@ public class LoginDAO {
               return true;
           } catch (SQLException ex){
               System.out.println("ex.getMessage()");
+              return false;
           }
-          return false;
+          
     }
     
     
@@ -47,8 +48,9 @@ public class LoginDAO {
               return true;
           } catch (SQLException ex){
               System.out.println("ex.getMessage()");
+              return false;
           }
-          return false;
+          
  
       }
     
