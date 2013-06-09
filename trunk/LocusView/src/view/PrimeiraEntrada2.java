@@ -291,6 +291,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
      * @param evt 
      */
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+
         
         // Se existir algum texto no "jLabel3" (confirmação de que Disciplina foi inserida), vai limpar esse campo;
         if (jLabel3.getText() != null){
