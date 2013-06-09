@@ -6,7 +6,6 @@ package model;
 
 import entidades.Escola;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -21,7 +20,7 @@ public class EscolaDAO {
        * @param novoNome Novo nome da instituição.
        * @return Retorna true se operação foi completada, false caso não.
        */
-      public static boolean mudarInstituicao(String novoNome){ 
+      public boolean mudarInstituicao(String novoNome){ 
           Connection connection = Conexao.getConexao();
           boolean sucesso = false;
           try{
@@ -39,7 +38,7 @@ public class EscolaDAO {
        * Se o turno já existir no banco de dados, ele insere de novo e omite os warnings).
        * @param turno 
        */
-      public static void adicionarTurno(String turno){
+      public void adicionarTurno(String turno){
           Connection connection = Conexao.getConexao();
           try{
               Statement statement = connection.createStatement();

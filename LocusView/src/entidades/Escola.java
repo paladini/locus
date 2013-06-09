@@ -4,6 +4,7 @@
  */
 package entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -14,8 +15,8 @@ public class Escola {
  
     // Atributos
     private String nomeEscola;
-    
-    
+    private ArrayList<Turno> turnos = new ArrayList<Turno>();
+
     // Construtores
     public Escola() {
     }
@@ -26,12 +27,24 @@ public class Escola {
     }
  
     // Métodos
+    public void adicionarTurno(Turno turno){
+        turnos.add(turno);
+    }
+    
     public String getNomeEscola() {
         return nomeEscola;
     }
 
     public void setNomeEscola(String nomeEscola) {
         this.nomeEscola = nomeEscola;
+    }
+    
+        public ArrayList<Turno> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(ArrayList<Turno> turnos) {
+        this.turnos = turnos;
     }
     
 }
