@@ -39,7 +39,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         
         // Seta o modelo na tabela, seta uma nova fonte e aumenta o tamanho das linhas.
         jTable1.setModel(modelo);  
-        jTable1.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        jTable1.setFont(new Font("Helvetica", Font.PLAIN, 18));
         jTable1.setRowHeight(jTable1.getRowHeight()+10);
         
         // Atualiza as disciplinas exibidas
