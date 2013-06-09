@@ -264,9 +264,9 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Pegando dados da tela
         String nomeInstituicao = jTextField5.getText();
         String senha = jPasswordField1.getText();
-        int resultado;
+        int resultado = 0;
         
-        // Setando turnos e definindo no banco de dados.
+        // Setando turnos
         if (jCheckBox6.getSelectedObjects()[0] != null){
             Turno matutino = new Turno();
             escola.adicionarTurno(matutino);
@@ -279,17 +279,25 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
             Turno noturno = new Turno();
             escola.adicionarTurno(noturno);
         }
-        ce.adicionarTurnos(escola);
-        
-        // Setando nova senha e definindo no banco de dados.
+
+        // Setando nova senha
         login.setSenha(senha);
-        cl.primeiraEntrada(login);
         
-        // Setando nome da escola e definindo no banco de dados.
+        // Setando nome da escola
         escola.setNomeEscola(nomeInstituicao);
-        ce.mudarNome(escola);
         
-        
+        // Salvando no banco e abrindo a nova tela.
+        if (ce.adicionarTurnos(escola) != 0){
+            if (ce.mudarNome(escola) != 0){
+                if (cl.primeiraEntrada(login) != 0){
+                    dispose();
+                    PrimeiraEntrada2 primeiraEntrada2 = new PrimeiraEntrada2();
+                    primeiraEntrada2.setVisible(true);
+                    primeiraEntrada2.setLocationRelativeTo(null);
+                    primeiraEntrada2.setResizable(false);
+                }
+            }
+        }
         
     }//GEN-LAST:event_jLabel20MouseClicked
 

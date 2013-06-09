@@ -20,17 +20,25 @@ public class ControleEscola {
      * Método para mudar o nome da escola.
      * @param escola 
      */
-   public void mudarNome(Escola escola){
-       modelo.mudarInstituicao(escola.getNomeEscola()); 
+   public int mudarNome(Escola escola){
+       if (modelo.mudarInstituicao(escola.getNomeEscola())){
+           return 0;
+       }else{
+           return 1;
+       }
    }
    
    /**
     * Método para adicionar turnos na escola.
     */
-    public void adicionarTurnos(Escola escola) {
+    public int adicionarTurnos(Escola escola) {
+        int resultado = 0;
         for(Turno temp : escola.getTurnos()){
-            modelo.adicionarTurno(temp.getNome());
+            if (modelo.adicionarTurno(temp.getNome())){
+                resultado = 1;
+            }
         }
+        return resultado;
     }
    
    
