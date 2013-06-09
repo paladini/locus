@@ -15,28 +15,7 @@ import java.sql.Statement;
  * @author fernando_paladini
  */
 public class EscolaDAO {
-    
-    
-      
-      /**
-       * Método para modificar a senha do administrador da Instituição
-       * @param novaSenha Nova senha de acesso
-       * @return 
-       */
-      public Boolean mudarSenha(String novaSenha){
-          Connection connection = Conexao.getConexao();
-          boolean sucesso = false;
-          try{    
-              Statement statement = connection.createStatement();
-              statement.execute("update admin set senha = '" +novaSenha +"' where login=\"admin\" ;");
-              sucesso = true;
-          } catch (SQLException ex){
-              System.out.println("ex.getMessage()");
-          }
-          return sucesso;
- 
-      }
-    
+
     /**
        * Método para mudar o nome da instituição.
        * @param novoNome Novo nome da instituição.

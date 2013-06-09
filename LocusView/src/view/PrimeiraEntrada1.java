@@ -5,7 +5,9 @@
 package view;
 
 import control.ControleEscola;
+import control.ControleLogin;
 import entidades.Escola;
+import entidades.Login;
 
 /**
  *
@@ -251,6 +253,8 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox8ActionPerformed
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
+        
+        // Pegando dados da tela
         String nomeInstituicao = jTextField5.getText();
         String senha = jPasswordField1.getText();
         String turnos = "";
@@ -265,16 +269,16 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
             turnos = turnos + "/" + "noturno";
         }
         
-        // Criando objeto "Login";
+        // Criando objeto "Escola" e "TelaLogin", além dos "controles";
         Escola escola = new Escola();
+        Login login = new Login();
+        ControleEscola ce = new ControleEscola();
+        ControleLogin cl = new ControleLogin();
         
         // Setando parâmetros
+        login.setSenha(senha);
         // escola.setSenha(senha);
         // escola.setNomeEscola(nomeInstituicao);
-        
-        // Instanciando controle do Login
-//        ControleEscola ce = new ControleEscola();
-//        ce.login(escola);
         
     }//GEN-LAST:event_jLabel20MouseClicked
 
