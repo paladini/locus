@@ -42,7 +42,7 @@ public class EscolaDAO {
           Connection connection = Conexao.getConexao();
           try{
               Statement statement = connection.createStatement();
-              statement.execute("INSERT IGNORE INTO turno (descricao) values (" + turno +");");
+              statement.execute("INSERT IGNORE INTO turno (descricao) values ('" + turno +"');");
               return true;
           } catch (SQLException ex){
               System.out.println(ex.getMessage());
