@@ -16,24 +16,7 @@ import java.sql.Statement;
  */
 public class EscolaDAO {
     
-    /**
-       * Verifica no banco de dados se a senha e o nome de usuário batem.
-       * @param nome Nome de usuário
-       * @param password Senha inserida pela usuário
-       * @return 
-       */
-      public ResultSet logar(Escola escola){
-          Connection connection = Conexao.getConexao();
-          ResultSet rs = null;
-          try{ 
-              Statement statement = connection.createStatement();
-              String query = "SELECT login,senha,ultimo_acesso FROM admin WHERE login='" +escola.getLogin() +"';";
-              rs = statement.executeQuery(query);
-          } catch (SQLException ex){
-              System.out.println(ex.getMessage());
-          }  
-          return rs;
-      }
+    
       
       /**
        * Método para modificar a senha do administrador da Instituição
