@@ -94,9 +94,12 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
         // e vai os chamando de "temp". 
-        for (Disciplina temp : consulta){
-            modelo.addRow(new String [] { temp.getNome() });
+        if (!(consulta.isEmpty())){
+            for (Disciplina temp : consulta){
+                modelo.addRow(new String [] { temp.getNome() });
+            }
         }
+        
     }
     
     /**
