@@ -45,7 +45,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         // Atualiza as disciplinas exibidas
         this.recarregarDisciplinas();
         
-        // "Listener", para "escutar" um duplo clique nas linhas.
+        // "Listener", para "escutar" um duplo clique nas linhas dentro da tabela.
         jTable1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {

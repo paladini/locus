@@ -16,6 +16,7 @@ public class Escola {
     // Atributos
     private String nomeEscola;
     private ArrayList<Turno> turnos = new ArrayList<Turno>();
+    private ArrayList<Dia> dias = new ArrayList<Dia>();
 
     // Construtores
     public Escola() {
@@ -31,6 +32,19 @@ public class Escola {
         getTurnos().add(turno);
     }
     
+    public void adicionarDia(Dia dia){
+        getDias().add(dia);
+    }
+    
+    public ArrayList<Dia> getDias() {
+        return dias;
+    }
+
+    public void setDias(ArrayList<Dia> dias) {
+        this.dias = dias;
+    }
+    
+
     public String getNomeEscola() {
         return nomeEscola;
     }
