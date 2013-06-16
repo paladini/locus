@@ -4,7 +4,18 @@
  */
 package view;
 
+import control.ControleCurso;
+import control.ControleDisciplina;
 import entidades.Curso;
+import entidades.Disciplina;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,8 +28,109 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
      */
     public PrimeiraEntrada3() {
         initComponents();
+        
+        // Cria uma coluna para a tabela
+        Object colunas[] = { "Cursos" }; 
+        
+        // Cria um modelo e diz que ele tem uma coluna (e depois sobreescrevendo um método para não ser possível editar a table)
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0) { 
+            public boolean isCellEditable(int row, int col) {  
+                return false;  
+            } 
+        } ;  
+        
+        // Seta o modelo na tabela, seta uma nova fonte e aumenta o tamanho das linhas.
+        jTable1.setModel(modelo);  
+        jTable1.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        jTable1.setRowHeight(jTable1.getRowHeight()+10);
+        
+        // Atualiza as disciplinas exibidas
+        this.recarregarCursos();
+        
+        // "Listener", para "escutar" um duplo clique nas linhas dentro da tabela.
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    
+                    // Pega a linha e a coluna do dado que foi selecionado pelo usuário. 
+                    JTable target = (JTable)e.getSource();
+                    int row = target.getSelectedRow();
+                    int column = target.getSelectedColumn();
+                    
+                    // Pega o nome da disciplina nessa posição
+                    String nomeCurso = (String) jTable1.getValueAt(row, column);
+                    
+                    // Instancia nova "view" chamada "editar". Em seguida exibe ela para o usuário centralizada.
+                    EditarDisciplina editar = new EditarDisciplina(nomeCurso);
+                    editar.setVisible(true);
+                    editar.setLocationRelativeTo(null);
+                    
+                    // "Listener" para recarregar as disciplinas quando fechar a janela de "editar disciplinas". 
+                    editar.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent evt) {
+                            recarregarCursos();
+                        }
+                    });    
+                }
+            }
+        });
     }
 
+    /**
+     * Faz uma nova consulta no banco de dados, atualizando todas as disciplinas na lista de disciplinas.
+     */
+    private void recarregarCursos(){
+        
+        // Variável "modelo" é o "modelo" da jTable1
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        
+        // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
+        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+        
+        // Instancia um novo ControleDisciplina
+        ControleCurso cc = new ControleCurso();
+        
+        // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
+        ArrayList<Curso> consulta = cc.consulta();
+        
+        // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
+        // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
+        // e vai os chamando de "temp". 
+        if (!(consulta.isEmpty())){
+            for (Curso temp : consulta){
+                modelo.addRow(new String [] { temp.getNome() });
+            }
+        }
+        
+    }
+    
+    /**
+     * Faz uma nova consulta no banco de dados com os termos digitados, atualizando as disciplinas na lista de disciplinas.
+     * Difere do método anterior pois leva em consideração os termos digitados pelo usuário.
+     */
+    private void recarregarCursos(ArrayList<Curso> consulta){
+        
+        // Variável "modelo" é o "modelo" da jTable1
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        
+        // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
+        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+        
+        // Instancia um novo ControleDisciplina
+        ControleCurso cc = new ControleCurso();
+        
+        // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
+        // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
+        // e vai os chamando de "temp". 
+        for (Curso temp : consulta){
+            modelo.addRow(new String [] { temp.getNome() });
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,13 +147,20 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo5.fw.png"))); // NOI18N
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-inferior-3.fw.png"))); // NOI18N
+
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar-geral.fw.png"))); // NOI18N
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -57,9 +176,23 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cursos"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,10 +203,6 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel20)
-                .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,6 +217,10 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel20)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,10 +236,10 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel20)
-                .addGap(36, 36, 36))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -117,12 +250,49 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel20MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+
+        // Instancia curso (entidade) e controleCurso(controller)
         Curso curso = new Curso();
+        ControleCurso cc = new ControleCurso();
         
-        String nomeCurso = jTextField1.getText();
+        // Pega nome do campo "jTextField1" e seta nome na disciplina
+        String nome = jTextField1.getText();
+        curso.setNome(nome);
+        
+        // Chama método do controle para adicionar disciplina ao banco de dados
+        cc.adicionar(curso);
+
+        // Limpa campo de nome da disciplina (deixa em branco)
+        jTextField1.setText(null);
+        
+        // Cria texto dizendo que disciplina foi adicionada
+        // jLabel3.setText("Disciplina adicionada! ");
+        
+        // Atualiza a lista de disciplinas
+        this.recarregarCursos();
         
         
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // Se existir algum texto no "jLabel3" (confirmação de que Disciplina foi inserida), vai limpar esse campo;
+//        if (jLabel3.getText() != null){
+//            jLabel3.setText(null); 
+//        } 
+        
+        // Se existir algum texto, atualiza a lista de disciplinas de acordo com os termos digitados
+        String texto = jTextField1.getText(); 
+        if (texto.length() != 0){
+             // Instancia novo gerenciar disciplina
+            ControleCurso cc = new ControleCurso();
+
+            // Recarrega as disciplinas de acordo com o 
+            this.recarregarCursos(cc.consultaComTermos(texto));      
+        }else{
+            // Se não, exibe todas as disciplinas
+            this.recarregarCursos();
+        }
+    }//GEN-LAST:event_jTextField1KeyTyped
 
     /**
      * @param args the command line arguments
@@ -165,7 +335,7 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
