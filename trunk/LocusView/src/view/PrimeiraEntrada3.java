@@ -61,7 +61,7 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
                     String nomeCurso = (String) jTable1.getValueAt(row, column);
                     
                     // Instancia nova "view" chamada "editar". Em seguida exibe ela para o usuário centralizada.
-                    EditarDisciplina editar = new EditarDisciplina(nomeCurso);
+                    EditarCurso editar = new EditarCurso(nomeCurso);
                     editar.setVisible(true);
                     editar.setLocationRelativeTo(null);
                     

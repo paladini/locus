@@ -4,36 +4,43 @@ import java.util.ArrayList;
 
 public class Curso {
 
-    //variaveis
+    // Variáveis
     private String nome;
     private int id;
+    private ArrayList<Disciplina> disciplina;
     private ArrayList<Turma> turmas; 
     // porra velho, esse ArrayList tá quebrando toda a arquitetura que fizemos. 
     // Uma turma tem um curso e não o contrário. 
 
-    //contrutores
+    // Contrutores
+    public Curso() {
+        super();
+    }
+    
     public Curso(String nome, int id, ArrayList<Turma> turmas) {
         super();
         this.nome = nome;
         this.id = id;
         this.turmas = turmas;
     }
-
-    public Curso() {
-        super();
+    
+    // Métodos
+    public void adicionarDisciplina(Disciplina disciplina){
+        getDisciplina().add(disciplina);
     }
-
-    @Override
-    public String toString() {
-        return "Curso{" + "nome=" + nome + ", id=" + id + ", turmas=" + turmas + '}';
-    }
-
-    //codigos
+    
     void adicionarTurma(Turma turma) {
         turmas.add(turma);
     }
 
-    //gets e sets
+    public ArrayList<Disciplina> getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(ArrayList<Disciplina> disciplina) {
+        this.disciplina = disciplina;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -56,5 +63,11 @@ public class Curso {
 
     public void setTurmas(ArrayList<Turma> turmas) {
         this.turmas = turmas;
+    }
+    
+    // ToString
+    @Override
+    public String toString() {
+        return "Curso{" + "nome=" + nome + ", id=" + id + ", turmas=" + turmas + '}';
     }
 }
