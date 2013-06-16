@@ -7,7 +7,9 @@ public class Curso {
     //variaveis
     private String nome;
     private int id;
-    private ArrayList<Turma> turmas;
+    private ArrayList<Turma> turmas; 
+    // porra velho, esse ArrayList tá quebrando toda a arquitetura que fizemos. 
+    // Uma turma tem um curso e não o contrário. 
 
     //contrutores
     public Curso(String nome, int id, ArrayList<Turma> turmas) {

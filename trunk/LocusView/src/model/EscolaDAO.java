@@ -47,8 +47,25 @@ public class EscolaDAO {
           } catch (SQLException ex){
               System.out.println(ex.getMessage());
               return false;
-          }
-          
+          }   
+      }
+      
+      /**
+       * Método para adicionar dias ao banco de dados.
+       * Se o dia já existir no banco de dados, ele insere de novo e omite os warnings. 
+       * @param dia 
+       * @return 
+       */
+      public boolean adicionarDia(String dia){
+          Connection connection = Conexao.getConexao();
+          try{
+              Statement statement = connection.createStatement();
+              statement.execute("INSERT IGNORE INTO dia (descricao) values (\"" + dia +"\");");
+              return true;
+          } catch (SQLException ex){
+              System.out.println(ex.getMessage());
+              return false;
+          }    
       }
     
 }

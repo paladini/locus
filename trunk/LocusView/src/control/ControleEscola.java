@@ -4,6 +4,7 @@
  */
 package control;
 
+import entidades.Dia;
 import entidades.Escola;
 import entidades.Turno;
 import model.EscolaDAO;
@@ -28,20 +29,71 @@ public class ControleEscola {
        }
    }
    
-   /**
-    * Método para adicionar turnos na escola.
+   /** 
+    * Método resumido para adicionar turnos e dias para uma escola.
+    * @param escola
+    * @return 
     */
-    public int adicionarTurnos(Escola escola) {
-        int resultado = 0;
-        for(Turno temp : escola.getTurnos()){
+   public int adicionarHorario(Escola escola){
+       int resultado = 0;
+       
+       // Percorre o ArrayList de Turnos, chamando cada elemento de "temp".
+       for(Turno temp : escola.getTurnos()){
             if (modelo.adicionarTurno(temp.getNome())){
                 
             }else{
                 resultado = 1;
             }
         }
-        return resultado;
-    }
+       
+       // Verifica se na etapa anterior teve algum erro.
+       // Se não teve, percorre o ArrayList de Dias, chamando cada elemento de "temp".
+       if (resultado == 0){
+           for(Dia temp : escola.getDias()){
+                if (modelo.adicionarDia(temp.getNome())){
+                    
+                }else{
+                     resultado = 1;
+                }
+            }
+       }
+       
+       return resultado;
+   }
+   
+   
+   // O método resumido acima faz tudo que esses dois métodos fazem.
+   
+   
+//   /**
+//    * Método para adicionar turnos na escola.
+//    */
+//    public int adicionarTurnos(Escola escola) {
+//        int resultado = 0;
+//        for(Turno temp : escola.getTurnos()){
+//            if (modelo.adicionarTurno(temp.getNome())){
+//                
+//            }else{
+//                resultado = 1;
+//            }
+//        }
+//        return resultado;
+//    }
+//    
+//    /**
+//    * Método para adicionar dias na escola.
+//    */
+//    public int adicionarDias(Escola escola) {
+//        int resultado = 0;
+//        for(Dia temp : escola.getDias()){
+//            if (modelo.adicionarDia(temp.getNome())){
+//                
+//            }else{
+//                resultado = 1;
+//            }
+//        }
+//        return resultado;
+//    }
    
    
     

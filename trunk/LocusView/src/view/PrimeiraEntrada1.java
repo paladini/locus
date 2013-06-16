@@ -6,6 +6,7 @@ package view;
 
 import control.ControleEscola;
 import control.ControleLogin;
+import entidades.Dia;
 import entidades.Escola;
 import entidades.Login;
 import entidades.Turno;
@@ -279,15 +280,39 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
             Turno noturno = new Turno("Noturno");
             escola.adicionarTurno(noturno);
         }
-
+        
+        // Setando dias
+        if (jCheckBox1.isSelected()){
+            Dia segunda = new Dia("Segunda");
+            escola.adicionarDia(segunda);
+        }
+        
+        // jCheckBox3 e jCheckBox2 estão invertidos. jCheckBox2 = Quarta, jCheckBox3 = Terça.
+        if (jCheckBox3.isSelected()){
+            Dia terca = new Dia("Terça");
+            escola.adicionarDia(terca);
+        }
+        if (jCheckBox2.isSelected()){
+            Dia quarta = new Dia("Quarta");
+            escola.adicionarDia(quarta);
+        }
+        if (jCheckBox4.isSelected()){
+            Dia quinta = new Dia("Quinta");
+            escola.adicionarDia(quinta);
+        }
+        if (jCheckBox5.isSelected()){
+            Dia sexta = new Dia("Sexta");
+            escola.adicionarDia(sexta);
+        }
+        
         // Setando nova senha
         login.setSenha(senha);
         
         // Setando nome da escola
         escola.setNomeEscola(nomeInstituicao);
         
-        // Salvando no banco e abrindo a nova tela.
-        if (ce.adicionarTurnos(escola) == 0){
+        // Salvando no banco e abrindo a nova tela. (O igual a 0 é para ver se retornou algum erro. Se retornar 1, é pq teve erro.
+        if (ce.adicionarHorario(escola) == 0){
             if (ce.mudarNome(escola) == 0){
                 if (cl.primeiraEntrada(login) == 0){
                     dispose();
