@@ -5,8 +5,6 @@
 package model;
 
 import entidades.Curso;
-import entidades.Disciplina;
-import entidades.Midia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +17,26 @@ import java.util.ArrayList;
  */
 public class CursoDAO {
    
+    /**
+     * ALTERAR ESSE MÉTODO E DEIXÁ-LO FUNCIONAL!
+     * @param curso 
+     */
+    public void adicionarDisciplina(Curso curso){
+        Connection connection = Conexao.getConexao();
+        try {
+            String sql = "INSERT INTO Curso_has_Disciplina (nome) VALUES (?);";
+            PreparedStatement prest = connection.prepareStatement(sql);
+           
+            prest.setString(1,curso.getNome() );
+            
+
+            prest.execute();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     /**
      * Faz consulta no banco de dados e retorna todos os cursos.
      * @return 
