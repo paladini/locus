@@ -17,6 +17,38 @@ import java.util.ArrayList;
  */
 public class DisciplinaDAO {
    
+   
+    /** 
+     * Retorna todas as disciplinas do banco de dados.
+     * @return 
+     */
+    public ArrayList<Disciplina> select() {
+
+        Connection connection = Conexao.getConexao();
+        try {
+
+            String sql = "SELECT * FROM disciplina order by nome;";
+            PreparedStatement prest = connection.prepareStatement(sql);
+            ResultSet rs = prest.executeQuery();
+
+            ArrayList<Disciplina> listaClientes = new ArrayList<Disciplina>();
+            while (rs.next()) {
+                Disciplina c = new Disciplina();
+                int id = rs.getInt("idDisciplina");
+                String nome = rs.getString("nome");
+                c.setId(id);
+                c.setNome(nome);
+                listaClientes.add(c);
+            }
+
+            connection.close();
+            return listaClientes;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+    
     /**
      * Faz consulta no banco de dados e retorna apenas uma disciplina com esse nome.
      * @return 
@@ -53,32 +85,6 @@ public class DisciplinaDAO {
     }
     
     
-    public ArrayList<Disciplina> select() {
-
-        Connection connection = Conexao.getConexao();
-        try {
-
-            String sql = "SELECT * FROM disciplina order by nome;";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            ResultSet rs = prest.executeQuery();
-
-            ArrayList<Disciplina> listaClientes = new ArrayList<Disciplina>();
-            while (rs.next()) {
-                Disciplina c = new Disciplina();
-                int id = rs.getInt("idDisciplina");
-                String nome = rs.getString("nome");
-                c.setId(id);
-                c.setNome(nome);
-                listaClientes.add(c);
-            }
-
-            connection.close();
-            return listaClientes;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
-    }
     
     /**
      * Faz uma consulta no banco de dados pesquisando pelos termos digitados até o momento.
