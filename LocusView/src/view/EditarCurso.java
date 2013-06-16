@@ -8,11 +8,14 @@ import control.ControleCurso;
 import control.ControleDisciplina;
 import entidades.Curso;
 import entidades.Disciplina;
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 
 /**
  *
@@ -23,6 +26,7 @@ public class EditarCurso extends javax.swing.JFrame {
     // Variáveis
     Curso curso;
     Curso cursoNovo;
+    private ListCellRenderer rendererCustomizado = new NonImgCellRenderer();
     
     /**
      * Cria um novo form "EditarCurso"
@@ -40,7 +44,7 @@ public class EditarCurso extends javax.swing.JFrame {
         ControleCurso cc = new ControleCurso();
         
         // Armazena a curso a ser editado
-        curso = cc.consultaDisciplina(nomeCurso);
+        curso = cc.consultaCurso(nomeCurso);
         
         // Seta os valores para exibir ao usuário
         jTextField2.setText(curso.getNome());
@@ -48,11 +52,13 @@ public class EditarCurso extends javax.swing.JFrame {
         // Cria um modelo para as jList
         // jList1 = Lista de todas as disciplinas
         // jList2 = Lista de todas as disciplinas já relacionadas ao curso
-        DefaultListModel lista1 = new DefaultListModel();
+        final DefaultListModel lista1 = new DefaultListModel();
         DefaultListModel lista2 = new DefaultListModel();
         
-        // Seta os modelos na jList
+        // Seta os modelos na jList e o "renderer customizado" para poder adicionar um objeto, e exibir um texto. 
+        // Explicação no último método desse código (que na verdade é uma classe).
         jList1.setModel(lista1);
+        jList1.setCellRenderer(rendererCustomizado);
         jList2.setModel(lista2);
         
         // Carrega os dados nas jList
@@ -65,20 +71,12 @@ public class EditarCurso extends javax.swing.JFrame {
                 if (evt.getClickCount() == 2) {
                     int index = list.locationToIndex(evt.getPoint());
                     
-                    //String nomeDisciplina = (String) lista1.get(index);
-                    adicionarDisciplinaAoCurso("huehue");
+                    Disciplina disciplina = (Disciplina) lista1.get(index);
+                    curso.adicionarDisciplina(disciplina);
+                    cc.adicionarDisciplina(curso);
                 } 
             }
         });
-        
-    }
-
-    private void adicionarDisciplinaAoCurso(String nomeDisciplina){
-        
-        // Instanciando um controle disciplina
-        ControleDisciplina cd = new ControleDisciplina();
-        
-        
         
     }
     
@@ -112,7 +110,26 @@ public class EditarCurso extends javax.swing.JFrame {
      * Método para recarregar a jList de disciplinas já adicionadas ao curso. 
      */
     private void recarregarDisciplinaCurso(){
+        // Variável "modelo" é o "modelo" da jTable1
+        DefaultListModel modelo = (DefaultListModel) jList1.getModel();
         
+        // Remove todos os elementos da lista
+        modelo.removeAllElements();
+        
+        // Instancia um novo ControleDisciplina
+        ControleDisciplina cd = new ControleDisciplina();
+        
+        // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
+        ArrayList<Disciplina> consulta = cd.consulta();
+        
+        // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
+        // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
+        // e vai os chamando de "temp". 
+        if (!(consulta.isEmpty())){
+            for (Disciplina temp : consulta){
+                modelo.addElement(temp);
+            }
+        }
     }
     
     /**
@@ -301,6 +318,28 @@ public class EditarCurso extends javax.swing.JFrame {
         this.cursoNovo = cursoNovo;
     }
 
+    /**
+     * Código para gerar um novo "renderer" para o jList.
+     * Basicamente permite que eu insira um objeto Disciplina na lista, e o usuário veja somente o atributo "nome" da disciplina. 
+     */
+    private class NonImgCellRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value,
+            int index, boolean isSelected, boolean cellHasFocus) {
+
+         // 
+         if (value != null) {
+            Disciplina disciplina = (Disciplina) value;
+            String displayString = disciplina.getNome();
+
+            value = displayString;  // change the value parameter to the String ******
+         }
+         return super.getListCellRendererComponent(list, value, index,
+               isSelected, cellHasFocus);
+        }      
+    }
+    
+    
     /**
      * @param args the command line arguments
      */

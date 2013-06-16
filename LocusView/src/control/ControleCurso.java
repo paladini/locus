@@ -46,6 +46,14 @@ public class ControleCurso {
     }
     
     /**
+     * Método para adicionar uma disciplina a um curso.
+     * @param cursoAdicionar 
+     */
+    public void adicionarDisciplina(Curso cursoAdicionar){
+        modelo.adicionarDisciplina(cursoAdicionar);
+    }
+    
+    /**
      * Método para consultar os cursos do banco de dados
      * @return 
      */
@@ -66,7 +74,7 @@ public class ControleCurso {
      * @param termo
      * @return 
      */
-    public Curso consultaDisciplina(String termo){
+    public Curso consultaCurso(String termo){
         return modelo.selectCurso(termo);
     }
     
