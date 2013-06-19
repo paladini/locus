@@ -144,14 +144,14 @@ public class EditarDisciplina extends javax.swing.JFrame {
         
         // Previne que um campo em branco seja salvo ou que o nome atual seja inserido como novo nome.
         // Verifica se o campo jTextField1 tem valor maior do que zero (não está em branco) e se o nome não igual ao anterior.
-        if (jTextField1.getText().length() != 0 && jTextField1.getText().equals(disciplina.getNome())){
-            String novaDisciplina = jTextField1.getText();
-            disciplinaNova = new Disciplina();
-            disciplinaNova.setNome(novaDisciplina);
+        //if (jTextField1.getText().length() != 0 && !(jTextField1.getText().equals(disciplina.getNome()))){
+        String novaDisciplina = jTextField1.getText();
+        disciplinaNova = new Disciplina();
+        disciplinaNova.setNome(novaDisciplina);
         
             // Atualizando a disciplina
-            cd.atualizar(disciplinaNova, disciplina);
-        }  
+        cd.atualizar(disciplinaNova, disciplina);
+        //}  
         
         // Fechando a janela
         dispose();

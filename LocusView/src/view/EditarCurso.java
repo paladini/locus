@@ -73,7 +73,7 @@ public class EditarCurso extends javax.swing.JFrame {
                     
                     Disciplina disciplina = (Disciplina) lista1.get(index);
                     curso.adicionarDisciplina(disciplina);
-                    cc.adicionarDisciplina(curso);
+                    //cc.adicionarDisciplina(curso);
                 } 
             }
         });

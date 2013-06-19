@@ -138,7 +138,7 @@ public class DisciplinaDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "UPDATE disciplina SET nome = ? WHERE nome like ?";
+            String sql = "UPDATE disciplina SET nome = ? WHERE nome = ?";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setString(1, disciplinaNova.getNome());
             prest.setString(2, disciplinaAntiga.getNome());
