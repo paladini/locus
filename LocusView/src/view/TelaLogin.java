@@ -38,7 +38,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Locus - Ensalamento");
+        setTitle("Locus - Acesso ao Sistema");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo2.png"))); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(200, 200));
