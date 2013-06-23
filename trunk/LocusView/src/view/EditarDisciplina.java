@@ -63,6 +63,7 @@ public class EditarDisciplina extends javax.swing.JFrame {
         jLabel2.setText("Nome de usuário:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Locus - Editar Disciplina");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Nome antigo:");
