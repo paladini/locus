@@ -129,6 +129,11 @@ public class GerenciarEscola extends javax.swing.JFrame {
         );
 
         jButton1.setText("Gerenciar Disciplinas");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setText("Gerenciar Cursos");
 
@@ -212,6 +217,12 @@ public class GerenciarEscola extends javax.swing.JFrame {
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_prof.png")));
     }//GEN-LAST:event_jLabel8MouseExited
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        GerenciarDisciplinas gerenciarDisciplina = new GerenciarDisciplinas();
+        gerenciarDisciplina.setVisible(true);
+        gerenciarDisciplina.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
