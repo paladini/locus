@@ -26,7 +26,6 @@ public class EditarCurso extends javax.swing.JFrame {
     // Variáveis
     Curso curso;
     Curso cursoNovo;
-    private ListCellRenderer rendererCustomizado = new NonImgCellRenderer();
     
     /**
      * Cria um novo form "EditarCurso"
@@ -53,28 +52,59 @@ public class EditarCurso extends javax.swing.JFrame {
         // jList1 = Lista de todas as disciplinas
         // jList2 = Lista de todas as disciplinas já relacionadas ao curso
         final DefaultListModel lista1 = new DefaultListModel();
-        DefaultListModel lista2 = new DefaultListModel();
+        final DefaultListModel lista2 = new DefaultListModel();
         
         // Seta os modelos na jList e o "renderer customizado" para poder adicionar um objeto, e exibir um texto. 
         // Explicação no último método desse código (que na verdade é uma classe).
         jList1.setModel(lista1);
-        jList1.setCellRenderer(rendererCustomizado);
         jList2.setModel(lista2);
         
         // Carrega os dados nas jList
         this.recarregarDisciplina();
         
         // Listener para um duplo clique nos itens da jList1
+        // Lista de todas as disciplinas
         jList1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 JList list = (JList)evt.getSource();
                 if (evt.getClickCount() == 2) {
                     int index = list.locationToIndex(evt.getPoint());
                     
-                    Disciplina disciplina = (Disciplina) lista1.get(index);
+                    // Pegando disciplina do index atual (onde o usuario clicou duas vezes)
+                    Disciplina disciplina = (Disciplina) lista1.getElementAt(index);
+                    
+                    // Adicionando disciplina ao curso
                     curso.adicionarDisciplina(disciplina);
-                    //cc.adicionarDisciplina(curso);
+                    
+                    // Removendo elemento dessa lista
+                    lista1.remove(index);
+                    
+                    // Adicionando elemento à outra lista
+                    lista2.addElement(disciplina); 
                 } 
+            }
+        });
+        
+        // Listener para duplo clique nos itens da jList2 
+        // Lista de disciplinas adicionadas ao curso
+        jList2.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                if (evt.getClickCount() == 2) {
+                    int index = list.locationToIndex(evt.getPoint());
+                    
+                    // Pegando disciplina do index atual (onde o usuario clicou duas vezes)
+                    Disciplina disciplina = (Disciplina) lista2.getElementAt(index);
+                    
+                    // Adicionando disciplina ao curso
+                    curso.removerDisciplina(disciplina);
+                    
+                    // Removendo elemento dessa lista
+                    lista2.remove(index);
+                    
+                    // Adicionando elemento à outra lista
+                    lista1.addElement(disciplina);
+                }
             }
         });
         
@@ -317,28 +347,6 @@ public class EditarCurso extends javax.swing.JFrame {
     public void setCursoNovo(Curso cursoNovo) {
         this.cursoNovo = cursoNovo;
     }
-
-    /**
-     * Código para gerar um novo "renderer" para o jList.
-     * Basicamente permite que eu insira um objeto Disciplina na lista, e o usuário veja somente o atributo "nome" da disciplina. 
-     */
-    private class NonImgCellRenderer extends DefaultListCellRenderer {
-        @Override
-        public Component getListCellRendererComponent(JList list, Object value,
-            int index, boolean isSelected, boolean cellHasFocus) {
-
-         // 
-         if (value != null) {
-            Disciplina disciplina = (Disciplina) value;
-            String displayString = disciplina.getNome();
-
-            value = displayString;  // change the value parameter to the String ******
-         }
-         return super.getListCellRendererComponent(list, value, index,
-               isSelected, cellHasFocus);
-        }      
-    }
-    
     
     /**
      * @param args the command line arguments
