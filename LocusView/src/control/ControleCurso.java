@@ -69,4 +69,8 @@ public class ControleCurso {
         return modelo.selectCurso(termo);
     }
     
+    
+    public void excluiDisciplina(int idCurso, int idDisciplina){
+        modelo.deleteCursoDisciplina(idCurso, idDisciplina);
+    }
 }
