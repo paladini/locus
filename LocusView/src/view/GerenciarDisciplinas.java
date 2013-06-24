@@ -57,7 +57,7 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
                     String nomeDisciplina = (String) jTable1.getValueAt(row, column);
                     
                     // Instancia nova "view" chamada "editar". Em seguida exibe ela para o usuário centralizada.
-                    EditarDisciplina editar = new EditarDisciplina(nomeDisciplina);
+                    Editar editar = new Editar(0, nomeDisciplina);
                     editar.setVisible(true);
                     editar.setLocationRelativeTo(null);
                     
