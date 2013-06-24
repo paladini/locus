@@ -20,11 +20,10 @@ public class ControleCurso {
     
     /**
      * Método para atualizar curso no banco de dados.
-     * @param antiga
-     * @param nova 
+     * @param curso 
      */
-    public void atualizar(Curso nova, Curso antiga){
-        modelo.update(nova, antiga);
+    public void atualizar(Curso curso){
+        modelo.update(curso);
     }
     
     
@@ -43,14 +42,6 @@ public class ControleCurso {
      */
     public void adicionar(Curso cursoAdicionar){
         modelo.insert(cursoAdicionar);
-    }
-    
-    /**
-     * Método para adicionar uma disciplina a um curso.
-     * @param cursoAdicionar 
-     */
-    public void adicionarDisciplina(Curso cursoAdicionar){
-        modelo.adicionarDisciplina(cursoAdicionar);
     }
     
     /**

@@ -15,27 +15,12 @@ import java.util.ArrayList;
  *
  * @author luiz_malaquias
  */
-public class CursoDAO {
+public class CursoDAO extends AbstractDAO{
    
     /**
      * ALTERAR ESSE MÉTODO E DEIXÁ-LO FUNCIONAL!
      * @param curso 
      */
-    public void adicionarDisciplina(Curso curso){
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "INSERT INTO Curso_has_Disciplina (nome) VALUES (?);";
-            PreparedStatement prest = connection.prepareStatement(sql);
-           
-            prest.setString(1,curso.getNome() );
-            
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
     
     /**
      * Faz consulta no banco de dados e retorna todos os cursos.
@@ -138,52 +123,25 @@ public class CursoDAO {
     }
     
     public void insert(Curso curso) {
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "INSERT INTO curso (nome) VALUES (?);";
-            PreparedStatement prest = connection.prepareStatement(sql);
-           
-            prest.setString(1,curso.getNome() );
-            
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String sql = "INSERT INTO curso (nome) VALUES (?);";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(curso.getNome());
+        operacaoEscrita(sql, params);
     }
 
-    public void update(Curso cursoNovo, Curso cursoAntigo) {
-        Connection connection = Conexao.getConexao();
-        try {
-
-            String sql = "UPDATE curso SET nome = ? WHERE nome like ?";
-            //String sql = "UPDATE cliente SET nome = ? WHERE id = ?";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, cursoNovo.getNome());
-            prest.setString(2, cursoAntigo.getNome());
-            //prest.setInt(2,clienteAntigo.getId());
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void update(Curso cursoNovo) {
+        String sql = "UPDATE curso SET nome = ? WHERE idCurso = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(cursoNovo.getNome());
+        params.add(cursoNovo.getId());
+        operacaoEscrita(sql, params);
     }
 
     public void delete(Curso cursoAntigo) {
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "DELETE FROM curso WHERE nome = ?";
-            //String sql = "UPDATE cliente SET nome = ? WHERE id = ?";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, cursoAntigo.getNome());
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String sql = "DELETE FROM curso WHERE nome = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(cursoAntigo.getNome());
+        operacaoEscrita(sql, params);
     }
     
     

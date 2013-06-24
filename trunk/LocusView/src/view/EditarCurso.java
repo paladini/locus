@@ -281,11 +281,10 @@ public class EditarCurso extends javax.swing.JFrame {
         
         // Atualizando curso
         String novoCurso = jTextField1.getText();
-        cursoNovo = new Curso();
-        cursoNovo.setNome(novoCurso);
+        curso.setNome(novoCurso);
         
         // Atualizando a curso
-        cc.atualizar(cursoNovo, curso);
+        cc.atualizar(curso);
         
         // Fechando a janela
         dispose();

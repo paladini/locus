@@ -8,12 +8,13 @@ import entidades.Escola;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
  * @author fernando_paladini
  */
-public class EscolaDAO {
+public class EscolaDAO extends AbstractDAO {
 
     /**
        * Método para mudar o nome da instituição.
@@ -21,16 +22,12 @@ public class EscolaDAO {
        * @return Retorna true se operação foi completada, false caso não.
        */
       public boolean mudarInstituicao(String novoNome){ 
-          Connection connection = Conexao.getConexao();
-          try{
-              Statement statement = connection.createStatement();
-              statement.execute("update admin set nome_escola = '" +novoNome +"' where login=\"admin\" ;");
-              return true;
-          } catch (SQLException ex){
-              System.out.println(ex.getMessage());
-              return false;
-          }
-          
+        String sql = "update admin set nome_escola = ? where login = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(novoNome);
+        params.add("admin");
+        operacaoEscrita(sql, params);
+        return true;
       }
       
       /**
@@ -39,15 +36,11 @@ public class EscolaDAO {
        * @param turno 
        */
       public boolean adicionarTurno(String turno){
-          Connection connection = Conexao.getConexao();
-          try{
-              Statement statement = connection.createStatement();
-              statement.execute("INSERT IGNORE INTO turno (descricao) values (\"" + turno +"\");");
-              return true;
-          } catch (SQLException ex){
-              System.out.println(ex.getMessage());
-              return false;
-          }   
+            String sql = "INSERT IGNORE INTO turno (descricao) values ?;";
+            ArrayList<Object> params = new ArrayList<Object>();
+            params.add(turno);
+            operacaoEscrita(sql, params);
+            return true;
       }
       
       /**
@@ -57,15 +50,11 @@ public class EscolaDAO {
        * @return 
        */
       public boolean adicionarDia(String dia){
-          Connection connection = Conexao.getConexao();
-          try{
-              Statement statement = connection.createStatement();
-              statement.execute("INSERT IGNORE INTO dia (descricao) values (\"" + dia +"\");");
-              return true;
-          } catch (SQLException ex){
-              System.out.println(ex.getMessage());
-              return false;
-          }    
+          String sql = "INSERT IGNORE INTO dia (descricao) values ?;";
+          ArrayList<Object> params = new ArrayList<Object>();
+          params.add(dia);
+          operacaoEscrita(sql, params);
+          return true; 
       }
     
 }

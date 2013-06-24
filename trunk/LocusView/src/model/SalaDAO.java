@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author silvio
  */
-public class SalaDAO {
+public class SalaDAO extends AbstractDAO{
     
     /** 
      * Retorna todas as salas do banco de dados.
@@ -119,49 +119,25 @@ public class SalaDAO {
     }
 
     public void insert(Sala sala) {
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "INSERT INTO sala (nome) VALUES (?);";
-            PreparedStatement prest = connection.prepareStatement(sql);
-           
-            prest.setString(1,sala.getNome() );
-            
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String sql = "INSERT INTO sala (nome) VALUES (?);";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(sala.getNome());
+        operacaoEscrita(sql, params);
     }
 
-    public void update(Sala salaNova, Sala salaAntiga) {
-        Connection connection = Conexao.getConexao();
-        try {
-
-            String sql = "UPDATE sala SET nome = ? WHERE nome = ?";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, salaNova.getNome());
-            prest.setString(2, salaAntiga.getNome());
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void update(Sala salaNova) {
+        String sql = "UPDATE sala SET nome = ? WHERE idSala = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(salaNova.getNome());
+        params.add(salaNova.getId());
+        operacaoEscrita(sql, params);
     }
 
     public void delete(Sala salaAntiga) {
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "DELETE FROM sala WHERE nome = ?";
-            //String sql = "UPDATE cliente SET nome = ? WHERE id = ?";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, salaAntiga.getNome());
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String sql = "DELETE FROM sala WHERE nome = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(salaAntiga.getNome());
+        operacaoEscrita(sql, params);
     }
     
 }
