@@ -52,7 +52,7 @@ public class SalaDAO {
      * Faz consulta no banco de dados e retorna apenas uma sala com esse nome.
      * @return 
      */
-    public Sala selectDisciplina(String nomeSala){
+    public Sala selectSala(String nomeSala){
         Connection connection = Conexao.getConexao();
         try {
 
