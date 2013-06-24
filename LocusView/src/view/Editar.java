@@ -17,9 +17,7 @@ public class Editar extends javax.swing.JFrame {
 
     
     Disciplina disciplina;
-    Disciplina disciplinaNova;
     Sala sala;
-    Sala salaNova;
     int argumento = 0;
     
     /**
@@ -165,23 +163,19 @@ public class Editar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         
         if (argumento == 0){
             // Instanciando gerenciar disciplina
             ControleDisciplina cd = new ControleDisciplina();
 
-            // Previne que um campo em branco seja salvo ou que o nome atual seja inserido como novo nome.
-            // Verifica se o campo jTextField1 tem valor maior do que zero (não está em branco) e se o nome não igual ao anterior.
-            //if (jTextField1.getText().length() != 0 && !(jTextField1.getText().equals(disciplina.getNome()))){
             String novaDisciplina = jTextField1.getText();
-            disciplinaNova = new Disciplina();
-            disciplinaNova.setNome(novaDisciplina);
-
-                // Atualizando a disciplina
-            cd.atualizar(disciplinaNova, disciplina);
-            //}  
-
+            disciplina.setNome(novaDisciplina);
+            
+            // Atualizando a disciplina
+            cd.atualizar(disciplina);
+            
             // Fechando a janela
             dispose();
         }else{
@@ -193,11 +187,10 @@ public class Editar extends javax.swing.JFrame {
                 // Verifica se o campo jTextField1 tem valor maior do que zero (não está em branco) e se o nome não igual ao anterior.
                 //if (jTextField1.getText().length() != 0 && !(jTextField1.getText().equals(disciplina.getNome()))){
                 String novaSala = jTextField1.getText();
-                salaNova = new Sala();
-                salaNova.setNome(novaSala);
+                sala.setNome(novaSala);
 
                     // Atualizando a disciplina
-                cs.atualizar(salaNova, sala);
+                cs.atualizar(sala);
                 //}  
 
                 // Fechando a janela
@@ -242,14 +235,6 @@ public class Editar extends javax.swing.JFrame {
         this.disciplina = disciplina;
     }
 
-    public Disciplina getDisciplinaNova() {
-        return disciplinaNova;
-    }
-
-    public void setDisciplinaNova(Disciplina disciplinaNova) {
-        this.disciplinaNova = disciplinaNova;
-    }
-
     public Sala getSala() {
         return sala;
     }
@@ -257,16 +242,6 @@ public class Editar extends javax.swing.JFrame {
     public void setSala(Sala sala) {
         this.sala = sala;
     }
-
-    public Sala getSalaNova() {
-        return salaNova;
-    }
-
-    public void setSalaNova(Sala salaNova) {
-        this.salaNova = salaNova;
-    }
-    
-    
 
     /**
      * @param args the command line arguments

@@ -15,12 +15,12 @@ import java.util.ArrayList;
  *
  * @author silvio
  */
-public class DisciplinaDAO {
-   
-   
-    /** 
+public class DisciplinaDAO extends AbstractDAO {
+
+    /**
      * Retorna todas as disciplinas do banco de dados.
-     * @return 
+     *
+     * @return
      */
     public ArrayList<Disciplina> select() {
 
@@ -48,12 +48,14 @@ public class DisciplinaDAO {
         }
         return null;
     }
-    
+
     /**
-     * Faz consulta no banco de dados e retorna apenas uma disciplina com esse nome.
-     * @return 
+     * Faz consulta no banco de dados e retorna apenas uma disciplina com esse
+     * nome.
+     *
+     * @return
      */
-    public Disciplina selectDisciplina(String nomeDisciplina){
+    public Disciplina selectDisciplina(String nomeDisciplina) {
         Connection connection = Conexao.getConexao();
         try {
 
@@ -64,14 +66,14 @@ public class DisciplinaDAO {
 
             // Cria uma nova disciplina
             Disciplina disciplina = new Disciplina();
-            
+
             // Pega o primeiro registro do retorno da consulta
             rs.next();
-            
+
             // Pega os dados desse registro e guarda em variáveis
             int id = rs.getInt("idDisciplina");
             String nome = rs.getString("nome");
-            
+
             // Seta os dados na disciplina criada
             disciplina.setId(id);
             disciplina.setNome(nome);
@@ -83,13 +85,13 @@ public class DisciplinaDAO {
         }
         return null;
     }
-    
-    
-    
+
     /**
-     * Faz uma consulta no banco de dados pesquisando pelos termos digitados até o momento.
+     * Faz uma consulta no banco de dados pesquisando pelos termos digitados até
+     * o momento.
+     *
      * @param termos Termos digitados pelo usuário.
-     * @return 
+     * @return
      */
     public ArrayList<Disciplina> selectComTermos(String termos) {
 
@@ -120,48 +122,24 @@ public class DisciplinaDAO {
     }
 
     public void insert(Disciplina disciplina) {
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "INSERT INTO disciplina (nome) VALUES (?);";
-            PreparedStatement prest = connection.prepareStatement(sql);
-           
-            prest.setString(1,disciplina.getNome() );
-            
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String sql = "INSERT INTO disciplina (nome) VALUES (?);";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(disciplina.getNome());
+        operacaoEscrita(sql, params);
     }
 
-    public void update(Disciplina disciplinaNova, Disciplina disciplinaAntiga) {
-        Connection connection = Conexao.getConexao();
-        try {
-
-            String sql = "UPDATE disciplina SET nome = ? WHERE nome = ?";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, disciplinaNova.getNome());
-            prest.setString(2, disciplinaAntiga.getNome());
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void update(Disciplina disciplinaNova) {
+        String sql = "UPDATE disciplina SET nome = ? WHERE idDisciplina = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(disciplinaNova.getNome());
+        params.add(disciplinaNova.getId());
+        operacaoEscrita(sql, params);
     }
 
     public void delete(Disciplina disciplinaAntiga) {
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "DELETE FROM disciplina WHERE nome = ?";
-            //String sql = "UPDATE cliente SET nome = ? WHERE id = ?";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, disciplinaAntiga.getNome());
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String sql = "DELETE FROM disciplina WHERE nome = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(disciplinaAntiga.getNome());
+        operacaoEscrita(sql, params);
     }
 }

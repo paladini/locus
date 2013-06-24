@@ -21,11 +21,10 @@ public class ControleSala {
     
     /**
      * Método para atualizar sala no banco de dados.
-     * @param antiga
-     * @param nova 
+     * @param sala 
      */
-    public void atualizar(Sala nova, Sala antiga){
-        modelo.update(nova, antiga);
+    public void atualizar(Sala sala){
+        modelo.update(sala);
     }
     
     

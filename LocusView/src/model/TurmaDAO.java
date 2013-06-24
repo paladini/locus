@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author silvio
  */
-public class TurmaDAO {
+public class TurmaDAO extends AbstractDAO{
     
     /** 
      * Retorna todas as turmas do banco de dados.
@@ -148,20 +148,11 @@ public class TurmaDAO {
      * @param turma Turma a ser inserida no banco
      */
     public void insert(Turma turma){
-        
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "INSERT INTO turma (nome, Curso_idCurso) VALUES (?,?);";
-            PreparedStatement prest = connection.prepareStatement(sql);
-           
-            prest.setString(1,turma.getNome() );
-            prest.setInt(2, turma.getCurso().getId());
-            
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String sql = "INSERT INTO turma (nome, Curso_idCurso) VALUES (?,?);";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(turma.getNome());
+        params.add(turma.getCurso().getId());
+        operacaoEscrita(sql, params);
     }
 
     public void update(Turma turmaNova, Turma turmaAntiga) {
@@ -191,18 +182,10 @@ public class TurmaDAO {
     }
 
     public void delete(Turma turmaAntiga) {
-        Connection connection = Conexao.getConexao();
-        try {
-            String sql = "DELETE FROM turma WHERE nome = ?";
-            //String sql = "UPDATE cliente SET nome = ? WHERE id = ?";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, turmaAntiga.getNome());
-
-            prest.execute();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String sql = "DELETE FROM turma WHERE idTurma = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(turmaAntiga.getId());
+        operacaoEscrita(sql, params);
     }
     
     

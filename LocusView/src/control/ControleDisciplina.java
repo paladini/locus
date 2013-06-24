@@ -19,11 +19,10 @@ public class ControleDisciplina {
     
     /**
      * Método para atualizar disciplina no banco de dados.
-     * @param antiga
-     * @param nova 
+     * @param disciplina 
      */
-    public void atualizar(Disciplina nova, Disciplina antiga){
-        modelo.update(nova, antiga);
+    public void atualizar(Disciplina disciplina){
+        modelo.update(disciplina);
     }
     
     
