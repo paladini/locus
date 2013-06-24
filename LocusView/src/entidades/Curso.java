@@ -7,7 +7,7 @@ public class Curso {
     // Variáveis
     private String nome;
     private int id;
-    private ArrayList<Disciplina> disciplina;
+    private ArrayList<Disciplina> disciplina = new ArrayList<Disciplina>();
     private ArrayList<Turma> turmas; 
     // porra velho, esse ArrayList tá quebrando toda a arquitetura que fizemos. 
     // Uma turma tem um curso e não o contrário. 
@@ -27,6 +27,10 @@ public class Curso {
     // Métodos
     public void adicionarDisciplina(Disciplina disciplina){
         getDisciplina().add(disciplina);
+    }
+    
+    public void removerDisciplina(Disciplina disciplina){
+        getDisciplina().remove(disciplina);
     }
     
     void adicionarTurma(Turma turma) {

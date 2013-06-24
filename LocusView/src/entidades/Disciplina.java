@@ -43,7 +43,7 @@ public class Disciplina {
     // ToString
     @Override
     public String toString() {
-        return "Disciplina{" + "id=" + id + ", nome=" + nome + '}';
+        return nome;
     }
     
 }
