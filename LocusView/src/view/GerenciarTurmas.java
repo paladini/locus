@@ -4,9 +4,7 @@
  */
 package view;
 
-import control.ControleSala;
 import control.ControleTurma;
-import entidades.Sala;
 import entidades.Turma;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -60,7 +58,7 @@ public class GerenciarTurmas extends javax.swing.JFrame {
                     String nomeTurma = (String) jTable1.getValueAt(row, column);
                     
                     // Instancia nova "view" chamada "editar". Em seguida exibe ela para o usuário centralizada.
-                    Editar editar = new Editar(1, nomeTurma);
+                    EditarTurma editar = new EditarTurma(nomeTurma);
                     editar.setVisible(true);
                     editar.setLocationRelativeTo(null);
                     
@@ -88,7 +86,7 @@ public class GerenciarTurmas extends javax.swing.JFrame {
             modelo.removeRow(i);
         }
         
-        // Instancia um novo ControleDisciplina
+        // Instancia um novo ControleTurma
         ControleTurma ct = new ControleTurma();
         
         // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
@@ -100,7 +98,7 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         if (!(consulta.isEmpty())){
             
             // Habilita os campos de pesquisa e tabela (pois tem algum dado)
-            jTextField1.setText(null);
+            jTextField1.setText("");
             jTextField1.setEnabled(true);
             jTable1.setEnabled(true);
             
@@ -369,7 +367,7 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         
         // Se existir algum texto, atualiza a lista de disciplinas de acordo com os termos digitados
         String texto = jTextField1.getText(); 
-        if (texto.length() != 0){
+        if (texto.length() > 0){
              // Instancia novo gerenciar disciplina
             ControleTurma ct = new ControleTurma();
 
@@ -391,6 +389,7 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         cadastroTurma.addWindowListener(new WindowAdapter(){
            public void windowClosed(WindowEvent evt){
                recarregarTurmas();
+               jLabel3.setVisible(true);
            } 
         });
         

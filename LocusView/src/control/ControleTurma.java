@@ -4,7 +4,6 @@
  */
 package control;
 
-import entidades.Curso;
 import entidades.Turma;
 import java.util.ArrayList;
 import model.TurmaDAO;

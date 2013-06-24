@@ -74,26 +74,26 @@ public class TurmaDAO {
             // Cria uma nova turma
             Turma turma = new Turma();
             
-            // Pega o primeiro registro do retorno da consulta
-            rs.next();
-            
-            // Pega os dados desse registro e guarda em variáveis
-            int id = rs.getInt("idTurma");
-            String nome = rs.getString("nome");
-            
-             /*
-              * O método selectCurso pesquisa na tabela "Curso" pelo curso com o mesmo ID que está no "Curo_idCurso"; 
-              * que é o curso associado à essa turma.
-             */
-            Curso curso = this.selectCurso(rs.getInt("Curso_idCurso"));
-            
-            // Seta os dados na turma criada
-            turma.setId(id);
-            turma.setNome(nome);
-            turma.setCurso(curso);
-            
-            connection.close();
-            return turma;
+            // Verifica se existe algum resultado nesse result set
+            if(rs.next()){
+                // Pega os dados desse registro e guarda em variáveis
+                int id = rs.getInt("idTurma");
+                String nome = rs.getString("nome");
+
+                 /*
+                  * O método selectCurso pesquisa na tabela "Curso" pelo curso com o mesmo ID que está no "Curo_idCurso"; 
+                  * que é o curso associado à essa turma.
+                 */
+                Curso curso = this.selectCurso(rs.getInt("Curso_idCurso"));
+
+                // Seta os dados na turma criada
+                turma.setId(id);
+                turma.setNome(nome);
+                turma.setCurso(curso);
+
+                connection.close();
+                return turma;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -168,10 +168,20 @@ public class TurmaDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "UPDATE turma SET nome = ? WHERE nome = ?";
+            String sql = "UPDATE turma SET nome = ?, Curso_idCurso = ? WHERE nome = ?";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setString(1, turmaNova.getNome());
-            prest.setString(2, turmaAntiga.getNome());
+            
+            /**
+             * Se a turma nova tiver um novo curso, atualiza com esse novo curso.
+             * Se não tiver, atualiza também mas deixa o ID do curso antigo.
+             */
+            if (turmaNova.getCurso() != null){
+                prest.setInt(2, turmaNova.getCurso().getId());
+            }else{
+                prest.setInt(2, turmaAntiga.getCurso().getId());
+            }
+            prest.setString(3, turmaAntiga.getNome());
 
             prest.execute();
             connection.close();
@@ -215,7 +225,7 @@ public class TurmaDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM curso where nome = ?;";
+            String sql = "SELECT * FROM curso where idCurso = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, idCurso);
             ResultSet rs = prest.executeQuery();
@@ -224,18 +234,18 @@ public class TurmaDAO {
             Curso curso = new Curso();
             
             // Pega o primeiro registro do retorno da consulta
-            rs.next();
-            
-            // Pega os dados desse registro e guarda em variáveis
-            int id = rs.getInt("idCurso");
-            String nome = rs.getString("nome");
-            
-            // Seta os dados na disciplina criada
-            curso.setId(id);
-            curso.setNome(nome);
+            if(rs.next()){
+                // Pega os dados desse registro e guarda em variáveis
+                int id = rs.getInt("idCurso");
+                String nome = rs.getString("nome");
 
-            connection.close();
-            return curso;
+                // Seta os dados na disciplina criada
+                curso.setId(id);
+                curso.setNome(nome);
+
+                connection.close();
+                return curso;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
