@@ -68,6 +68,7 @@ public class Curso {
     // ToString
     @Override
     public String toString() {
-        return "Curso{" + "nome=" + nome + ", id=" + id + ", turmas=" + turmas + '}';
+        return nome;
     }
+    
 }
