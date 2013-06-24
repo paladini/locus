@@ -5,38 +5,65 @@
 package view;
 
 import control.ControleDisciplina;
+import control.ControleSala;
 import entidades.Disciplina;
+import entidades.Sala;
 
 /**
  *
  * @author silvio
  */
-public class EditarDisciplina extends javax.swing.JFrame {
+public class Editar extends javax.swing.JFrame {
 
     
     Disciplina disciplina;
     Disciplina disciplinaNova;
+    Sala sala;
+    Sala salaNova;
+    int argumento = 0;
     
     /**
-     * Cria um novo form "EditarDisciplina"
-     * @param nomeDisciplina Nome da disciplina a ser pesquisada no banco de dados.
+     * Cria um novo form "Editar".
+     * 
+     * Tipo = 0 - Disciplina
+     * Tipo = 1 - Sala
+     * 
+     * @param tipo Tipo de dado (0 = Disciplina, 1 = Sala)
+     * @param nome Nome a ser pesquisado para editar.
      */
-    public EditarDisciplina(String nomeDisciplina) {
-        
-        // Não fechar todas as janelas ao fechar esta janela.
-        setDefaultCloseOperation(EditarDisciplina.DISPOSE_ON_CLOSE);
+    public Editar(int tipo, String nome) {
         
         // Inicializa todos os componentes
         initComponents();
         
-        // Instancia um novo ControleDisciplina
-        ControleDisciplina cd = new ControleDisciplina();
+        // Não fechar todas as janelas ao fechar esta janela.
+        setDefaultCloseOperation(Editar.DISPOSE_ON_CLOSE);
         
-        // Armazena a disciplina a ser editada
-        disciplina = cd.consultaDisciplina(nomeDisciplina);
+        // O valor da variável global "argumento" é igual ao valor do dado enviado pelo usuário.
+        argumento = tipo;
         
-        // Seta os valores para exibir ao usuário
-        jTextField2.setText(disciplina.getNome());
+        if (argumento == 0){
+            // Instancia um novo ControleDisciplina
+            ControleDisciplina cd = new ControleDisciplina();
+
+            // Armazena a disciplina a ser editada
+            disciplina = cd.consultaDisciplina(nome);
+
+            // Seta os valores para exibir ao usuário
+            jTextField2.setText(disciplina.getNome());
+        }else{
+            if (argumento == 1){
+                // Instancia um novo ControleDisciplina
+                ControleSala cs = new ControleSala();
+
+                // Armazena a disciplina a ser editada
+                sala = cs.consultaDisciplina(nome);
+
+                // Seta os valores para exibir ao usuário
+                jTextField2.setText(sala.getNome());
+            }
+        }
+        
          
     }
 
@@ -140,34 +167,71 @@ public class EditarDisciplina extends javax.swing.JFrame {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         
-        // Instanciando gerenciar disciplina
-        ControleDisciplina cd = new ControleDisciplina();
+        if (argumento == 0){
+            // Instanciando gerenciar disciplina
+            ControleDisciplina cd = new ControleDisciplina();
+
+            // Previne que um campo em branco seja salvo ou que o nome atual seja inserido como novo nome.
+            // Verifica se o campo jTextField1 tem valor maior do que zero (não está em branco) e se o nome não igual ao anterior.
+            //if (jTextField1.getText().length() != 0 && !(jTextField1.getText().equals(disciplina.getNome()))){
+            String novaDisciplina = jTextField1.getText();
+            disciplinaNova = new Disciplina();
+            disciplinaNova.setNome(novaDisciplina);
+
+                // Atualizando a disciplina
+            cd.atualizar(disciplinaNova, disciplina);
+            //}  
+
+            // Fechando a janela
+            dispose();
+        }else{
+            if (argumento == 1){
+                // Instanciando gerenciar disciplina
+                ControleSala cs = new ControleSala();
+
+                // Previne que um campo em branco seja salvo ou que o nome atual seja inserido como novo nome.
+                // Verifica se o campo jTextField1 tem valor maior do que zero (não está em branco) e se o nome não igual ao anterior.
+                //if (jTextField1.getText().length() != 0 && !(jTextField1.getText().equals(disciplina.getNome()))){
+                String novaSala = jTextField1.getText();
+                salaNova = new Sala();
+                salaNova.setNome(novaSala);
+
+                    // Atualizando a disciplina
+                cs.atualizar(salaNova, sala);
+                //}  
+
+                // Fechando a janela
+                dispose();
+            }
+        }
         
-        // Previne que um campo em branco seja salvo ou que o nome atual seja inserido como novo nome.
-        // Verifica se o campo jTextField1 tem valor maior do que zero (não está em branco) e se o nome não igual ao anterior.
-        //if (jTextField1.getText().length() != 0 && !(jTextField1.getText().equals(disciplina.getNome()))){
-        String novaDisciplina = jTextField1.getText();
-        disciplinaNova = new Disciplina();
-        disciplinaNova.setNome(novaDisciplina);
-        
-            // Atualizando a disciplina
-        cd.atualizar(disciplinaNova, disciplina);
-        //}  
-        
-        // Fechando a janela
-        dispose();
         
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        // Instanciando gerenciar disciplina
-        ControleDisciplina cd = new ControleDisciplina();
-          
-        // Atualizando a disciplina
-        cd.remover(disciplina);
         
-        // Fechando a janela
-        dispose();
+        if (argumento == 0){
+           // Instanciando gerenciar disciplina
+            ControleDisciplina cd = new ControleDisciplina();
+
+            // Atualizando a disciplina
+            cd.remover(disciplina);
+
+            // Fechando a janela
+            dispose();
+        } else {
+            if (argumento == 1){
+                // Instanciando gerenciar disciplina
+                ControleSala cs = new ControleSala();
+
+                // Atualizando a disciplina
+                cs.remover(sala);
+
+                // Fechando a janela
+                dispose();
+            }
+        }
+        
     }//GEN-LAST:event_jLabel6MouseClicked
 
     public Disciplina getDisciplina() {
@@ -186,6 +250,24 @@ public class EditarDisciplina extends javax.swing.JFrame {
         this.disciplinaNova = disciplinaNova;
     }
 
+    public Sala getSala() {
+        return sala;
+    }
+
+    public void setSala(Sala sala) {
+        this.sala = sala;
+    }
+
+    public Sala getSalaNova() {
+        return salaNova;
+    }
+
+    public void setSalaNova(Sala salaNova) {
+        this.salaNova = salaNova;
+    }
+    
+    
+
     /**
      * @param args the command line arguments
      */
@@ -203,20 +285,20 @@ public class EditarDisciplina extends javax.swing.JFrame {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(EditarDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(EditarDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(EditarDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(EditarDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new EditarDisciplina().setVisible(true);
+//                new Editar().setVisible(true);
 //            }
 //        });
 //    }
