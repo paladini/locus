@@ -183,15 +183,7 @@ public class GerenciarSalas extends javax.swing.JFrame {
             }
         });
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_sala.png"))); // NOI18N
-        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel17MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel17MouseExited(evt);
-            }
-        });
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-salas-selecionado.fw.png"))); // NOI18N
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_escola.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -355,16 +347,6 @@ public class GerenciarSalas extends javax.swing.JFrame {
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_turma.png")));
     }//GEN-LAST:event_jLabel16MouseExited
-
-    private void jLabel17MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseEntered
-        // Caso o usuário passe o mouse em cima, exibe essa imagem.
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-salas-selecionado.fw.png")));
-    }//GEN-LAST:event_jLabel17MouseEntered
-
-    private void jLabel17MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseExited
-        // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_sala.png")));
-    }//GEN-LAST:event_jLabel17MouseExited
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
         // Caso o usuário passe o mouse em cima, exibe essa imagem.

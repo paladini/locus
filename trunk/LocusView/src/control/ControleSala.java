@@ -67,8 +67,8 @@ public class ControleSala {
      * @param termo
      * @return 
      */
-    public Sala consultaDisciplina(String termo){
-        return modelo.selectDisciplina(termo);
+    public Sala consultaSala(String termo){
+        return modelo.selectSala(termo);
     }
     
 }

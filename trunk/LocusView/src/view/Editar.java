@@ -57,7 +57,7 @@ public class Editar extends javax.swing.JFrame {
                 ControleSala cs = new ControleSala();
 
                 // Armazena a disciplina a ser editada
-                sala = cs.consultaDisciplina(nome);
+                sala = cs.consultaSala(nome);
 
                 // Seta os valores para exibir ao usuário
                 jTextField2.setText(sala.getNome());
