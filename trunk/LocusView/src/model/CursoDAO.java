@@ -5,11 +5,13 @@
 package model;
 
 import entidades.Curso;
+import entidades.Disciplina;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 /**
  *
@@ -144,6 +146,27 @@ public class CursoDAO extends AbstractDAO{
         operacaoEscrita(sql, params);
     }
     
+    
+    public void insertCursoDisciplina(Curso curso) {
+        String sql = "INSERT INTO `locus`.`Curso_has_Disciplina` (`Curso_idCurso`, `Disciplina_idDisciplina`) VALUES (?, ?);";
+        
+        
+        for (Disciplina d : curso.getDisciplina() ) {
+            ArrayList<Object> params = new ArrayList<Object>();
+            params.add(curso.getId());
+            params.add(d.getId() );
+            operacaoEscrita(sql, params);
+        }
+    }
+    
+    public void deleteCursoDisciplina(int idCurso, int idDisciplina) {
+        String sql = "delete from Curso_has_Disciplina where Curso_idCurso = ? and Disciplina_idDisciplina = ?;";
+        
+         ArrayList<Object> params = new ArrayList<Object>();
+         params.add( idCurso );
+         params.add( idDisciplina );
+         operacaoEscrita(sql, params);
+    }
     
     
     

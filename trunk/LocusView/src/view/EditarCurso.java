@@ -99,6 +99,10 @@ public class EditarCurso extends javax.swing.JFrame {
                     // Adicionando disciplina ao curso
                     curso.removerDisciplina(disciplina);
                     
+                    // Excluir disciplina no banco de dados
+                    ControleCurso cc = new ControleCurso();
+                    cc.excluiDisciplina(curso.getId(), disciplina.getId());
+                    
                     // Removendo elemento dessa lista
                     lista2.remove(index);
                     

@@ -275,7 +275,9 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-
+        dispose();
+        PrimeiraEntrada3 primeiraEntrada3 = new PrimeiraEntrada3();
+        
     }//GEN-LAST:event_jLabel20MouseClicked
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
