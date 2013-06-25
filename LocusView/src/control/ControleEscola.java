@@ -17,6 +17,10 @@ public class ControleEscola {
     
     EscolaDAO modelo = new EscolaDAO();
     
+    public Escola consultar(){
+        return modelo.consultar();
+    } 
+    
     /**
      * Método para mudar o nome da escola.
      * @param escola 
@@ -62,38 +66,7 @@ public class ControleEscola {
    }
    
    
-   // O método resumido acima faz tudo que esses dois métodos fazem.
    
-   
-//   /**
-//    * Método para adicionar turnos na escola.
-//    */
-//    public int adicionarTurnos(Escola escola) {
-//        int resultado = 0;
-//        for(Turno temp : escola.getTurnos()){
-//            if (modelo.adicionarTurno(temp.getNome())){
-//                
-//            }else{
-//                resultado = 1;
-//            }
-//        }
-//        return resultado;
-//    }
-//    
-//    /**
-//    * Método para adicionar dias na escola.
-//    */
-//    public int adicionarDias(Escola escola) {
-//        int resultado = 0;
-//        for(Dia temp : escola.getDias()){
-//            if (modelo.adicionarDia(temp.getNome())){
-//                
-//            }else{
-//                resultado = 1;
-//            }
-//        }
-//        return resultado;
-//    }
    
    
     
