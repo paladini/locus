@@ -4,8 +4,10 @@
  */
 package model;
 
+import entidades.Escola;
 import entidades.Login;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,6 +20,28 @@ import java.util.Date;
  */
 public class LoginDAO extends AbstractDAO {
 
+    public Login consultar() {
+        
+        Connection connection = Conexao.getConexao();
+        try {
+
+            String sql = "SELECT * FROM admin;";
+            PreparedStatement prest = connection.prepareStatement(sql);
+            ResultSet rs = prest.executeQuery();
+
+            if (rs.next()){
+                Login login = new Login();
+                login.setSenha(rs.getString("senha"));
+                return login;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+        
+    }
+    
+    
     /**
      * Modifica o "último acesso" para o horário atual.
      *

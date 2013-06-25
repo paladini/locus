@@ -196,7 +196,7 @@ public class CadastrarCurso extends javax.swing.JFrame {
         jLabel2.setText("Nome de usuário:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Locus - Editar Curso");
+        setTitle("Locus - Cadastrar Curso");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Nome: ");

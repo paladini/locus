@@ -18,6 +18,10 @@ public class ControleLogin {
     LoginDAO modelo = new LoginDAO();
     
     
+    public Login consultar(){
+        return modelo.consultar();
+    }
+    
     /**
      * Método para realizar as mudanças na primeira entrada no sistema.
      * @param login 

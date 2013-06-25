@@ -24,6 +24,16 @@ public class GerenciarEscola extends javax.swing.JFrame {
         initComponents();
         
         jLabel5.setVisible(false);
+        
+        // Pegando dados e setando na janela
+        ControleEscola ce = new ControleEscola();
+        ControleLogin cl = new ControleLogin();
+        Login login = cl.consultar();
+        Escola escola = ce.consultar();
+        
+        // Setando nome da escola
+        jTextField5.setText(escola.getNomeEscola());
+        jPasswordField1.setText(login.getSenha());
     }
 
     /**
@@ -162,6 +172,11 @@ public class GerenciarEscola extends javax.swing.JFrame {
         });
 
         jButton2.setText("Gerenciar Cursos");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jTextField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
@@ -480,6 +495,13 @@ public class GerenciarEscola extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        dispose();
+        GerenciarCursos gerenciarCursos = new GerenciarCursos();
+        gerenciarCursos.setVisible(true);
+        gerenciarCursos.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton2MouseClicked
 
     /**
      * @param args the command line arguments
