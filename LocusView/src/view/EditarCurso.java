@@ -8,14 +8,11 @@ import control.ControleCurso;
 import control.ControleDisciplina;
 import entidades.Curso;
 import entidades.Disciplina;
-import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 /**
  *
@@ -26,146 +23,152 @@ public class EditarCurso extends javax.swing.JFrame {
     // Variáveis
     Curso curso;
     Curso cursoNovo;
-    
+
     /**
      * Cria um novo form "EditarCurso"
+     *
      * @param nomeDisciplina Nome da curso a ser pesquisada no banco de dados.
      */
     public EditarCurso(String nomeCurso) {
-        
+
         // Não fechar todas as janelas ao fechar esta janela.
         setDefaultCloseOperation(EditarCurso.DISPOSE_ON_CLOSE);
-        
+
         // Inicializa todos os componentes
         initComponents();
-        
+
         // Instancia um novo ControleCurso
         ControleCurso cc = new ControleCurso();
-        
+
         // Armazena a curso a ser editado
         curso = cc.consultaCurso(nomeCurso);
-        
+
         // Seta os valores para exibir ao usuário
         jTextField2.setText(curso.getNome());
-         
+        jTextField1.setText(curso.getNome());
+
         // Cria um modelo para as jList
         // jList1 = Lista de todas as disciplinas
         // jList2 = Lista de todas as disciplinas já relacionadas ao curso
         final DefaultListModel lista1 = new DefaultListModel();
         final DefaultListModel lista2 = new DefaultListModel();
-        
+
         // Seta os modelos na jList e o "renderer customizado" para poder adicionar um objeto, e exibir um texto. 
         // Explicação no último método desse código (que na verdade é uma classe).
         jList1.setModel(lista1);
         jList2.setModel(lista2);
-        
+
         // Carrega os dados nas jList
         this.recarregarDisciplina();
-        
+
         // Listener para um duplo clique nos itens da jList1
         // Lista de todas as disciplinas
         jList1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                JList list = (JList)evt.getSource();
+                JList list = (JList) evt.getSource();
                 if (evt.getClickCount() == 2) {
                     int index = list.locationToIndex(evt.getPoint());
-                    
+
                     // Pegando disciplina do index atual (onde o usuario clicou duas vezes)
                     Disciplina disciplina = (Disciplina) lista1.getElementAt(index);
-                    
+
                     // Adicionando disciplina ao curso
                     curso.adicionarDisciplina(disciplina);
-                    
+
+                    // Adicionando disciplina ao curso (no banco de dados)
+                    ControleCurso cc = new ControleCurso();
+                    cc.adicionarDisciplina(curso.getId(), disciplina.getId());
+
                     // Removendo elemento dessa lista
                     lista1.remove(index);
-                    
+
                     // Adicionando elemento à outra lista
-                    lista2.addElement(disciplina); 
-                } 
+                    lista2.addElement(disciplina);
+                }
             }
         });
-        
+
         // Listener para duplo clique nos itens da jList2 
         // Lista de disciplinas adicionadas ao curso
         jList2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                JList list = (JList)evt.getSource();
+                JList list = (JList) evt.getSource();
                 if (evt.getClickCount() == 2) {
                     int index = list.locationToIndex(evt.getPoint());
-                    
+
                     // Pegando disciplina do index atual (onde o usuario clicou duas vezes)
                     Disciplina disciplina = (Disciplina) lista2.getElementAt(index);
-                    
+
                     // Adicionando disciplina ao curso
                     curso.removerDisciplina(disciplina);
-                    
+
                     // Excluir disciplina no banco de dados
                     ControleCurso cc = new ControleCurso();
-                    cc.excluiDisciplina(curso.getId(), disciplina.getId());
-                    
+                    cc.excluirDisciplina(curso.getId(), disciplina.getId());
+
                     // Removendo elemento dessa lista
                     lista2.remove(index);
-                    
+
                     // Adicionando elemento à outra lista
                     lista1.addElement(disciplina);
                 }
             }
         });
-        
+
     }
-    
+
     /**
-     * Método para recarregar a jList de todas as disciplinas. 
+     * Método para recarregar a jList de todas as disciplinas.
      */
-    private void recarregarDisciplina(){
+    private void recarregarDisciplina() {
         // Variável "modelo" é o "modelo" da jTable1
         DefaultListModel modelo = (DefaultListModel) jList1.getModel();
-        
+
         // Remove todos os elementos da lista
         modelo.removeAllElements();
-        
-        // Instancia um novo ControleDisciplina
-        ControleDisciplina cd = new ControleDisciplina();
-        
+
+        // Instancia um novo ControleCurso
+        ControleCurso cc = new ControleCurso();
+
         // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
-        ArrayList<Disciplina> consulta = cd.consulta();
-        
+        ArrayList<Disciplina> consulta = cc.listaDisciplinasNaoAssociadas(curso);
+
         // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
         // e vai os chamando de "temp". 
-        if (!(consulta.isEmpty())){
-            for (Disciplina temp : consulta){
+        if (!(consulta.isEmpty())) {
+            for (Disciplina temp : consulta) {
                 modelo.addElement(temp);
             }
         }
     }
-    
+
     /**
-     * Método para recarregar a jList de disciplinas já adicionadas ao curso. 
+     * Método para recarregar a jList de disciplinas já adicionadas ao curso.
      */
-    private void recarregarDisciplinaCurso(){
-        // Variável "modelo" é o "modelo" da jTable1
+    private void recarregarDisciplinaCurso() {
+        // Variável "modelo" é igual ao "modelo" da jTable1
         DefaultListModel modelo = (DefaultListModel) jList1.getModel();
-        
+
         // Remove todos os elementos da lista
         modelo.removeAllElements();
-        
-        // Instancia um novo ControleDisciplina
-        ControleDisciplina cd = new ControleDisciplina();
-        
+
+        // Instancia um novo ControleCurso
+        ControleCurso cc = new ControleCurso();
+
         // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
-        ArrayList<Disciplina> consulta = cd.consulta();
-        
+        ArrayList<Disciplina> consulta = cc.listaDisciplinasAssociadas(curso);
+
         // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
         // e vai os chamando de "temp". 
-        if (!(consulta.isEmpty())){
-            for (Disciplina temp : consulta){
+        if (!(consulta.isEmpty())) {
+            for (Disciplina temp : consulta) {
                 modelo.addElement(temp);
             }
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -309,29 +312,34 @@ public class EditarCurso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        
+
         // Instanciando gerenciar curso
         ControleCurso cc = new ControleCurso();
-        
-        // Atualizando curso
-        String novoCurso = jTextField1.getText();
-        curso.setNome(novoCurso);
-        
+
+        // Fazendo algumas verificações de segurança
+        if (jTextField1.getText().length() > 0) {
+            if (jTextField1.getText() != " ") {
+                String novoCurso = jTextField1.getText();
+                curso.setNome(novoCurso);
+            }
+        }
+
         // Atualizando a curso
         cc.atualizar(curso);
-        
+
         // Fechando a janela
         dispose();
-        
+
+
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // Instanciando gerenciar curso
         ControleCurso cc = new ControleCurso();
-          
+
         // Atualizando a curso
         cc.remover(curso);
-        
+
         // Fechando a janela
         dispose();
     }//GEN-LAST:event_jLabel6MouseClicked
@@ -351,7 +359,6 @@ public class EditarCurso extends javax.swing.JFrame {
     public void setCursoNovo(Curso cursoNovo) {
         this.cursoNovo = cursoNovo;
     }
-    
     /**
      * @param args the command line arguments
      */

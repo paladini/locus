@@ -14,63 +14,119 @@ import model.CursoDAO;
  * @author silvio
  */
 public class ControleCurso {
-    
+
     // Instancia o modelo desse tipo de objeto
     CursoDAO modelo = new CursoDAO();
-    
+
     /**
      * Método para atualizar curso no banco de dados.
-     * @param curso 
+     *
+     * @param curso
      */
-    public void atualizar(Curso curso){
-        modelo.update(curso);
+    public void atualizar(Curso curso) {
+        if (curso.getNome() == null || curso.getNome() == " " || curso.getNome() == ""){
+            
+        }else{
+            modelo.update(curso);
+        }
     }
-    
-    
+
     /**
      * Método para remover curso no banco de dados
-     * @param disciplina 
+     *
+     * @param disciplina
      */
-    public void remover(Curso curso){
+    public void remover(Curso curso) {
         modelo.delete(curso);
     }
-    
-    
+
     /**
      * Método para adicionar um curso ao banco de dados.
-     * @param disciplinaAdicionar 
+     *
+     * @param disciplinaAdicionar
      */
-    public void adicionar(Curso cursoAdicionar){
+    public void adicionar(Curso cursoAdicionar) {
         modelo.insert(cursoAdicionar);
     }
-    
+
     /**
      * Método para consultar os cursos do banco de dados
-     * @return 
+     *
+     * @return
      */
-    public ArrayList<Curso> consulta(){
+    public ArrayList<Curso> consulta() {
         return modelo.select();
     }
-    
+
     /**
-     * Método para consultar os cursos com nomes que começam com os termos digitados pelo usuário.
-     * @return 
+     * Método para consultar os cursos com nomes que começam com os termos
+     * digitados pelo usuário.
+     *
+     * @return
      */
-    public ArrayList<Curso> consultaComTermos(String termo){
+    public ArrayList<Curso> consultaComTermos(String termo) {
         return modelo.selectComTermos(termo);
     }
-    
+
     /**
      * Método para retornar somente um curso (para tela "Editar").
+     *
      * @param termo
-     * @return 
+     * @return
      */
-    public Curso consultaCurso(String termo){
+    public Curso consultaCurso(String termo) {
         return modelo.selectCurso(termo);
     }
+
+    
+    /*
+     * 
+     *    ======================================================================
+     * 
+     *                   Métodos de interação curso-disciplina
+     * 
+     *    ======================================================================
+     * 
+     */
     
     
-    public void excluiDisciplina(int idCurso, int idDisciplina){
+    /**
+     * Adiciona uma disciplina associada ao curso.
+     *
+     * @param idCurso
+     * @param idDisciplina
+     */
+    public void adicionarDisciplina(int idCurso, int idDisciplina) {
+        modelo.insertCursoDisciplina(idCurso, idDisciplina);
+    }
+
+    /**
+     * Exclui disciplina associada ao curso.
+     *
+     * @param idCurso
+     * @param idDisciplina
+     */
+    public void excluirDisciplina(int idCurso, int idDisciplina) {
         modelo.deleteCursoDisciplina(idCurso, idDisciplina);
+    }
+
+    /**
+     * Retorna a lista de disciplinas associadas à esse curso.
+     *
+     * @param curso
+     * @return
+     */
+    public ArrayList<Disciplina> listaDisciplinasAssociadas(Curso curso) {
+        return modelo.listaDisciplinasAssociadas(curso);
+    }
+
+    /**
+     * Retorna a lista de disciplinas não associadas à esse curso.
+     *
+     * @param curso
+     * @return
+     */
+    public ArrayList<Disciplina> listaDisciplinasNaoAssociadas(Curso curso) {
+        return modelo.listaDisciplinasNaoAssociadas(curso);
     }
 }
