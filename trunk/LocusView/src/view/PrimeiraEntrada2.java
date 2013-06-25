@@ -149,7 +149,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locus - Disciplinas");
-        setPreferredSize(new java.awt.Dimension(918, 551));
+        setPreferredSize(new java.awt.Dimension(918, 600));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo5.fw.png"))); // NOI18N
 
@@ -224,7 +224,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,8 +275,12 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
+        
+        // Iniciando a próxima da tela do programa.
         dispose();
         PrimeiraEntrada3 primeiraEntrada3 = new PrimeiraEntrada3();
+        primeiraEntrada3.setVisible(true);
+        primeiraEntrada3.setLocationRelativeTo(null);
         
     }//GEN-LAST:event_jLabel20MouseClicked
 

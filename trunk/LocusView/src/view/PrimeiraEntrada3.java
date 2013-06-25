@@ -29,6 +29,8 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
     public PrimeiraEntrada3() {
         initComponents();
         
+        jLabel3.setVisible(false);
+        
         // Cria uma coluna para a tabela
         Object colunas[] = { "Cursos" }; 
         
@@ -69,6 +71,8 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
                     editar.addWindowListener(new WindowAdapter() {
                         public void windowClosed(WindowEvent evt) {
                             recarregarCursos();
+                            jLabel3.setText("Curso atualizado!");
+                            jLabel3.setVisible(true);
                         }
                     });    
                 }
@@ -99,9 +103,17 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
         // e vai os chamando de "temp". 
         if (!(consulta.isEmpty())){
+            
+            // Habilita os campos de pesquisa e tabela (pois tem algum dado)
+            jTable1.setEnabled(true);
+            
             for (Curso temp : consulta){
                 modelo.addRow(new String [] { temp.getNome() });
             }
+        }
+        
+        if (modelo.getRowCount() == 0){   
+            jTable1.setEnabled(false);
         }
         
     }
@@ -146,9 +158,10 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLabel7 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locus - Cursos");
@@ -182,44 +195,55 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 102, 0));
+        jLabel3.setText("Curso adicionado!");
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar-geral.fw.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+        jLabel7.setBounds(650, 0, 150, 40);
+        jLayeredPane1.add(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField1KeyTyped(evt);
             }
         });
-        jTextField1.setBounds(0, 0, 657, 34);
+        jTextField1.setBounds(10, 0, 640, 40);
         jLayeredPane1.add(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar-geral.fw.png"))); // NOI18N
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
-            }
-        });
-        jLabel5.setBounds(650, 0, 178, 34);
-        jLayeredPane1.add(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 9, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel20))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 817, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -232,13 +256,15 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel20)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -248,43 +274,11 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel20MouseClicked
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-
-        // Instancia curso (entidade) e controleCurso(controller)
-        Curso curso = new Curso();
-        ControleCurso cc = new ControleCurso();
-        
-        // Validações do campo para não inserir se estiver em branco.
-        if (jTextField1.getText().length() > 0){
-            if (jTextField1.getText() != " "){
-                
-                // Pega nome do campo "jTextField1" e seta nome na disciplina
-                String nome = jTextField1.getText();
-                curso.setNome(nome);
-
-                // Chama método do controle para adicionar disciplina ao banco de dados
-                cc.adicionar(curso);
-
-                // Limpa campo de nome da disciplina (deixa em branco)
-                jTextField1.setText(null);
-
-                // Cria texto dizendo que disciplina foi adicionada
-                // jLabel3.setText("Disciplina adicionada! ");
-
-                // Atualiza a lista de disciplinas
-                this.recarregarCursos();
-            }   
-        }
-        
-        
-        
-    }//GEN-LAST:event_jLabel5MouseClicked
-
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
         // Se existir algum texto no "jLabel3" (confirmação de que Disciplina foi inserida), vai limpar esse campo;
-//        if (jLabel3.getText() != null){
-//            jLabel3.setText(null); 
-//        } 
+        if (jLabel3.getText() != null){
+            jLabel3.setText(null); 
+        } 
         
         // Se existir algum texto, atualiza a lista de disciplinas de acordo com os termos digitados
         String texto = jTextField1.getText(); 
@@ -299,6 +293,33 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
             this.recarregarCursos();
         }
     }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+
+        // Instanciando controle e novo curso.
+        ControleCurso cc = new ControleCurso();
+        Curso curso = new Curso();
+        
+        // Pegando os dados
+        curso.setNome(jTextField1.getText());
+        
+        // Adicionando no banco
+        cc.adicionar(curso);
+        
+        // Instanciando um nova janela para cadastro de turmas
+        CadastrarCurso cadastrarCurso = new CadastrarCurso(curso.getNome());
+        cadastrarCurso.setVisible(true);
+        cadastrarCurso.setLocationRelativeTo(null);
+
+        cadastrarCurso.addWindowListener(new WindowAdapter(){
+            public void windowClosed(WindowEvent evt){
+                recarregarCursos();
+                jLabel3.setText("Curso adicionado!");
+                jLabel3.setVisible(true);
+            }
+        });
+
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -338,7 +359,8 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

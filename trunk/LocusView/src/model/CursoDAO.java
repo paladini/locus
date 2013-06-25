@@ -173,7 +173,7 @@ public class CursoDAO extends AbstractDAO {
         try {
 
             String sql = "select d.idDisciplina, d.nome from Curso_has_Disciplina as cd inner join disciplina as d on "
-                    + "d.idDisciplina = cd.Disciplina_idDisciplina where cd.Curso_idCurso = ?;";
+                    + "d.idDisciplina = cd.Disciplina_idDisciplina where cd.Curso_idCurso = ? order by d.nome;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, curso.getId());
             ResultSet rs = prest.executeQuery();
@@ -206,7 +206,7 @@ public class CursoDAO extends AbstractDAO {
         try {
 
             String sql = "select d.idDisciplina, d.nome from disciplina d where d.idDisciplina not in "
-                    + "(select Disciplina_idDisciplina from Curso_has_Disciplina where Curso_idCurso = ?);";
+                    + "(select Disciplina_idDisciplina from Curso_has_Disciplina where Curso_idCurso = ?) order by d.nome;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, curso.getId());
             ResultSet rs = prest.executeQuery();
