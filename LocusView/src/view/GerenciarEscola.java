@@ -75,6 +75,7 @@ public class GerenciarEscola extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Locus - Gerenciar Escola");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo5.fw.png"))); // NOI18N
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 70));
@@ -261,7 +262,7 @@ public class GerenciarEscola extends javax.swing.JFrame {
                         .addContainerGap()
                         .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(layout.createSequentialGroup()
-                        .add(39, 39, 39)
+                        .add(35, 35, 35)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel15)
                             .add(jLabel16)
