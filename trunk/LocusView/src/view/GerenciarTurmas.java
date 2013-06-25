@@ -168,6 +168,7 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Locus - Turmas");
         setResizable(false);
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar-turma-2.fw.png"))); // NOI18N
