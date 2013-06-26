@@ -5,7 +5,12 @@
 package view;
 
 import control.ControleLogin;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 
 /**
  *
@@ -18,6 +23,8 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public TelaLogin() {
         initComponents();
+        
+        jLabel6.setFont(new Font("Tahoma", Font.BOLD, 11));
     }
 
     /**
@@ -36,6 +43,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locus - Acesso ao Sistema");
@@ -69,12 +77,26 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel6.setText("Esqueci minha senha");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel6MouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(297, Short.MAX_VALUE)
+                .addContainerGap(201, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -88,7 +110,9 @@ public class TelaLogin extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(15, 15, 15)))
-                .addGap(250, 250, 250))
+                .addGap(100, 100, 100)
+                .addComponent(jLabel6)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +130,9 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -166,6 +192,36 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel5MouseClicked
 
+    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
+        
+        // Gera uma fonte com sublinhado
+        final Map attributes = (new Font("Tahoma", Font.BOLD, 11)).getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        
+        // Seta fonte do jLabel6 com a fonte acima.
+        jLabel6.setFont(new Font(attributes));
+    }//GEN-LAST:event_jLabel6MouseEntered
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        
+        // Esqueci minha senha
+        EsqueciMinhaSenha esqueciMinhaSenha = new EsqueciMinhaSenha();
+        esqueciMinhaSenha.setVisible(true);
+        esqueciMinhaSenha.setLocationRelativeTo(null);
+        
+        esqueciMinhaSenha.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent evt) {
+                            jLabel4.setText("Dados enviados, em breve entraremos em contato!");
+                            jLabel4.setVisible(true);
+            }
+        }); 
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
+        // Seta fonte do jLabel6 com a fonte acima.
+        jLabel6.setFont(new Font("Tahoma", Font.BOLD, 11));
+    }//GEN-LAST:event_jLabel6MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -214,6 +270,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

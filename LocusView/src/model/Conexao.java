@@ -23,7 +23,7 @@ public class Conexao {
             String mydatabase ="locus";        //nome do seu banco de dados  
             String url = "jdbc:mysql://" + serverName + "/" + mydatabase;  
             String username = "root";        // nome de um usuário de seu BD        
-            String password = "33410084";      // sua senha de acesso  
+            String password = "";      // sua senha de acesso  
             Connection connection = DriverManager.getConnection(url, username, password);  
             return connection;  
         } catch (ClassNotFoundException e) {  //Driver não encontrado  
