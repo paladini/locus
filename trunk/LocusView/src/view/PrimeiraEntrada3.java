@@ -5,9 +5,7 @@
 package view;
 
 import control.ControleCurso;
-import control.ControleDisciplina;
 import entidades.Curso;
-import entidades.Disciplina;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
