@@ -4,7 +4,20 @@
  */
 package view;
 
-import javax.swing.JOptionPane;
+import control.ControleCurso;
+import control.ControleDisciplina;
+import control.ControleProfessor;
+import entidades.Curso;
+import entidades.Disciplina;
+import entidades.Professor;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,8 +30,111 @@ public class GerenciarProfessores extends javax.swing.JFrame {
      */
     public GerenciarProfessores() {
         initComponents();
+        
+        jLabel3.setVisible(false);
+        
+        // Cria uma coluna para a tabela
+        Object colunas[] = { "Professores" }; 
+        
+        // Cria um modelo e diz que ele tem uma coluna (e depois sobreescrevendo um método para não ser possível editar a table)
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0) { 
+            public boolean isCellEditable(int row, int col) {  
+                return false;  
+            } 
+        } ;  
+        
+        // Seta o modelo na tabela, seta uma nova fonte e aumenta o tamanho das linhas.
+        jTable1.setModel(modelo);  
+        jTable1.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        jTable1.setRowHeight(jTable1.getRowHeight()+10);
+        
+        // Atualiza as disciplinas exibidas
+        this.recarregarProfessores();
+        
+        // "Listener", para "escutar" um duplo clique nas linhas dentro da tabela.
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable)e.getSource();
+                    int row = target.getSelectedRow();
+                    int column = target.getSelectedColumn();
+                    
+                    // Pega o nome da disciplina nessa posição
+                    String nomeProfessor = (String) jTable1.getValueAt(row, column);
+                    
+                    // Instancia nova "view" chamada "editar". Em seguida exibe ela para o usuário centralizada.
+                    EditarProfessor editar = new EditarProfessor(nomeProfessor);
+                    editar.setVisible(true);
+                    editar.setLocationRelativeTo(null);
+                    
+                    // "Listener" para recarregar as disciplinas quando fechar a janela de "editar disciplinas". 
+                    editar.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent evt) {
+                            recarregarProfessores();
+                            jLabel3.setText("Professor atualizado!");
+                            jLabel3.setVisible(true);
+                        }
+                    });    
+                }
+            }
+        });
     }
 
+     /**
+     * Faz uma nova consulta no banco de dados, atualizando todos os professores na lista de professores.
+     */
+    private void recarregarProfessores(){
+        
+        // Variável "modelo" é o "modelo" da jTable1
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        
+        // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
+        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+        
+        // Instancia um novo ControleProfessor
+        ControleProfessor cp = new ControleProfessor();
+        
+        // Faz a pesquisa no banco de dados, e armazena todos os professores no ArrayList "consulta". 
+        ArrayList<Professor> consulta = cp.consulta();
+        
+        // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
+        // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
+        // e vai os chamando de "temp". 
+        if (!(consulta.isEmpty())){
+            for (Professor temp : consulta){
+                modelo.addRow(new String [] { temp.getNome() });
+            }
+        }
+        
+    }
+    
+    /**
+     * Faz uma nova consulta no banco de dados com os termos digitados, atualizando os professores na lista de professores.
+     * Difere do método anterior pois leva em consideração os termos digitados pelo usuário.
+     */
+    private void recarregarProfessores(ArrayList<Professor> consulta){
+        
+        // Variável "modelo" é o "modelo" da jTable1
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        
+        // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
+        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+        
+        // Instancia um novo ControleProfessor
+        ControleProfessor cp = new ControleProfessor();
+        
+        // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
+        // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
+        // e vai os chamando de "temp". 
+        for (Professor temp : consulta){
+            modelo.addRow(new String [] { temp.getNome() });
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,7 +144,6 @@ public class GerenciarProfessores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -38,17 +153,16 @@ public class GerenciarProfessores extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locus - Professores");
         setMaximumSize(new java.awt.Dimension(776, 467));
         setResizable(false);
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar-professor-2.fw.png"))); // NOI18N
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo5.fw.png"))); // NOI18N
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 70));
@@ -138,19 +252,23 @@ public class GerenciarProfessores extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTextField1.setMinimumSize(new java.awt.Dimension(6, 21));
-        jTextField1.setPreferredSize(new java.awt.Dimension(6, 21));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar-geral.fw.png"))); // NOI18N
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
             }
         });
-        jTextField1.setBounds(0, 0, 592, 40);
-        jLayeredPane1.add(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pesquisar2.fw.png"))); // NOI18N
         jLabel5.setBounds(590, 0, 150, 40);
         jLayeredPane1.add(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
+        jTextField1.setBounds(0, 0, 590, 40);
+        jLayeredPane1.add(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,6 +288,10 @@ public class GerenciarProfessores extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 102, 0));
+        jLabel3.setText("Professor adicionado!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,8 +305,8 @@ public class GerenciarProfessores extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 736, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -192,21 +314,17 @@ public class GerenciarProfessores extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
@@ -252,6 +370,52 @@ public class GerenciarProfessores extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png")));
     }//GEN-LAST:event_jLabel2MouseExited
 
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        
+        // Instanciando controle e novo curso.
+        ControleProfessor cp = new ControleProfessor();
+        Professor professor = new Professor();
+        
+        // Pegando os dados
+        professor.setNome(jTextField1.getText());
+        
+        // Adicionando no banco
+        cp.adicionar(professor);
+        
+        // Instanciando um nova janela para cadastro de turmas
+        CadastrarProfessor cadastrarProfessor = new CadastrarProfessor(professor.getNome());
+        cadastrarProfessor.setVisible(true);
+        cadastrarProfessor.setLocationRelativeTo(null);
+
+        cadastrarProfessor.addWindowListener(new WindowAdapter(){
+            public void windowClosed(WindowEvent evt){
+                recarregarProfessores();
+                jLabel3.setText("Professor adicionado!");
+                jLabel3.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // Se existir algum texto no "jLabel3" (confirmação de que Disciplina foi inserida), vai limpar esse campo;
+        if (jLabel3.getText() != null){
+            jLabel3.setText(null);
+        }
+
+        // Se existir algum texto, atualiza a lista de disciplinas de acordo com os termos digitados
+        String texto = jTextField1.getText();
+        if (texto.length() != 0){
+            // Instancia novo gerenciar disciplina
+            ControleProfessor cp = new ControleProfessor();
+
+            // Recarrega as disciplinas de acordo com o
+            this.recarregarProfessores(cp.consultaComTermos(texto));
+        }else{
+            // Se não, exibe todas as disciplinas
+            this.recarregarProfessores();
+        }
+    }//GEN-LAST:event_jTextField1KeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -290,9 +454,9 @@ public class GerenciarProfessores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
