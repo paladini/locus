@@ -271,7 +271,12 @@ public class PrimeiraEntrada3 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-
+        
+        // Ir para "PrimeiraEntrada4".
+        dispose();
+        PrimeiraEntrada4 primeiraEntrada4 = new PrimeiraEntrada4();
+        primeiraEntrada4.setVisible(true);
+        primeiraEntrada4.setLocationRelativeTo(null);
     }//GEN-LAST:event_jLabel20MouseClicked
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
