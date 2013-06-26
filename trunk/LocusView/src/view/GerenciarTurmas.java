@@ -110,7 +110,7 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         
         // Se o modelo não tiver nenhum dado, deixa os campos desabilitados.
         if (modelo.getRowCount() == 0){
-            jTextField1.setText("Você ainda não adicionou nenhuma disciplina.");
+            jTextField1.setText("Você ainda não adicionou nenhuma turma.");
             jTextField1.setEnabled(false);
             jTable1.setEnabled(false);
         }

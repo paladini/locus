@@ -86,9 +86,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo5.fw.png"))); // NOI18N
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 70));
         jLabel1.setPreferredSize(new java.awt.Dimension(50, 70));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_prof.png"))); // NOI18N
         jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel15MouseEntered(evt);
             }
@@ -99,6 +107,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_turma.png"))); // NOI18N
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel16MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel16MouseEntered(evt);
             }
@@ -109,6 +120,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_sala.png"))); // NOI18N
         jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel17MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel17MouseEntered(evt);
             }
@@ -119,6 +133,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_escola.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel4MouseEntered(evt);
             }
@@ -202,13 +219,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseEntered
-        
+
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-professor-selecionado.fw.png")));
     }//GEN-LAST:event_jLabel15MouseEntered
 
     private void jLabel15MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseExited
-        
+
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_prof.png")));
     }//GEN-LAST:event_jLabel15MouseExited
@@ -252,6 +269,58 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png")));
     }//GEN-LAST:event_jLabel2MouseExited
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+
+        // Ao clicar no botão Professor, cria janela "Gerenciar Professor"
+        dispose();
+        GerenciarProfessores gerenciarProfessores = new GerenciarProfessores();
+        gerenciarProfessores.setVisible(true);
+        gerenciarProfessores.setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_jLabel15MouseClicked
+
+    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
+
+        // Ao clicar no botão Turmas, cria janela "Gerenciar Turmas"
+        dispose();
+        GerenciarTurmas gerenciarTurmas = new GerenciarTurmas();
+        gerenciarTurmas.setVisible(true);
+        gerenciarTurmas.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel16MouseClicked
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+
+        // Ao clicar no botão Salas, cria janela "Gerenciar Salas"
+        dispose();
+        GerenciarSalas gerenciarSalas = new GerenciarSalas();
+        gerenciarSalas.setVisible(true);
+        gerenciarSalas.setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_jLabel17MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+
+        // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
+        dispose();
+        GerenciarEscola gerenciarEscola = new GerenciarEscola();
+        gerenciarEscola.setVisible(true);
+        gerenciarEscola.setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        
+        // Se essa janela (this) NÃO for uma instância de "MenuPrincipal", é possível clicar no Logo.
+        if (!(this instanceof MenuPrincipal)) {
+            // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
+            dispose();
+            MenuPrincipal menuPrincipal = new MenuPrincipal();
+            menuPrincipal.setVisible(true);
+            menuPrincipal.setLocationRelativeTo(null);
+        }
+
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
