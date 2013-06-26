@@ -27,123 +27,125 @@ public class GerenciarTurmas extends javax.swing.JFrame {
     public GerenciarTurmas() {
         initComponents();
         jLabel3.setVisible(false);
-        
+
         // Cria uma coluna para a tabela
-        Object colunas[] = { "Turmas" }; 
-        
+        Object colunas[] = {"Turmas"};
+
         // Cria um modelo e diz que ele tem uma coluna (e depois sobreescrevendo um método para não ser possível editar a table)
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0) { 
-            public boolean isCellEditable(int row, int col) {  
-                return false;  
-            } 
-        } ;  
-        
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0) {
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+
         // Seta o modelo na tabela, seta uma nova fonte e aumenta o tamanho das linhas.
-        jTable1.setModel(modelo);  
+        jTable1.setModel(modelo);
         jTable1.setFont(new Font("Helvetica", Font.PLAIN, 18));
-        jTable1.setRowHeight(jTable1.getRowHeight()+10);
-        
+        jTable1.setRowHeight(jTable1.getRowHeight() + 10);
+
         // Atualiza as disciplinas exibidas
         this.recarregarTurmas();
-        
+
         // "Listener", para "escutar" um duplo clique nas linhas dentro da tabela.
         jTable1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    JTable target = (JTable)e.getSource();
+                    JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
                     int column = target.getSelectedColumn();
-                    
+
                     // Pega o nome da disciplina nessa posição
                     String nomeTurma = (String) jTable1.getValueAt(row, column);
-                    
+
                     // Instancia nova "view" chamada "editar". Em seguida exibe ela para o usuário centralizada.
                     EditarTurma editar = new EditarTurma(nomeTurma);
                     editar.setVisible(true);
                     editar.setLocationRelativeTo(null);
-                    
+
                     // "Listener" para recarregar as disciplinas quando fechar a janela de "editar disciplinas". 
                     editar.addWindowListener(new WindowAdapter() {
                         public void windowClosed(WindowEvent evt) {
                             recarregarTurmas();
                         }
-                    });    
+                    });
                 }
             }
         });
     }
 
-     /**
-     * Faz uma nova consulta no banco de dados, atualizando todas as salas na lista de disciplinas.
+    /**
+     * Faz uma nova consulta no banco de dados, atualizando todas as salas na
+     * lista de disciplinas.
      */
-    private void recarregarTurmas(){
-        
+    private void recarregarTurmas() {
+
         // Variável "modelo" é o "modelo" da jTable1
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        
+
         // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
         for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
-        
+
         // Instancia um novo ControleTurma
         ControleTurma ct = new ControleTurma();
-        
+
         // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
         ArrayList<Turma> consulta = ct.consulta();
-        
+
         // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
         // e vai os chamando de "temp". 
-        if (!(consulta.isEmpty())){
-            
+        if (!(consulta.isEmpty())) {
+
             // Habilita os campos de pesquisa e tabela (pois tem algum dado)
             jTextField1.setText("");
             jTextField1.setEnabled(true);
             jTable1.setEnabled(true);
-            
+
             // Preenche o modelo com as turmas
-            for (Turma temp : consulta){
-                modelo.addRow(new String [] { temp.getNome() });
+            for (Turma temp : consulta) {
+                modelo.addRow(new String[]{temp.getNome()});
             }
         }
-        
+
         // Se o modelo não tiver nenhum dado, deixa os campos desabilitados.
-        if (modelo.getRowCount() == 0){
+        if (modelo.getRowCount() == 0) {
             jTextField1.setText("Você ainda não adicionou nenhuma turma.");
             jTextField1.setEnabled(false);
             jTable1.setEnabled(false);
         }
-        
-        
-        
+
+
+
     }
-    
+
     /**
-     * Faz uma nova consulta no banco de dados com os termos digitados, atualizando as disciplinas na lista de disciplinas.
-     * Difere do método anterior pois leva em consideração os termos digitados pelo usuário.
+     * Faz uma nova consulta no banco de dados com os termos digitados,
+     * atualizando as disciplinas na lista de disciplinas. Difere do método
+     * anterior pois leva em consideração os termos digitados pelo usuário.
      */
-    private void recarregarTurmas(ArrayList<Turma> consulta){
-        
+    private void recarregarTurmas(ArrayList<Turma> consulta) {
+
         // Variável "modelo" é o "modelo" da jTable1
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        
+
         // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
         for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
-        
+
         // Instancia um novo ControleDisciplina
         ControleTurma ct = new ControleTurma();
-        
+
         // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
         // e vai os chamando de "temp". 
-        for (Turma temp : consulta){
-            modelo.addRow(new String [] { temp.getNome() });
+        for (Turma temp : consulta) {
+            modelo.addRow(new String[]{temp.getNome()});
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,6 +156,10 @@ public class GerenciarTurmas extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel7 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -162,10 +168,6 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locus - Turmas");
@@ -178,12 +180,53 @@ public class GerenciarTurmas extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Turmas"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 102, 0));
+        jLabel3.setText("Turma adicionada!");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo5.fw.png"))); // NOI18N
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 70));
         jLabel1.setPreferredSize(new java.awt.Dimension(50, 70));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_prof.png"))); // NOI18N
         jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel15MouseEntered(evt);
             }
@@ -195,9 +238,23 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-turmas0selecionado-1.fw.png"))); // NOI18N
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_sala.png"))); // NOI18N
+        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel17MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel17MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel17MouseExited(evt);
+            }
+        });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_escola.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel4MouseEntered(evt);
             }
@@ -255,61 +312,29 @@ public class GerenciarTurmas extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Turmas"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 102, 0));
-        jLabel3.setText("Turma adicionada!");
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel3))
-                .addGap(86, 86, 86))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel3))
+                        .addGap(86, 86, 86))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -323,6 +348,66 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+
+        // Se existir algum texto no "jLabel3" (confirmação de que Disciplina foi inserida), vai limpar esse campo;
+        if (jLabel3.getText() != null) {
+            jLabel3.setText(null);
+        }
+
+        // Se existir algum texto, atualiza a lista de disciplinas de acordo com os termos digitados
+        String texto = jTextField1.getText();
+        if (texto.length() > 0) {
+            // Instancia novo gerenciar disciplina
+            ControleTurma ct = new ControleTurma();
+
+            // Recarrega as disciplinas de acordo com o 
+            this.recarregarTurmas(ct.consultaComTermos(texto));
+        } else {
+            // Se não, exibe todas as disciplinas
+            this.recarregarTurmas();
+        }
+    }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+
+        // Instanciando um nova janela para cadastro de turmas
+        CadastrarTurma cadastroTurma = new CadastrarTurma();
+        cadastroTurma.setVisible(true);
+        cadastroTurma.setLocationRelativeTo(null);
+
+        cadastroTurma.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent evt) {
+                recarregarTurmas();
+                jLabel3.setVisible(true);
+            }
+        });
+
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+
+        // MenuPrincipal
+        dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        menuPrincipal.setVisible(true);
+        menuPrincipal.setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+
+        // Ao clicar no botão Professor, cria janela "Gerenciar Professor"
+        dispose();
+        GerenciarProfessores gerenciarProfessores = new GerenciarProfessores();
+        gerenciarProfessores.setVisible(true);
+        gerenciarProfessores.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel15MouseClicked
+
     private void jLabel15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseEntered
 
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
@@ -334,6 +419,34 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_prof.png")));
     }//GEN-LAST:event_jLabel15MouseExited
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+
+        // Ao clicar no botão Salas, cria janela "Gerenciar Salas"
+        dispose();
+        GerenciarSalas gerenciarSalas = new GerenciarSalas();
+        gerenciarSalas.setVisible(true);
+        gerenciarSalas.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel17MouseClicked
+
+    private void jLabel17MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseEntered
+        // Caso o usuário passe o mouse em cima, exibe essa imagem.
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-salas-selecionado.fw.png")));
+    }//GEN-LAST:event_jLabel17MouseEntered
+
+    private void jLabel17MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseExited
+        // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_sala.png")));
+    }//GEN-LAST:event_jLabel17MouseExited
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+
+        // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
+        dispose();
+        GerenciarEscola gerenciarEscola = new GerenciarEscola();
+        gerenciarEscola.setVisible(true);
+        gerenciarEscola.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
@@ -354,47 +467,6 @@ public class GerenciarTurmas extends javax.swing.JFrame {
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png")));
     }//GEN-LAST:event_jLabel2MouseExited
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-        
-        // Se existir algum texto no "jLabel3" (confirmação de que Disciplina foi inserida), vai limpar esse campo;
-        if (jLabel3.getText() != null){
-            jLabel3.setText(null); 
-        } 
-        
-        // Se existir algum texto, atualiza a lista de disciplinas de acordo com os termos digitados
-        String texto = jTextField1.getText(); 
-        if (texto.length() > 0){
-             // Instancia novo gerenciar disciplina
-            ControleTurma ct = new ControleTurma();
-
-            // Recarrega as disciplinas de acordo com o 
-            this.recarregarTurmas(ct.consultaComTermos(texto));      
-        }else{
-            // Se não, exibe todas as disciplinas
-            this.recarregarTurmas();
-        }
-    }//GEN-LAST:event_jTextField1KeyTyped
-
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        
-        // Instanciando um nova janela para cadastro de turmas
-        CadastrarTurma cadastroTurma = new CadastrarTurma();
-        cadastroTurma.setVisible(true);
-        cadastroTurma.setLocationRelativeTo(null);
-        
-        cadastroTurma.addWindowListener(new WindowAdapter(){
-           public void windowClosed(WindowEvent evt){
-               recarregarTurmas();
-               jLabel3.setVisible(true);
-           } 
-        });
-        
-    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
