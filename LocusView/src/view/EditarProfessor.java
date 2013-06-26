@@ -5,8 +5,10 @@
 package view;
 
 import control.ControleCurso;
+import control.ControleProfessor;
 import entidades.Curso;
 import entidades.Disciplina;
+import entidades.Professor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -17,36 +19,36 @@ import javax.swing.JList;
  *
  * @author silvio
  */
-public class CadastrarCurso extends javax.swing.JFrame {
+public class EditarProfessor extends javax.swing.JFrame {
 
     // Variáveis
-    Curso curso;
+    Professor professor;
 
     /**
      * Cria um novo form "EditarCurso"
      *
-     * @param nomeDisciplina Nome da curso a ser pesquisada no banco de dados.
+     * @param nomeDisciplina Nome da professor a ser pesquisada no banco de dados.
      */
-    public CadastrarCurso(String nomeCurso) {
+    public EditarProfessor(String nomeProfessor) {
+
+        // Não fechar todas as janelas ao fechar esta janela.
+        setDefaultCloseOperation(EditarProfessor.DISPOSE_ON_CLOSE);
 
         // Inicializa todos os componentes
         initComponents();
-        
-        // Não fechar todas as janelas ao fechar esta janela.
-        setDefaultCloseOperation(CadastrarCurso.DISPOSE_ON_CLOSE);
 
-        // Instancia um novo ControleCurso
-        ControleCurso cc = new ControleCurso();
+        ControleProfessor cp = new ControleProfessor();
 
-        // Armazena a curso a ser editado
-        curso = cc.consultaCurso(nomeCurso);
+        // Armazena a professor a ser editado
+        professor = cp.consultaProfessor(nomeProfessor);
 
         // Seta os valores para exibir ao usuário
-        jTextField1.setText(curso.getNome());
+        jTextField2.setText(professor.getNome());
+        jTextField1.setText(professor.getNome());
 
         // Cria um modelo para as jList
         // jList1 = Lista de todas as disciplinas
-        // jList2 = Lista de todas as disciplinas já relacionadas ao curso
+        // jList2 = Lista de todas as disciplinas já relacionadas ao professor
         final DefaultListModel lista1 = new DefaultListModel();
         final DefaultListModel lista2 = new DefaultListModel();
 
@@ -57,8 +59,8 @@ public class CadastrarCurso extends javax.swing.JFrame {
 
         // Carrega os dados nas jList
         this.recarregarDisciplina();
-        this.recarregarDisciplinaCurso();
-        
+        this.recarregarDisciplinaProfessor();
+
         // Listener para um duplo clique nos itens da jList1
         // Lista de todas as disciplinas
         jList1.addMouseListener(new MouseAdapter() {
@@ -70,12 +72,12 @@ public class CadastrarCurso extends javax.swing.JFrame {
                     // Pegando disciplina do index atual (onde o usuario clicou duas vezes)
                     Disciplina disciplina = (Disciplina) lista1.getElementAt(index);
 
-                    // Adicionando disciplina ao curso
-                    curso.adicionarDisciplina(disciplina);
+                    // Adicionando disciplina ao professor
+                    professor.adicionarDisciplina(disciplina);
 
-                    // Adicionando disciplina ao curso (no banco de dados)
-                    ControleCurso cc = new ControleCurso();
-                    cc.adicionarDisciplina(curso.getId(), disciplina.getId());
+                    // Adicionando disciplina ao professor (no banco de dados)
+                    ControleProfessor cp = new ControleProfessor();
+                    cp.adicionarDisciplina(professor.getId(), disciplina.getId());
 
                     // Removendo elemento dessa lista
                     lista1.remove(index);
@@ -87,7 +89,7 @@ public class CadastrarCurso extends javax.swing.JFrame {
         });
 
         // Listener para duplo clique nos itens da jList2 
-        // Lista de disciplinas adicionadas ao curso
+        // Lista de disciplinas adicionadas ao professor
         jList2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 JList list = (JList) evt.getSource();
@@ -97,26 +99,25 @@ public class CadastrarCurso extends javax.swing.JFrame {
                     // Pegando disciplina do index atual (onde o usuario clicou duas vezes)
                     Disciplina disciplina = (Disciplina) lista2.getElementAt(index);
 
-                    // Adicionando disciplina ao curso
-                    curso.removerDisciplina(disciplina);
+                    // Adicionando disciplina ao professor
+                    professor.removerDisciplina(disciplina);
 
                     // Excluir disciplina no banco de dados
-                    ControleCurso cc = new ControleCurso();
-                    cc.excluirDisciplina(curso.getId(), disciplina.getId());
+                    ControleProfessor cp = new ControleProfessor();
+                    cp.excluirDisciplina(professor.getId(), disciplina.getId());
 
                     // Removendo elemento dessa lista
                     lista2.remove(index);
 
                     // Adicionando elemento à outra lista
                     lista1.addElement(disciplina);
-                    
                 }
             }
         });
 
     }
 
-    /**
+   /**
      * Método para recarregar a jList de todas as disciplinas.
      */
     private void recarregarDisciplina() {
@@ -127,10 +128,10 @@ public class CadastrarCurso extends javax.swing.JFrame {
         modelo.removeAllElements();
 
         // Instancia um novo ControleCurso
-        ControleCurso cc = new ControleCurso();
+        ControleProfessor cp = new ControleProfessor();
 
         // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
-        ArrayList<Disciplina> consulta = cc.listaDisciplinasNaoAssociadas(curso);
+        ArrayList<Disciplina> consulta = cp.listaDisciplinasNaoAssociadas(professor);
 
         // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
@@ -145,7 +146,7 @@ public class CadastrarCurso extends javax.swing.JFrame {
     /**
      * Método para recarregar a jList de disciplinas já adicionadas ao curso.
      */
-    private void recarregarDisciplinaCurso() {
+    private void recarregarDisciplinaProfessor() {
         // Variável "modelo" é igual ao "modelo" da jTable1
         DefaultListModel modelo = (DefaultListModel) jList2.getModel();
 
@@ -153,10 +154,10 @@ public class CadastrarCurso extends javax.swing.JFrame {
         modelo.removeAllElements();
 
         // Instancia um novo ControleCurso
-        ControleCurso cc = new ControleCurso();
+        ControleProfessor cp = new ControleProfessor();
 
         // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
-        ArrayList<Disciplina> consulta = cc.listaDisciplinasAssociadas(curso);
+        ArrayList<Disciplina> consulta = cp.listaDisciplinasAssociadas(professor);
 
         // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
@@ -179,10 +180,13 @@ public class CadastrarCurso extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jSeparator2 = new javax.swing.JSeparator();
@@ -194,18 +198,31 @@ public class CadastrarCurso extends javax.swing.JFrame {
         jLabel2.setText("Nome de usuário:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Locus - Cadastrar Curso");
+        setTitle("Locus - Editar Curso");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setText("Nome antigo:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("Nome: ");
+        jLabel4.setText("Nome novo:");
+
+        jTextField2.setEditable(false);
+        jTextField2.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Curso");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar-curso.fw.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salvar.fw.png"))); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
+            }
+        });
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/excluir3.fw.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
             }
         });
 
@@ -226,8 +243,8 @@ public class CadastrarCurso extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jSeparator2)
@@ -235,17 +252,26 @@ public class CadastrarCurso extends javax.swing.JFrame {
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
                             .addComponent(jLabel7))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(32, 32, 32))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,21 +280,32 @@ public class CadastrarCurso extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(19, 19, 19)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
+                .addContainerGap())
         );
 
         pack();
@@ -276,19 +313,19 @@ public class CadastrarCurso extends javax.swing.JFrame {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 
-        // Instanciando gerenciar curso
-        ControleCurso cc = new ControleCurso();
+        // Instanciando gerenciar professor
+        ControleProfessor cp = new ControleProfessor();
 
         // Fazendo algumas verificações de segurança
         if (jTextField1.getText().length() > 0) {
             if (jTextField1.getText() != " ") {
                 String novoCurso = jTextField1.getText();
-                curso.setNome(novoCurso);
+                professor.setNome(novoCurso);
             }
         }
 
-        // Atualizando a curso
-        cc.atualizar(curso);
+        // Atualizando a professor
+        cp.atualizar(professor);
 
         // Fechando a janela
         dispose();
@@ -296,13 +333,26 @@ public class CadastrarCurso extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    public Curso getCurso() {
-        return curso;
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // Instanciando gerenciar professor
+        ControleProfessor cp = new ControleProfessor();
+
+        // Atualizando a professor
+        cp.remover(professor);
+
+        // Fechando a janela
+        dispose();
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    public Professor getProfessor() {
+        return professor;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -340,8 +390,10 @@ public class CadastrarCurso extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
@@ -350,5 +402,6 @@ public class CadastrarCurso extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

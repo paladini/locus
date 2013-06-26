@@ -383,7 +383,7 @@ public class GerenciarTurmas extends javax.swing.JFrame {
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         
         // Instanciando um nova janela para cadastro de turmas
-        CadastroTurma cadastroTurma = new CadastroTurma();
+        CadastrarTurma cadastroTurma = new CadastrarTurma();
         cadastroTurma.setVisible(true);
         cadastroTurma.setLocationRelativeTo(null);
         

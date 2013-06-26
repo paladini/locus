@@ -15,14 +15,14 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author silvio
  */
-public class CadastroTurma extends javax.swing.JFrame {
+public class CadastrarTurma extends javax.swing.JFrame {
 
     DefaultComboBoxModel modelo;
     
     /**
-     * Creates new form CadastroTurma
+     * Creates new form CadastrarTurma
      */
-    public CadastroTurma() {
+    public CadastrarTurma() {
         initComponents();
         
         // Não fechar todas as janelas ao fechar esta janela.
@@ -175,20 +175,20 @@ public class CadastroTurma extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroTurma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastrarTurma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroTurma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastrarTurma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroTurma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastrarTurma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroTurma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastrarTurma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroTurma().setVisible(true);
+                new CadastrarTurma().setVisible(true);
             }
         });
     }

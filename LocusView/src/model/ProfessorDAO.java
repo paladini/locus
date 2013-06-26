@@ -4,7 +4,6 @@
  */
 package model;
 
-import entidades.Curso;
 import entidades.Disciplina;
 import entidades.Professor;
 import java.sql.Connection;
@@ -56,7 +55,7 @@ public class ProfessorDAO extends AbstractDAO{
      *
      * @return
      */
-    public Professor selectCurso(String nomeProfessor) {
+    public Professor selectProfessor(String nomeProfessor) {
         Connection connection = Conexao.getConexao();
         try {
 
@@ -195,16 +194,16 @@ public class ProfessorDAO extends AbstractDAO{
     /**
      * Retorna a lista de todas as disciplinas não associadas à esse curso
      *
-     * @param curso
+     * @param professor
      */
-    public ArrayList<Disciplina> listaDisciplinasNaoAssociadas(Curso curso) {
+    public ArrayList<Disciplina> listaDisciplinasNaoAssociadas(Professor professor) {
         Connection connection = Conexao.getConexao();
         try {
 
             String sql = "select d.idDisciplina, d.nome from disciplina d where d.idDisciplina not in "
                     + "(select Disciplina_idDisciplina from Disciplina_has_Professor where Professor_idProfessor = ?) order by d.nome;";
             PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setInt(1, curso.getId());
+            prest.setInt(1, professor.getId());
             ResultSet rs = prest.executeQuery();
 
             ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
@@ -245,7 +244,7 @@ public class ProfessorDAO extends AbstractDAO{
      * @param idDisciplina
      */
     public void deleteProfessorDisciplina(int idProfessor, int idDisciplina) {
-        String sql = "delete from Curso_has_Disciplina where Disciplina_idDisciplina = ? and Professor_idProfessor = ?;";
+        String sql = "delete from Disciplina_has_Professor where Disciplina_idDisciplina = ? and Professor_idProfessor = ?;";
 
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(idDisciplina);
