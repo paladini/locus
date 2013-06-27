@@ -4,6 +4,7 @@
  */
 package view;
 
+import control.ControleDia;
 import control.ControleEscola;
 import control.ControleLogin;
 import entidades.Dia;
@@ -16,12 +17,44 @@ import entidades.Turno;
  * @author silvio
  */
 public class PrimeiraEntrada1 extends javax.swing.JFrame {
-    
+
+    Dia segunda = new Dia("Segunda");
+    Dia terca = new Dia("Terca");
+    Dia quarta = new Dia("Quarta");
+    Dia quinta = new Dia("Quinta");
+    Dia sexta = new Dia("Sexta");
+    ControleDia cd = new ControleDia();
+
     /**
      * Creates new form PrimeiraEntrada1
      */
     public PrimeiraEntrada1() {
         initComponents();
+
+        // Desativando o botão "Próxima"
+        jLabel20.setEnabled(false);
+
+        // Recuperando dias
+        if (cd.checarDia(segunda)) {
+            jCheckBox1.setSelected(true);
+        }
+
+        if (cd.checarDia(terca)) {
+            jCheckBox3.setSelected(true);
+        }
+
+        if (cd.checarDia(quarta)) {
+            jCheckBox2.setSelected(true);
+        }
+
+        if (cd.checarDia(quinta)) {
+            jCheckBox4.setSelected(true);
+        }
+
+        if (cd.checarDia(sexta)) {
+            jCheckBox5.setSelected(true);
+        }
+
     }
 
     /**
@@ -96,10 +129,25 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jCheckBox1.setText("Segunda-feira");
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox1ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox2.setText("Quarta-feira");
+        jCheckBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox2ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox3.setText("Terça-feira");
+        jCheckBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox3ItemStateChanged(evt);
+            }
+        });
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox3ActionPerformed(evt);
@@ -107,8 +155,18 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         });
 
         jCheckBox4.setText("Quinta-feira");
+        jCheckBox4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox4ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox5.setText("Sexta-feira");
+        jCheckBox5.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox5ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox6.setText("Matutino");
         jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
@@ -256,66 +314,42 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox8ActionPerformed
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-        
+
         // Criando objeto "Escola" e "TelaLogin", além dos "controles";
         Escola escola = new Escola();
         Login login = new Login();
         ControleEscola ce = new ControleEscola();
         ControleLogin cl = new ControleLogin();
-        
+
         // Pegando dados da tela
         String nomeInstituicao = jTextField5.getText();
         String senha = jPasswordField1.getText();
         int resultado = 0;
-        
+
         // Setando turnos     
-        if (jCheckBox6.isSelected()){
+        if (jCheckBox6.isSelected()) {
             Turno matutino = new Turno("Matutino");
             escola.adicionarTurno(matutino);
         }
-        if (jCheckBox7.isSelected()){
+        if (jCheckBox7.isSelected()) {
             Turno vespertino = new Turno("Vespertino");
             escola.adicionarTurno(vespertino);
         }
-        if (jCheckBox8.isSelected()){
+        if (jCheckBox8.isSelected()) {
             Turno noturno = new Turno("Noturno");
             escola.adicionarTurno(noturno);
         }
-        
-        // Setando dias
-        if (jCheckBox1.isSelected()){
-            Dia segunda = new Dia("Segunda");
-            escola.adicionarDia(segunda);
-        }
-        
-        // jCheckBox3 e jCheckBox2 estão invertidos. jCheckBox2 = Quarta, jCheckBox3 = Terça.
-        if (jCheckBox3.isSelected()){
-            Dia terca = new Dia("Terça");
-            escola.adicionarDia(terca);
-        }
-        if (jCheckBox2.isSelected()){
-            Dia quarta = new Dia("Quarta");
-            escola.adicionarDia(quarta);
-        }
-        if (jCheckBox4.isSelected()){
-            Dia quinta = new Dia("Quinta");
-            escola.adicionarDia(quinta);
-        }
-        if (jCheckBox5.isSelected()){
-            Dia sexta = new Dia("Sexta");
-            escola.adicionarDia(sexta);
-        }
-        
+
         // Setando nova senha
         login.setSenha(senha);
-        
+
         // Setando nome da escola
         escola.setNomeEscola(nomeInstituicao);
-        
+
         // Salvando no banco e abrindo a nova tela. (O igual a 0 é para ver se retornou algum erro. Se retornar 1, é pq teve erro.
-        if (ce.adicionarHorario(escola) == 0){
-            if (ce.mudarNome(escola) == 0){
-                if (cl.primeiraEntrada(login) == 0){
+        if (ce.adicionarHorario(escola) == 0) {
+            if (ce.mudarNome(escola) == 0) {
+                if (cl.primeiraEntrada(login) == 0) {
                     dispose();
                     PrimeiraEntrada2 primeiraEntrada2 = new PrimeiraEntrada2();
                     primeiraEntrada2.setVisible(true);
@@ -324,8 +358,62 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
                 }
             }
         }
-        
+
     }//GEN-LAST:event_jLabel20MouseClicked
+
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+
+        // Se o jCheckBox1 estiver selecionado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox1.isSelected()) {
+            cd.adicionarDia(segunda);
+        }
+        
+        if (!jCheckBox1.isSelected()){
+            cd.removerDia(segunda);
+        }
+
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
+
+    private void jCheckBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox3ItemStateChanged
+
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox3.isSelected()) {
+            cd.adicionarDia(terca);
+        }
+        if (!jCheckBox3.isSelected()){
+            cd.removerDia(terca);
+        }
+    }//GEN-LAST:event_jCheckBox3ItemStateChanged
+
+    private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox2.isSelected()) {
+            cd.adicionarDia(quarta);
+        }
+        if (!jCheckBox2.isSelected()){
+            cd.removerDia(quarta);
+        }
+    }//GEN-LAST:event_jCheckBox2ItemStateChanged
+
+    private void jCheckBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox4ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox4.isSelected()) {
+            cd.adicionarDia(quinta);
+        }
+        if (!jCheckBox4.isSelected()){
+            cd.removerDia(quinta);
+        }
+    }//GEN-LAST:event_jCheckBox4ItemStateChanged
+
+    private void jCheckBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox5ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox5.isSelected()) {
+            cd.adicionarDia(sexta);
+        }
+        if (!jCheckBox5.isSelected()){
+            cd.removerDia(sexta);
+        }
+    }//GEN-LAST:event_jCheckBox5ItemStateChanged
 
     /**
      * @param args the command line arguments
