@@ -246,17 +246,24 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Segunda-feira"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox1ItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Quarta-feira"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox2ItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ter&#xe7;a-feira"/>
       </Properties>
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox3ItemStateChanged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox3ActionPerformed"/>
       </Events>
     </Component>
@@ -264,11 +271,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Quinta-feira"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox4ItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox5">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sexta-feira"/>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox5ItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox6">
       <Properties>
