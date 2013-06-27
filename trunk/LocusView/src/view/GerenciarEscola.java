@@ -4,6 +4,7 @@
  */
 package view;
 
+import control.ControleDia;
 import control.ControleEscola;
 import control.ControleLogin;
 import entidades.Dia;
@@ -17,6 +18,13 @@ import entidades.Turno;
  */
 public class GerenciarEscola extends javax.swing.JFrame {
 
+    Dia segunda = new Dia("Segunda");
+    Dia terca = new Dia("Terca");
+    Dia quarta = new Dia("Quarta");
+    Dia quinta = new Dia("Quinta");
+    Dia sexta = new Dia("Sexta");
+    ControleDia cd = new ControleDia();
+    
     /**
      * Creates new form GerenciarEscola
      */
@@ -34,6 +42,28 @@ public class GerenciarEscola extends javax.swing.JFrame {
         // Setando nome da escola
         jTextField5.setText(escola.getNomeEscola());
         jPasswordField1.setText(login.getSenha());
+        
+        // Recuperando dias e setando na janela
+        if (cd.checarDia(segunda)) {
+            jCheckBox1.setSelected(true);
+        }
+
+        if (cd.checarDia(terca)) {
+            jCheckBox3.setSelected(true);
+        }
+
+        if (cd.checarDia(quarta)) {
+            jCheckBox2.setSelected(true);
+        }
+
+        if (cd.checarDia(quinta)) {
+            jCheckBox4.setSelected(true);
+        }
+
+        if (cd.checarDia(sexta)) {
+            jCheckBox5.setSelected(true);
+        }
+        
     }
 
     /**
@@ -54,11 +84,6 @@ public class GerenciarEscola extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
         jCheckBox8 = new javax.swing.JCheckBox();
         jCheckBox7 = new javax.swing.JCheckBox();
         jCheckBox6 = new javax.swing.JCheckBox();
@@ -73,6 +98,11 @@ public class GerenciarEscola extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locus - Gerenciar Escola");
@@ -113,21 +143,6 @@ public class GerenciarEscola extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel18.setText("Dias da semana:");
-
-        jCheckBox1.setText("Segunda-feira");
-
-        jCheckBox3.setText("Terça-feira");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
-            }
-        });
-
-        jCheckBox2.setText("Quarta-feira");
-
-        jCheckBox4.setText("Quinta-feira");
-
-        jCheckBox5.setText("Sexta-feira");
 
         jCheckBox8.setText("Noturno");
         jCheckBox8.addActionListener(new java.awt.event.ActionListener() {
@@ -263,6 +278,46 @@ public class GerenciarEscola extends javax.swing.JFrame {
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
 
+        jCheckBox1.setText("Segunda-feira");
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox1ItemStateChanged(evt);
+            }
+        });
+
+        jCheckBox3.setText("Terça-feira");
+        jCheckBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox3ItemStateChanged(evt);
+            }
+        });
+        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox3ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox2.setText("Quarta-feira");
+        jCheckBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox2ItemStateChanged(evt);
+            }
+        });
+
+        jCheckBox4.setText("Quinta-feira");
+        jCheckBox4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox4ItemStateChanged(evt);
+            }
+        });
+
+        jCheckBox5.setText("Sexta-feira");
+        jCheckBox5.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox5ItemStateChanged(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -277,15 +332,16 @@ public class GerenciarEscola extends javax.swing.JFrame {
                             .add(layout.createSequentialGroup()
                                 .add(22, 22, 22)
                                 .add(jLabel19)
-                                .add(44, 44, 44)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(43, 43, 43)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                                     .add(jLabel18)
-                                    .add(jCheckBox1)
-                                    .add(jCheckBox3)
-                                    .add(jCheckBox2)
-                                    .add(jCheckBox4)
-                                    .add(jCheckBox5))
-                                .add(103, 103, 103)
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                        .add(jCheckBox1)
+                                        .add(jCheckBox3)
+                                        .add(jCheckBox2)
+                                        .add(jCheckBox4)
+                                        .add(jCheckBox5)))
+                                .add(104, 104, 104)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jCheckBox8)
                                     .add(jCheckBox6)
@@ -329,30 +385,30 @@ public class GerenciarEscola extends javax.swing.JFrame {
                                 .add(jLabel16)
                                 .add(26, 26, 26)
                                 .add(jLabel19)
-                                .add(4, 4, 4))
+                                .add(63, 63, 63))
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                                     .add(jLabel17)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel18))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jCheckBox6)
-                                    .add(jCheckBox1))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(layout.createSequentialGroup()
+                                        .add(jCheckBox6)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jCheckBox7)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jCheckBox8))
+                                    .add(layout.createSequentialGroup()
+                                        .add(jCheckBox1)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                         .add(jCheckBox3)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                         .add(jCheckBox2)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                         .add(jCheckBox4)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jCheckBox5))
-                                    .add(layout.createSequentialGroup()
-                                        .add(jCheckBox7)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jCheckBox8)))))
-                        .add(59, 59, 59))
+                                        .add(jCheckBox5)))
+                                .add(59, 59, 59))))
                     .add(layout.createSequentialGroup()
                         .add(63, 63, 63)
                         .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -377,10 +433,6 @@ public class GerenciarEscola extends javax.swing.JFrame {
     private void jTextField5jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5jTextField2ActionPerformed
-
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jCheckBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox8ActionPerformed
         // TODO add your handling code here:
@@ -426,33 +478,7 @@ public class GerenciarEscola extends javax.swing.JFrame {
             Turno noturno = new Turno("Noturno");
             escola.adicionarTurno(noturno);
         }
-
-        // Setando dias
-        if (jCheckBox1.isSelected()) {
-            Dia segunda = new Dia("Segunda");
-            escola.adicionarDia(segunda);
-        }
-
-        // jCheckBox3 e jCheckBox2 estão invertidos. jCheckBox2 = Quarta, jCheckBox3 = Terça.
-        if (jCheckBox3.isSelected()) {
-            Dia terca = new Dia("Terça");
-            escola.adicionarDia(terca);
-        }
-        if (jCheckBox2.isSelected()) {
-            Dia quarta = new Dia("Quarta");
-            escola.adicionarDia(quarta);
-        }
-        if (jCheckBox4.isSelected()) {
-            Dia quinta = new Dia("Quinta");
-            escola.adicionarDia(quinta);
-        }
-        if (jCheckBox5.isSelected()) {
-            Dia sexta = new Dia("Sexta");
-            escola.adicionarDia(sexta);
-        }
-
-
-
+        
         // Salvando no banco e abrindo a nova tela. (O igual a 0 é para ver se retornou algum erro. Se retornar 1, é pq teve erro.
         if (ce.adicionarHorario(escola) == 0) {
             if (ce.mudarNome(escola) == 0) {
@@ -547,6 +573,63 @@ public class GerenciarEscola extends javax.swing.JFrame {
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png")));
     }//GEN-LAST:event_jLabel2MouseExited
+
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+
+        // Se o jCheckBox1 estiver selecionado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox1.isSelected()) {
+            cd.adicionarDia(segunda);
+        }
+
+        if (!jCheckBox1.isSelected()){
+            cd.removerDia(segunda);
+        }
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
+
+    private void jCheckBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox3ItemStateChanged
+
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox3.isSelected()) {
+            cd.adicionarDia(terca);
+        }
+        if (!jCheckBox3.isSelected()){
+            cd.removerDia(terca);
+        }
+    }//GEN-LAST:event_jCheckBox3ItemStateChanged
+
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox3ActionPerformed
+
+    private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox2.isSelected()) {
+            cd.adicionarDia(quarta);
+        }
+        if (!jCheckBox2.isSelected()){
+            cd.removerDia(quarta);
+        }
+    }//GEN-LAST:event_jCheckBox2ItemStateChanged
+
+    private void jCheckBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox4ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox4.isSelected()) {
+            cd.adicionarDia(quinta);
+        }
+        if (!jCheckBox4.isSelected()){
+            cd.removerDia(quinta);
+        }
+    }//GEN-LAST:event_jCheckBox4ItemStateChanged
+
+    private void jCheckBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox5ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox5.isSelected()) {
+            cd.adicionarDia(sexta);
+        }
+        if (!jCheckBox5.isSelected()){
+            cd.removerDia(sexta);
+        }
+    }//GEN-LAST:event_jCheckBox5ItemStateChanged
 
     /**
      * @param args the command line arguments
