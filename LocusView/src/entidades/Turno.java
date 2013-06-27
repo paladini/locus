@@ -11,6 +11,7 @@ package entidades;
 public class Turno {
     
     // Atributos
+    private int id;
     private String nome;
 
     // Construtores
@@ -22,6 +23,14 @@ public class Turno {
     }
     
     // Métodos
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNome() {
         return nome;
     }
