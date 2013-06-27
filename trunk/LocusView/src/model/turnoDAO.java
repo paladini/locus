@@ -4,7 +4,7 @@
  */
 package model;
 
-import entidades.Dia;
+import entidades.Turno;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,36 +15,36 @@ import java.util.ArrayList;
  *
  * @author silvio
  */
-public class DiaDAO extends AbstractDAO {
-
+public class TurnoDAO extends AbstractDAO {
+    
     /**
      * Faz consulta no banco de dados e retorna apenas um dia com esse nome.
      *
      * @return
      */
-    public Dia selectDia(String nomeDia) {
+    public Turno selectTurno(String nomeTurno) {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM dia where descricao = ?;";
+            String sql = "SELECT * FROM turno where descricao = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, nomeDia);
+            prest.setString(1, nomeTurno);
             ResultSet rs = prest.executeQuery();
 
             // Pega o primeiro registro do retorno da consulta
             if (rs.next()) {
                 // Cria uma nova disciplina
-                Dia dia = new Dia();
+                Turno turno = new Turno();
                 // Pega os dados desse registro e guarda em variáveis
-                int id = rs.getInt("idDia");
+                int id = rs.getInt("idTurno");
                 String nome = rs.getString("descricao");
 
                 // Seta os dados na disciplina criada
-                dia.setId(id);
-                dia.setNome(nome);
+                turno.setId(id);
+                turno.setNome(nome);
 
                 connection.close();
-                return dia;
+                return turno;
             }else{
                 connection.close();
                 return null;
@@ -55,17 +55,18 @@ public class DiaDAO extends AbstractDAO {
         return null;
     }
 
-    public void insert(Dia dia) {
-        String sql = "INSERT INTO dia (descricao) VALUES (?);";
+    public void insert(Turno turno) {
+        String sql = "INSERT INTO turno (descricao) VALUES (?);";
         ArrayList<Object> params = new ArrayList<Object>();
-        params.add(dia.getNome());
+        params.add(turno.getNome());
         operacaoEscrita(sql, params);
     }
 
-    public void delete(Dia dia) {
-        String sql = "DELETE FROM dia WHERE descricao = ?;";
+    public void delete(Turno turno) {
+        String sql = "DELETE FROM turno WHERE descricao = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
-        params.add(dia.getNome());
+        params.add(turno.getNome());
         operacaoEscrita(sql, params);
     }
+    
 }
