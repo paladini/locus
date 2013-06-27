@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author silvio
+ * @author fernando_paladini
  */
-public class TurnoDAO extends AbstractDAO {
+public class TurnoDAO extends AbstractDAO{
     
     /**
      * Faz consulta no banco de dados e retorna apenas um dia com esse nome.
