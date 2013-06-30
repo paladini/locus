@@ -16,6 +16,9 @@ public class EsqueciMinhaSenha extends javax.swing.JFrame {
     public EsqueciMinhaSenha() {
         initComponents();
 
+        // Não fechar todas as janelas ao fechar esta janela.
+        setDefaultCloseOperation(EsqueciMinhaSenha.DISPOSE_ON_CLOSE);
+        
         // Desativa campos de envio até que usuário clique no CheckBox
         jTextField1.setEnabled(false);
         jTextArea1.setEnabled(false);

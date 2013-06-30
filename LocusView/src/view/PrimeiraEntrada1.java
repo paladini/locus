@@ -7,6 +7,7 @@ package view;
 import control.ControleDia;
 import control.ControleEscola;
 import control.ControleLogin;
+import control.ControleTurno;
 import entidades.Dia;
 import entidades.Escola;
 import entidades.Login;
@@ -18,12 +19,23 @@ import entidades.Turno;
  */
 public class PrimeiraEntrada1 extends javax.swing.JFrame {
 
+    // Variáveis para dias e turnos
     Dia segunda = new Dia("Segunda");
     Dia terca = new Dia("Terca");
     Dia quarta = new Dia("Quarta");
     Dia quinta = new Dia("Quinta");
     Dia sexta = new Dia("Sexta");
+    Turno matutino = new Turno("Matutino");
+    Turno vespertino = new Turno("Vespertino");
+    Turno noturno = new Turno("Notruno");
     ControleDia cd = new ControleDia();
+    ControleTurno ct = new ControleTurno();
+    
+    // Variáveis para liberar o botão "Próxima"
+    boolean turnos = false;
+    boolean dias = false;
+    boolean senha = false;
+    boolean instituicao = false;
 
     /**
      * Creates new form PrimeiraEntrada1
@@ -54,9 +66,41 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         if (cd.checarDia(sexta)) {
             jCheckBox5.setSelected(true);
         }
+        
+        // Recuperando turnos
+        if (ct.checarDia(matutino)) {
+            jCheckBox6.setSelected(true);
+        }
+
+        if (ct.checarDia(vespertino)) {
+            jCheckBox7.setSelected(true);
+        }
+
+        if (ct.checarDia(noturno)) {
+            jCheckBox8.setSelected(true);
+        }
 
     }
 
+    /**
+     * Verifica se já pode liberar o botão próxima, ou seja,
+     * se a variável turnos, dias, instituicao e senha estão como true.
+     * @return 
+     */
+    private boolean checarProxima(){
+        if ((turnos == true) &&
+            (dias == true) &&
+            (instituicao == true) &&
+            (senha == true)          ){
+            
+            return true;
+            
+        }else{
+            return false;
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,6 +213,11 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         });
 
         jCheckBox6.setText("Matutino");
+        jCheckBox6.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox6ItemStateChanged(evt);
+            }
+        });
         jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox6ActionPerformed(evt);
@@ -176,6 +225,11 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         });
 
         jCheckBox7.setText("Vespertino");
+        jCheckBox7.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox7ItemStateChanged(evt);
+            }
+        });
         jCheckBox7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox7ActionPerformed(evt);
@@ -183,6 +237,11 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         });
 
         jCheckBox8.setText("Noturno");
+        jCheckBox8.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox8ItemStateChanged(evt);
+            }
+        });
         jCheckBox8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox8ActionPerformed(evt);
@@ -326,20 +385,6 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         String senha = jPasswordField1.getText();
         int resultado = 0;
 
-        // Setando turnos     
-        if (jCheckBox6.isSelected()) {
-            Turno matutino = new Turno("Matutino");
-            escola.adicionarTurno(matutino);
-        }
-        if (jCheckBox7.isSelected()) {
-            Turno vespertino = new Turno("Vespertino");
-            escola.adicionarTurno(vespertino);
-        }
-        if (jCheckBox8.isSelected()) {
-            Turno noturno = new Turno("Noturno");
-            escola.adicionarTurno(noturno);
-        }
-
         // Setando nova senha
         login.setSenha(senha);
 
@@ -415,6 +460,70 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCheckBox5ItemStateChanged
 
+    private void jCheckBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox6ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox6.isSelected()) {
+            ct.adicionarDia(matutino);
+        }
+        if (!jCheckBox6.isSelected()){
+            ct.removerDia(matutino);
+        }
+    }//GEN-LAST:event_jCheckBox6ItemStateChanged
+
+    private void jCheckBox7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox7ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox7.isSelected()) {
+            ct.adicionarDia(vespertino);
+        }
+        if (!jCheckBox7.isSelected()){
+            ct.removerDia(vespertino);
+        }
+    }//GEN-LAST:event_jCheckBox7ItemStateChanged
+
+    private void jCheckBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox8ItemStateChanged
+        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        if (jCheckBox8.isSelected()) {
+            ct.adicionarDia(noturno);
+        }
+        if (!jCheckBox8.isSelected()){
+            ct.removerDia(noturno);
+        }
+    }//GEN-LAST:event_jCheckBox8ItemStateChanged
+
+    public boolean isTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(boolean turnos) {
+        this.turnos = turnos;
+    }
+
+    public boolean isDias() {
+        return dias;
+    }
+
+    public void setDias(boolean dias) {
+        this.dias = dias;
+    }
+
+    public boolean isSenha() {
+        return senha;
+    }
+
+    public void setSenha(boolean senha) {
+        this.senha = senha;
+    }
+
+    public boolean isInstituicao() {
+        return instituicao;
+    }
+
+    public void setInstituicao(boolean instituicao) {
+        this.instituicao = instituicao;
+    }
+
+    
+    
     /**
      * @param args the command line arguments
      */
