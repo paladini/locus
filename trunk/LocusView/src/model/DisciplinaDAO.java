@@ -4,6 +4,7 @@
  */
 package model;
 
+import entidades.Curso;
 import entidades.Disciplina;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -137,9 +138,17 @@ public class DisciplinaDAO extends AbstractDAO {
     }
 
     public void delete(Disciplina disciplinaAntiga) {
+        deleteAssociacoes(disciplinaAntiga);
         String sql = "DELETE FROM disciplina WHERE idDisciplina = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(disciplinaAntiga.getId());
+        operacaoEscrita(sql, params);
+    }
+    
+     private void deleteAssociacoes(Disciplina disciplina) {
+        String sql = "delete from Curso_has_Disciplina where Disciplina_idDisciplina = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(disciplina.getId());
         operacaoEscrita(sql, params);
     }
 }

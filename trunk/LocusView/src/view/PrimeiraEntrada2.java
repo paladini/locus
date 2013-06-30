@@ -27,6 +27,9 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
     public PrimeiraEntrada2() {
         initComponents();
         
+        // Desativando botão próxima
+        jLabel20.setEnabled(false);
+        
         // Cria uma coluna para a tabela
         Object colunas[] = { "Disciplinas" }; 
         
@@ -98,6 +101,7 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
             for (Disciplina temp : consulta){
                 modelo.addRow(new String [] { temp.getNome() });
             }
+            jLabel20.setEnabled(true);
         }
         
     }
@@ -124,6 +128,11 @@ public class PrimeiraEntrada2 extends javax.swing.JFrame {
         // e vai os chamando de "temp". 
         for (Disciplina temp : consulta){
             modelo.addRow(new String [] { temp.getNome() });
+        }
+        
+        // Se o número de linhas for maior do que 0, ativa o botão "Próxima"
+        if (modelo.getRowCount() > 0){
+             jLabel20.setEnabled(true);
         }
     }
     
