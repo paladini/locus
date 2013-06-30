@@ -45,7 +45,10 @@ public class ControleProfessor {
      * @param disciplinaAdicionar
      */
     public void adicionar(Professor professor) {
-        modelo.insert(professor);
+         // Se não existir nenhum curso com esse nome, manda inserir o curso.
+        if (consultaProfessor(professor.getNome()) == null){
+            modelo.insert(professor);
+        }
     }
 
     /**
