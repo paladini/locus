@@ -30,10 +30,9 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
     Turno noturno = new Turno("Notruno");
     ControleDia cd = new ControleDia();
     ControleTurno ct = new ControleTurno();
-    
     // Variáveis para liberar o botão "Próxima"
-    boolean turnos = false;
-    boolean dias = false;
+    int turnos = 0;
+    int dias = 0;
     boolean senha = false;
     boolean instituicao = false;
 
@@ -66,7 +65,7 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         if (cd.checarDia(sexta)) {
             jCheckBox5.setSelected(true);
         }
-        
+
         // Recuperando turnos
         if (ct.checarDia(matutino)) {
             jCheckBox6.setSelected(true);
@@ -83,24 +82,26 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
     }
 
     /**
-     * Verifica se já pode liberar o botão próxima, ou seja,
-     * se a variável turnos, dias, instituicao e senha estão como true.
-     * @return 
+     * Verifica se já pode liberar o botão próxima, ou seja, se a variável
+     * turnos, dias são maiores do que 0 e as variáveis instituicao e senha
+     * estão como true.
+     *
+     * @return
      */
-    private boolean checarProxima(){
-        if ((turnos == true) &&
-            (dias == true) &&
-            (instituicao == true) &&
-            (senha == true)          ){
-            
-            return true;
-            
-        }else{
-            return false;
+    private void checarProxima() {
+        if ((turnos > 0)
+                && (dias > 0)
+                && (instituicao == true)
+                && (senha == true)) {
+
+            if (!jLabel20.isEnabled()) {
+                jLabel20.setEnabled(true);
+            }
+        } else {
+            jLabel20.setEnabled(false);
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,11 +167,21 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
                 jTextField5jTextField2ActionPerformed(evt);
             }
         });
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField5KeyTyped(evt);
+            }
+        });
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel21.setText("Senha  de acesso:");
 
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyTyped(evt);
+            }
+        });
 
         jCheckBox1.setText("Segunda-feira");
         jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
@@ -392,29 +403,29 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         escola.setNomeEscola(nomeInstituicao);
 
         // Salvando no banco e abrindo a nova tela. (O igual a 0 é para ver se retornou algum erro. Se retornar 1, é pq teve erro.
-        if (ce.adicionarHorario(escola) == 0) {
-            if (ce.mudarNome(escola) == 0) {
-                if (cl.primeiraEntrada(login) == 0) {
-                    dispose();
-                    PrimeiraEntrada2 primeiraEntrada2 = new PrimeiraEntrada2();
-                    primeiraEntrada2.setVisible(true);
-                    primeiraEntrada2.setLocationRelativeTo(null);
-                    primeiraEntrada2.setResizable(false);
-                }
+        if (ce.mudarNome(escola) == 0) {
+            if (cl.primeiraEntrada(login) == 0) {
+                dispose();
+                PrimeiraEntrada2 primeiraEntrada2 = new PrimeiraEntrada2();
+                primeiraEntrada2.setVisible(true);
+                primeiraEntrada2.setLocationRelativeTo(null);
+                primeiraEntrada2.setResizable(false);
             }
         }
-
     }//GEN-LAST:event_jLabel20MouseClicked
-
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
 
         // Se o jCheckBox1 estiver selecionado, cria um novo dia e insere no banco de dados.
         if (jCheckBox1.isSelected()) {
             cd.adicionarDia(segunda);
+            setDias(getDias() + 1);
+            this.checarProxima();
         }
         
         if (!jCheckBox1.isSelected()){
             cd.removerDia(segunda);
+            setDias(getDias() - 1);
+            this.checarProxima();
         }
 
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
@@ -424,9 +435,19 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
         if (jCheckBox3.isSelected()) {
             cd.adicionarDia(terca);
+            setDias(getDias() + 1);
+            this.checarProxima();
         }
         if (!jCheckBox3.isSelected()){
+            
+            // Remove dia do banco de dados
             cd.removerDia(terca);
+            
+            // Seta a variável de dias com "-1" (essa variável vai dizer se pode passar para a próxima etapa)
+            setDias(getDias() - 1);
+            
+            // Chama o método para verificar se pode ou não liberar o botão próxima
+            this.checarProxima();
         }
     }//GEN-LAST:event_jCheckBox3ItemStateChanged
 
@@ -434,9 +455,13 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
         if (jCheckBox2.isSelected()) {
             cd.adicionarDia(quarta);
+            setDias(getDias() + 1);
+            this.checarProxima();
         }
         if (!jCheckBox2.isSelected()){
             cd.removerDia(quarta);
+            setDias(getDias() - 1);
+            this.checarProxima();
         }
     }//GEN-LAST:event_jCheckBox2ItemStateChanged
 
@@ -444,9 +469,13 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
         if (jCheckBox4.isSelected()) {
             cd.adicionarDia(quinta);
+            setDias(getDias() + 1);
+            this.checarProxima();
         }
         if (!jCheckBox4.isSelected()){
             cd.removerDia(quinta);
+            setDias(getDias() - 1);
+            this.checarProxima();
         }
     }//GEN-LAST:event_jCheckBox4ItemStateChanged
 
@@ -454,9 +483,13 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
         if (jCheckBox5.isSelected()) {
             cd.adicionarDia(sexta);
+            setDias(getDias() + 1);
+            this.checarProxima();
         }
         if (!jCheckBox5.isSelected()){
             cd.removerDia(sexta);
+            setDias(getDias() - 1);
+            this.checarProxima();
         }
     }//GEN-LAST:event_jCheckBox5ItemStateChanged
 
@@ -464,9 +497,13 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
         if (jCheckBox6.isSelected()) {
             ct.adicionarDia(matutino);
+            setTurnos(getTurnos() + 1);
+            this.checarProxima();
         }
         if (!jCheckBox6.isSelected()){
             ct.removerDia(matutino);
+            setTurnos(getTurnos() - 1);
+            this.checarProxima();
         }
     }//GEN-LAST:event_jCheckBox6ItemStateChanged
 
@@ -474,38 +511,69 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
         // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
         if (jCheckBox7.isSelected()) {
             ct.adicionarDia(vespertino);
+            setTurnos(getTurnos() + 1);
+            this.checarProxima();
         }
         if (!jCheckBox7.isSelected()){
             ct.removerDia(vespertino);
+            setTurnos(getTurnos() - 1);
+            this.checarProxima();
         }
     }//GEN-LAST:event_jCheckBox7ItemStateChanged
 
     private void jCheckBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox8ItemStateChanged
-        // Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+        /*
+         * Se o jCheckBox3 estiver ativado, cria um novo dia e insere no banco de dados.
+         * Além disso, adiciona "1" na variável "turnos" (para liberar o botão "Próxima").
+         */
         if (jCheckBox8.isSelected()) {
             ct.adicionarDia(noturno);
+            setTurnos(getTurnos() + 1);
+            this.checarProxima();
         }
         if (!jCheckBox8.isSelected()){
             ct.removerDia(noturno);
+            setTurnos(getTurnos() - 1);
+            this.checarProxima();
         }
     }//GEN-LAST:event_jCheckBox8ItemStateChanged
 
-    public boolean isTurnos() {
+    private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
+        if (jTextField5.getText().length() > 0){
+            setInstituicao(true);
+            this.checarProxima();
+        }else{
+            setInstituicao(false);
+            this.checarProxima();
+        }
+    }//GEN-LAST:event_jTextField5KeyTyped
+
+    private void jPasswordField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyTyped
+        if (jPasswordField1.getText().length() > 0){
+            setSenha(true);
+            this.checarProxima();
+        } else{
+            setSenha(false);
+            this.checarProxima();
+        }
+    }//GEN-LAST:event_jPasswordField1KeyTyped
+
+    public int getTurnos() {
         return turnos;
     }
 
-    public void setTurnos(boolean turnos) {
+    public void setTurnos(int turnos) {
         this.turnos = turnos;
     }
 
-    public boolean isDias() {
+    public int getDias() {
         return dias;
     }
 
-    public void setDias(boolean dias) {
+    public void setDias(int dias) {
         this.dias = dias;
     }
-
+    
     public boolean isSenha() {
         return senha;
     }
@@ -538,16 +606,32 @@ public class PrimeiraEntrada1 extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrimeiraEntrada1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrimeiraEntrada1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrimeiraEntrada1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrimeiraEntrada1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrimeiraEntrada1.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PrimeiraEntrada1.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PrimeiraEntrada1.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PrimeiraEntrada1.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
