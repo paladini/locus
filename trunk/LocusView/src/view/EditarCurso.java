@@ -29,12 +29,12 @@ public class EditarCurso extends javax.swing.JFrame {
      */
     public EditarCurso(String nomeCurso) {
 
-        // Não fechar todas as janelas ao fechar esta janela.
-        setDefaultCloseOperation(EditarCurso.DISPOSE_ON_CLOSE);
-
         // Inicializa todos os componentes
         initComponents();
 
+        // Não fechar todas as janelas ao fechar esta janela.
+        setDefaultCloseOperation(EditarCurso.DISPOSE_ON_CLOSE);
+        
         // Instancia um novo ControleCurso
         ControleCurso cc = new ControleCurso();
 

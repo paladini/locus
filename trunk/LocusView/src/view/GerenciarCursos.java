@@ -392,6 +392,7 @@ public class GerenciarCursos extends javax.swing.JFrame {
                 recarregarCursos();
                 jLabel3.setText("Curso adicionado!");
                 jLabel3.setVisible(true);
+                jTextField1.setText("");
             }
         });
 

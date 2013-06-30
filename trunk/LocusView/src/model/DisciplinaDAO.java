@@ -137,9 +137,9 @@ public class DisciplinaDAO extends AbstractDAO {
     }
 
     public void delete(Disciplina disciplinaAntiga) {
-        String sql = "DELETE FROM disciplina WHERE nome = ?;";
+        String sql = "DELETE FROM disciplina WHERE idDisciplina = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
-        params.add(disciplinaAntiga.getNome());
+        params.add(disciplinaAntiga.getId());
         operacaoEscrita(sql, params);
     }
 }

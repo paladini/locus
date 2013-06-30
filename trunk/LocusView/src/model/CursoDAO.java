@@ -69,22 +69,28 @@ public class CursoDAO extends AbstractDAO {
             prest.setString(1, nomeCurso);
             ResultSet rs = prest.executeQuery();
 
-            // Cria uma nova disciplina
-            Curso curso = new Curso();
-
             // Pega o primeiro registro do retorno da consulta
-            rs.next();
+            if (rs.next()) {
+                
+                // Cria uma nova disciplina
+                Curso curso = new Curso();
 
-            // Pega os dados desse registro e guarda em variáveis
-            int id = rs.getInt("idCurso");
-            String nome = rs.getString("nome");
+                // Pega os dados desse registro e guarda em variáveis
+                int id = rs.getInt("idCurso");
+                String nome = rs.getString("nome");
 
-            // Seta os dados na disciplina criada
-            curso.setId(id);
-            curso.setNome(nome);
+                // Seta os dados na disciplina criada
+                curso.setId(id);
+                curso.setNome(nome);
 
-            connection.close();
-            return curso;
+                connection.close();
+                return curso;
+            }else{
+                connection.close();
+                return null;
+            }
+
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -146,12 +152,12 @@ public class CursoDAO extends AbstractDAO {
         // Chama um outro método para excluir as disciplinas associadas a esse curso.
         this.deleteAssociacoes(cursoAntigo);
 
-        String sql = "DELETE FROM curso WHERE nome = ?;";
+        String sql = "DELETE FROM curso WHERE idCurso = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
-        params.add(cursoAntigo.getNome());
+        params.add(cursoAntigo.getId());
         operacaoEscrita(sql, params);
     }
-    
+
     /*
      * 
      *    ======================================================================
@@ -161,8 +167,6 @@ public class CursoDAO extends AbstractDAO {
      *    ======================================================================
      * 
      */
-
-    
     /**
      * Retorna a lista de todas as disciplinas associadas à esse curso
      *
@@ -264,10 +268,9 @@ public class CursoDAO extends AbstractDAO {
      * 
      * ============================================
      */
-    
     /**
-     * Deleta todas as associações entre curso e disciplina. 
-     * (Necessário para poder excluir o curso sem deixar dependências).
+     * Deleta todas as associações entre curso e disciplina. (Necessário para
+     * poder excluir o curso sem deixar dependências).
      *
      * @param curso
      */
