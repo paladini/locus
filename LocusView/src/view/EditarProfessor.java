@@ -31,11 +31,12 @@ public class EditarProfessor extends javax.swing.JFrame {
      */
     public EditarProfessor(String nomeProfessor) {
 
-        // Não fechar todas as janelas ao fechar esta janela.
-        setDefaultCloseOperation(EditarProfessor.DISPOSE_ON_CLOSE);
 
         // Inicializa todos os componentes
         initComponents();
+        
+        // Não fechar todas as janelas ao fechar esta janela.
+        setDefaultCloseOperation(EditarProfessor.DISPOSE_ON_CLOSE);
 
         ControleProfessor cp = new ControleProfessor();
 

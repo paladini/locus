@@ -46,7 +46,12 @@ public class ControleCurso {
      * @param disciplinaAdicionar
      */
     public void adicionar(Curso cursoAdicionar) {
-        modelo.insert(cursoAdicionar);
+        
+        // Se não existir nenhum curso com esse nome, manda inserir o curso.
+        if (consultaCurso(cursoAdicionar.getNome()) == null){
+            modelo.insert(cursoAdicionar);
+        }
+        
     }
 
     /**
