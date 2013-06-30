@@ -17,7 +17,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import util.LineWrapCellRenderer;
 
@@ -97,9 +96,10 @@ public class GerarEnsalamento extends javax.swing.JFrame {
             modelo.removeRow(i);
         }
 
+        // Técnico em Informática
         if (tipo instanceof Turma) {
 
-            modelo.addRow(new String[]{"",
+            modelo.addRow(new String[]{"                                      ",
                 "                                      ",
                 "                                      ",
                 "                                      ",
@@ -120,75 +120,81 @@ public class GerarEnsalamento extends javax.swing.JFrame {
                 "                                      "
             });
         } else {
+            
+            // G23
             if (tipo instanceof Sala) {
 
-                modelo.addRow(new String[]{"",
+                modelo.addRow(new String[]{"                                      ",
+                    "                                      ",
+                    "                                      ",
+                    "                                      ",
+                    "                                      "
+                });
+
+                modelo.addRow(new String[]{"Daniel \nDisciplina: POO \nTécnico em Informática - 2012/01 - V2",
                     "",
                     "",
-                    "",
+                    "Daniel \nDisciplina: POO \nTécnico em Informática - 2012/01 - V2",
                     ""
                 });
 
-                modelo.addRow(new String[]{"Professor: Daniel \n Disciplina: POO \n Turma: Técnico em Informática - 2012/01 - V2",
-                    "",
-                    "",
-                    "Professor: Daniel \n Disciplina: POO \n Turma: Técnico em Informática - 2012/01 - V2",
-                    ""
-                });
-
                 modelo.addRow(new String[]{"",
-                    "",
-                    "",
-                    "",
-                    ""
+                    "                                      ",
+                    "                                      ",
+                    "                                      ",
+                    "                                      "
                 });
 
             } else {
+                
+                // Banco de Dados
                 if (tipo instanceof Disciplina) {
 
-                    modelo.addRow(new String[]{"",
-                        "",
-                        "",
-                        "",
-                        ""
+                    modelo.addRow(new String[]{"                                      ",
+                        "                                      ",
+                        "                                      ",
+                        "                                      ",
+                        "                                      "
                     });
 
-                    modelo.addRow(new String[]{"Turma: Disciplina: POO \n Sala: G23",
-                        "Professor: Andrenizia \n Disciplina: Projeto de Software \n Sala: G24",
-                        "Professor: Artur \n Disciplina: Banco de Dados II \n Sala: G24",
-                        "Professor: Daniel \n Disciplina: POO \n Sala: G24",
-                        ""
+                    modelo.addRow(new String[]{"                                      ",
+                        "                                      ",
+                        "Artur \nSala: G23 \nTécnico em Informática - 2012/01 - V2",
+                        "                                      ",
+                        "                                      "
                     });
 
                     modelo.addRow(new String[]{"",
-                        "",
-                        "",
-                        "",
-                        ""
+                        "                                      ",
+                        "                                      ",
+                        "                                      ",
+                        "                                      "
                     });
 
                 } else {
+                    
+                    // Daniel
                     if (tipo instanceof Professor) {
 
-                        modelo.addRow(new String[]{"",
-                            "",
-                            "",
-                            "",
-                            ""
+                        modelo.addRow(new String[]{"                                      ",
+                            "                                      ",
+                            "                                      ",
+                            "                                      ",
+                            "                                      "
                         });
 
-                        modelo.addRow(new String[]{"Turma: Técnico em Informática - 2012/01 - V2 \n Disciplina: POO \n Sala: G23",
-                            "",
-                            "",
-                            "Turma: Técnico em Informática - 2012/01 - V2 \n Disciplina: POO \n Sala: G24",
-                            ""
+                        modelo.addRow(new String[]{"Turma: Técnico em Informática - 2012/01 - V2 \nDisciplina: POO \nSala: G23",
+                            "                                      ",
+                            "                                      ",
+                            "Turma: Técnico em Informática - 2012/01 - V2 \nDisciplina: POO \nSala: G23",
+                            "                                      "
                         });
 
-                        modelo.addRow(new String[]{"",
-                            "",
-                            "",
-                            "",
-                            ""
+                        modelo.addRow(new String[]{"                                      ",
+                            "                                      ",
+                            "                                      ",
+                            "                                      ",
+                            "                                      "
                         });
                     }
                 }
