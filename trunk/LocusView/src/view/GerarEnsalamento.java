@@ -4,7 +4,6 @@
  */
 package view;
 
-import control.ControleCurso;
 import control.ControleDisciplina;
 import control.ControleProfessor;
 import control.ControleSala;
@@ -13,8 +12,14 @@ import entidades.Disciplina;
 import entidades.Professor;
 import entidades.Sala;
 import entidades.Turma;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import util.LineWrapCellRenderer;
 
 /**
  *
@@ -37,7 +42,161 @@ public class GerarEnsalamento extends javax.swing.JFrame {
         // Seta o modelo na Lista
         jList1.setModel(lista1);
 
+        // Carrega lista de turmas
         this.recarregarTurmas();
+
+        /*
+         * ===========================================
+         *            TABELA DO ENSALAMENTO
+         * ===========================================
+         */
+
+        // Cria as colunas
+        Object colunas[] = {"Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira"};
+
+        // Cria o modelo
+        final DefaultTableModel modelo = new DefaultTableModel(colunas, 0) {
+            public Class getColumnClass(int columnIndex) {
+                return String.class;
+            }
+
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        // Seta o modelo na tabela e um novo tamanho para as linhas
+        jTable1.setModel(modelo);
+
+        jTable1.setRowHeight(jTable1.getRowHeight() + 20);
+        jTable1.setDefaultRenderer(String.class, new LineWrapCellRenderer());
+
+        // Mouse listener
+        jList1.addMouseListener(
+                new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList) evt.getSource();
+                if (evt.getClickCount() == 2) {
+
+                    int index = list.locationToIndex(evt.getPoint());
+
+                    Object hue = lista1.getElementAt(index);
+
+                    carregarDados(hue);
+
+                }
+            }
+        });
+
+    }
+
+    private void carregarDados(Object tipo) {
+
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+
+        if (tipo instanceof Turma) {
+
+            modelo.addRow(new String[]{"",
+                "                                      ",
+                "                                      ",
+                "                                      ",
+                "                                      "
+            });
+
+            modelo.addRow(new String[]{"Daniel \nDisciplina:POO \nSala:G23",
+                "Andrenizia \nDisciplina:Projeto de Software \nSala:G24",
+                "Artur \nDisciplina: BD II \nSala:G24",
+                "Daniel \nDisciplina:POO \nSala:G23",
+                ""
+            });
+
+            modelo.addRow(new String[]{"",
+                "                                      ",
+                "                                      ",
+                "                                      ",
+                "                                      "
+            });
+        } else {
+            if (tipo instanceof Sala) {
+
+                modelo.addRow(new String[]{"",
+                    "",
+                    "",
+                    "",
+                    ""
+                });
+
+                modelo.addRow(new String[]{"Professor: Daniel \n Disciplina: POO \n Turma: Técnico em Informática - 2012/01 - V2",
+                    "",
+                    "",
+                    "Professor: Daniel \n Disciplina: POO \n Turma: Técnico em Informática - 2012/01 - V2",
+                    ""
+                });
+
+                modelo.addRow(new String[]{"",
+                    "",
+                    "",
+                    "",
+                    ""
+                });
+
+            } else {
+                if (tipo instanceof Disciplina) {
+
+                    modelo.addRow(new String[]{"",
+                        "",
+                        "",
+                        "",
+                        ""
+                    });
+
+                    modelo.addRow(new String[]{"Turma: Disciplina: POO \n Sala: G23",
+                        "Professor: Andrenizia \n Disciplina: Projeto de Software \n Sala: G24",
+                        "Professor: Artur \n Disciplina: Banco de Dados II \n Sala: G24",
+                        "Professor: Daniel \n Disciplina: POO \n Sala: G24",
+                        ""
+                    });
+
+                    modelo.addRow(new String[]{"",
+                        "",
+                        "",
+                        "",
+                        ""
+                    });
+
+                } else {
+                    if (tipo instanceof Professor) {
+
+                        modelo.addRow(new String[]{"",
+                            "",
+                            "",
+                            "",
+                            ""
+                        });
+
+                        modelo.addRow(new String[]{"Turma: Técnico em Informática - 2012/01 - V2 \n Disciplina: POO \n Sala: G23",
+                            "",
+                            "",
+                            "Turma: Técnico em Informática - 2012/01 - V2 \n Disciplina: POO \n Sala: G24",
+                            ""
+                        });
+
+                        modelo.addRow(new String[]{"",
+                            "",
+                            "",
+                            "",
+                            ""
+                        });
+                    }
+                }
+            }
+        }
+
+
+
     }
 
     private void recarregarTurmas() {
@@ -159,6 +318,8 @@ public class GerarEnsalamento extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locus - Relatório de Ensalamento");
@@ -292,6 +453,26 @@ public class GerarEnsalamento extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("jLabel6");
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -327,6 +508,8 @@ public class GerarEnsalamento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -346,10 +529,13 @@ public class GerarEnsalamento extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 26, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -485,16 +671,22 @@ public class GerarEnsalamento extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GerarEnsalamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerarEnsalamento.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GerarEnsalamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerarEnsalamento.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GerarEnsalamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerarEnsalamento.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GerarEnsalamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerarEnsalamento.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -522,7 +714,13 @@ public class GerarEnsalamento extends javax.swing.JFrame {
     private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
+// Tentando fazer um negócio de várias linhas em uma única linha do modelo.
+/**
+ * Multiline Table Cell Renderer.
+ */
