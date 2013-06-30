@@ -25,7 +25,7 @@ public class LineWrapCellRenderer extends JTextArea implements TableCellRenderer
 
         int fontHeight = this.getFontMetrics(this.getFont()).getHeight();
         int textLength = this.getText().length();
-        int lines = textLength / 5 + 1;//+1, cause we need at least 1 row.           
+        int lines = textLength / 7 + 1;//+1, cause we need at least 1 row.           
         int height = fontHeight * lines;
         table.setRowHeight(row, height);
         this.setText((String) value);
