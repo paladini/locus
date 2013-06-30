@@ -255,6 +255,9 @@ public class GerenciarSalas extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png"))); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel2MouseEntered(evt);
             }
@@ -307,7 +310,7 @@ public class GerenciarSalas extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 42, Short.MAX_VALUE)
+                .addGap(0, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 797, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -458,6 +461,14 @@ public class GerenciarSalas extends javax.swing.JFrame {
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png")));
     }//GEN-LAST:event_jLabel2MouseExited
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
+        dispose();
+        GerarEnsalamento gerarEnsalamento = new GerarEnsalamento();
+        gerarEnsalamento.setVisible(true);
+        gerarEnsalamento.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments
