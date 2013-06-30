@@ -146,6 +146,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png"))); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel2MouseEntered(evt);
             }
@@ -310,7 +313,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        
+
         // Se essa janela (this) NÃO for uma instância de "MenuPrincipal", é possível clicar no Logo.
         if (!(this instanceof MenuPrincipal)) {
             // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
@@ -321,6 +324,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
+        dispose();
+        GerarEnsalamento gerarEnsalamento = new GerarEnsalamento();
+        gerarEnsalamento.setVisible(true);
+        gerarEnsalamento.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments

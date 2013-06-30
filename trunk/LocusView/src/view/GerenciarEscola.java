@@ -330,6 +330,9 @@ public class GerenciarEscola extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png"))); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel2MouseEntered(evt);
             }
@@ -777,6 +780,14 @@ public class GerenciarEscola extends javax.swing.JFrame {
     private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
         this.checarInstituicao();
     }//GEN-LAST:event_jTextField5KeyTyped
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
+        dispose();
+        GerarEnsalamento gerarEnsalamento = new GerarEnsalamento();
+        gerarEnsalamento.setVisible(true);
+        gerarEnsalamento.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     public int getTurnos() {
         return turnos;

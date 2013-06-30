@@ -4,89 +4,96 @@
  */
 package view;
 
+import control.ControleCurso;
 import control.ControleDisciplina;
+import control.ControleProfessor;
+import control.ControleSala;
+import control.ControleTurma;
 import entidades.Disciplina;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import entidades.Professor;
+import entidades.Sala;
+import entidades.Turma;
 import java.util.ArrayList;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultListModel;
 
 /**
  *
  * @author silvio
  */
-public class GerenciarDisciplinas extends javax.swing.JFrame {
+public class GerarEnsalamento extends javax.swing.JFrame {
 
     /**
-     * Creates new form GerenciarDisciplinas
+     * Creates new form GerarEnsalamento
      */
-    public GerenciarDisciplinas() {
+    public GerarEnsalamento() {
         initComponents();
 
-        // Cria uma coluna para a tabela
-        Object colunas[] = {"Disciplinas"};
+        // Setar como desativado o jLabel6 ("jLabel6")
+        jLabel6.setText("Turmas:");
 
-        // Cria um modelo e diz que ele tem uma coluna (e depois sobreescrevendo um método para não ser possível editar a table)
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0) {
-            public boolean isCellEditable(int row, int col) {
-                return false;
-            }
-        };
+        // Cria um modelo para a Lista.
+        final DefaultListModel lista1 = new DefaultListModel();
 
-        // Seta o modelo na tabela, seta uma nova fonte e aumenta o tamanho das linhas.
-        jTable1.setModel(modelo);
-        jTable1.setFont(new Font("Helvetica", Font.PLAIN, 18));
-        jTable1.setRowHeight(jTable1.getRowHeight() + 10);
+        // Seta o modelo na Lista
+        jList1.setModel(lista1);
 
-        // Atualiza as disciplinas exibidas
-        this.recarregarDisciplinas();
-
-        // "Listener", para "escutar" um duplo clique nas linhas dentro da tabela.
-        jTable1.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    JTable target = (JTable) e.getSource();
-                    int row = target.getSelectedRow();
-                    int column = target.getSelectedColumn();
-
-                    // Pega o nome da disciplina nessa posição
-                    String nomeDisciplina = (String) jTable1.getValueAt(row, column);
-
-                    // Instancia nova "view" chamada "editar". Em seguida exibe ela para o usuário centralizada.
-                    Editar editar = new Editar(0, nomeDisciplina);
-                    editar.setVisible(true);
-                    editar.setLocationRelativeTo(null);
-
-                    // "Listener" para recarregar as disciplinas quando fechar a janela de "editar disciplinas". 
-                    editar.addWindowListener(new WindowAdapter() {
-                        public void windowClosed(WindowEvent evt) {
-                            recarregarDisciplinas();
-                        }
-                    });
-                }
-            }
-        });
+        this.recarregarTurmas();
     }
 
-    /**
-     * Faz uma nova consulta no banco de dados, atualizando todas as disciplinas
-     * na lista de disciplinas.
-     */
-    private void recarregarDisciplinas() {
-
+    private void recarregarTurmas() {
         // Variável "modelo" é o "modelo" da jTable1
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        DefaultListModel modelo = (DefaultListModel) jList1.getModel();
 
-        // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
-        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
-            modelo.removeRow(i);
+        // Remove todos os elementos da lista
+        modelo.removeAllElements();
+
+        // Instancia um novo ControleCurso
+        ControleTurma ct = new ControleTurma();
+
+        // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
+        ArrayList<Turma> consulta = ct.consulta();
+
+        // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
+        // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
+        // e vai os chamando de "temp". 
+        if (!(consulta.isEmpty())) {
+            for (Turma temp : consulta) {
+                modelo.addElement(temp);
+            }
         }
+    }
 
-        // Instancia um novo ControleDisciplina
+    private void recarregarSalas() {
+        // Variável "modelo" é o "modelo" da jTable1
+        DefaultListModel modelo = (DefaultListModel) jList1.getModel();
+
+        // Remove todos os elementos da lista
+        modelo.removeAllElements();
+
+        // Instancia um novo ControleCurso
+        ControleSala cs = new ControleSala();
+
+        // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
+        ArrayList<Sala> consulta = cs.consulta();
+
+        // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
+        // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
+        // e vai os chamando de "temp". 
+        if (!(consulta.isEmpty())) {
+            for (Sala temp : consulta) {
+                modelo.addElement(temp);
+            }
+        }
+    }
+
+    private void recarregarDisciplinas() {
+        // Variável "modelo" é o "modelo" da jTable1
+        DefaultListModel modelo = (DefaultListModel) jList1.getModel();
+
+        // Remove todos os elementos da lista
+        modelo.removeAllElements();
+
+        // Instancia um novo ControleCurso
         ControleDisciplina cd = new ControleDisciplina();
 
         // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
@@ -97,35 +104,31 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
         // e vai os chamando de "temp". 
         if (!(consulta.isEmpty())) {
             for (Disciplina temp : consulta) {
-                modelo.addRow(new String[]{temp.getNome()});
+                modelo.addElement(temp);
             }
         }
-
     }
 
-    /**
-     * Faz uma nova consulta no banco de dados com os termos digitados,
-     * atualizando as disciplinas na lista de disciplinas. Difere do método
-     * anterior pois leva em consideração os termos digitados pelo usuário.
-     */
-    private void recarregarDisciplinas(ArrayList<Disciplina> consulta) {
-
+    private void recarregarProfessores() {
         // Variável "modelo" é o "modelo" da jTable1
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        DefaultListModel modelo = (DefaultListModel) jList1.getModel();
 
-        // Limpa todas as linhas do modelo (para não simplesmente adicionar os mesmos resultados já existentes na lista.
-        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
-            modelo.removeRow(i);
-        }
+        // Remove todos os elementos da lista
+        modelo.removeAllElements();
 
-        // Instancia um novo ControleDisciplina
-        ControleDisciplina cd = new ControleDisciplina();
+        // Instancia um novo ControleCurso
+        ControleProfessor cd = new ControleProfessor();
+
+        // Faz a pesquisa no banco de dados, e armazena todas as disciplinas no ArrayList "consulta". 
+        ArrayList<Professor> consulta = cd.consulta();
 
         // Esse é o "for each". Percorre todo o ArrayList "consulta", chamando o elemento atual de "temp".
         // É uma implementação mais rápida para um "for" normal. Basicamente percorre elemento por elemento do arraylist
         // e vai os chamando de "temp". 
-        for (Disciplina temp : consulta) {
-            modelo.addRow(new String[]{temp.getNome()});
+        if (!(consulta.isEmpty())) {
+            for (Professor temp : consulta) {
+                modelo.addElement(temp);
+            }
         }
     }
 
@@ -138,13 +141,6 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -153,61 +149,19 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Locus - Disciplinas");
-
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField1.setToolTipText("Pesquise ou adicione uma disciplina...");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
-            }
-        });
-        jTextField1.setBounds(0, 0, 657, 34);
-        jLayeredPane1.add(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar-geral.fw.png"))); // NOI18N
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
-            }
-        });
-        jLabel5.setBounds(650, 0, 150, 34);
-        jLayeredPane1.add(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Disciplinas"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 102, 0));
-
-        jButton1.setText("Voltar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
+        setTitle("Locus - Relatório de Ensalamento");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo5.fw.png"))); // NOI18N
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 70));
@@ -257,20 +211,20 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-escola-selecionado.fw.png"))); // NOI18N
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png"))); // NOI18N
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_escola.png"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                jLabel4MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel2MouseEntered(evt);
+                jLabel4MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel2MouseExited(evt);
+                jLabel4MouseExited(evt);
             }
         });
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-ensalamento-selecionado.fw.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -311,103 +265,103 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Turma", "Sala", "Professor", "Disciplina" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setText("Organizar por:");
+
+        jCheckBox1.setSelected(true);
+        jCheckBox1.setText("Matutino");
+
+        jCheckBox2.setSelected(true);
+        jCheckBox2.setText("Vespertino");
+
+        jCheckBox3.setSelected(true);
+        jCheckBox3.setText("Noturno");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setText("Turnos:");
+
+        jScrollPane1.setViewportView(jList1);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setText("jLabel6");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(129, 129, 129)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(193, 193, 193)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jCheckBox1)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jCheckBox2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jCheckBox3))
+                                    .addComponent(jLabel5))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-
-        // Se existir algum texto no "jLabel3" (confirmação de que Disciplina foi inserida), vai limpar esse campo;
-        if (jLabel3.getText() != null) {
-            jLabel3.setText(null);
-        }
-
-        // Se existir algum texto, atualiza a lista de disciplinas de acordo com os termos digitados
-        String texto = jTextField1.getText();
-        if (texto.length() != 0) {
-            // Instancia novo gerenciar disciplina
-            ControleDisciplina cd = new ControleDisciplina();
-
-            // Recarrega as disciplinas de acordo com o
-            this.recarregarDisciplinas(cd.consultaComTermos(texto));
-        } else {
-            // Se não, exibe todas as disciplinas
-            this.recarregarDisciplinas();
-        }
-    }//GEN-LAST:event_jTextField1KeyTyped
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-
-        // Instancia disciplina (entidade) e controleDisciplina(controller)
-        Disciplina disciplina = new Disciplina();
-        ControleDisciplina cd = new ControleDisciplina();
-
-        // Pega nome do campo "jTextField1" e seta nome na disciplina
-        String nome = jTextField1.getText();
-        disciplina.setNome(nome);
-
-        // Chama método do controle para adicionar disciplina ao banco de dados
-        cd.adicionar(disciplina);
-
-        // Limpa campo de nome da disciplina (deixa em branco)
-        jTextField1.setText(null);
-
-        // Cria texto dizendo que disciplina foi adicionada
-        jLabel3.setText("Disciplina adicionada! ");
-
-        // Atualiza a lista de disciplinas
-        this.recarregarDisciplinas();
-
-    }//GEN-LAST:event_jLabel5MouseClicked
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        dispose();
-        GerenciarEscola gerenciarEscola = new GerenciarEscola();
-        gerenciarEscola.setVisible(true);
-        gerenciarEscola.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton1MouseClicked
-
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-
 
         // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
         dispose();
         MenuPrincipal menuPrincipal = new MenuPrincipal();
         menuPrincipal.setVisible(true);
         menuPrincipal.setLocationRelativeTo(null);
-
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
@@ -450,14 +404,54 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_turma.png")));
     }//GEN-LAST:event_jLabel16MouseExited
 
-    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
 
-        // Ao clicar no botão Salas, cria janela "Gerenciar Salas"
+        // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
         dispose();
-        GerenciarSalas gerenciarSalas = new GerenciarSalas();
-        gerenciarSalas.setVisible(true);
-        gerenciarSalas.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jLabel17MouseClicked
+        GerenciarEscola gerenciarEscola = new GerenciarEscola();
+        gerenciarEscola.setVisible(true);
+        gerenciarEscola.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
+        // Caso o usuário passe o mouse em cima, exibe essa imagem.
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-escola-selecionado.fw.png")));
+    }//GEN-LAST:event_jLabel4MouseEntered
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+        // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_escola.png")));
+    }//GEN-LAST:event_jLabel4MouseExited
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+
+        int indice = jComboBox1.getSelectedIndex();
+
+        switch (indice) {
+            case 0:
+                jLabel6.setText("Turmas:");
+                jLabel6.setVisible(true);
+                this.recarregarTurmas();
+                break;
+            case 1:
+                jLabel6.setText("Salas:");
+                jLabel6.setVisible(true);
+                this.recarregarSalas();
+                break;
+            case 2:
+                jLabel6.setText("Professores:");
+                jLabel6.setVisible(true);
+                this.recarregarProfessores();
+                break;
+            case 3:
+                jLabel6.setText("Disciplinas:");
+                jLabel6.setVisible(true);
+                this.recarregarDisciplinas();
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jLabel17MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseEntered
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
@@ -469,23 +463,13 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_sala.png")));
     }//GEN-LAST:event_jLabel17MouseExited
 
-    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
-        // Caso o usuário passe o mouse em cima, exibe essa imagem.
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-ensalamento-selecionado.fw.png")));
-    }//GEN-LAST:event_jLabel2MouseEntered
-
-    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
-        // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png")));
-    }//GEN-LAST:event_jLabel2MouseExited
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+        // Ao clicar no botão Salas, cria janela "Gerenciar Salas"
         dispose();
-        GerarEnsalamento gerarEnsalamento = new GerarEnsalamento();
-        gerarEnsalamento.setVisible(true);
-        gerarEnsalamento.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jLabel2MouseClicked
+        GerenciarSalas gerenciarSalas = new GerenciarSalas();
+        gerenciarSalas.setVisible(true);
+        gerenciarSalas.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel17MouseClicked
 
     /**
      * @param args the command line arguments
@@ -504,25 +488,28 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GerenciarDisciplinas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerarEnsalamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GerenciarDisciplinas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerarEnsalamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GerenciarDisciplinas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerarEnsalamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GerenciarDisciplinas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerarEnsalamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GerenciarDisciplinas().setVisible(true);
+                new GerarEnsalamento().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -531,11 +518,11 @@ public class GerenciarDisciplinas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
 }

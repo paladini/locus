@@ -268,6 +268,9 @@ public class GerenciarCursos extends javax.swing.JFrame {
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png"))); // NOI18N
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel10MouseEntered(evt);
             }
@@ -426,13 +429,13 @@ public class GerenciarCursos extends javax.swing.JFrame {
     private void jLabel18MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseEntered
 
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-professor-selecionado.fw.png")));
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-professor-selecionado.fw.png")));
     }//GEN-LAST:event_jLabel18MouseEntered
 
     private void jLabel18MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseExited
 
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_prof.png")));
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_prof.png")));
     }//GEN-LAST:event_jLabel18MouseExited
 
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
@@ -446,12 +449,12 @@ public class GerenciarCursos extends javax.swing.JFrame {
 
     private void jLabel19MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseEntered
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-turmas0selecionado-1.fw.png")));
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-turmas0selecionado-1.fw.png")));
     }//GEN-LAST:event_jLabel19MouseEntered
 
     private void jLabel19MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseExited
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_turma.png")));
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_turma.png")));
     }//GEN-LAST:event_jLabel19MouseExited
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
@@ -465,23 +468,31 @@ public class GerenciarCursos extends javax.swing.JFrame {
 
     private void jLabel20MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseEntered
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-salas-selecionado.fw.png")));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-salas-selecionado.fw.png")));
     }//GEN-LAST:event_jLabel20MouseEntered
 
     private void jLabel20MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseExited
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_sala.png")));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_sala.png")));
     }//GEN-LAST:event_jLabel20MouseExited
 
     private void jLabel10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseEntered
         // Caso o usuário passe o mouse em cima, exibe essa imagem.
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-ensalamento-selecionado.fw.png")));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-superior-ensalamento-selecionado.fw.png")));
     }//GEN-LAST:event_jLabel10MouseEntered
 
     private void jLabel10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseExited
         // Caso o usuário tire o mouse de cima, volta a exibir a imagem anterior.
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png")));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_ensalamento.png")));
     }//GEN-LAST:event_jLabel10MouseExited
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // Ao clicar no botão Escola, cria janela "Gerenciar Escola"
+        dispose();
+        GerarEnsalamento gerarEnsalamento = new GerarEnsalamento();
+        gerarEnsalamento.setVisible(true);
+        gerarEnsalamento.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel10MouseClicked
 
     /**
      * @param args the command line arguments
@@ -519,25 +530,17 @@ public class GerenciarCursos extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

@@ -55,6 +55,13 @@ public class Turma {
     public void setCurso(Curso idCurso) {
         this.curso = idCurso;
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+    
+    
     
     
 }
