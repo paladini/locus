@@ -28,7 +28,7 @@ public class EditarTurma extends javax.swing.JFrame {
         initComponents();
 
         // Não fechar todas as janelas ao fechar esta janela.
-        setDefaultCloseOperation(Editar.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EditarTurma.DISPOSE_ON_CLOSE);
 
         // Cria um modelo para o ComboBox e seta o modelo no combox
         modelo = new DefaultComboBoxModel();
