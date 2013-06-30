@@ -4,7 +4,6 @@
  */
 package control;
 
-import entidades.Disciplina;
 import entidades.Sala;
 import java.util.ArrayList;
 import model.SalaDAO;
@@ -42,7 +41,11 @@ public class ControleSala {
      * @param salaAdicionar 
      */
     public void adicionar(Sala salaAdicionar){
-        modelo.insert(salaAdicionar);
+        
+        // Se não existir nenhum curso com esse nome, manda inserir o curso.
+        if (consultaSala(salaAdicionar.getNome()) == null){
+            modelo.insert(salaAdicionar);
+        }
     }
     
     /**

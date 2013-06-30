@@ -42,7 +42,10 @@ public class ControleTurma {
      * @param turmaAdicionar 
      */
     public void adicionar(Turma turmaAdicionar){
-        modelo.insert(turmaAdicionar);
+        // Se não existir nenhum curso com esse nome, manda inserir o curso.
+        if (consultaTurma(turmaAdicionar.getNome()) == null){
+            modelo.insert(turmaAdicionar);
+        }
     }
     
     

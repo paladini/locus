@@ -40,7 +40,10 @@ public class ControleDisciplina {
      * @param disciplinaAdicionar 
      */
     public void adicionar(Disciplina disciplinaAdicionar){
-        modelo.insert(disciplinaAdicionar);
+        // Se não existir nenhum curso com esse nome, manda inserir o curso.
+        if (consultaDisciplina(disciplinaAdicionar.getNome()) == null){
+            modelo.insert(disciplinaAdicionar);
+        }
     }
     
     /**
