@@ -19,11 +19,6 @@ import java.util.ArrayList;
 public class CursoDAO extends AbstractDAO {
 
     /**
-     * ALTERAR ESSE MÉTODO E DEIXÁ-LO FUNCIONAL!
-     *
-     * @param curso
-     */
-    /**
      * Faz consulta no banco de dados e retorna todos os cursos.
      *
      * @return
@@ -69,7 +64,7 @@ public class CursoDAO extends AbstractDAO {
             prest.setString(1, nomeCurso);
             ResultSet rs = prest.executeQuery();
 
-            // Pega o primeiro registro do retorno da consulta
+            // Pega o primeiro registro do retorno da consulta, se existir
             if (rs.next()) {
                 
                 // Cria uma nova disciplina

@@ -1,5 +1,4 @@
 package entidades;
-
 import java.util.ArrayList;
 
 public class Curso {
@@ -8,9 +7,7 @@ public class Curso {
     private String nome;
     private int id;
     private ArrayList<Disciplina> disciplina = new ArrayList<Disciplina>();
-    private ArrayList<Turma> turmas; 
-    // porra velho, esse ArrayList tá quebrando toda a arquitetura que fizemos. 
-    // Uma turma tem um curso e não o contrário. 
+    private ArrayList<Turma> turmas; // Uma turma tem um curso e não o contrário.
 
     // Contrutores
     public Curso() {

@@ -28,7 +28,7 @@ public class Dia {
         this.nome = nome;
     }
     
-    // Getters & Setters
+    // Métodos
     public int getId() {
         return id;
     }

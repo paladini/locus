@@ -11,7 +11,15 @@ import java.util.ArrayList;
 
 
 /**
- *
+ *  Essa classe é uma Classe-Pai (Hierarquia) das outras classes modelo.
+ * 
+ *  Ela implementa um create, update e delete genérico. Todas as classes do Model 
+ *  podem usar esses métodos, ou seja, não precisa implementar um create, um update
+ * e um delete pra cada classe, ele fica muito mais resumido pois todos podem usar
+ * os métodos dessa classe. 
+ * 
+ *  Não é para mexer nessa classe e não precisa entender como ela funciona.
+ * 
  * @author daniel.s.oliveira
  */
 public abstract class AbstractDAO {

@@ -28,7 +28,7 @@ public class Sala {
         this.nome = nome;
     }
     
-    // G & S
+    // Métodos
     public int getId() {
         return id;
     }
@@ -45,6 +45,7 @@ public class Sala {
         this.nome = nome;
     }
 
+    // ToString - NÃO ALTERAR UMA VIRGULA!
     @Override
     public String toString() {
         return nome;
