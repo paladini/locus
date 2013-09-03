@@ -28,22 +28,33 @@ public class CursoDAO extends AbstractDAO {
         Connection connection = Conexao.getConexao();
         try {
 
+            // Faz a consulta ao banco de dados
             String sql = "SELECT * FROM curso";
             PreparedStatement prest = connection.prepareStatement(sql);
             ResultSet rs = prest.executeQuery();
 
-            ArrayList<Curso> listaClientes = new ArrayList<Curso>();
+            /*
+             * Cria um arraylist de cursos para armazenar todos os cursos
+             * que voltaram dessa consulta ao banco de dados.
+             */
+            ArrayList<Curso> listaCurso = new ArrayList<Curso>();
+            
+            /* Enquanto rs.next() for true, ou seja, enquanto existir mais um curso,
+             * ele vai fazendo os comandos que estão ai dentro. Quando não existir
+             * mais um curso (rs.next() == false), ele sai do Loop, fecha a conexão
+             * e retorna o ArrayList com todos os cursos.
+             */
             while (rs.next()) {
                 Curso c = new Curso();
                 int id = rs.getInt("idCurso");
                 String nome = rs.getString("nome");
                 c.setId(id);
                 c.setNome(nome);
-                listaClientes.add(c);
+                listaCurso.add(c);
             }
 
             connection.close();
-            return listaClientes;
+            return listaCurso;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
