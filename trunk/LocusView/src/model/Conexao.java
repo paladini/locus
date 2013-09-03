@@ -9,6 +9,10 @@ import java.sql.SQLException;
 
 /**
  *
+ *  Esta classe é responsável APENAS pela conexão com o banco de dados. 
+ *  Precisa configurar de acordo com a sua máquina, abrir o MySQL Workbench,etc.
+ *  O campo "password" normalmente é vazio ou nulo, não se esqueçam de alterar
+ *  esse campo, normalmente é necessário, pois depende da sua configuração no Workbench.
  * @author fernando_paladini
  */
 public class Conexao { 

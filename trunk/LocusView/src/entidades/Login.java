@@ -28,7 +28,7 @@ public class Login {
         this.ultimoacesso = ultimoacesso;
     }
     
-    // Getters & Setters
+    // Métodos
     public String getLogin() {
         return login;
     }

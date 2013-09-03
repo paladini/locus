@@ -31,7 +31,7 @@ public class Turma {
         this.curso = idCurso;
     }
     
-    // G & S
+    // Métodos
     public int getId() {
         return id;
     }
@@ -56,12 +56,9 @@ public class Turma {
         this.curso = idCurso;
     }
 
+    // ToString - NÃO ALTERAR UMA VIRGULA!
     @Override
     public String toString() {
         return nome;
-    }
-    
-    
-    
-    
+    }  
 }

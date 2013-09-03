@@ -18,7 +18,6 @@ public class Professor {
     private ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 
     // Construtores
-
     public Professor() {
     }
     
@@ -49,7 +48,7 @@ public class Professor {
         getListaDisciplinas().remove(disciplina);
     }
     
-    // G & S
+    // Métodos
     public ArrayList<Disciplina> getListaDisciplinas() {
         return listaDisciplinas;
     }
@@ -74,13 +73,9 @@ public class Professor {
         this.nome = nome;
     }
 
+    // ToString - NÃO ALTERAR UMA VIRGULA!
     @Override
     public String toString() {
         return nome;
     }
-    
-    
-    
-    
-    
 }

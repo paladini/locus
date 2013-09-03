@@ -5,7 +5,6 @@
 package entidades;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -43,7 +42,6 @@ public class Escola {
     public void setDias(ArrayList<Dia> dias) {
         this.dias = dias;
     }
-    
 
     public String getNomeEscola() {
         return nomeEscola;
@@ -53,7 +51,7 @@ public class Escola {
         this.nomeEscola = nomeEscola;
     }
     
-        public ArrayList<Turno> getTurnos() {
+    public ArrayList<Turno> getTurnos() {
         return turnos;
     }
 
