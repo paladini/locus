@@ -45,9 +45,29 @@ public class CursoDAO extends AbstractDAO {
              * e retorna o ArrayList com todos os cursos.
              */
             while (rs.next()) {
+                
+                /*
+                 * Cria um curso.
+                 * 
+                 * Pega os dados DESSE RESULTADO ESPECÍFICO do banco de dados. Para isso:
+                 * Cria variáveis de acordo com os atributos desse objeto
+                 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
+                 * correspondente no banco de dados (rs.getInt("idCurso"). 
+                 * 
+                 */
                 Curso c = new Curso();
                 int id = rs.getInt("idCurso");
                 String nome = rs.getString("nome");
+                
+                /* Depois que criou as variáveis e pegou os dados do banco,
+                 * coloca esses dados dentro do objeto criado logo acima.
+                 * Porque? Porque você vai adicionar Objetos no ArrayList, e depois 
+                 * vamos retornar esse arraylist. 
+                 * 
+                 * Se os dados nao fossem colocados em um Objeto, onde iriamos colocar
+                 * os dados de cada linha que retornou no banco de dados? Objetos é o jeito
+                 * certo de se fazer, só para contextualizar pq isso é necessário. 
+                 */ 
                 c.setId(id);
                 c.setNome(nome);
                 listaCurso.add(c);
