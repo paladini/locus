@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="author" content="Fernando Paladin">
+		<title>Locus - Tela de Login </title>
+	
+		<link href="../css/bootstrap.css" rel="stylesheet">
+		<link href="../css/custom.css" rel="stylesheet">
+	</head>
+	<body>
+
+		<div id="barra">
+		</div>
+	
+		<div class="navbar-wrapper">
+			<div class="container">
+				<p class="invisivel">Voltar</p>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				
+				<!-- Conteúdo da página em si -->
+				<div class="col-md-3 center">
+					
+					<div class="text-center">
+						<img src="../images/antigos/logo.png" class="imagem"/>
+					</div>
+					
+					<form role="form" id="form-login" method="post" action="first/1-dados-escola.html">
+						<br />
+						<fieldset>
+							<div class="form-group">
+								<label for="login">Login:</label>
+								<input type="text" class="form-control" autocomplete="off" id="login" name="login" placeholder="Nome de usuário">
+							</div>
+
+							<div class="form-group">
+								<label for="senha">Senha: </label>
+								<input type="password" autocomplete="off" class="form-control" id="senha" name="senha" placeholder="Senha">
+							</div>
+							
+							<div class="form-actions">
+								<input name="submit" type="submit" id="submit" class="btn btn-default btn-lg" value="Entrar"/>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			
+			<!-- Rodapé -->
+			<div class="row text-center">
+				<footer id="rodape">
+					Entrou aqui por engano? <a href="../index.html#contato">Fique conosco.</a> | Esqueceu sua senha? <a href="esqueci-minha-senha.html" >Clique aqui</a>.
+				</footer>
+			</div>
+		</div>
+
+		<!-- JavaScripts e Complementos -->
+        <script src="../js/jquery.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery.validate.min.js"></script>
+        
+        <!-- Validações desta página -->
+        <script>
+        	$(document).ready(function(){
+        		
+        		// Declarando as variáveis que serão usadas para as validações
+    			var loginDir = $('#login');
+    			var passwordDir = $('#senha');
+    			var enviarDir = $('#submit');
+    			var prosseguir = [false, false];
+
+        		// Dando focus(colocando o cursor) no campo de Login.
+        		loginDir.focus();
+
+        		// Desativando botão de enviar
+        		enviarDir.attr('disabled','disabled');
+
+        		// Validando os dados do loginDir. Toda mudança é detectada.
+        		loginDir.on('input', function(){
+        			if (loginDir.val().length == 0 || loginDir.val() == ' '){
+        				loginDir.removeClass('form-okay');
+        				loginDir.addClass('form-erro');
+        				prosseguir[0] = false;
+        			}else{
+        				loginDir.removeClass('form-erro');
+        				loginDir.addClass('form-okay');
+        				prosseguir[0] = true;
+        			}
+        		});
+
+        		// Validando os dados do passwordDir. Toda mudança é detectada.
+        		passwordDir.on('input', function(){
+        			if(passwordDir.val().length == 0 || passwordDir.val() == ' '){
+        				passwordDir.removeClass('form-okay');
+        				passwordDir.addClass('form-erro');
+        				prosseguir[1] = false;
+        			}else{
+        				passwordDir.removeClass('form-erro');
+        				passwordDir.addClass('form-okay');
+        				prosseguir[1] = true;
+        			}
+        		});
+
+        		// Validação para ativar ou desativar o botão de enviar
+        		$('input[type="text"], input[type="password"]').on('input', function(){
+
+        			if ((prosseguir[0] === true) && (prosseguir[1] === true)){
+        				enviarDir.removeAttr('disabled');
+        			}else{
+        				enviarDir.attr('disabled','disabled');
+        			}
+
+        		});
+        	});
+        </script>
+
+	</body>
+</html>

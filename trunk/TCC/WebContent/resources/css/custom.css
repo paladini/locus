@@ -1,0 +1,137 @@
+/* Logo do site na "primeira entrada" */
+.imagem-pequena{
+	margin-top: 20px;
+	display: inline;
+}
+
+/* Validações */
+.form-okay{
+	border-color: green !important;
+	box-shadow: green !important;
+	outline-color: green !important;
+	outline-width: 10px;
+}
+
+.form-erro{
+	border-color: red !important;
+	box-shadow: red !important;
+	outline-color: red !important;
+	outline-width: 10px;
+}
+
+label.valid {
+   width: 24px;
+  height: 24px;
+  background: url(../images/valid.png) center center no-repeat; 
+  display: inline-block;
+  text-indent: -9999px;
+}
+label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+
+/* Ajusta as colunas do Bootstrap de acordo com as necessidades.
+ * Nesse caso, coloca o vertical-align no centro, para a imagem ficar centrada verticalmente
+ */
+.col-md-5{
+	vertical-align: middle;
+}
+
+.col-md-5 img{
+	vertical-align: middle !important; 
+}
+
+
+/* Define um espaço em branco */
+.espaco{
+	height: 100px;
+	position: relative;
+}
+
+/* Define o background verde da área de contato */
+#contato{
+	background-color: #9dc95e;
+	width: 100% !important;
+	height: auto;
+	padding-top: 1px;
+	padding-bottom: 5px;
+}
+
+#contato h2{
+	margin-top: 40px !important;
+}
+
+
+
+/* 
+	
+==========================================================================================================
+												NÃO MEXER MAIS 
+==========================================================================================================
+*/
+
+/* Texto-dica e Linha-dica são espaçamentos para as imagens do primeira entrada */
+.texto-dica{
+	margin-top: 20px;
+	display: inline;
+}
+
+.linha-dica{
+	margin-top: 20px;
+	vertical-align: middle;
+}
+
+/* Barra verde no topo do site na primeira entrada*/
+#barra{
+	height: 10px;
+	width: 100%;
+	background: #9dc95e;
+	top: 0;
+	left: 0;
+	position: absolute;
+	z-index: 1;
+}
+
+/* Coloca a barra de progresso mais para baixo */
+.progress{
+	margin-top: 20px;
+}
+
+/* ======== DEFINE O RODAPÉ DO SITE ========== */
+#rodape{
+	margin-top: 50px;
+}
+
+#rodape a{
+	color: #5393ea;
+}
+
+/* ========= CORPO DO SITE =============== */
+body{
+	padding-bottom: 0px !important; 
+}
+
+/* ======== MARGEM PARA UMA DETERMINADA IMAGEM (index.html, imagem das "características") ================ */
+.imagem{
+	margin-top: 80px;
+}
+
+/* ======== COMPONENTE INVISÍVEL NA PÁGINA ============= */
+.invisivel{
+	display: none;
+}
+
+/* Botão de Enviar do Formulário de Contato */
+.form-actions{
+	margin: 0;
+    background-color: transparent;
+    text-align: center;
+}
+
+/* Posiciona elementos no centro de uma coluna*/
+.center { 
+	float: none; margin: auto; padding: auto; 
+}
