@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="author" content="Fernando Paladin">
+		<title>Locus - Gerenciar Escola </title>
+	
+		<link href="../../../css/bootstrap.css" rel="stylesheet">
+		<link href="../../../css/custom.css" rel="stylesheet">
+	</head>
+	<body>
+
+		<div id="barra">
+		</div>
+	
+		<div class="navbar-wrapper">
+			<div class="container">
+				<p class="invisivel">Voltar</p>
+			</div>
+		</div>
+
+		<div class="container">
+
+			<!-- Logo e botões para gerenciamento --> 
+			<div class="row">
+				<div class="col-md-10 center">
+					<div class="row linha-dica">
+						<div class="col-lg-2">
+							<a href="../principal.html"><img src="../../../images/antigos/logo.png" height="110" width="80" alt="Menu Principal" title="Menu Principal"/></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../professor/index.html"><img class="menu-principal" src="../../../images/principal/professor.png" alt="Gerenciar Professores" title="Gerenciar Professores"/></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../sala/index.html"><img src="../../../images/principal/sala.png" class="menu-principal" alt="Gerenciar Salas" title="Gerenciar Salas" /></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../turma/index.html"><img src="../../../images/principal/turma.png" class="menu-principal" alt="Gerenciar Turmas" title="Gerenciar Turmas"/></a>
+						</div>
+						<div class="col-lg-2">
+							<img src="../../../images/principal/escola-selecionado.png" alt="Gerenciar Escola" title="Gerenciar Escola"/>
+						</div>
+						<div class="col-lg-2">
+							<a href=""><img src="../../../images/principal/ensalamento.png" class="menu-principal" alt="Gerar Ensalamento" title="Gerar Ensalamento"/></a>
+						</div>
+					</div>
+					
+					<hr class="featurette-divider"> 
+				</div>
+			</div>
+
+			<!-- Conteúdo da página em si -->
+			<div class="row">
+				<div class="col-lg-10 center">
+					<form role="form">
+						<div class="col-md-8 center">
+							<div class="form-group">
+								<label for="nome">Nome da Instituição:</label>
+								<input type="text" size="20" class="form-control" name="nome" id="nome" placeholder="Nome da Instituição" required>
+							</div>
+
+							<div class="form-group">
+								<label for="senha">Senha:</label>
+								<input type="password" class="form-control" name="senha" id="senha" placeholder="Nova senha" required>
+							</div>
+							
+							<div class="form-group">
+								<label>Calendário Escolar:</label>
+							</div>
+
+							<div class="col-md-4">	
+								<div class="checkbox">	
+									<label><input type="checkbox" id="segunda">Segunda-Feira</label>
+								</div>
+								<div class="checkbox">	
+									<label><input type="checkbox" id="terca">Terça-Feira</label>
+								</div>
+								<div class="checkbox">	
+									<label><input type="checkbox" id="quarta">Quarta-Feira</label>
+								</div>
+								<div class="checkbox">	
+									<label><input type="checkbox" id="quinta">Quinta-Feira</label>
+								</div>
+								<div class="checkbox">	
+									<label><input type="checkbox" id="sexta">Sexta-Feira</label>
+								</div>
+								<div class="checkbox">	
+									<label><input type="checkbox" id="sabado">Sábado</label>
+								</div>
+								<div class="checkbox">	
+									<label><input type="checkbox" id="domingo">Domingo</label>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="checkbox">	
+									<label><input type="checkbox" id="matutino">Matutino</label>
+								</div>
+								<div class="checkbox">	
+									<label><input type="checkbox" id="vespertino">Vespertino</label>
+								</div>
+								<div class="checkbox">	
+									<label><input type="checkbox" id="noturno">Noturno</label>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<div class="col-lg-10 center">
+				<div class="col-lg-8 center">
+					<a type="button" href="../disciplina/index.html" class="btn btn-lg btn-default">Editar Disciplinas</a>
+					<a type="button" href="../curso/index.html" class="btn btn-lg btn-default">Editar Cursos</a>
+					<a type="button" href="2-tela-disciplinas.html" id="salvar" class="btn btn-lg btn-success pull-right">Salvar</a>
+				</div>
+			</div>
+	
+
+			<!-- Rodapé 
+			<div class="row text-center">
+				<footer id="rodape">
+					<div class="invisivel">Entrou aqui por engano? <a href="../index.html#contato">Fique conosco.</a> | Esqueceu sua senha? <a href="#">Clique aqui</a>.</div>
+				</footer>
+			</div> -->
+		</div>
+
+		<!-- JavaScripts e Complementos -->
+        <script src="../../../js/jquery.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/locus-hoverIt.js"></script>
+
+         <!-- Validações desta página -->
+        <script>
+        	$(document).ready(function(){
+
+        		// Declarando variáveis que serão usadas nas validações
+        		var nomeDir = $('#nome');
+        		var senhaDir = $('#senha');
+        		var enviarDir = $('#salvar');
+        		var prosseguir = [false, false];
+
+        		// Colocando focus no primeiro campo.
+        		nomeDir.focus();
+
+        		// Desativando botão de enviar
+        		enviarDir.attr('disabled','disabled');
+
+        		// Validando campo de nome.
+        		nomeDir.on('input', function(){
+        			
+        			if (nomeDir.val().length == 0 || nomeDir.val() == ' '){
+        				nomeDir.removeClass('form-okay');
+        				nomeDir.addClass('form-erro');
+        				prosseguir[0] = false;
+        			}else{
+        				nomeDir.removeClass('form-erro');
+        				nomeDir.addClass('form-okay');
+        				prosseguir[0] = true;
+        			}
+        		});
+
+        		// Validando campo de senha.
+        		senhaDir.on('input', function(){
+
+        			if(senhaDir.val().length == 0 || senhaDir.val() == ' '){
+        				senhaDir.removeClass('form-okay');
+        				senhaDir.addClass('form-erro');
+        				prosseguir[1] = false;
+        			}else{
+        				senhaDir.removeClass('form-erro');
+        				senhaDir.addClass('form-okay');
+        				prosseguir[1] = true;
+        			}
+        		});
+
+        		// A cada "change" nos inputs, verifica se pode ativar o botão de enviar.
+        		$('input[name="nome"], input[name="senha"], input[type="checkbox"]').change(function(){
+
+        			// Verifica se existe pelo menos 1 checkbox acionado.
+        			var checkbox = false;
+        			$('input:checkbox').each(function(){
+        				if ($(this).is(':checked')){
+        					checkbox = true;
+        				}else{
+        				}
+        			});
+
+        			if ((prosseguir[0] == true) && (prosseguir[1] == true) && (checkbox == true)){
+        				enviarDir.removeAttr('disabled'); 
+        			}else{
+        				enviarDir.attr('disabled','disabled');
+        			}
+
+        		});
+
+        	});
+        </script>
+
+	</body>
+</html>

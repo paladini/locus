@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="author" content="Fernando Paladin">
+	<title>Locus - Editar Disciplina</title>
+	
+	<link href="../../../css/bootstrap.css" rel="stylesheet">
+	<link href="../../../css/custom.css" rel="stylesheet">
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+
+			<!-- Conteúdo da página em si -->
+			<div class="col-lg-8 center">
+				<form role="form">
+					<div class="form-group">
+						<div class="col-lg-10 center">
+							<div class="col-lg-10 pull-left" style="padding-left: 0px;">
+								<label for="nome">Nome:</label>
+								<input type="text" class="form-control adicionar" id="nome" value="Programação Orientada a Objetos" required>
+								<br/>
+								<a type="button" href="#" id="excluir" class="btn btn-md btn-danger pull-left">Excluir</a>
+								<a type="button" href="#" id="enviar" class="btn btn-lg btn-success pull-right">Salvar</a>
+							</div>
+						</div>
+						<!-- Botão de voltar e avançar -->
+						<br />
+						
+		
+					</div>
+				</form>
+			</div>
+		</div>
+		</div>
+
+		<!-- JavaScripts e Complementos -->
+		<script src="../../../js/jquery.js"></script>
+		<script src="../../../js/bootstrap.min.js"></script>
+		<script src="../../../js/locus-menu-principal.js"></script>
+		<script>
+
+		$(document).ready(function(){
+
+				// Declarando variáveis que serão usadas nas validações
+        		var nomeDir = $('#nome');
+        		var enviarDir = $('#enviar');
+        		var excluirDir = $('#excluir');
+        		var prosseguir = false;
+
+        		// Colocando focus no primeiro campo.
+        		//nomeDir.focus();
+
+        		excluirDir.on('click',function(){
+        			confirm("Tem certeza que deseja excluir a disciplina " + nomeDir.val() + "?");
+        			// Fazer ação para excluir professor.
+        		});
+
+        		// Validando campo de nome.
+        		nomeDir.on('input', function(){
+        			
+        			if (nomeDir.val().length == 0 || nomeDir.val() == ' '){
+        				nomeDir.removeClass('form-okay');
+        				nomeDir.addClass('form-erro');
+        				prosseguir = false;
+        			}else{
+        				nomeDir.removeClass('form-erro');
+        				nomeDir.addClass('form-okay');
+        				prosseguir = true;
+        			}
+        		});
+
+        		// A cada "change" nos inputs, verifica se pode ativar o botão de enviar.
+        		$('input[name="nome"]').change(function(){
+
+        			if (prosseguir == true){
+        				enviarDir.removeAttr('disabled'); 
+        			}else{
+        				enviarDir.attr('disabled','disabled');
+        			}
+
+        		});
+
+		});
+
+		</script>
+
+	</body>
+	</html>
