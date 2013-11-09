@@ -1,27 +1,33 @@
 package mbeans;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
-import javax.servlet.annotation.WebFilter;
-
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
-
-import model.Conexao;
 import control.ControleDisciplina;
-import entidades.Curso;
 import entidades.Disciplina;
+
+
+
+/*
+ * 
+ * TODO Disciplina (ver arquivo) 
+ *  BEAN:
+ *   Revisar, arrumar e deletar métodos desnecessários/ruins/inúteis.
+ *   
+ *  JSF: 
+ *   Implementar avisos (ao deletar) e validações dos dados. 
+ * 
+ * 
+ */
+
+
+
+
+
+
 
 @ManagedBean(name = "disciplinaMBean")
 @SessionScoped

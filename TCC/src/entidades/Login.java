@@ -22,6 +22,11 @@ public class Login {
     
     }
     
+    public Login(String login, String senha){
+    	this.login = login;
+    	this.senha = senha;
+    }
+    
     public Login(String login, String senha, Date ultimoacesso) {
         this.login = login;
         this.senha = senha;
