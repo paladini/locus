@@ -29,7 +29,7 @@ public class CursoDAO extends AbstractDAO {
         try {
 
             // Faz a consulta ao banco de dados
-            String sql = "SELECT * FROM curso";
+            String sql = "SELECT * FROM Curso";
             PreparedStatement prest = connection.prepareStatement(sql);
             ResultSet rs = prest.executeQuery();
 
@@ -90,7 +90,7 @@ public class CursoDAO extends AbstractDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM curso where nome = ?;";
+            String sql = "SELECT * FROM Curso where nome = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setString(1, nomeCurso);
             ResultSet rs = prest.executeQuery();
@@ -135,7 +135,7 @@ public class CursoDAO extends AbstractDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM curso where nome like ?;";
+            String sql = "SELECT * FROM Curso where nome like ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setString(1, termos + "%");
             ResultSet rs = prest.executeQuery();
@@ -157,16 +157,42 @@ public class CursoDAO extends AbstractDAO {
         }
         return null;
     }
+    
+    public Curso select(int id){
+    	 Connection connection = Conexao.getConexao();
+         try {
+
+             String sql = "SELECT * FROM Curso where id = ?;";
+             PreparedStatement prest = connection.prepareStatement(sql);
+             prest.setInt(1, id);
+             ResultSet rs = prest.executeQuery();
+
+             if (rs.next()) {
+                 Curso c = new Curso();
+                 int idConsulta = rs.getInt("idCurso");
+                 String nome = rs.getString("nome");
+                 c.setId(idConsulta);
+                 c.setNome(nome);
+                 return c;
+             }
+
+             connection.close();
+             return null;
+         } catch (SQLException ex) {
+             System.out.println(ex.getMessage());
+         }
+         return null;
+    }
 
     public void insert(Curso curso) {
-        String sql = "INSERT INTO curso (nome) VALUES (?);";
+        String sql = "INSERT INTO Curso (nome) VALUES (?);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(curso.getNome());
         operacaoEscrita(sql, params);
     }
 
     public void update(Curso cursoNovo) {
-        String sql = "UPDATE curso SET nome = ? WHERE idCurso = ?;";
+        String sql = "UPDATE Curso SET nome = ? WHERE idCurso = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(cursoNovo.getNome());
         params.add(cursoNovo.getId());
@@ -178,7 +204,7 @@ public class CursoDAO extends AbstractDAO {
         // Chama um outro método para excluir as disciplinas associadas a esse curso.
         this.deleteAssociacoes(idCurso);
 
-        String sql = "DELETE FROM curso WHERE idCurso = ?;";
+        String sql = "DELETE FROM Curso WHERE idCurso = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(idCurso);
         operacaoEscrita(sql, params);
@@ -202,7 +228,7 @@ public class CursoDAO extends AbstractDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "select d.idDisciplina, d.nome from Curso_has_Disciplina as cd inner join disciplina as d on "
+            String sql = "select d.idDisciplina, d.nome from Curso_has_Disciplina as cd inner join Disciplina as d on "
                     + "d.idDisciplina = cd.Disciplina_idDisciplina where cd.Curso_idCurso = ? order by d.nome;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, curso.getId());
@@ -235,7 +261,7 @@ public class CursoDAO extends AbstractDAO {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "select d.idDisciplina, d.nome from disciplina d where d.idDisciplina not in "
+            String sql = "select d.idDisciplina, d.nome from Disciplina d where d.idDisciplina not in "
                     + "(select Disciplina_idDisciplina from Curso_has_Disciplina where Curso_idCurso = ?) order by d.nome;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, curso.getId());

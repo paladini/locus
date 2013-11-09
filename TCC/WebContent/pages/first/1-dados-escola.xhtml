@@ -7,7 +7,6 @@
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="custom.css" />
 	<h:outputStylesheet library="css" name="bootstrap-datatable.css" />
-
 </h:head>
 <h:body>
 
@@ -27,7 +26,7 @@
 				<div class="col-md-10 center">
 					<div class="row linha-dica">
 						<div class="col-lg-1 center">
-							<img src="../../images/antigos/logo.png" height="100" width="80"/>
+							<h:graphicImage library="images" name="logo.png" height="100" width="80" />
 						</div>
 						<div class="col-md-10 center">
 							<h3 style="vertical-align: middle;">Nesta etapa preencha o nome, a senha e os horários da sua instituição.</h3>
@@ -52,12 +51,17 @@
 						<div class="col-md-10">
 							<div class="form-group">
 								<label for="nome">Nome da Instituição:</label>
-								<input type="text" size="20" class="form-control" name="nome" id="nome" placeholder="Nome da Instituição" />
+								<p:inputText size="20" styleClass="form-control" id="nome" autocomplete="off"
+								style="padding: 6px 12px;" 
+								placeholder="Nome da Instituição" required="true" requiredMessage="Este campo é obrigatório."/>
 							</div>
 
 							<div class="form-group">
 								<label for="senha">Senha:</label>
-								<input type="password" class="form-control" name="senha" id="senha" placeholder="Nova senha" />
+								<p:inputText size="20" styleClass="form-control" id="senha" autocomplete="off" type="password"
+								placeholder="Digite uma nova senha para acesso" required="true" requiredMessage="Este campo é obrigatório." 
+								style="padding: 6px 12px;" 
+								/>
 							</div>
 						</div>
 						<div class="col-md-10">
@@ -108,7 +112,7 @@
 			<div class="row">
 				<br />
 				<div class="col-md-8 center">
-					<a type="button" href="2-tela-disciplinas.html" id="enviar" class="btn btn-lg btn-success pull-right">Avançar</a>
+					<h:commandButton id="enviar" action="2-tela-disciplinas.xhtml" styleClass="btn btn-lg btn-success pull-right" value="Avançar" />
 				</div>
 			</div>
 
@@ -121,78 +125,19 @@
 		</div>
 
 		<!-- JavaScripts e Complementos -->
-        <script src="../../js/jquery.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
-        <script src="../../js/bootstrap-progressbar.min.js"></script>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="js" name="bootsrap.min.js" />
+        <h:outputScript library="js" name="bootstrap-progressbar.min.js" />
 
         <!-- Validações desta página -->
+        
         <script>
-        	$(document).ready(function(){
+        	 $(document).ready(function(){
 
         		// Ativando a animação da barra de progresso
         		$('.progress .progress-bar').progressbar();
 
-        		// Declarando variáveis que serão usadas nas validações
-        		var nomeDir = $('#nome');
-        		var senhaDir = $('#senha');
-        		var enviarDir = $('#enviar');
-        		var prosseguir = [false, false];
-
-        		// Colocando focus no primeiro campo.
-        		nomeDir.focus();
-
-        		// Desativando botão de enviar
-        		enviarDir.attr('disabled','disabled');
-
-        		// Validando campo de nome.
-        		nomeDir.on('input', function(){
-        			
-        			if (nomeDir.val().length == 0 || nomeDir.val() == ' '){
-        				nomeDir.removeClass('form-okay');
-        				nomeDir.addClass('form-erro');
-        				prosseguir[0] = false;
-        			}else{
-        				nomeDir.removeClass('form-erro');
-        				nomeDir.addClass('form-okay');
-        				prosseguir[0] = true;
-        			}
-        		});
-
-        		// Validando campo de senha.
-        		senhaDir.on('input', function(){
-
-        			if(senhaDir.val().length == 0 || senhaDir.val() == ' '){
-        				senhaDir.removeClass('form-okay');
-        				senhaDir.addClass('form-erro');
-        				prosseguir[1] = false;
-        			}else{
-        				senhaDir.removeClass('form-erro');
-        				senhaDir.addClass('form-okay');
-        				prosseguir[1] = true;
-        			}
-        		});
-
-        		// A cada "change" nos inputs, verifica se pode ativar o botão de enviar.
-        		$('input[name="nome"], input[name="senha"], input[type="checkbox"]').change(function(){
-
-        			// Verifica se existe pelo menos 1 checkbox acionado.
-        			var checkbox = false;
-        			$('input:checkbox').each(function(){
-        				if ($(this).is(':checked')){
-        					checkbox = true;
-        				}else{
-        				}
-        			});
-
-        			if ((prosseguir[0] == true) && (prosseguir[1] == true) && (checkbox == true)){
-        				enviarDir.removeAttr('disabled'); 
-        			}else{
-        				enviarDir.attr('disabled','disabled');
-        			}
-
-        		});
-
-        	});
+        	}); 
         </script>
 
 	</h:body>
