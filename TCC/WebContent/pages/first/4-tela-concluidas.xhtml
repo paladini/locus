@@ -1,15 +1,14 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="description" content="">
-		<meta name="author" content="Fernando Paladin">
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
 		<title>Locus - Concluído! </title>
-	
-		<link href="../../css/bootstrap.css" rel="stylesheet">
-		<link href="../../css/custom.css" rel="stylesheet">
-	</head>
-	<body>
+		
+		<h:outputStylesheet library="css" name="bootstrap.css" />
+		<h:outputStylesheet library="css" name="custom.css" />
+	</h:head>
+	<h:body>
 
 		<div id="barra">
 		</div>
@@ -27,7 +26,7 @@
 				<div class="col-md-10 center">
 					<div class="row linha-dica">
 						<div class="col-lg-1 center">
-							<img src="../../images/antigos/logo.png" height="100" width="80"/>
+							<h:graphicImage library="images" name="logo.png" height="100" width="80" />
 						</div>
 						<div class="col-md-10 center">
 							<h3 style="vertical-align: middle; text-align: center;">Etapas concluídas com sucesso!</h3>
@@ -43,7 +42,7 @@
 							</div>
 						</div>
 					</div>
-					<hr class="featurette-divider"> 
+					<hr class="featurette-divider" /> 
 				</div>
 			</div>
 
@@ -53,7 +52,7 @@
 				<div class="col-lg-7 center">
 					<div class="row">
 						<div class="col-md-2">
-							<img src="../../images/numero-1.png" height="70" width="70">
+							<img src="../../images/numero-1.png" height="70" width="70" />
 						</div>
 						<div class="col-lg-12">
 							<h3>Vá para o menu principal clicando no botão abaixo.</h3>
@@ -62,7 +61,7 @@
 					<br />
 					<div class="row">
 						<div class="col-md-2">
-							<img src="../../images/numero-2.png" height="70" width="70">
+							<img src="../../images/numero-2.png" height="70" width="70" />
 						</div>
 						<div class="col-lg-12">
 							<h3>Insira os dados referentes à sua instituição.</h3>
@@ -71,7 +70,7 @@
 					<br />
 					<div class="row">
 						<div class="col-md-2">
-							<img src="../../images/numero-3.png" height="70" width="70">
+							<img src="../../images/numero-3.png" height="70" width="70" />
 						</div>
 						<div class="col-lg-12">
 							<h3>Peça para o Locus gerar o ensalamento e seja feliz!</h3>
@@ -84,7 +83,7 @@
 			<!-- Botão avançar para o Menu Principal -->
 			<div class="row">
 				<div class="col-lg-3 center">
-					<a type="button" href="../user/principal.html" class="btn btn-lg btn-success pull-right">Ir para o Menu Principal</a>
+					<h:commandButton styleClass="btn btn-lg btn-success pull-right" value="Ir para o Menu Principal" action="../user/principal.html" />
 				</div>
 			</div>
 			
@@ -97,9 +96,9 @@
 		</div>
 
 		<!-- JavaScripts e Complementos -->
-        <script src="../../js/jquery.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
-        <script src="../../js/bootstrap-progressbar.min.js"></script>
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+		<h:outputScript library="js" name="bootstrap.min.js" />
+		<h:outputScript library="js" name="bootstrap-progressbar.min.js" />
 
         <!-- Validações desta página -->
         <script>
@@ -110,5 +109,5 @@
         	});
         </script>
 
-	</body>
+	</h:body>
 </html>
