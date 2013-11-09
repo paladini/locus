@@ -11,7 +11,7 @@ import model.CursoDAO;
 
 /**
  *
- * @author silvio
+ * @author fernando_paladini
  */
 public class ControleCurso {
 
@@ -63,7 +63,14 @@ public class ControleCurso {
         
         // Se não existir nenhum curso com esse nome, manda inserir o curso.
         if (consultaCurso(cursoAdicionar.getNome()) == null){
-            modelo.insert(cursoAdicionar);
+            
+        	modelo.insert(cursoAdicionar);
+        	
+        	// Caso tenha alguma disciplina associada, cria as associações no banco
+        	if (cursoAdicionar.getDisciplina() != null){
+        		this.adicionarDisciplina(cursoAdicionar);
+        	}
+        	
         }
         
     }
@@ -71,30 +78,19 @@ public class ControleCurso {
     /**
      * Método para consultar os cursos do banco de dados
      *
-     * @return
+     * @return Retorna todos os cursos do banco de dados.
      */
     public ArrayList<Curso> consulta() {
         return modelo.select();
     }
-
+    
     /**
-     * Método para consultar os cursos com nomes que começam com os termos
-     * digitados pelo usuário.
-     *
-     * @return
+     * Método para pegar o curso pelo seu ID. 
+     * @param id Id do curso desejado. 
+     * @return Retorna um único curso.
      */
-    public ArrayList<Curso> consultaComTermos(String termo) {
-        return modelo.selectComTermos(termo);
-    }
-
-    /**
-     * Método para retornar somente um curso (para tela "Editar").
-     *
-     * @param termo
-     * @return
-     */
-    public Curso consultaCurso(String termo) {
-        return modelo.selectCurso(termo);
+    public Curso consultaCurso(int id){
+    	return modelo.select(id);
     }
 
     
@@ -108,6 +104,79 @@ public class ControleCurso {
      * 
      */
     
+    /**
+     * Retorna a lista de disciplinas associadas à esse curso.
+     *
+     * @param curso
+     * @return Retorna a lista de disciplinas que estão associadas a esse curso.
+     */
+    public ArrayList<Disciplina> listaDisciplinasAssociadas(Curso curso) {
+        return modelo.listaDisciplinasAssociadas(curso);
+    }
+
+    /**
+     * Retorna a lista de disciplinas não associadas à esse curso.
+     *
+     * @param curso
+     * @return Retorna a lista de disciplinas que não está associada a esse curso.
+     */
+    public ArrayList<Disciplina> listaDisciplinasNaoAssociadas(Curso curso) {
+        return modelo.listaDisciplinasNaoAssociadas(curso);
+    }
+    
+    /**
+     * Atualiza todas as disciplinas desse curso no banco de dados.
+     * 1) Deleta todas as disciplinas antigas desse curso do banco.
+     * 2) Adiciona todas as novas disciplinas (getDisciplina()) desse curso no banco.
+     * @param curso Curso com uma lista de disciplinas não nula.
+     */
+    private void adicionarDisciplina(Curso curso){
+    	
+    	ArrayList<Disciplina> listaDisciplinasBanco = this.listaDisciplinasAssociadas(curso);
+    	
+    	// TODO: Essa forma de fazer isso está, no mínimo, ingênua.
+    	
+    	// Deletando TODAS as disciplinas associadas ao curso.
+    	for(int i = 0; i < listaDisciplinasBanco.size(); i++){
+    		modelo.deleteCursoDisciplina(curso.getId(), listaDisciplinasBanco.get(i).getId());
+    	}
+    	
+    	// Adicionando as novas disciplinas no banco
+    	for(int i = 0; i < curso.getDisciplina().size(); i++){
+    		modelo.insertCursoDisciplina(curso.getId(), curso.getDisciplina().get(i).getId());
+    	}
+    }
+    
+    /**
+     * Método para retornar somente um curso (para tela "Editar").
+     * Embora pareça desnecessário, é bom para verificar se um curso com o mesmo já existe, para validar no banco.
+     * @param termo
+     * @return
+     */
+    private Curso consultaCurso(String termo) {
+        return modelo.selectCurso(termo);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+     * 
+     *
+     *                    MÉTODOS POSSIVELMENTE DEPRECIADOS
+     * 
+     * 
+     */
+    
     
     /**
      * Adiciona uma disciplina associada ao curso.
@@ -115,6 +184,7 @@ public class ControleCurso {
      * @param idCurso
      * @param idDisciplina
      */
+    @Deprecated
     public void adicionarDisciplina(int idCurso, int idDisciplina) {
         modelo.insertCursoDisciplina(idCurso, idDisciplina);
     }
@@ -125,27 +195,22 @@ public class ControleCurso {
      * @param idCurso
      * @param idDisciplina
      */
+    @Deprecated
     public void excluirDisciplina(int idCurso, int idDisciplina) {
         modelo.deleteCursoDisciplina(idCurso, idDisciplina);
     }
+    
 
     /**
-     * Retorna a lista de disciplinas associadas à esse curso.
+     * Método para consultar os cursos com nomes que começam com os termos
+     * digitados pelo usuário.
      *
-     * @param curso
      * @return
      */
-    public ArrayList<Disciplina> listaDisciplinasAssociadas(Curso curso) {
-        return modelo.listaDisciplinasAssociadas(curso);
+    @Deprecated
+    public ArrayList<Curso> consultaComTermos(String termo) {
+        return modelo.selectComTermos(termo);
     }
 
-    /**
-     * Retorna a lista de disciplinas não associadas à esse curso.
-     *
-     * @param curso
-     * @return
-     */
-    public ArrayList<Disciplina> listaDisciplinasNaoAssociadas(Curso curso) {
-        return modelo.listaDisciplinasNaoAssociadas(curso);
-    }
+   
 }

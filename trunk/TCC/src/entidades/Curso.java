@@ -46,7 +46,13 @@ public class Curso {
         super();
     }
     
-    public Curso(String nome, int id, ArrayList<Turma> turmas) {
+    public Curso(int id, String nome){
+    	super();
+        this.nome = nome;
+        this.id = id;
+    }
+    
+    public Curso(int id, String nome, ArrayList<Turma> turmas) {
         super();
         this.nome = nome;
         this.id = id;

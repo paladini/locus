@@ -15,8 +15,20 @@ import model.EscolaDAO;
  */
 public class ControleEscola {
     
-    EscolaDAO modelo = new EscolaDAO();
+    private static ControleEscola singleton;
+	EscolaDAO modelo;
     
+	private ControleEscola(){
+		modelo = new EscolaDAO();
+	}
+	
+	public static ControleEscola getInstance(){
+		if (singleton == null){
+			singleton = new ControleEscola();
+		}
+		return singleton;
+	}
+	
     public Escola consultar(){
         return modelo.consultar();
     } 
