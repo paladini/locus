@@ -6,7 +6,6 @@
 	<title>Cadastro de Disciplina</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="custom.css" />
-	<h:outputStylesheet library="css" name="jquery.fancybox.css" />
 	<h:outputStylesheet library="css" name="bootstrap-datatable.css" />
 
 </h:head>
@@ -28,7 +27,7 @@
 			<div class="col-md-10 center">
 				<div class="row linha-dica">
 					<div class="col-lg-1 center">
-						<h:graphicImage library="images" height="100" width="80" value="logo.png"></h:graphicImage>
+						<h:graphicImage library="images" height="100" width="80" name="logo.png"></h:graphicImage>
 					</div>
 					<div class="col-md-10 center">
 						<h3 style="vertical-align: middle; text-align: center;">Cadastre
@@ -70,7 +69,7 @@
 								styleClass="btn btn-md btn-success">
 								<!-- Tem erro mas funciona, why god, why? -->
 								<f:ajax event="click" listener="#{disciplinaMBean.cadastrar}"
-									render="@all" />
+									render=":meuForm:minhaTabela :inserirDisciplina" />
 							</h:commandButton>
 						</div>
 					</div>
@@ -166,13 +165,11 @@
 			</footer>
 		</div>
 	</div>
-
-		<!-- <h:outputScript library="js" name="jquery.js" /> -->
+	<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
 	<h:outputScript library="js" name="bootstrap.min.js" />
 	<h:outputScript library="js" name="bootstrap-progressbar.min.js" />
-	<h:outputScript library="js" name="jquery.fancybox.pack.js" />
-	<!-- Validações desta página -->
 
+	<!-- Validações desta página -->
 	<script>
 		$(document).ready(
 				function() {

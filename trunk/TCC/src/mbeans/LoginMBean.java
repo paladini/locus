@@ -7,6 +7,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import sun.reflect.generics.visitor.Reifier;
 import control.ControleLogin;
 import entidades.Login;
 
@@ -30,28 +31,30 @@ public class LoginMBean {
 		
 	}
 	
-	public void entrar() throws IOException{
-		
-		System.out.println("Login: " + this.getLogin() + " Senha: " + this.getPassword());
+	public String entrar() throws IOException{
 		
 		// Criando o objeto loginTentativa com os dados inseridos pelo usuário
 		Login loginTentativa = new Login(login, password);
+		String redirecionamento = "";
 		
 		// Validando o Login
 		int resultadoValidacao = controle.validaLogin(loginTentativa);
-		System.out.println(resultadoValidacao);
+		
 		// Direcionando de acordo com a validação
 		switch (resultadoValidacao) {
 		case 0:
 			System.out.println("Usuário autenticado. Primeira Entrada.");
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("first/1-dados-escola.xhtml");
+			redirecionamento = "first/1-dados-escola.xhtml";
+			break;
 		case 1:
 			System.out.println("Usuário autenticado. Menu Principal.");
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/user/principal.xhtml");
-			
+			redirecionamento = "user/principal.xhtml";
+			break;
 		default:
 			System.out.println("Usuário não autenticado.");
 		}
+		
+		return redirecionamento;
 	}
 
 	public String getLogin() {
