@@ -86,21 +86,24 @@ public class LoginDAO extends AbstractDAO {
             Statement statement = connection.createStatement();
             String query = "SELECT login,senha,ultimo_acesso FROM admin WHERE login='" + usuario + "';";
             rs = statement.executeQuery(query);
-            rs.next();
+            if(rs.next()){
+            	// Pegando os dados
+                String admin = rs.getString("login");
+                String senha = rs.getString("senha");
+                Date ultimo_acesso = rs.getDate("ultimo_acesso");
 
-            // Pegando os dados
-            String admin = rs.getString("login");
-            String senha = rs.getString("senha");
-            Date ultimo_acesso = rs.getDate("ultimo_acesso");
+                // Setando atributos ao objeto
+                Login login = new Login();
+                login.setLogin(admin);
+                login.setSenha(senha);
+                login.setUltimoacesso(ultimo_acesso);
 
-            // Setando atributos ao objeto
-            Login login = new Login();
-            login.setLogin(admin);
-            login.setSenha(senha);
-            login.setUltimoacesso(ultimo_acesso);
+                return login;
+            }else{
+            	return null;
+            }
 
-            return login;
-
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

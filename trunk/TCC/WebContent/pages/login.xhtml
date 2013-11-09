@@ -1,0 +1,77 @@
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	<h:head>
+	
+		<meta name="description" content=""></meta>
+		<meta name="author" content="Fernando Paladin"></meta>
+		<title>Locus - Tela de Login </title>
+		
+		<h:outputStylesheet library="css" name="bootstrap.css" />
+		<h:outputStylesheet library="css" name="custom.css" />
+	</h:head>
+	<h:body>
+
+		<div id="barra">
+		</div>
+	
+		<div class="navbar-wrapper">
+			<div class="container">
+				<p class="invisivel">Voltar</p>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				
+				<!-- Conteúdo da página em si -->
+				<div class="col-md-3 center">
+					
+					<div class="text-center">
+						<img src="../images/antigos/logo.png" class="imagem"/>
+					</div>
+					
+					<h:form id="form-login">
+						<br />
+						<fieldset>
+							<div class="form-group">
+								<label for="login">Login:</label>
+								<p:inputText styleClass="form-control" autocomplete="off" id="login" 
+								placeholder="Nome de usuário" style="padding: 6px 12px;" required="true" 
+								requiredMessage="Este campo é obrigatório." value="#{loginMBean.login}"/>
+							</div>
+
+							<div class="form-group">
+								<label for="senha">Senha: </label>
+								<p:inputText styleClass="form-control" autocomplete="off" id="senha" type="password"
+								placeholder="Senha" style="padding: 6px 12px;" required="true" 
+								requiredMessage="Este campo é obrigatório." value="#{loginMBean.password}" />
+							</div>
+							
+							<div class="form-actions">
+								<h:commandButton value="Entrar" styleClass="btn btn-default btn-lg" action="#{loginMBean.entrar}">
+								</h:commandButton>
+							</div>
+						</fieldset>
+					</h:form>
+				</div>
+			</div>
+			
+			<!-- Rodapé -->
+			<div class="row text-center">
+				<footer id="rodape">
+					Entrou aqui por engano? <a href="../index.html#contato">Fique conosco.</a> | Esqueceu sua senha? <a href="esqueci-minha-senha.html" >Clique aqui</a>.
+				</footer>
+			</div>
+		</div>
+
+		<!-- JavaScripts e Complementos -->
+        <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+        
+        <!-- Validações desta página -->
+        
+
+	</h:body>
+</html>
