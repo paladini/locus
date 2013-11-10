@@ -1,0 +1,163 @@
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Locus - Disciplinas</title>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="custom.css" />
+	<h:outputStylesheet library="css" name="bootstrap-datatable.css" />
+</h:head>
+<h:body>
+	<div id="barra">
+	</div>
+	
+	<div class="navbar-wrapper">
+		<div class="container">
+			<p class="invisivel">Voltar</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+
+			<!-- Logo e Barra de Progresso --> 
+			<!-- Logo e botões para gerenciamento --> 
+			<div class="row">
+				<div class="col-md-10 center">
+					<div class="row linha-dica">
+						<div class="col-lg-2">
+							<a href="../principal.jsf"><img src="../../../images/antigos/logo.png" height="110" width="80" alt="Menu Principal" title="Menu Principal"/></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../professor/index.html"><img class="menu-principal" src="../../../images/principal/professor.png" alt="Gerenciar Professores" title="Gerenciar Professores"/></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../sala/index.html"><img src="../../../images/principal/sala.png" class="menu-principal" alt="Gerenciar Salas" title="Gerenciar Salas" /></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../turma/index.html"><img src="../../../images/principal/turma.png" class="menu-principal" alt="Gerenciar Turmas" title="Gerenciar Turmas"/></a>
+						</div>
+						<div class="col-lg-2">
+							<img src="../../../images/principal/escola-selecionado.png" alt="Gerenciar Escola" title="Gerenciar Escola"/>
+						</div>
+						<div class="col-lg-2">
+							<a href=""><img src="../../../images/principal/ensalamento.png" class="menu-principal" alt="Gerar Ensalamento" title="Gerar Ensalamento"/></a>
+						</div>
+					</div>
+					
+					<hr class="featurette-divider" /> 
+
+					<ol class="breadcrumb">
+						<li><a href="../principal.jsf">Principal</a></li>
+						<li><a href="../escola/index.jsf">Escola</a></li>
+						<li class="active">Disciplinas</li>
+					</ol>
+
+				</div>
+			</div>
+
+			<!-- Conteúdo da página em si -->
+			<div class="col-lg-8 center">
+				<h:form id="inserirDisciplina">
+					<div class="form-group">
+						<div class="col-md-10">
+							<h:inputText styleClass="form-control" id="disciplina"
+								value="#{disciplinaMBean.nome}"
+								valueChangeListener="#{disciplinaMBean.atualizarListagemPesquisa}">
+								<f:ajax event="keyup" render=":meuForm:minhaTabela" />
+							</h:inputText>
+						</div>
+						<div class="col-md-2">
+							<h:commandButton value="Adicionar"
+								styleClass="btn btn-md btn-success">
+								<!-- Tem erro mas funciona, why god, why? -->
+								<f:ajax event="click" listener="#{disciplinaMBean.cadastrar}"
+									render=":meuForm:minhaTabela :inserirDisciplina" />
+							</h:commandButton>
+						</div>
+					</div>
+				</h:form>
+
+
+				<div class="col-md-10">
+					<div class="form-group">
+						<br />
+
+						<h:form id="meuForm">
+							<p:dataTable id="minhaTabela" tableStyleClass="table table-hover"
+								var="disciplina"
+								value="#{disciplinaMBean.listaDisciplinasPesquisadas}"
+								widgetVar="resultadosDisciplina" rowKey="#{disciplina.id}"
+								selection="#{disciplinaMBean.disciplinaSelecionada}"
+								selectionMode="single"
+								rowSelectListener="#{disciplinaMBean.limparSelecionadosDataTable}"
+								emptyMessage="Nenhuma disciplina encontrada.">
+
+								<p:column headerText="Nome" styleClass="pull-left">
+									#{disciplina.nome}
+								</p:column>
+
+								<p:ajax event="rowSelect" update=":meuForm:display"
+									render=":meuForm:dialog" oncomplete="PF('edit').show();"
+									onerror="alert('erro');" />
+								<p:ajax event="rowUnselect" />
+							</p:dataTable>
+
+							<p:dialog id="dialog" header="Editar Disciplina" widgetVar="edit"
+								resizable="false" modal="true" width="400" height="160"
+								hideEffect="clip" closeOnEscape="true" focus="enviar">
+
+								<h:panelGrid id="display" styleClass="col-lg-10 center"
+									style="margin-top: 10px; margin-bottom: 15px;">
+									<label for="nome">Nome:</label>
+									<p:inputText
+										rendered="#{disciplinaMBean.disciplinaSelecionada.nome != null}"
+										styleClass="form-control adicionar" id="nome"
+										value="#{disciplinaMBean.disciplinaSelecionada.nome}">
+										<f:ajax event="keyup"
+											listener="#{disciplinaMBean.disciplinaSelecionada.nome}" />
+									</p:inputText>
+
+								</h:panelGrid>
+								<h:panelGrid styleClass="col-lg-10 center">
+									<p:columnGroup>
+										<h:commandButton id="excluir"
+											styleClass="btn btn-lg btn-danger pull-left" value="Excluir"
+											action="#{disciplinaMBean.deletar}">
+											<f:ajax event="click" onevent="edit.hide()"
+												render=":meuForm:minhaTabela"
+												listener="#{disciplinaMBean.deletar}" />
+										</h:commandButton>
+
+										<h:commandButton id="enviar"
+											styleClass="btn btn-lg btn-success pull-right" value="Salvar"
+											action="#{disciplinaMBean.editar}">
+											<f:ajax event="click" onevent="edit.hide()"
+												render=":meuForm:minhaTabela"
+												listener="#{disciplinaMBean.editar}" />
+										</h:commandButton>
+									</p:columnGroup>
+								</h:panelGrid>
+							</p:dialog>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<!-- Rodapé -->
+		<div class="row text-center">
+			<footer id="rodape">
+				<div class="invisivel">Entrou aqui por engano? <a href="../index.html#contato">Fique conosco.</a> | Esqueceu sua senha? <a href="#">Clique aqui</a>.</div>
+			</footer>
+		</div>
+		</div>
+
+		<!-- JavaScripts e Complementos -->
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+		<h:outputScript library="js" name="bootstrap.min.js" />
+		<h:outputScript library="js" name="locus-hoverIt.js" />
+
+	</h:body>
+	</html>

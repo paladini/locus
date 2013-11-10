@@ -104,6 +104,7 @@ public class ControleDisciplina {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	public ArrayList<Disciplina> consultaComTermos(String termo) {
 		return modelo.selectComTermos(termo);
 	}
@@ -114,6 +115,7 @@ public class ControleDisciplina {
 	 * @param termo
 	 * @return
 	 */
+	@Deprecated
 	public Disciplina consultaDisciplina(String termo) {
 		return modelo.selectDisciplina(termo);
 	}
