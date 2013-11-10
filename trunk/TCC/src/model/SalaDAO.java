@@ -91,7 +91,7 @@ public class SalaDAO extends AbstractDAO{
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM Sala where id = ?;";
+            String sql = "SELECT * FROM Sala where idSala = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, id);
             ResultSet rs = prest.executeQuery();
@@ -175,9 +175,9 @@ public class SalaDAO extends AbstractDAO{
     }
 
     public void delete(Sala salaAntiga) {
-        String sql = "DELETE FROM Sala WHERE nome = ?;";
+        String sql = "DELETE FROM Sala WHERE idSala = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
-        params.add(salaAntiga.getNome());
+        params.add(salaAntiga.getId());
         operacaoEscrita(sql, params);
     }
     

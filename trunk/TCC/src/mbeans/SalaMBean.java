@@ -43,6 +43,7 @@ public class SalaMBean {
 	// Lista de disciplinas pesquisadas (fiz isso para evitar muitas consultas
 	// ao banco de dados)
 	private static ArrayList<Sala> listaPesquisa;
+//	private Sala selecionado;
 	private Sala selecionado;
 
 	private int id;
@@ -116,6 +117,7 @@ public class SalaMBean {
 		if(this.getSelecionado() != null){
 			
 			int id = this.getSelecionado().getId();
+			System.out.println("Cheguei aqui com ID: " + id);
 			
 			// Limpando a disciplina selecionada antes de excluir do banco/lista (se não dá erro)
 			setSelecionado(null);
@@ -250,17 +252,14 @@ public class SalaMBean {
 	}
 
 	public Sala getSelecionado() {
-		if (selecionado != null){
-			System.out.println("Get: " + selecionado.getNome());
-		}
+		System.out.println("Get: " + selecionado);
 		
 		return selecionado;
 	}
 
 	public void setSelecionado(Sala selecionado) {
 		this.selecionado = selecionado;
-		if (selecionado != null)
-			System.out.println("Set: " + selecionado.getNome());
+		System.out.println("Set: " + selecionado);
 	}
 
 	public ArrayList<Sala> getLista() {

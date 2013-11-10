@@ -117,24 +117,24 @@
 										<f:ajax event="keyup"
 											listener="#{salaMBean.selecionado.nome}" />
 									</p:inputText>
+
 								</h:panelGrid>
-								
 								<h:panelGrid styleClass="col-lg-10 center">
 									<p:columnGroup>
 										<h:commandButton id="excluir"
 											styleClass="btn btn-lg btn-danger pull-left" value="Excluir"
-											action="#{cursoMBean.deletar}">
+											action="#{salaMBean.deletar}">
 											<f:ajax event="click" onevent="edit.hide()"
 												render=":meuForm:minhaTabela"
-												listener="#{cursoMBean.deletar}" />
+												listener="#{salaMBean.deletar}" />
 										</h:commandButton>
 
 										<h:commandButton id="enviar"
 											styleClass="btn btn-lg btn-success pull-right" value="Salvar"
-											action="#{cursoMBean.editar}">
+											action="#{salaMBean.editar}">
 											<f:ajax event="click" onevent="edit.hide()"
 												render=":meuForm:minhaTabela"
-												listener="#{cursoMBean.editar}" />
+												listener="#{salaMBean.editar}" />
 										</h:commandButton>
 									</p:columnGroup>
 								</h:panelGrid>
