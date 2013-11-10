@@ -50,7 +50,7 @@ public class ControleSala {
 	public void remover(int idSala) {
 		Sala sala = new Sala();
 		sala.setId(idSala);
-		 modelo.delete(sala);
+		modelo.delete(sala);
 //		modeloHibernate.delete(sala);
 	}
 
