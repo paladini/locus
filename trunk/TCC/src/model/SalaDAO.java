@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author silvio
+ * @author fernando_paladini
  */
 public class SalaDAO extends AbstractDAO{
     
@@ -83,6 +83,46 @@ public class SalaDAO extends AbstractDAO{
         return null;
     }
     
+    /**
+     * Faz consulta no banco de dados e retorna apenas uma sala com esse id.
+     * @return Retorna uma sala única com esse ID.
+     */
+    public Sala selectSala(int id){
+        Connection connection = Conexao.getConexao();
+        try {
+
+            String sql = "SELECT * FROM Sala where id = ?;";
+            PreparedStatement prest = connection.prepareStatement(sql);
+            prest.setInt(1, id);
+            ResultSet rs = prest.executeQuery();
+
+            // Cria uma nova sala
+            Sala sala = new Sala();
+            
+            if (rs.next()){
+            	// Pega o primeiro registro do retorno da consulta
+                rs.next();
+                
+                // Pega os dados desse registro e guarda em variáveis
+                int idSala = rs.getInt("idSala");
+                String nome = rs.getString("nome");
+                
+                // Seta os dados na disciplina criada
+                sala.setId(id);
+                sala.setNome(nome);
+
+                connection.close();
+                return sala;
+
+            }else{
+            	return null;
+            }
+       } catch (SQLException ex) {
+           System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+    
     
     
     /**
@@ -90,6 +130,7 @@ public class SalaDAO extends AbstractDAO{
      * @param termos Termos digitados pelo usuário.
      * @return 
      */
+    @Deprecated
     public ArrayList<Sala> selectComTermos(String termos) {
 
         Connection connection = Conexao.getConexao();
@@ -119,14 +160,14 @@ public class SalaDAO extends AbstractDAO{
     }
 
     public void insert(Sala sala) {
-        String sql = "INSERT INTO sala (nome) VALUES (?);";
+        String sql = "INSERT INTO Sala (nome) VALUES (?);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(sala.getNome());
         operacaoEscrita(sql, params);
     }
 
     public void update(Sala salaNova) {
-        String sql = "UPDATE sala SET nome = ? WHERE idSala = ?;";
+        String sql = "UPDATE Sala SET nome = ? WHERE idSala = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(salaNova.getNome());
         params.add(salaNova.getId());
@@ -134,7 +175,7 @@ public class SalaDAO extends AbstractDAO{
     }
 
     public void delete(Sala salaAntiga) {
-        String sql = "DELETE FROM sala WHERE nome = ?;";
+        String sql = "DELETE FROM Sala WHERE nome = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(salaAntiga.getNome());
         operacaoEscrita(sql, params);

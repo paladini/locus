@@ -36,20 +36,20 @@ public class DisciplinaMBean {
 	private ControleDisciplina controleDisciplina;
 
 	// Lista de todas as disciplinas
-	private static ArrayList<Disciplina> listaDisciplinas;
+	private static ArrayList<Disciplina> lista;
 
 	// Lista de disciplinas pesquisadas (fiz isso para evitar muitas consultas
 	// ao banco de dados)
-	private static ArrayList<Disciplina> listaDisciplinasPesquisadas;
-	private Disciplina disciplinaSelecionada;
+	private static ArrayList<Disciplina> listaPesquisa;
+	private Disciplina selecionado;
 
 	private int id;
 	private String nome;
 
 	public DisciplinaMBean() {
 
-		if (listaDisciplinas == null) {
-			listaDisciplinas = new ArrayList<Disciplina>();
+		if (lista == null) {
+			lista = new ArrayList<Disciplina>();
 		}
 
 		if (this.getNome() == null) {
@@ -80,31 +80,6 @@ public class DisciplinaMBean {
 
 		return null;
 	}
-	
-	/**
-	 * Limpa o campo de Input.
-	 */
-	private void limparCampos() {
-		this.setNome("");
-	}
-
-	public String entrarEditar() {
-
-		String param1 = FacesContext.getCurrentInstance().getExternalContext()
-				.getRequestParameterMap().get("idDisciplina");
-		String param2 = FacesContext.getCurrentInstance().getExternalContext()
-				.getRequestParameterMap().get("nomeDisciplina");
-
-		int idDisciplina = Integer.parseInt(param1);
-		String nomeDisciplina = param2;
-
-		this.setId(idDisciplina);
-		this.setNome(nomeDisciplina);
-		// Disciplina disciplinaSelecionada = modeloDisciplina.getRowData();
-		// controleDisciplina.atualizar(disciplinaSelecionada);
-
-		return null;
-	}
 
 	public String editar() {
 
@@ -124,7 +99,7 @@ public class DisciplinaMBean {
 			
 			// Atualizando dados da disciplinaSelecionada e das listas
 			Disciplina disciplina = controleDisciplina.consultaDisciplina(id);
-			disciplinaSelecionada = disciplina;
+			selecionado = disciplina;
 			
 			atualizarListagem();
 		}
@@ -160,7 +135,7 @@ public class DisciplinaMBean {
 	 */
 	public void atualizarListagem() {
 		this.setListaDisciplinas(controleDisciplina.consulta());
-		listaDisciplinasPesquisadas = (ArrayList<Disciplina>) this.getListaDisciplinas().clone();
+		listaPesquisa = (ArrayList<Disciplina>) this.getListaDisciplinas().clone();
 	}
 
 	/**
@@ -180,9 +155,19 @@ public class DisciplinaMBean {
 		}
 	}
 	
+	/**
+	 * Limpa todos os objetos selecionados na tabela.
+	 */
 	public void limparSelecionadosDataTable() {
 		RequestContext.getCurrentInstance().execute(
 				"resultadosDisciplina.unselectAllRows()");
+	}
+	
+	/**
+	 * Limpa o campo de Input.
+	 */
+	private void limparCampos() {
+		this.setNome("");
 	}
 
 	/**
@@ -228,6 +213,16 @@ public class DisciplinaMBean {
 		return false;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -254,32 +249,29 @@ public class DisciplinaMBean {
 
 	public Disciplina getDisciplinaSelecionada() {
 		System.out.println("Get Disciplina selecionada: "
-				+ disciplinaSelecionada);
-		return disciplinaSelecionada;
+				+ selecionado);
+		return selecionado;
 	}
 
 	public void setDisciplinaSelecionada(Disciplina disciplinaSelecionada) {
-		this.disciplinaSelecionada = disciplinaSelecionada;
+		this.selecionado = disciplinaSelecionada;
 		System.out.println("Set Disciplina selecionada: "
 				+ disciplinaSelecionada);
-//		System.out.println("Id: " + disciplinaSelecionada.getId());
-//		System.out.println("Nome: " + disciplinaSelecionada.getNome());
-
 	}
 
 	public ArrayList<Disciplina> getListaDisciplinas() {
-		return listaDisciplinas;
+		return lista;
 	}
 
 	public void setListaDisciplinas(ArrayList<Disciplina> listaDisciplinas) {
-		DisciplinaMBean.listaDisciplinas = listaDisciplinas;
+		DisciplinaMBean.lista = listaDisciplinas;
 	}
 
 	public ArrayList<Disciplina> getListaDisciplinasPesquisadas() {
-		return listaDisciplinasPesquisadas;
+		return listaPesquisa;
 	}
 
 	public void setListaDisciplinasPesquisadas(ArrayList<Disciplina> lista) {
-		DisciplinaMBean.listaDisciplinasPesquisadas = lista;
+		DisciplinaMBean.listaPesquisa = lista;
 	}
 }
