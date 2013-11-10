@@ -38,6 +38,11 @@ public class Turma {
         
     }
     
+    public Turma(int id, String nome){
+        this.id = id;
+        this.nome = nome;
+    }
+    
     public Turma(int id, String nome, Curso idCurso) {
         this.id = id;
         this.nome = nome;
