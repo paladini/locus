@@ -96,7 +96,7 @@
 									<p:columnGroup>
 										<h:outputText value="Disciplinas do Curso: " />
 										<p:selectManyCheckbox style="margin-bottom: 40px;" id="disciplinas" value="#{cursoMBean.listaDisciplinasDoCurso}" layout="grid" columns="2">
-											<f:selectItems value="#{cursoMBean.listaTodasDisciplinas}" />
+											<f:selectItems value="#{cursoMBean.listaTodasDisciplinas}" var="disciplina" itemValue="#{disciplina}" itemLabel="#{disciplina.nome}" />
 										</p:selectManyCheckbox>
 									</p:columnGroup>
 								</h:panelGrid>
