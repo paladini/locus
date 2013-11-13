@@ -263,6 +263,15 @@ public class CursoMBean {
 		}
 		return false;
 	}
+	
+	
+	// Primeira etapa antes de abrir o modal, basicamente salva o nome do curso para exibir dentro do modal.
+	public void gravarNome(){
+		System.out.println("Cheguei com o nome: " + nome);
+		setNome(nome);
+	}
+	
+	
 
 	public int getId() {
 		return id;
