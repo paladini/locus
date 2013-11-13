@@ -86,14 +86,14 @@ public class CursoMBean {
 //		listaTodasDisciplinas = controleDisciplina.consulta();
 		
 		System.out.println("\n----------------------");
-		System.out.println("Chegando disciplinas da listaDisciplinasDoCurso: \n");
+		System.out.println("Chegando disciplinas do curso: " + listaDisciplinasDoCurso.size() +"\n");
 		for (Disciplina d : listaDisciplinasDoCurso) {
 			System.out.println(d.toString());
 		}
 		System.out.println("----------------------\n");
 		
 		System.out.println("\n----------------------");
-		System.out.println("Chegando disciplinas da listaDisciplinasDoCurso: \n");
+		System.out.println("Chegando todas disciplinas: \n");
 		for(Disciplina d : listaTodasDisciplinas){
 			System.out.println(d.toString());
 		}
@@ -106,6 +106,9 @@ public class CursoMBean {
 			// Atribuindo nome ao curso
 			curso.setNome(this.getNome());
 //			curso.setDisciplina(listaDisciplinasDoCurso);
+			
+			// Limpando a lista de disciplinas do curso
+			listaDisciplinasDoCurso = new ArrayList<Disciplina>();
 			
 			// Adicionando curso ao banco de dados
 			controleCurso.adicionar(curso);
