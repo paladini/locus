@@ -72,7 +72,7 @@
 									render=":meuForm:minhaTabela :inserirDisciplina" /> -->
 								<p:ajax event="click" update=":meuForm:display"
 									render=":meuForm:dialog" oncomplete="PF('insert').show();"
-									onerror="alert('erro');" />
+									onerror="alert('erro');" listener="#{cursoMBean.gravarNome}" />
 							</h:commandButton>
 						</div>
 					</div>
@@ -87,8 +87,7 @@
 									<label for="nome">Nome:</label>
 									<p:inputText styleClass="form-control adicionar" id="nome"
 										value="#{cursoMBean.nome}">
-										<f:ajax event="keyup"
-											listener="#{cursoMBean.nome}" />
+									
 									</p:inputText>
 								</h:panelGrid>
 								
