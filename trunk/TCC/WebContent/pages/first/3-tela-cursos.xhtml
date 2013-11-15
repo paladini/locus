@@ -1,7 +1,8 @@
 <html xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
 <h:head>
 	<title>Cadastro de Cursos</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
@@ -48,9 +49,7 @@
 						</div>
 					</div>
 				</div>
-				<f:verbatim>
-					<hr class="featurette-divider" />
-				</f:verbatim>
+				<hr class="featurette-divider" />
 			</div>
 
 			<!-- Conteúdo da página em si -->
@@ -66,80 +65,63 @@
 						</div>
 						<div class="col-md-2">
 							<h:commandButton value="Adicionar"
-								styleClass="btn btn-md btn-success">
-								<!-- Tem erro mas funciona, why god, why? 
-								<f:ajax event="click" listener="#{cursoMBean.cadastrar}"
-									render=":meuForm:minhaTabela :inserirDisciplina" /> -->
-								<p:ajax event="click" update=":meuForm:display"
-									render=":meuForm:dialog" oncomplete="PF('insert').show();"
-									onerror="alert('erro');" listener="#{cursoMBean.gravarNome}" />
+								styleClass="btn btn-md btn-success" onclick="PF('insert').show();">
+								<!--  CUIDADO COM O EXECUTE="@FORM", PODE DAR PROBLEMA -->
+								<p:ajax event="click" execute="@form" update=":meuForm:display"
+									render=":meuForm:dialog"
+									onerror="alert('erro');" />
 							</h:commandButton>
 						</div>
 					</div>
-					
-					<!--  MODAL PARA INSERIR -->
-					<p:dialog id="dialog" header="Inserir Curso" widgetVar="insert"
-								resizable="false" modal="true" width="600" height="500"
-								hideEffect="clip" closeOnEscape="true" focus="enviar">
-								
-								<h:panelGrid id="display" styleClass="col-lg-10 center"
-									style="margin-top: 10px; margin-bottom: 15px;">
-									<label for="nome">Nome:</label>
-									<p:inputText styleClass="form-control adicionar" id="nome"
-										value="#{cursoMBean.nome}">
-									
-									</p:inputText>
-								</h:panelGrid>
-								
-								<h:panelGrid styleClass="col-lg-10 center">
-									<p:columnGroup>
-										<h:outputText value="Disciplinas do Curso: " />
-										<p:selectManyCheckbox style="margin-bottom: 40px;" id="disciplinas" value="#{cursoMBean.listaDisciplinasDoCurso}" layout="grid" columns="2">
-											<f:selectItems value="#{cursoMBean.listaTodasDisciplinas}" var="disciplina" itemValue="#{disciplina.id}" itemLabel="#{disciplina.nome}"/>
-										</p:selectManyCheckbox>
-									</p:columnGroup>
-								</h:panelGrid>
-								
-								<!--  <h:panelGrid styleClass="col-lg-10 center">
-									<p:columnGroup>
-										<p:dataTable id="disponivel" var="disciplina" 
-										value="#{cursoMBean.listaTodasDisciplinas}" width="200">
-
-											<p:column headerText="Disciplinas Disponíveis">
-												<h:outputText value="#{disciplina.nome}" id="disciplina" />
-												<p:draggable for="disciplina" rever="true" />
-											</p:column>
-
-										</p:dataTable>
-									
-										<p:outputPanel id="dropArea">
-											<p:dataTable id="indisponivel" var="disciplina" value="#{cursoMBean.listaDisciplinasDoCurso}" width="200">
-													<p:column headerText="Disciplinas do Curso">
-														<h:outputText value="#{disciplina.nome}" id="disciplina" />
-													</p:column>
-											</p:dataTable>
-										</p:outputPanel>
-									
-									<p:droppable for="dropArea" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="disponivel">
-										<p:ajax listener="#{cursoMBean.onDrop}" update="dropArea disponivel" />
-									</p:droppable>
-								
-									</p:columnGroup> 
-								</h:panelGrid> -->
-								
-								<h:panelGrid styleClass="col-lg-10 center">
-									<p:columnGroup>
-										<h:commandButton id="enviar"
-											styleClass="btn btn-lg btn-success pull-right" value="Adicionar"
-											action="#{cursoMBean.cadastrar}">
-											<f:ajax event="click" onevent="insert.hide()"
-												render=":meuForm:minhaTabela"
-												listener="#{cursoMBean.cadastrar}" />
-										</h:commandButton>
-									</p:columnGroup>
-								</h:panelGrid>
-							</p:dialog>
 				</h:form>
+				
+				
+				
+				<!--  MODAL PARA INSERIR -->
+				<p:dialog id="dialog" header="Inserir Curso" widgetVar="insert"
+					resizable="false" modal="true" width="600" height="500"
+					hideEffect="clip" closeOnEscape="true">
+
+					<h:form>
+						<h:panelGrid id="display" styleClass="col-lg-10 center"
+							style="margin-top: 10px; margin-bottom: 15px;">
+							<label for="nome">Nome:</label>
+							<p:inputText styleClass="form-control adicionar" id="nome"
+								value="#{cursoMBean.nome}">
+
+							</p:inputText>
+						</h:panelGrid>
+
+						<h:panelGrid styleClass="col-lg-10 center">
+							<p:columnGroup>
+								<label for="disciplinas">Disciplinas do Curso:</label>
+								<!--   layout="grid" columns="2" -->
+								<h:selectManyCheckbox style="margin-bottom: 40px;"
+									id="disciplinas" value="#{cursoMBean.listaDisciplinasDoCurso}"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItems value="#{cursoMBean.listaTodasDisciplinas}"
+										var="disciplina" itemValue="#{disciplina}"
+										itemLabel="#{disciplina.nome}" />
+								</h:selectManyCheckbox>
+							</p:columnGroup>
+						</h:panelGrid>
+
+						<h:panelGrid styleClass="col-lg-10 center">
+							<p:columnGroup>
+								<h:commandButton id="enviar"
+									styleClass="btn btn-lg btn-success pull-right"
+									value="Adicionar" action="#{cursoMBean.cadastrar}" onclick="insert.hide()">
+									<f:ajax event="click" execute="@form"
+										render=":meuForm:minhaTabela"
+										listener="#{cursoMBean.cadastrar}" />
+								</h:commandButton>
+							</p:columnGroup>
+						</h:panelGrid>
+						<h:messages autoUpdate="true" />
+						<p:messages autoUpdate="true" />
+					</h:form>
+				</p:dialog>
+
 
 
 				<div class="col-md-10">
@@ -148,11 +130,9 @@
 
 						<h:form id="meuForm">
 							<p:dataTable id="minhaTabela" tableStyleClass="table table-hover"
-								var="curso"
-								value="#{cursoMBean.listaPesquisa}"
+								var="curso" value="#{cursoMBean.listaPesquisa}"
 								widgetVar="resultados" rowKey="#{curso.id}"
-								selection="#{cursoMBean.selecionado}"
-								selectionMode="single"
+								selection="#{cursoMBean.selecionado}" selectionMode="single"
 								rowSelectListener="#{cursoMBean.limparSelecionadosDataTable}"
 								emptyMessage="Nenhum curso encontrado.">
 
@@ -165,7 +145,7 @@
 									onerror="alert('erro');" />
 								<p:ajax event="rowUnselect" />
 							</p:dataTable>
-							
+
 							<!-- MODAL PARA EDITAR -->
 							<p:dialog id="dialog" header="Editar Curso" widgetVar="edit"
 								resizable="false" modal="true" width="400" height="160"
@@ -174,8 +154,7 @@
 								<h:panelGrid id="display" styleClass="col-lg-10 center"
 									style="margin-top: 10px; margin-bottom: 15px;">
 									<label for="nome">Nome:</label>
-									<p:inputText
-										rendered="#{cursoMBean.selecionado.nome != null}"
+									<p:inputText rendered="#{cursoMBean.selecionado.nome != null}"
 										styleClass="form-control adicionar" id="nome"
 										value="#{cursoMBean.selecionado.nome}">
 										<f:ajax event="keyup"
@@ -253,12 +232,11 @@
 			cursoDir.focus();
 
 		});
-		
 
 		function handleDrop(event, ui) {
-	        var selectedSample = ui.draggable;          
-	        selectedSample.fadeOut('fast');
-	    }
+			var selectedSample = ui.draggable;
+			selectedSample.fadeOut('fast');
+		}
 	</script>
 
 </h:body>

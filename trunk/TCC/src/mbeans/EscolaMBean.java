@@ -13,8 +13,17 @@ public class EscolaMBean {
 	private ControleEscola modelo;
 	private Escola escola;
 	
+	
 	public EscolaMBean(){
 		modelo = ControleEscola.getInstance();
+	}
+	
+	public String cadastrar(){
+		
+		
+		
+		return "";
+		
 	}
 	
 	public String atualizarDados(){
@@ -22,7 +31,21 @@ public class EscolaMBean {
 		return null;
 		
 	}
-	
-	
+
+	public ControleEscola getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(ControleEscola modelo) {
+		this.modelo = modelo;
+	}
+
+	public Escola getEscola() {
+		return escola;
+	}
+
+	public void setEscola(Escola escola) {
+		this.escola = escola;
+	}
 	
 }

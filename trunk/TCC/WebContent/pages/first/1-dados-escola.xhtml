@@ -69,27 +69,11 @@
 								<label for="calendario">Calendário Escolar:</label>
 							</div>
 							
-							<div class="col-md-4">
-								<div class="checkbox">	
-									<label><input type="checkbox" id="segunda">Segunda-Feira</input></label>
-								</div>
-								<div class="checkbox">	
-									<label><input type="checkbox" id="terca">Terça-Feira</input></label>
-								</div>
-								<div class="checkbox">	
-									<label><input type="checkbox" id="quarta">Quarta-Feira</input></label>
-								</div>
-								<div class="checkbox">	
-									<label><input type="checkbox" id="quinta">Quinta-Feira</input></label>
-								</div>
-								<div class="checkbox">	
-									<label><input type="checkbox" id="sexta">Sexta-Feira</input></label>
-								</div>
-								<div class="checkbox">	
-									<label><input type="checkbox" id="sabado">Sábado</input></label>
-								</div>
-								<div class="checkbox">	
-									<label><input type="checkbox" id="domingo">Domingo</input></label>
+							<div class="col-md-4" id="calendario">
+								<div class="checkbox">
+									<p:selectManyCheckbox style="margin-bottom: 40px;" id="disciplinas" value="#{escolaMBean.listaDiasSelecionados}" layout="grid" columns="2">
+											<f:selectItems value="#{escolaMBean.listaDias}"/>
+									</p:selectManyCheckbox>
 								</div>
 							</div>
 							<div class="col-md-4">
