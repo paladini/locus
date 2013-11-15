@@ -47,10 +47,10 @@ public class CursoMBean {
 	private Curso selecionado;
 	
 	// Lista de todas as disciplinas (que ainda não estão associadas ao curso)
-	private static ArrayList<Disciplina> listaTodasDisciplinas;
+	private ArrayList<Disciplina> listaTodasDisciplinas;
 	
 	// Lista de disciplinas deste curso
-	private static ArrayList<Disciplina> listaDisciplinasDoCurso;
+	private ArrayList<Disciplina> listaDisciplinasDoCurso;
 	
 	private int id;
 	private String nome;
@@ -82,22 +82,12 @@ public class CursoMBean {
 	public String cadastrar() {
 
 		Curso curso = new Curso();
-//		listaDisciplinasDoCurso = new ArrayList<Disciplina>();
-//		listaTodasDisciplinas = controleDisciplina.consulta();
 		
 		System.out.println("\n----------------------");
 		System.out.println("Chegando disciplinas do curso: " + listaDisciplinasDoCurso.size() +"\n");
 		for (Disciplina d : listaDisciplinasDoCurso) {
-			System.out.println(d.toString());
+			System.out.println(d + " " + d.getId());
 		}
-		System.out.println("----------------------\n");
-		
-		System.out.println("\n----------------------");
-		System.out.println("Chegando todas disciplinas: \n");
-		for(Disciplina d : listaTodasDisciplinas){
-			System.out.println(d.toString());
-		}
-		
 		System.out.println("----------------------\n");
 		
 		if (!(this.getNome().isEmpty() || this.getNome() == " " || this
@@ -182,13 +172,6 @@ public class CursoMBean {
 
 		 return null;
 	}
-
-	 public void onDrop(DragDropEvent ddEvent) {  
-	        Disciplina disciplina = ((Disciplina) ddEvent.getData());  
-	  
-	        listaDisciplinasDoCurso.add(disciplina);  
-	        listaTodasDisciplinas.remove(disciplina);  
-	    }  
 	
 	/**
 	 * Atualizar a listagem de cursos (chamado do próprio Bean, ou seja, na
@@ -255,7 +238,6 @@ public class CursoMBean {
 	}
 
 	private boolean containsListaDisciplina(Curso esteCurso) {
-
 		for (Curso c : getListaPesquisa()){
 			if (c.getNome().equals(esteCurso.getNome())){
 				return true;
@@ -264,15 +246,6 @@ public class CursoMBean {
 		return false;
 	}
 	
-	
-	// Primeira etapa antes de abrir o modal, basicamente salva o nome do curso para exibir dentro do modal.
-	public void gravarNome(){
-		System.out.println("Cheguei com o nome: " + nome);
-		setNome(nome);
-	}
-	
-	
-
 	public int getId() {
 		return id;
 	}
@@ -321,7 +294,10 @@ public class CursoMBean {
 		this.selecionado = selecionado;
 		if (selecionado != null){
 			listaTodasDisciplinas = controleCurso.listaDisciplinasNaoAssociadas(selecionado);
-			listaDisciplinasDoCurso = controleCurso.listaDisciplinasAssociadas(selecionado);
+//			// Pegando os IDS do ArrayList<Integer> e adicionando no ArrayList de disciplinas do Curso.
+//			for(Integer i : listaDisciplinasSelecionadas){
+//				listaDisciplinasDoCurso.add(controleDisciplina.consultaDisciplina(i));
+//			}
 		}
 	}
 
@@ -339,7 +315,7 @@ public class CursoMBean {
 
 	public void setListaTodasDisciplinas(
 			ArrayList<Disciplina> listaTodasDisciplinas) {
-		CursoMBean.listaTodasDisciplinas = listaTodasDisciplinas;
+		this.listaTodasDisciplinas = listaTodasDisciplinas;
 	}
 
 	public ArrayList<Disciplina> getListaDisciplinasDoCurso() {
@@ -348,9 +324,6 @@ public class CursoMBean {
 
 	public void setListaDisciplinasDoCurso(
 			ArrayList<Disciplina> listaDisciplinasDoCurso) {
-		CursoMBean.listaDisciplinasDoCurso = listaDisciplinasDoCurso;
+		this.listaDisciplinasDoCurso = listaDisciplinasDoCurso;
 	}
-	
-	
-
 }

@@ -38,11 +38,11 @@ public class TurmaMBean {
 	private ControleTurma controleTurma;
 
 	// Lista de todas as turmas
-	private static ArrayList<Turma> lista;
+	private ArrayList<Turma> lista;
 
 	// Lista de Turmas pesquisadas (fiz isso para evitar muitas consultas
 	// ao banco de dados)
-	private static ArrayList<Turma> listaPesquisa;
+	private ArrayList<Turma> listaPesquisa;
 
 	private Turma selecionado;
 
@@ -268,7 +268,7 @@ public class TurmaMBean {
 	}
 
 	public void setLista(ArrayList<Turma> listaTurmas) {
-		TurmaMBean.lista = listaTurmas;
+		this.lista = listaTurmas;
 	}
 
 	public ArrayList<Turma> getListaPesquisa() {
@@ -276,6 +276,6 @@ public class TurmaMBean {
 	}
 
 	public void setListaPesquisa(ArrayList<Turma> lista) {
-		TurmaMBean.listaPesquisa = lista;
+		this.listaPesquisa = lista;
 	}
 }

@@ -291,7 +291,7 @@ public class CursoDAO extends AbstractDAO {
      * @param curso
      */
     public void insertCursoDisciplina(int idCurso, int idDisciplina) {
-        String sql = "INSERT INTO `locus`.`Curso_has_Disciplina` (`Curso_idCurso`, `Disciplina_idDisciplina`) VALUES (?, ?);";
+        String sql = "INSERT INTO Curso_has_Disciplina VALUES (?, ?);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(idCurso);
         params.add(idDisciplina);
