@@ -100,6 +100,8 @@ public class TurmaMBean {
 			turma.setNome(this.getNome());
 			turma.setCurso(cursoSelecionado);
 			
+//			System.out.println("Curso selecionado: " + turma.getCurso().getNome());
+			
 			// Adicionando turma ao banco de dados
 			controleTurma.adicionar(turma);
 			
