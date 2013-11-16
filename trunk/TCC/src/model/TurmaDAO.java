@@ -200,7 +200,7 @@ public class TurmaDAO extends AbstractDAO{
     }
     
     public void update(Turma turmaNova) {
-        String sql = "UPDATE Turma SET nome = ?, Curso_idCurso = ? WHERE id = ?;";
+        String sql = "UPDATE Turma SET nome = ?, Curso_idCurso = ? WHERE idTurma = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(turmaNova.getNome());
         params.add(turmaNova.getCurso().getId());
