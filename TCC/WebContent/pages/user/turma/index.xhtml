@@ -166,7 +166,7 @@
 								<h:panelGrid styleClass="col-lg-10 center">
 							
 									<label for="curso">Curso:</label>
-									<p:selectOneMenu id="curso" value="#{turmaMBean.selecionado.curso}" converter="omnifaces.SelectItemsConverter" style="margin-bottom: 15px;">
+									<p:selectOneMenu id="curso" value="#{turmaMBean.cursoSelecionado}" converter="omnifaces.SelectItemsConverter" style="margin-bottom: 15px;">
 										<f:selectItems value="#{turmaMBean.listaTodosCursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}"/>
 									</p:selectOneMenu>
 							

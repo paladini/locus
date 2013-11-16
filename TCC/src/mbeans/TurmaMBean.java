@@ -13,8 +13,6 @@ import control.ControleTurma;
 import entidades.Curso;
 import entidades.Turma;
 
-
-
 /*
  * 
  * TODO Turma (ver arquivo) 
@@ -26,12 +24,6 @@ import entidades.Turma;
  * 
  * 
  */
-
-
-
-
-
-
 
 @ManagedBean(name = "turmaMBean")
 @SessionScoped
@@ -46,10 +38,10 @@ public class TurmaMBean {
 	// Lista de Turmas pesquisadas (fiz isso para evitar muitas consultas
 	// ao banco de dados)
 	private ArrayList<Turma> listaPesquisa;
-	
+
 	// Lista de todos os cursos
 	private ArrayList<Curso> listaTodosCursos;
-	
+
 	private Turma selecionado;
 
 	private int id;
@@ -62,22 +54,22 @@ public class TurmaMBean {
 		if (lista == null) {
 			lista = new ArrayList<Turma>();
 		}
-		
+
 		// Inicializando ControleCurso
-		if (controleCurso == null){
+		if (controleCurso == null) {
 			controleCurso = ControleCurso.getInstance();
 		}
 
 		// Inicializando listaTodosCursos
-		if (listaTodosCursos == null){
+		if (listaTodosCursos == null) {
 			listaTodosCursos = controleCurso.consulta();
 		}
-		
+
 		// Inicializando cursoSelecionado
-		if (cursoSelecionado == null){
+		if (cursoSelecionado == null) {
 			cursoSelecionado = new Curso();
 		}
-		
+
 		// Inicializando variável nome
 		if (this.getNome() == null) {
 			this.setNome("");
@@ -94,55 +86,56 @@ public class TurmaMBean {
 
 		if (!(this.getNome().isEmpty() || this.getNome() == " " || this
 				.getNome() == "  ")) {
-			
+
 			// Criando turma
 			Turma turma = new Turma();
 			turma.setNome(this.getNome());
 			turma.setCurso(cursoSelecionado);
-			
-//			System.out.println("Curso selecionado: " + turma.getCurso().getNome());
-			
+
+			// System.out.println("Curso selecionado: " +
+			// turma.getCurso().getNome());
+
 			// Adicionando turma ao banco de dados
 			controleTurma.adicionar(turma);
-			
+
 			// Limpando o cursoSelecionado
 			cursoSelecionado = new Curso();
-			
+
 			limparCampos();
 			atualizarListagem();
-			
+
 		} else {
 			System.out.println("Turma não inserida.");
 		}
-
-		
 
 		return null;
 	}
 
 	public String editar() {
 
-		if (this.getSelecionado() != null){
-			// Pegando ID da Turma selecionada e o nome editado pelo usuário (no edit.xhtml)
+		if (this.getSelecionado() != null) {
+			// Pegando ID da Turma selecionada e o nome editado pelo usuário (no
+			// edit.xhtml)
 			String nome = this.getSelecionado().getNome();
 			int id = this.getSelecionado().getId();
-			
+
 			// Verificando dados
 			System.out.println("---------------------");
-			System.out.println("nome editado: " + this.getSelecionado().getNome());
+			System.out.println("nome editado: "
+					+ this.getSelecionado().getNome());
 			System.out.println("---------------------");
-			
+
 			// Atualizando turma
-			Turma turmaAtualizar = new Turma(id, nome);
+			Turma turmaAtualizar = new Turma(id, nome, this.getSelecionado().getCurso());
 			controleTurma.atualizar(turmaAtualizar);
-			
+
 			// Atualizando dados do selecionado e das listas
 			Turma turma = controleTurma.consultaTurma(id);
 			selecionado = turma;
-			
+
 			// Atualizando lista
 			atualizarListagem();
-			
+
 			// Limpando campos
 			limparCampos();
 		}
@@ -151,16 +144,17 @@ public class TurmaMBean {
 	}
 
 	public String deletar() {
-		
+
 		// Prevenindo para ID da disciplina selecionada não ser null
-		if(this.getSelecionado() != null){
-			
+		if (this.getSelecionado() != null) {
+
 			int id = this.getSelecionado().getId();
 			System.out.println("Cheguei aqui com ID: " + id);
-			
-			// Limpando a disciplina selecionada antes de excluir do banco/lista (se não dá erro)
+
+			// Limpando a disciplina selecionada antes de excluir do banco/lista
+			// (se não dá erro)
 			setSelecionado(null);
-			
+
 			// Removando da banco/lista
 			Turma turma = new Turma(id, "");
 			controleTurma.remover(turma);
@@ -168,12 +162,12 @@ public class TurmaMBean {
 
 			// Atualizando lista
 			atualizarListagem();
-			
+
 			// Limpando campos
 			limparCampos();
 		}
 
-		 return null;
+		return null;
 	}
 
 	/**
@@ -201,7 +195,7 @@ public class TurmaMBean {
 			System.out.println("Deveria mostrar todas as salas agora.");
 		}
 	}
-	
+
 	/**
 	 * Limpa todos os objetos selecionados na tabela.
 	 */
@@ -209,7 +203,7 @@ public class TurmaMBean {
 		RequestContext.getCurrentInstance().execute(
 				"resultados.unselectAllRows()");
 	}
-	
+
 	/**
 	 * Limpa o campo de Input.
 	 */
@@ -218,10 +212,9 @@ public class TurmaMBean {
 	}
 
 	/**
-	 * Adiciona na listaPesquisa as salas que contém no seu
-	 * nome o termo pesquisado pelo usuário. Criei este novo arrayList pq é
-	 * melhor usar um ArrayList ao invés de ficar fazendo consultas toda hora no
-	 * banco.
+	 * Adiciona na listaPesquisa as salas que contém no seu nome o termo
+	 * pesquisado pelo usuário. Criei este novo arrayList pq é melhor usar um
+	 * ArrayList ao invés de ficar fazendo consultas toda hora no banco.
 	 * 
 	 * @param termo
 	 */
@@ -230,8 +223,8 @@ public class TurmaMBean {
 		for (int i = 0; i < this.getLista().size(); i++) {
 
 			Turma estaTurma = this.getLista().get(i);
-			boolean disciplinaTemEsseTermo = estaTurma.getNome().contains(
-					termo);
+			boolean disciplinaTemEsseTermo = estaTurma.getNome()
+					.contains(termo);
 
 			if (disciplinaTemEsseTermo) {
 				if (!contains(estaTurma)) {
@@ -244,8 +237,7 @@ public class TurmaMBean {
 					// não faz nada, pois a sala sem o termo não está na
 					// lista
 				} else {
-					this.getListaPesquisa()
-							.remove(estaTurma);
+					this.getListaPesquisa().remove(estaTurma);
 				}
 			}
 		}
@@ -260,16 +252,6 @@ public class TurmaMBean {
 		return false;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public Curso getCursoSelecionado() {
 		return cursoSelecionado;
 	}
@@ -304,17 +286,15 @@ public class TurmaMBean {
 
 	public Turma getSelecionado() {
 		System.out.println("Get: " + selecionado);
-		
+
 		return selecionado;
 	}
 
 	public void setSelecionado(Turma selecionado) {
 		this.selecionado = selecionado;
-		if(selecionado != null){
-			if (selecionado.getCurso() != null){
-				this.setCursoSelecionado(selecionado.getCurso());
-			}
-		}
+//		if (selecionado.getCurso() != null) {
+//			this.setCursoSelecionado(selecionado.getCurso());
+//		}
 		System.out.println("Set: " + selecionado);
 	}
 
@@ -349,6 +329,5 @@ public class TurmaMBean {
 	public void setListaTodosCursos(ArrayList<Curso> listaTodosCursos) {
 		this.listaTodosCursos = listaTodosCursos;
 	}
-	
-	
+
 }
