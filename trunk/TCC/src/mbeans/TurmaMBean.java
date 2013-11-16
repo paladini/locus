@@ -82,7 +82,7 @@ public class TurmaMBean {
 
 	public String cadastrar() {
 
-		System.out.println("metodo cadastrar Ok");
+		
 
 		if (!(this.getNome().isEmpty() || this.getNome() == " " || this
 				.getNome() == "  ")) {
@@ -103,6 +103,8 @@ public class TurmaMBean {
 
 			limparCampos();
 			atualizarListagem();
+			
+			System.out.println("metodo cadastrar Ok");
 
 		} else {
 			System.out.println("Turma não inserida.");

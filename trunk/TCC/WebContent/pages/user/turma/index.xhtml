@@ -115,10 +115,10 @@
 							<p:columnGroup>
 								<h:commandButton id="enviar"
 									styleClass="btn btn-lg btn-success pull-right"
-									value="Adicionar" onclick="insert.hide();"> <!-- action="#{turmaMBean.cadastrar}" -->
+									value="Adicionar" action="#{turmaMBean.cadastrar}" onclick="insert.hide();"> <!-- action="#{turmaMBean.cadastrar}" -->
 									<f:ajax event="click" execute="@form"
-										render=":meuForm:minhaTabela"
-										listener="#{turmaMBean.cadastrar}" />
+										render=":meuForm:minhaTabela :inserirTurma"
+										listener="#{turmaMBean.cadastrar}" update=":meuForm:minhaTabela :inserirTurma" />
 								</h:commandButton>
 							</p:columnGroup>
 						</h:panelGrid>
@@ -178,16 +178,16 @@
 											styleClass="btn btn-lg btn-danger pull-left" value="Excluir"
 											action="#{turmaMBean.deletar}" onclick="edit.hide()">
 											<f:ajax event="click" execute="@form"
-												render=":meuForm:minhaTabela"
-												listener="#{turmaMBean.deletar}" />
+												render=":meuForm:minhaTabela  :inserirTurma"
+												listener="#{turmaMBean.deletar}" update=":meuForm:minhaTabela :inserirTurma" />
 										</h:commandButton>
 
 										<h:commandButton id="enviar"
 											styleClass="btn btn-lg btn-success pull-right" value="Salvar"
 											action="#{cursoMBean.editar}" onclick="edit.hide()">
 											<f:ajax event="click" execute="@form"
-												render=":meuForm:minhaTabela"
-												listener="#{turmaMBean.editar}" />
+												render=":meuForm:minhaTabela :inserirTurma"
+												listener="#{turmaMBean.editar}" update=":meuForm:minhaTabela :inserirTurma" />
 										</h:commandButton>
 									</p:columnGroup>
 								</h:panelGrid>
