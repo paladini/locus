@@ -29,6 +29,9 @@ public class ControleEscola {
 		return singleton;
 	}
 	
+	
+	
+	
     public Escola consultar(){
         return modelo.consultar();
     } 

@@ -23,10 +23,6 @@ public class LoginMBean {
 	
 	public LoginMBean(){
 		
-//		if (login == null){
-//			login = new Login();
-//		}
-		
 		controle = ControleLogin.getInstance();
 		
 	}
@@ -72,13 +68,5 @@ public class LoginMBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-//	public Login getLogin() {
-//		return login;
-//	}
-//
-//	public void setLogin(Login login) {
-//		this.login = login;
-//	}
 
 }

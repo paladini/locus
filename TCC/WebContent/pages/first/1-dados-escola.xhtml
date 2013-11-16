@@ -20,6 +20,7 @@
 		</div>
 
 		<div class="container">
+			<h:form role="form">
 			<div class="row">
 				
 				<!-- Logo e Barra de Progresso --> 
@@ -47,20 +48,20 @@
 
 				<!-- Conteúdo da página em si -->
 				<div class="col-lg-8 center">
-					<form role="form">
+					
 						<div class="col-md-10">
 							<div class="form-group">
 								<label for="nome">Nome da Instituição:</label>
 								<p:inputText size="20" styleClass="form-control" id="nome" autocomplete="off"
 								style="padding: 6px 12px;" 
-								placeholder="Nome da Instituição" required="true" requiredMessage="Este campo é obrigatório."/>
+								placeholder="Nome da Instituição" value="#{escolaMBean.escola.nomeEscola}" required="true" requiredMessage="Este campo é obrigatório."/>
 							</div>
 
 							<div class="form-group">
 								<label for="senha">Senha:</label>
 								<p:inputText size="20" styleClass="form-control" id="senha" autocomplete="off" type="password"
 								placeholder="Digite uma nova senha para acesso" required="true" requiredMessage="Este campo é obrigatório." 
-								style="padding: 6px 12px;" 
+								style="padding: 6px 12px;" value="#{escolaMBean.novaSenha}"
 								/>
 							</div>
 						</div>
@@ -70,25 +71,22 @@
 							</div>
 							
 							<div class="col-md-4" id="calendario">
-								<div class="checkbox">
-									<p:selectManyCheckbox style="margin-bottom: 40px;" id="disciplinas" value="#{escolaMBean.listaDiasSelecionados}" layout="grid" columns="2">
-											<f:selectItems value="#{escolaMBean.listaDias}"/>
+									
+									<p:selectManyCheckbox style="margin-bottom: 40px;" id="dias" value="#{escolaMBean.escola.dias}" converter="omnifaces.SelectItemsConverter" layout="pageDirection" >
+											<f:selectItems value="#{escolaMBean.listaTodosDias}" var="dia" itemValue="#{dia}" itemLabel="#{dia.nome}" />
 									</p:selectManyCheckbox>
-								</div>
+								
 							</div>
 							<div class="col-md-4">
-								<div class="checkbox">	
-									<label><input type="checkbox" id="matutino">Matutino</input></label>
-								</div>
-								<div class="checkbox">	
-									<label><input type="checkbox" id="vespertino">Vespertino</input></label>
-								</div>
-								<div class="checkbox">	
-									<label><input type="checkbox" id="noturno">Noturno</input></label>
-								</div>
+								
+									<p:selectManyCheckbox style="margin-bottom: 40px;" id="turnos" value="#{escolaMBean.escola.turnos}" converter="omnifaces.SelectItemsConverter" layout="pageDirection">
+											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno}" itemLabel="#{turno.nome}" />
+									</p:selectManyCheckbox>
+								
 							</div>
+							
 						</div>
-					</form>
+					
 				</div>
 			</div>
 			
@@ -96,9 +94,10 @@
 			<div class="row">
 				<br />
 				<div class="col-md-8 center">
-					<h:commandButton id="enviar" action="2-tela-disciplinas.xhtml" styleClass="btn btn-lg btn-success pull-right" value="Avançar" />
+					<h:commandButton id="enviar" action="#{escolaMBean.atualizarDados}" styleClass="btn btn-lg btn-success pull-right" value="Avançar" />
 				</div>
 			</div>
+			</h:form>
 
 			<!-- Rodapé -->
 			<div class="row text-center">

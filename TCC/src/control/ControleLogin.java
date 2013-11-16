@@ -52,6 +52,10 @@ public class ControleLogin {
     	}
     }
     
+    public void modificarSenha(String novaSenha){
+    	modelo.mudarSenha(novaSenha);
+    }
+    
     
     
 }
