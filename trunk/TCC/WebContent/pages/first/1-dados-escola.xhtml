@@ -1,7 +1,9 @@
 <html xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
 <h:head>
 	<title>Locus - Instituição</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
@@ -54,7 +56,7 @@
 								<label for="nome">Nome da Instituição:</label>
 								<p:inputText size="20" styleClass="form-control" id="nome" autocomplete="off"
 								style="padding: 6px 12px;" 
-								placeholder="Nome da Instituição" value="#{escolaMBean.escola.nomeEscola}" required="true" requiredMessage="Este campo é obrigatório."/>
+								placeholder="Nome da Instituição" value="#{escolaMBean.nomeEscola}" required="true" requiredMessage="Este campo é obrigatório."/>
 							</div>
 
 							<div class="form-group">
@@ -94,7 +96,7 @@
 			<div class="row">
 				<br />
 				<div class="col-md-8 center">
-					<h:commandButton id="enviar" action="#{escolaMBean.atualizarDados}" styleClass="btn btn-lg btn-success pull-right" value="Avançar" />
+					<h:commandButton id="enviar" action="#{escolaMBean.cadastrarPrimeiraEntrada}" styleClass="btn btn-lg btn-success pull-right" value="Avançar" />
 				</div>
 			</div>
 			</h:form>

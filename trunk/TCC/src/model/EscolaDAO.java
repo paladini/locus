@@ -53,6 +53,8 @@ public class EscolaDAO extends AbstractDAO {
         return true;
     }
 
+ 
+    
     /**
      * Método para adicionar turnos ao banco de dados. Se o turno já existir no
      * banco de dados, ele insere de novo e omite os warnings).
@@ -60,12 +62,25 @@ public class EscolaDAO extends AbstractDAO {
      * @param turno
      */
     public boolean adicionarTurno(String turno) {
-        String sql = "INSERT IGNORE INTO turno (descricao) values ?;";
+        String sql = "INSERT IGNORE INTO Turno (descricao) values (?);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(turno);
         operacaoEscrita(sql, params);
         return true;
     }
+    
+    /**
+     * Método para remover um turno do banco de dados.
+     * @param turno
+     * @return
+     */
+    public boolean removerTurno(String turno){
+   	 String sql = "DELETE from Turno where descricao = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(turno);
+        operacaoEscrita(sql, params);
+        return true;
+   }
 
     /**
      * Método para adicionar dias ao banco de dados. Se o dia já existir no
@@ -75,10 +90,37 @@ public class EscolaDAO extends AbstractDAO {
      * @return
      */
     public boolean adicionarDia(String dia) {
-        String sql = "INSERT IGNORE INTO dia (descricao) values ?;";
+        String sql = "INSERT IGNORE INTO Dia (descricao) values (?);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(dia);
         operacaoEscrita(sql, params);
         return true;
+    }
+    
+    /**
+     * Método par remover um dia do banco de dados
+     * @param dia
+     * @return
+     */
+    public boolean removerDia(String dia){
+    	 String sql = "DELETE from Dia where descricao = ?;";
+         ArrayList<Object> params = new ArrayList<Object>();
+         params.add(dia);
+         operacaoEscrita(sql, params);
+         return true;
+    }
+    
+    public boolean removerDias(){
+    	String sql = "DELETE from Dia where idDia != -1;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        operacaoEscrita(sql, params);
+        return true;
+    }
+    
+    public boolean removerTurnos(){
+    	 String sql = "DELETE from Turno where idTurno != -1;";
+         ArrayList<Object> params = new ArrayList<Object>();
+         operacaoEscrita(sql, params);
+         return true;
     }
 }

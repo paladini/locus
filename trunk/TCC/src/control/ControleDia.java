@@ -4,6 +4,8 @@
  */
 package control;
 
+import java.util.ArrayList;
+
 import entidades.Dia;
 import model.DiaDAO;
 
@@ -14,7 +16,25 @@ import model.DiaDAO;
 public class ControleDia {
     
     // Criando um modelo
-    DiaDAO modelo = new DiaDAO();
+	private static ControleDia controleDia;
+    private DiaDAO modelo;
+    
+    private ControleDia(){
+    	modelo = new DiaDAO();
+    }
+    
+    public static ControleDia getInstance(){
+    	if (controleDia == null){
+    		controleDia = new ControleDia();
+    	}
+    	return controleDia;
+    }
+    
+    public ArrayList<Dia> consulta(){
+    	return modelo.consulta();
+    }
+    
+    
     
     /**
      * Faz uma consulta no banco e checa se esse dia já existe

@@ -288,15 +288,11 @@ public class TurmaMBean {
 
 	public Turma getSelecionado() {
 		System.out.println("Get: " + selecionado);
-
 		return selecionado;
 	}
 
 	public void setSelecionado(Turma selecionado) {
 		this.selecionado = selecionado;
-//		if (selecionado.getCurso() != null) {
-//			this.setCursoSelecionado(selecionado.getCurso());
-//		}
 		System.out.println("Set: " + selecionado);
 	}
 

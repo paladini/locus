@@ -26,11 +26,6 @@ public class ControleLogin {
 		}
 		return singleton;
 	}
-	
-    public static String processamentoApae(String email, String senha){
-        String resultado = email + " " + senha;
-        return resultado;
-    }
     
     /**
      * Verifica se o Login é valido e sob quais condiçoes
@@ -52,10 +47,21 @@ public class ControleLogin {
     	}
     }
     
+    /**
+     * Modifica a senha do administrador
+     * @param novaSenha
+     */
     public void modificarSenha(String novaSenha){
     	modelo.mudarSenha(novaSenha);
     }
     
+    
+    /**
+     * Atualiza o primeiro acesso para o horário atual.
+     */
+    public void primeiroAcesso(){
+    	modelo.ultimoAcesso();
+    }
     
     
 }

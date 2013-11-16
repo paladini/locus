@@ -17,7 +17,39 @@ import java.util.ArrayList;
  */
 public class TurnoDAO extends AbstractDAO {
     
-    /**
+	/**
+	 * Faz consulta no banco de dados e retorna todos os turnos.
+	 * @return
+	 */
+    public ArrayList<Turno> select(){
+    	Connection connection = Conexao.getConexao();
+        try {
+
+            String sql = "SELECT * FROM Turno";
+            PreparedStatement prest = connection.prepareStatement(sql);
+            ResultSet rs = prest.executeQuery();
+            
+            ArrayList<Turno> listaTurnos = new ArrayList<Turno>();
+            while (rs.next()) {
+                Turno turno = new Turno();
+                int id = rs.getInt("idTurno");
+                String nome = rs.getString("descricao");
+
+                turno.setId(id);
+                turno.setNome(nome);
+                
+                listaTurnos.add(turno);
+               
+            }
+            connection.close();
+            return listaTurnos;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+	
+	/**
      * Faz consulta no banco de dados e retorna apenas um dia com esse nome.
      *
      * @return
@@ -56,14 +88,14 @@ public class TurnoDAO extends AbstractDAO {
     }
 
     public void insert(Turno turno) {
-        String sql = "INSERT INTO turno (descricao) VALUES (?);";
+        String sql = "INSERT INTO Turno (descricao) VALUES (?);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(turno.getNome());
         operacaoEscrita(sql, params);
     }
 
     public void delete(Turno turno) {
-        String sql = "DELETE FROM turno WHERE descricao = ?;";
+        String sql = "DELETE FROM Turno WHERE descricao = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(turno.getNome());
         operacaoEscrita(sql, params);

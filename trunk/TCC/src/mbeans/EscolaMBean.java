@@ -11,101 +11,144 @@ import control.ControleLogin;
 import control.ControleTurno;
 import entidades.Dia;
 import entidades.Escola;
-import entidades.Login;
 import entidades.Turno;
 
 @ManagedBean(name = "escolaMBean")
 @SessionScoped
 public class EscolaMBean {
-	
+
 	private ControleEscola modelo;
 	private Escola escola;
+	
+	// TODO: Cuidar do primeiro acesso.
 	
 	// Alguns controles necessários
 	ControleDia controleDia;
 	ControleTurno controleTurno;
 	ControleLogin controleLogin;
-	
+
 	// Lista de turnos e dias
 	private ArrayList<Dia> listaTodosDias;
 	private ArrayList<Turno> listaTodosTurnos;
-	
-	// Nova senha definida pela usuário
-	private String novaSenha;
-	
-	
-	public EscolaMBean(){
-		modelo = ControleEscola.getInstance();
-		
-		if (escola == null){
-			escola = new Escola();
-		}
-		
-		// Inicializando os controles necessários
-		if (controleDia == null){
-			controleDia = new ControleDia(); //TODO: Fazer singleton.
-		}
-		
-		if (controleTurno == null){
-			controleTurno = new ControleTurno(); //TODO: Fazer singleton
-		}
-		
-		// Populando lista com todos os dias da semana
-		if (listaTodosDias == null){
-			listaTodosDias = new ArrayList<Dia>();
-			listaTodosDias.add(new Dia("Segunda-feira"));
-			listaTodosDias.add(new Dia("Terça-feira"));
-			listaTodosDias.add(new Dia("Quarta-feira"));
-			listaTodosDias.add(new Dia("Quinta-feira"));
-			listaTodosDias.add(new Dia("Sexta-feira"));
-			listaTodosDias.add(new Dia("Sábado"));
-		}
-		
-		// Populando lista com todos os turnos
-		if (listaTodosTurnos == null){
-			listaTodosTurnos = new ArrayList<Turno>();
-			listaTodosTurnos.add(new Turno("Matutino"));
-			listaTodosTurnos.add(new Turno("Vespertino"));
-			listaTodosTurnos.add(new Turno("Noturno"));
-		}
-		
-		novaSenha = "";
-		
 
-		
-		if (controleLogin == null){
+	// Atributos para o primeira entrada
+	private String novaSenha;
+	private String nomeEscola;
+
+	public EscolaMBean() {
+		modelo = ControleEscola.getInstance();
+
+		if (escola == null) {
+			escola = modelo.consultar();
+		}
+
+		// Inicializando os controles necessários
+		if (controleDia == null) {
+			controleDia = ControleDia.getInstance();
+		}
+
+		if (controleTurno == null) {
+			controleTurno = ControleTurno.getInstance();
+		}
+
+		if (controleLogin == null) {
 			controleLogin = ControleLogin.getInstance();
 		}
-		
+
+		// Populando lista com todos os dias da semana
+		if (listaTodosDias == null) {
+			listaTodosDias = new ArrayList<Dia>();
+
+			Dia segunda = new Dia("Segunda-feira");
+			Dia terca = new Dia("Terça-feira");
+			Dia quarta = new Dia("Quarta-feira");
+			Dia quinta = new Dia("Quinta-feira");
+			Dia sexta = new Dia("Sexta-feira");
+			Dia sabado = new Dia("Sábado");
+
+			listaTodosDias.add(segunda);
+			listaTodosDias.add(terca);
+			listaTodosDias.add(quarta);
+			listaTodosDias.add(quinta);
+			listaTodosDias.add(sexta);
+			listaTodosDias.add(sabado);
+		}
+
+		// Populando lista com todos os turnos
+		if (listaTodosTurnos == null) {
+			listaTodosTurnos = new ArrayList<Turno>();
+
+			Turno matutino = new Turno("Matutino");
+			Turno vespertino = new Turno("Vespertino");
+			Turno noturno = new Turno("Noturno");
+
+			listaTodosTurnos.add(matutino);
+			listaTodosTurnos.add(vespertino);
+			listaTodosTurnos.add(noturno);
+		}
+
+		novaSenha = "";
+		nomeEscola = "";
+
+		getEscola().setDias(controleDia.consulta());
+		getEscola().setTurnos(controleTurno.consulta());
+
+		for (Turno t : getEscola().getTurnos()) {
+			System.out.println("Turno selecionado anteriormente: "
+					+ t.getNome());
+		}
+
 	}
-	
-	public String cadastrar(){
+
+	/**
+	 * Método exclusivo para o primeira entrada.
+	 * @return
+	 */
+	public String cadastrarPrimeiraEntrada() {
+
+		// Criando nome para Escola
+		Escola escolaPrimeiraEntrada = new Escola(nomeEscola);
 		
-		
-		
-		return "";
-		
-	}
-	
-	public String atualizarDados(){
-		
-		System.out.println("Cheguei");
-		
-		// Mudando nome da escola;
-		if (modelo.mudarNome(escola) == 0){
-			
+		if (modelo.mudarNome(escolaPrimeiraEntrada) == 0) {
+
 			// Adicionando todos os horários
-			if (modelo.adicionarHorario(escola) == 0){
-				
+			if (modelo.adicionarHorario(escola) == 0) {
+
 				controleLogin.modificarSenha(novaSenha);
-				System.out.println("Aparentemente tudo certo com o Login.");
+//				controleLogin.primeiroAcesso(); // Define o últimoAcesso como agora.
+				System.out
+						.println("Aparentemente tudo certo com o Dados Escola.");
+				return "2-tela-disciplinas.xhtml?faces-redirect=true";
+			}
+
+		}
+
+		return "";
+
+	}
+	
+	/**
+	 * Método a ser editado para CRUD genérico de Escola.
+	 * @return
+	 */
+	public String atualizarDados() {
+
+		// Mudando nome da escola;
+		if (modelo.mudarNome(escola) == 0) {
+
+			// Adicionando todos os horários
+			if (modelo.adicionarHorario(escola) == 0) {
+
+				controleLogin.modificarSenha(novaSenha);
+				System.out
+						.println("Aparentemente tudo certo com o Dados Escola.");
 				return "2-tela-disciplinas.jsf";
 			}
-			
+
 		}
-		
+
 		return null;
-		
+
 	}
 
 	public ControleEscola getModelo() {
@@ -171,9 +214,13 @@ public class EscolaMBean {
 	public void setControleLogin(ControleLogin controleLogin) {
 		this.controleLogin = controleLogin;
 	}
-	
-	
-	
-	
-	
+
+	public String getNomeEscola() {
+		return nomeEscola;
+	}
+
+	public void setNomeEscola(String nomeEscola) {
+		this.nomeEscola = nomeEscola;
+	}
+
 }

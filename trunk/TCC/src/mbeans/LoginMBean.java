@@ -40,11 +40,11 @@ public class LoginMBean {
 		switch (resultadoValidacao) {
 		case 0:
 			System.out.println("Usuário autenticado. Primeira Entrada.");
-			redirecionamento = "first/1-dados-escola.xhtml";
+			redirecionamento = "first/1-dados-escola.xhtml?faces-redirect=true";
 			break;
 		case 1:
 			System.out.println("Usuário autenticado. Menu Principal.");
-			redirecionamento = "user/principal.xhtml";
+			redirecionamento = "user/principal.xhtml?faces-redirect=true";
 			break;
 		default:
 			System.out.println("Usuário não autenticado.");
