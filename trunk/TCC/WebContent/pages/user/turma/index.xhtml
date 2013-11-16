@@ -82,54 +82,49 @@
 						</div>
 						<div class="col-md-2">
 							<h:commandButton value="Adicionar"
-								styleClass="btn btn-md btn-success">
-								<!-- Tem erro mas funciona, why god, why? 
-								<f:ajax event="click" listener="#{cursoMBean.cadastrar}"
-									render=":meuForm:minhaTabela :inserirTurmaa" /> -->
-								<p:ajax event="click" update=":meuForm:display"
-									render=":meuForm:dialog" oncomplete="PF('insert').show();"
-									onerror="alert('erro');" />
+								styleClass="btn btn-md btn-success" onclick="PF('insert').show();" >
+								<p:ajax event="click" execute="@form" render=":modal-insert:display" update=":modal-insert:display"/>
 							</h:commandButton>
 						</div>
 					</div>
-					
-					<!--  MODAL PARA INSERIR -->
-					<p:dialog id="dialog" header="Inserir Turma" widgetVar="insert"
-								resizable="false" modal="true" width="600" height="500"
-								hideEffect="clip" closeOnEscape="true" focus="enviar">
-								
-								<h:panelGrid id="display" styleClass="col-lg-10 center"
-									style="margin-top: 10px; margin-bottom: 15px;">
-									<label for="nome">Nome:</label>
-									<p:inputText styleClass="form-control adicionar" id="nome"
-										value="#{turmaMBean.nome}">
-										<f:ajax event="keyup"
-											listener="#{turmaMBean.nome}" />
-									</p:inputText>
-								</h:panelGrid>
-								
-								<h:panelGrid styleClass="col-lg-10 center">
-									<p:columnGroup>
-										 <h:outputText value="Grouping: " />  
-								        <p:selectOneMenu value="#{turmaMBean.}">  
-								            <f:selectItems value="#{turmaMBean.cars}" />  
-								        </p:selectOneMenu>  
-									</p:columnGroup>
-								</h:panelGrid>
-								
-								<h:panelGrid styleClass="col-lg-10 center">
-									<p:columnGroup>
-										<h:commandButton id="enviar"
-											styleClass="btn btn-lg btn-success pull-right" value="Adicionar"
-											action="#{turmaMBean.cadastrar}">
-											<f:ajax event="click" onevent="insert.hide()"
-												render=":meuForm:minhaTabela"
-												listener="#{turmaMBean.cadastrar}" />
-										</h:commandButton>
-									</p:columnGroup>
-								</h:panelGrid>
-							</p:dialog>
 				</h:form>
+				
+				<!--  MODAL PARA INSERIR -->
+				<p:dialog id="dialog" header="Inserir Turma" widgetVar="insert"
+					resizable="false" modal="true" width="400" height="225"
+					hideEffect="clip" closeOnEscape="true">
+					<h:form id="modal-insert">
+						<h:panelGrid id="display" styleClass="col-lg-10 center"
+							style="margin-top: 10px; margin-bottom: 15px;">
+							<label for="nome">Nome:</label>
+							<h:inputText styleClass="form-control adicionar" id="nome"
+								value="#{turmaMBean.nome}">
+							</h:inputText>
+						</h:panelGrid>
+
+						<h:panelGrid styleClass="col-lg-10 center">
+							
+								<label for="curso">Curso:</label>
+								<p:selectOneMenu id="curso" value="#{turmaMBean.cursoSelecionado}" converter="omnifaces.SelectItemsConverter" style="margin-bottom: 15px;">
+									<f:selectItems value="#{turmaMBean.listaTodosCursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}"/>
+								</p:selectOneMenu>
+							
+						</h:panelGrid>
+
+						<h:panelGrid styleClass="col-lg-10 center">
+							<p:columnGroup>
+								<h:commandButton id="enviar"
+									styleClass="btn btn-lg btn-success pull-right"
+									value="Adicionar" onclick="insert.hide();"> <!-- action="#{turmaMBean.cadastrar}" -->
+									<f:ajax event="click" execute="@form"
+										render=":meuForm:minhaTabela"
+										listener="#{turmaMBean.cadastrar}" />
+								</h:commandButton>
+							</p:columnGroup>
+						</h:panelGrid>
+					</h:form>
+				</p:dialog>
+
 
 
 				<div class="col-md-10">
@@ -138,11 +133,9 @@
 
 						<h:form id="meuForm">
 							<p:dataTable id="minhaTabela" tableStyleClass="table table-hover"
-								var="turma"
-								value="#{turmaMBean.listaPesquisa}"
-								widgetVar="resultados" rowKey="#{curso.id}"
-								selection="#{turmaMBean.selecionado}"
-								selectionMode="single"
+								var="turma" value="#{turmaMBean.listaPesquisa}"
+								widgetVar="resultados" rowKey="#{turma.id}"
+								selection="#{turmaMBean.selecionado}" selectionMode="single"
 								rowSelectListener="#{turmaMBean.limparSelecionadosDataTable}"
 								emptyMessage="Nenhum curso encontrado.">
 
@@ -155,38 +148,44 @@
 									onerror="alert('erro');" />
 								<p:ajax event="rowUnselect" />
 							</p:dataTable>
-							
+
 							<!-- MODAL PARA EDITAR -->
 							<p:dialog id="dialog" header="Editar Turma" widgetVar="edit"
-								resizable="false" modal="true" width="400" height="160"
+								resizable="false" modal="true" width="400" height="225"
 								hideEffect="clip" closeOnEscape="true" focus="enviar">
 
 								<h:panelGrid id="display" styleClass="col-lg-10 center"
 									style="margin-top: 10px; margin-bottom: 15px;">
 									<label for="nome">Nome:</label>
-									<p:inputText
-										rendered="#{turmaMBean.selecionado.nome != null}"
+									<p:inputText rendered="#{turmaMBean.selecionado.nome != null}"
 										styleClass="form-control adicionar" id="nome"
 										value="#{turmaMBean.selecionado.nome}">
-										<f:ajax event="keyup"
-											listener="#{turmaMBean.selecionado.nome}" />
 									</p:inputText>
-
 								</h:panelGrid>
+								
+								<h:panelGrid styleClass="col-lg-10 center">
+							
+									<label for="curso">Curso:</label>
+									<p:selectOneMenu id="curso" value="#{turmaMBean.selecionado.curso}" converter="omnifaces.SelectItemsConverter" style="margin-bottom: 15px;">
+										<f:selectItems value="#{turmaMBean.listaTodosCursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}"/>
+									</p:selectOneMenu>
+							
+								</h:panelGrid>
+								
 								<h:panelGrid styleClass="col-lg-10 center">
 									<p:columnGroup>
 										<h:commandButton id="excluir"
 											styleClass="btn btn-lg btn-danger pull-left" value="Excluir"
-											action="#{turmaMBean.deletar}">
-											<f:ajax event="click" onevent="edit.hide()"
+											action="#{turmaMBean.deletar}" onclick="edit.hide()">
+											<f:ajax event="click" execute="@form"
 												render=":meuForm:minhaTabela"
 												listener="#{turmaMBean.deletar}" />
 										</h:commandButton>
 
 										<h:commandButton id="enviar"
 											styleClass="btn btn-lg btn-success pull-right" value="Salvar"
-											action="#{cursoMBean.editar}">
-											<f:ajax event="click" onevent="edit.hide()"
+											action="#{cursoMBean.editar}" onclick="edit.hide()">
+											<f:ajax event="click" execute="@form"
 												render=":meuForm:minhaTabela"
 												listener="#{turmaMBean.editar}" />
 										</h:commandButton>
@@ -197,9 +196,9 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
+
+
+
 		</div>
 
 		<!-- Rodapé -->

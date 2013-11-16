@@ -235,7 +235,7 @@ public class TurmaDAO extends AbstractDAO{
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM Turma where idCurso = ?;";
+            String sql = "SELECT * FROM Curso where idCurso = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, idCurso);
             ResultSet rs = prest.executeQuery();

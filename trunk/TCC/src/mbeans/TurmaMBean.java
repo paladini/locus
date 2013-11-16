@@ -8,7 +8,9 @@ import javax.faces.event.ValueChangeEvent;
 
 import org.primefaces.context.RequestContext;
 
+import control.ControleCurso;
 import control.ControleTurma;
+import entidades.Curso;
 import entidades.Turma;
 
 
@@ -36,6 +38,7 @@ import entidades.Turma;
 public class TurmaMBean {
 
 	private ControleTurma controleTurma;
+	private ControleCurso controleCurso;
 
 	// Lista de todas as turmas
 	private ArrayList<Turma> lista;
@@ -43,18 +46,39 @@ public class TurmaMBean {
 	// Lista de Turmas pesquisadas (fiz isso para evitar muitas consultas
 	// ao banco de dados)
 	private ArrayList<Turma> listaPesquisa;
-
+	
+	// Lista de todos os cursos
+	private ArrayList<Curso> listaTodosCursos;
+	
 	private Turma selecionado;
 
 	private int id;
 	private String nome;
+	private Curso cursoSelecionado;
 
 	public TurmaMBean() {
 
+		// Inicializando lista com todas as turmas
 		if (lista == null) {
 			lista = new ArrayList<Turma>();
 		}
+		
+		// Inicializando ControleCurso
+		if (controleCurso == null){
+			controleCurso = ControleCurso.getInstance();
+		}
 
+		// Inicializando listaTodosCursos
+		if (listaTodosCursos == null){
+			listaTodosCursos = controleCurso.consulta();
+		}
+		
+		// Inicializando cursoSelecionado
+		if (cursoSelecionado == null){
+			cursoSelecionado = new Curso();
+		}
+		
+		// Inicializando variável nome
 		if (this.getNome() == null) {
 			this.setNome("");
 		}
@@ -71,16 +95,25 @@ public class TurmaMBean {
 		if (!(this.getNome().isEmpty() || this.getNome() == " " || this
 				.getNome() == "  ")) {
 			
+			// Criando turma
 			Turma turma = new Turma();
 			turma.setNome(this.getNome());
-
+			turma.setCurso(cursoSelecionado);
+			
+			// Adicionando turma ao banco de dados
 			controleTurma.adicionar(turma);
+			
+			// Limpando o cursoSelecionado
+			cursoSelecionado = new Curso();
+			
+			limparCampos();
+			atualizarListagem();
+			
 		} else {
 			System.out.println("Turma não inserida.");
 		}
 
-		limparCampos();
-		atualizarListagem();
+		
 
 		return null;
 	}
@@ -105,7 +138,11 @@ public class TurmaMBean {
 			Turma turma = controleTurma.consultaTurma(id);
 			selecionado = turma;
 			
+			// Atualizando lista
 			atualizarListagem();
+			
+			// Limpando campos
+			limparCampos();
 		}
 
 		return null;
@@ -129,6 +166,9 @@ public class TurmaMBean {
 
 			// Atualizando lista
 			atualizarListagem();
+			
+			// Limpando campos
+			limparCampos();
 		}
 
 		 return null;
@@ -228,6 +268,14 @@ public class TurmaMBean {
 	
 	
 	
+	public Curso getCursoSelecionado() {
+		return cursoSelecionado;
+	}
+
+	public void setCursoSelecionado(Curso cursoSelecionado) {
+		this.cursoSelecionado = cursoSelecionado;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -260,6 +308,11 @@ public class TurmaMBean {
 
 	public void setSelecionado(Turma selecionado) {
 		this.selecionado = selecionado;
+		if(selecionado != null){
+			if (selecionado.getCurso() != null){
+				this.setCursoSelecionado(selecionado.getCurso());
+			}
+		}
 		System.out.println("Set: " + selecionado);
 	}
 
@@ -278,4 +331,22 @@ public class TurmaMBean {
 	public void setListaPesquisa(ArrayList<Turma> lista) {
 		this.listaPesquisa = lista;
 	}
+
+	public ControleCurso getControleCurso() {
+		return controleCurso;
+	}
+
+	public void setControleCurso(ControleCurso controleCurso) {
+		this.controleCurso = controleCurso;
+	}
+
+	public ArrayList<Curso> getListaTodosCursos() {
+		return listaTodosCursos;
+	}
+
+	public void setListaTodosCursos(ArrayList<Curso> listaTodosCursos) {
+		this.listaTodosCursos = listaTodosCursos;
+	}
+	
+	
 }
