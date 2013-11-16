@@ -49,16 +49,22 @@ public class ControleEscola {
    }
    
    /** 
-    * Método resumido para adicionar turnos e dias para uma escola.
+    * Método resumido para adicionar turnos e dias para uma escola. TODO: Santana vai me bater, arrumar isso.
     * @param escola
     * @return 
-    */
+    */ 
    public int adicionarHorario(Escola escola){
        int resultado = 0;
        
+       // Removendo todos os dias e turnos
+       // TODO: Arrumar essa zueira
+       modelo.removerTurnos();
+       modelo.removerDias();
+       
        // Percorre o ArrayList de Turnos, chamando cada elemento de "temp".
        for(Turno temp : escola.getTurnos()){
-            if (modelo.adicionarTurno(temp.getNome())){
+    	   System.out.println("Controle Turno: " + temp.getNome());
+    	   if (modelo.adicionarTurno(temp.getNome())){
                 
             }else{
                 resultado = 1;
@@ -68,8 +74,10 @@ public class ControleEscola {
        // Verifica se na etapa anterior teve algum erro.
        // Se não teve, percorre o ArrayList de Dias, chamando cada elemento de "temp".
        if (resultado == 0){
-           for(Dia temp : escola.getDias()){
-                if (modelo.adicionarDia(temp.getNome())){
+           
+    	   for(Dia temp : escola.getDias()){
+        	   System.out.println("Controle Dia: " + temp.getNome());
+        	   if (modelo.adicionarDia(temp.getNome())){
                     
                 }else{
                      resultado = 1;

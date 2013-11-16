@@ -83,7 +83,7 @@
 						<div class="col-md-2">
 							<h:commandButton value="Adicionar"
 								styleClass="btn btn-md btn-success" onclick="PF('insert').show();" >
-								<p:ajax event="click" execute="@form" render=":modal-insert:display" update=":modal-insert:display"/>
+								<p:ajax event="click" execute="@form" render=":modal-insert" update=":modal-insert"/>
 							</h:commandButton>
 						</div>
 					</div>
@@ -143,8 +143,8 @@
 									#{turma.nome}
 								</p:column>
 
-								<p:ajax event="rowSelect" update=":meuForm:display"
-									render=":meuForm:dialog" oncomplete="PF('edit').show();"
+								<p:ajax event="rowSelect" update=":meuForm"
+									render=":meuForm" oncomplete="PF('edit').show();"
 									onerror="alert('erro');" />
 								<p:ajax event="rowUnselect" />
 							</p:dataTable>
@@ -164,12 +164,10 @@
 								</h:panelGrid>
 								
 								<h:panelGrid styleClass="col-lg-10 center">
-							
 									<label for="curso">Curso:</label>
-									<p:selectOneMenu id="curso" value="#{turmaMBean.cursoSelecionado}" converter="omnifaces.SelectItemsConverter" style="margin-bottom: 15px;">
+									<p:selectOneMenu id="curso" value="#{turmaMBean.selecionado.curso}" converter="omnifaces.SelectItemsConverter" style="margin-bottom: 15px;">
 										<f:selectItems value="#{turmaMBean.listaTodosCursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}"/>
 									</p:selectOneMenu>
-							
 								</h:panelGrid>
 								
 								<h:panelGrid styleClass="col-lg-10 center">

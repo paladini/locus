@@ -17,7 +17,39 @@ import java.util.ArrayList;
  */
 public class DiaDAO extends AbstractDAO {
 
-    /**
+    public ArrayList<Dia> consulta(){
+    	
+    	 Connection connection = Conexao.getConexao();
+         try {
+
+             String sql = "SELECT * FROM Dia;";
+             PreparedStatement prest = connection.prepareStatement(sql);
+             ResultSet rs = prest.executeQuery();
+             
+             
+             ArrayList<Dia> listaDias = new ArrayList<Dia>();
+             while (rs.next()) {
+                 Dia dia = new Dia();
+                 int id = rs.getInt("idDia");
+                 String nome = rs.getString("descricao");
+
+                 dia.setId(id);
+                 dia.setNome(nome);
+
+                 listaDias.add(dia);
+                 
+             }
+             connection.close();
+             return listaDias;
+             
+         } catch (SQLException ex) {
+             System.out.println(ex.getMessage());
+         }
+         return null;
+    	
+    }
+	
+	/**
      * Faz consulta no banco de dados e retorna apenas um dia com esse nome.
      *
      * @return
