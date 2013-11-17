@@ -192,12 +192,13 @@
 		<div class="row">
 			<br />
 			<div class="col-md-8 center">
-				<h:commandButton action="3-tela-cursos.xhtml"
-					value="&lt;&lt; Voltar" styleClass="btn btn-md btn-error pull-left" />
-
-				<h:commandButton action="4-tela-concluidas.xhtml" value="Avançar"
-					styleClass="btn btn-lg btn-success pull-right" />
-
+				<h:form>
+					<h:commandButton action="2-tela-disciplinas?faces-redirect=true"
+						value="&lt;&lt; Voltar" styleClass="btn btn-md btn-error pull-left" />
+	
+					<h:commandButton action="4-tela-concluidas?faces-redirect=true" value="Avançar"
+						styleClass="btn btn-lg btn-success pull-right" />
+				</h:form>
 			</div>
 		</div>
 
