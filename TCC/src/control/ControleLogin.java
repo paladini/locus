@@ -27,7 +27,11 @@ public class ControleLogin {
 		return singleton;
 	}
     
-    /**
+    public Login consultar(){
+    	return modelo.consultar();
+    }
+	
+	/**
      * Verifica se o Login é valido e sob quais condiçoes
      * @param loginTentativa Recebe a tentativa de login com os dados que o usuário inseriu.
      * @return 0 = Pula direto para o menu principal; 1 = Pula para o "Primeiro Acesso"; 2 = Login ou senha errados
