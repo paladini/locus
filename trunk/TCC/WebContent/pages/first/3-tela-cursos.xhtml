@@ -54,7 +54,7 @@
 
 			<!-- Conteúdo da página em si -->
 			<div class="col-lg-8 center">
-				<h:form id="inserirDisciplina">
+				<h:form id="inserir">
 					<div class="form-group">
 						<div class="col-md-10">
 							<h:inputText styleClass="form-control" id="disciplina"
@@ -67,9 +67,8 @@
 							<h:commandButton value="Adicionar"
 								styleClass="btn btn-md btn-success" onclick="PF('insert').show();">
 								<!--  CUIDADO COM O EXECUTE="@FORM", PODE DAR PROBLEMA -->
-								<p:ajax event="click" execute="@form" update=":meuForm:display"
-									render=":meuForm:dialog"
-									onerror="alert('erro');" />
+								<p:ajax event="click" execute="@form" update=":modal-insert"
+									render=":modal-insert" />
 							</h:commandButton>
 						</div>
 					</div>
@@ -82,7 +81,7 @@
 					resizable="false" modal="true" width="600" height="500"
 					hideEffect="clip" closeOnEscape="true">
 
-					<h:form>
+					<h:form id="modal-insert">
 						<h:panelGrid id="display" styleClass="col-lg-10 center"
 							style="margin-top: 10px; margin-bottom: 15px;">
 							<label for="nome">Nome:</label>
@@ -112,8 +111,8 @@
 									styleClass="btn btn-lg btn-success pull-right"
 									value="Adicionar" action="#{cursoMBean.cadastrar}" onclick="insert.hide()">
 									<f:ajax event="click" execute="@form"
-										render=":meuForm:minhaTabela"
-										listener="#{cursoMBean.cadastrar}" />
+										render=":meuForm:minhaTabela :inserir"
+										listener="#{cursoMBean.cadastrar}" update=":meuForm:minhaTabela :inserir"/>
 								</h:commandButton>
 							</p:columnGroup>
 						</h:panelGrid>
@@ -156,10 +155,7 @@
 									<label for="nome">Nome:</label>
 									<p:inputText rendered="#{cursoMBean.selecionado.nome != null}"
 										styleClass="form-control adicionar" id="nome"
-										value="#{cursoMBean.selecionado.nome}">
-										<f:ajax event="keyup"
-											listener="#{cursoMBean.selecionado.nome}" />
-									</p:inputText>
+										value="#{cursoMBean.selecionado.nome}" />
 
 								</h:panelGrid>
 								<h:panelGrid styleClass="col-lg-10 center">
@@ -168,16 +164,16 @@
 											styleClass="btn btn-lg btn-danger pull-left" value="Excluir"
 											action="#{cursoMBean.deletar}">
 											<f:ajax event="click" onevent="edit.hide()"
-												render=":meuForm:minhaTabela"
-												listener="#{cursoMBean.deletar}" />
+												render=":meuForm:minhaTabela :inserir"
+												listener="#{cursoMBean.deletar}" update=":meuForm:minhaTabela :inserir"/>
 										</h:commandButton>
 
 										<h:commandButton id="enviar"
 											styleClass="btn btn-lg btn-success pull-right" value="Salvar"
 											action="#{cursoMBean.editar}">
 											<f:ajax event="click" onevent="edit.hide()"
-												render=":meuForm:minhaTabela"
-												listener="#{cursoMBean.editar}" />
+												render=":meuForm:minhaTabela :inserir"
+												listener="#{cursoMBean.editar}" update=":meuForm:minhaTabela :inserir"/>
 										</h:commandButton>
 									</p:columnGroup>
 								</h:panelGrid>
