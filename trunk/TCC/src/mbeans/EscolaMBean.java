@@ -11,6 +11,7 @@ import control.ControleLogin;
 import control.ControleTurno;
 import entidades.Dia;
 import entidades.Escola;
+import entidades.Login;
 import entidades.Turno;
 
 @ManagedBean(name = "escolaMBean")
@@ -19,6 +20,7 @@ public class EscolaMBean {
 
 	private ControleEscola modelo;
 	private Escola escola;
+	private Login login;
 	
 	// TODO: Cuidar do primeiro acesso.
 	
@@ -55,6 +57,11 @@ public class EscolaMBean {
 			controleLogin = ControleLogin.getInstance();
 		}
 
+		// Instanciando Login
+		if (login == null){
+			login = controleLogin.consultar();
+		}
+		
 		// Populando lista com todos os dias da semana
 		if (listaTodosDias == null) {
 			listaTodosDias = new ArrayList<Dia>();
@@ -223,4 +230,14 @@ public class EscolaMBean {
 		this.nomeEscola = nomeEscola;
 	}
 
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
+	
+	
 }

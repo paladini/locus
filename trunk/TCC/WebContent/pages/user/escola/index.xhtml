@@ -1,0 +1,123 @@
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+<h:head>
+	<title>Locus - Instituição</title>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="custom.css" />
+	<h:outputStylesheet library="css" name="bootstrap-datatable.css" />
+</h:head>
+<h:body>
+
+		<div id="barra">
+		</div>
+	
+		<div class="navbar-wrapper">
+			<div class="container">
+				<p class="invisivel">Voltar</p>
+			</div>
+		</div>
+
+		<div class="container">
+
+			<!-- Logo e botões para gerenciamento --> 
+			<div class="row">
+				<div class="col-md-10 center">
+					<div class="row linha-dica">
+						<div class="col-lg-2">
+							<a href="../principal.jsf"><img src="../../../images/antigos/logo.png" height="110" width="80" alt="Menu Principal" title="Menu Principal"/></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../professor/index.jsf"><img class="menu-principal" src="../../../images/principal/professor.png" alt="Gerenciar Professores" title="Gerenciar Professores"/></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../sala/index.jsf"><img src="../../../images/principal/sala.png" class="menu-principal" alt="Gerenciar Salas" title="Gerenciar Salas" /></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../turma/index.jsf"><img src="../../../images/principal/turma.png" class="menu-principal" alt="Gerenciar Turmas" title="Gerenciar Turmas"/></a>
+						</div>
+						<div class="col-lg-2">
+							<img src="../../../images/principal/escola-selecionado.png" alt="Gerenciar Escola" title="Gerenciar Escola"/>
+						</div>
+						<div class="col-lg-2">
+							<a href=""><img src="../../../images/principal/ensalamento.png" class="menu-principal" alt="Gerar Ensalamento" title="Gerar Ensalamento"/></a>
+						</div>
+					</div>
+					
+					<hr class="featurette-divider" /> 
+					
+					<ol class="breadcrumb">
+						<li><a href="../principal.jsf">Principal</a></li>
+						<li>Escola</li>
+					</ol>
+				</div>
+			</div>
+
+			<!-- Conteúdo da página em si -->
+			<h:form role="form">
+			<div class="row">
+				<div class="col-lg-8 center">
+					
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="nome">Nome da Instituição:</label>
+								<p:inputText size="20" styleClass="form-control" id="nome" autocomplete="off"
+								style="padding: 6px 12px;" 
+								placeholder="Nome da Instituição" value="#{escolaMBean.escola.nomeEscola}" required="true" requiredMessage="Este campo é obrigatório."/>
+							</div>
+
+							<div class="form-group">
+								<label for="senha">Senha:</label>
+								<p:inputText size="20" styleClass="form-control" id="senha" autocomplete="off" type="password"
+								placeholder="Digite uma nova senha para acesso" required="true" requiredMessage="Este campo é obrigatório." 
+								style="padding: 6px 12px;" value="#{escolaMBean.login.senha}"
+								/>
+							</div>
+						</div>
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="calendario">Calendário Escolar:</label>
+							</div>
+							
+							<div class="col-md-4" id="calendario">
+									
+									<p:selectManyCheckbox style="margin-bottom: 40px;" id="dias" value="#{escolaMBean.escola.dias}" converter="omnifaces.SelectItemsConverter" layout="pageDirection" >
+											<f:selectItems value="#{escolaMBean.listaTodosDias}" var="dia" itemValue="#{dia}" itemLabel="#{dia.nome}" />
+									</p:selectManyCheckbox>
+								
+							</div>
+							<div class="col-md-4">
+								
+									<p:selectManyCheckbox style="margin-bottom: 40px;" id="turnos" value="#{escolaMBean.escola.turnos}" converter="omnifaces.SelectItemsConverter" layout="pageDirection">
+											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno}" itemLabel="#{turno.nome}" />
+									</p:selectManyCheckbox>
+								
+							</div>
+							
+						</div>
+					
+				</div>
+			</div>
+			
+			<div class="col-lg-10 center">
+				<div class="col-lg-8 center">
+					<h:commandButton value="Editar Disciplinas" styleClass="btn btn-lg btn-default" action="../disciplina/index.jsf?faces-redirect=true" />
+					<h:commandButton value="Editar Cursos" styleClass="btn btn-lg btn-default" action="../curso/index.jsf?faces-redirect=true" />
+					<h:commandButton value="Salvar" styleClass="btn btn-lg btn-success pull-right" action="metodoAqui" />
+				</div>
+			</div>
+			</h:form>
+
+		</div>
+
+		<!-- JavaScripts e Complementos -->
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="js" name="bootsrap.min.js" />
+        <h:outputScript library="js" name="bootstrap-progressbar.min.js" />
+        <h:outputScript library="js" name="locus-hoverIt.js" />
+
+	</h:body>
+</html>
