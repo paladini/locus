@@ -157,7 +157,7 @@ public class ControleCurso {
      * @param termo
      * @return
      */
-    private Curso consultaCurso(String termo) {
+    public Curso consultaCurso(String termo) {
         return modelo.selectCurso(termo);
     }
     
@@ -166,7 +166,7 @@ public class ControleCurso {
      * @param termo
      * @return
      */
-    private int consultaCursoID(String termo){
+    public int consultaCursoID(String termo){
     	Curso curso = modelo.selectCurso(termo);
     	return curso.getId();
     }
