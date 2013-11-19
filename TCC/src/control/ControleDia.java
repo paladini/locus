@@ -47,6 +47,15 @@ public class ControleDia {
         }
     }
     
+    /**
+     * Método para retornar um objeto dia baseado no seu nome
+     * @param dia
+     * @return
+     */
+    public Dia consultarDia(String dia){
+    	return modelo.selectDia(dia);
+    }
+    
     
     /**
      * Adiciona dia na tabela "Dia" somente se esse dia não existir ainda

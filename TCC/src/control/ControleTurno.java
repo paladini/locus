@@ -30,5 +30,14 @@ public class ControleTurno {
 		return modelo.select();
 	}
 	
+	/**
+	 * Método que retorna o objeto turno baseado no seu nome
+	 * @param termo
+	 * @return
+	 */
+	public Turno consultarTurno(String termo){
+		return modelo.selectTurno(termo);
+	}
+	
 
 }

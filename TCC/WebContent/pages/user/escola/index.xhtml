@@ -1,9 +1,7 @@
 <html xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:of="http://omnifaces.org/functions">
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Locus - Instituição</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
@@ -84,15 +82,15 @@
 							
 							<div class="col-md-4" id="calendario">
 									
-									<p:selectManyCheckbox style="margin-bottom: 40px;" id="dias" value="#{escolaMBean.escola.dias}" converter="omnifaces.SelectItemsConverter" layout="pageDirection" >
-											<f:selectItems value="#{escolaMBean.listaTodosDias}" var="dia" itemValue="#{dia}" itemLabel="#{dia.nome}" />
+									<p:selectManyCheckbox style="margin-bottom: 40px;" value="#{escolaMBean.vetorDias}" layout="pageDirection" >
+											<f:selectItems value="#{escolaMBean.listaTodosDias}" var="dia" itemValue="#{dia.nome}" itemLabel="#{dia.nome}" />
 									</p:selectManyCheckbox>
 								
 							</div>
 							<div class="col-md-4">
 								
-									<p:selectManyCheckbox style="margin-bottom: 40px;" id="turnos" value="#{escolaMBean.escola.turnos}" converter="omnifaces.SelectItemsConverter" layout="pageDirection">
-											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno}" itemLabel="#{turno.nome}" />
+									<p:selectManyCheckbox style="margin-bottom: 40px;" id="turnos" value="#{escolaMBean.vetorTurnos}" layout="pageDirection">
+											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno.nome}" itemLabel="#{turno.nome}" />
 									</p:selectManyCheckbox>
 								
 							</div>
@@ -106,7 +104,7 @@
 				<div class="col-lg-8 center">
 					<h:commandButton value="Editar Disciplinas" styleClass="btn btn-lg btn-default" action="../disciplina/index.jsf?faces-redirect=true" />
 					<h:commandButton value="Editar Cursos" styleClass="btn btn-lg btn-default" action="../curso/index.jsf?faces-redirect=true" />
-					<h:commandButton value="Salvar" styleClass="btn btn-lg btn-success pull-right" action="metodoAqui" />
+					<h:commandButton value="Salvar" styleClass="btn btn-lg btn-success pull-right" action="#{escolaMBean.atualizarDados}" />
 				</div>
 			</div>
 			</h:form>
