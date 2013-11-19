@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
 
 import org.primefaces.context.RequestContext;
@@ -27,7 +28,7 @@ import entidades.Turma;
  */
 
 @ManagedBean(name = "turmaMBean")
-@RequestScoped
+@ViewScoped
 public class TurmaMBean {
 
 	private ControleTurma controleTurma;
@@ -47,7 +48,7 @@ public class TurmaMBean {
 
 	private int id;
 	private String nome;
-	private Curso cursoSelecionado;
+	private String cursoSelecionado;
 
 	public TurmaMBean() {
 
@@ -66,14 +67,13 @@ public class TurmaMBean {
 			listaTodosCursos = controleCurso.consulta();
 		}
 
-		// Inicializando cursoSelecionado
-		if (cursoSelecionado == null) {
-			cursoSelecionado = new Curso();
-		}
-
 		// Inicializando variável nome
 		if (this.getNome() == null) {
 			this.setNome("");
+		}
+		
+		if (this.getCursoSelecionado() == null){
+			this.setCursoSelecionado("");
 		}
 
 		controleTurma = ControleTurma.getInstance();
@@ -91,7 +91,12 @@ public class TurmaMBean {
 			// Criando turma
 			Turma turma = new Turma();
 			turma.setNome(this.getNome());
-			turma.setCurso(cursoSelecionado);
+			
+			System.out.println("Curso selecionado no menu: " + cursoSelecionado.toString().toString());
+			
+			// Setando o curso na Turma
+			Curso novoCurso = controleCurso.consultaCurso(cursoSelecionado);
+			turma.setCurso(novoCurso);
 
 			// System.out.println("Curso selecionado: " +
 			// turma.getCurso().getNome());
@@ -99,9 +104,7 @@ public class TurmaMBean {
 			// Adicionando turma ao banco de dados
 			controleTurma.adicionar(turma);
 
-			// Limpando o cursoSelecionado
-			cursoSelecionado = new Curso();
-
+			
 			limparCampos();
 			atualizarListagem();
 			
@@ -122,14 +125,11 @@ public class TurmaMBean {
 			String nome = this.getSelecionado().getNome();
 			int id = this.getSelecionado().getId();
 
-			// Verificando dados
-			System.out.println("---------------------");
-			System.out.println("nome editado: "
-					+ this.getSelecionado().getNome());
-			System.out.println("---------------------");
-
+			// Pegando curso associado à turma
+			Curso novoCurso = controleCurso.consultaCurso(cursoSelecionado);		
+			
 			// Atualizando turma
-			Turma turmaAtualizar = new Turma(id, nome, this.getSelecionado().getCurso());
+			Turma turmaAtualizar = new Turma(id, nome, novoCurso);
 			controleTurma.atualizar(turmaAtualizar);
 
 			// Atualizando dados do selecionado e das listas
@@ -212,6 +212,7 @@ public class TurmaMBean {
 	 */
 	private void limparCampos() {
 		this.setNome("");
+		this.setCursoSelecionado("");
 	}
 
 	/**
@@ -255,11 +256,11 @@ public class TurmaMBean {
 		return false;
 	}
 
-	public Curso getCursoSelecionado() {
+	public String getCursoSelecionado() {
 		return cursoSelecionado;
 	}
 
-	public void setCursoSelecionado(Curso cursoSelecionado) {
+	public void setCursoSelecionado(String cursoSelecionado) {
 		this.cursoSelecionado = cursoSelecionado;
 	}
 
@@ -288,13 +289,18 @@ public class TurmaMBean {
 	}
 
 	public Turma getSelecionado() {
-		System.out.println("Get: " + selecionado);
 		return selecionado;
 	}
 
 	public void setSelecionado(Turma selecionado) {
 		this.selecionado = selecionado;
-		System.out.println("Set: " + selecionado);
+		if(selecionado != null){
+			
+			// Pegando o curso selecionado
+			listaTodosCursos = controleCurso.consulta();
+			cursoSelecionado = selecionado.getCurso().getNome();
+			
+		}
 	}
 
 	public ArrayList<Turma> getLista() {
