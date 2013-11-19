@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author luiz_malaquias
+ * @author fernando_paladini
  */
 public class CursoDAO extends AbstractDAO {
 
@@ -202,7 +202,7 @@ public class CursoDAO extends AbstractDAO {
     public void delete(int idCurso) {
 
         // Chama um outro método para excluir as disciplinas associadas a esse curso.
-        this.deleteAssociacoes(idCurso);
+//        this.deleteAssociacoes(idCurso);
 
         String sql = "DELETE FROM Curso WHERE idCurso = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
@@ -291,7 +291,7 @@ public class CursoDAO extends AbstractDAO {
      * @param curso
      */
     public void insertCursoDisciplina(int idCurso, int idDisciplina) {
-        String sql = "INSERT INTO Curso_has_Disciplina VALUES (?, ?);";
+        String sql = "INSERT INTO Curso_has_Disciplina (Curso_idCurso, Disciplina_idDisciplina) VALUES (?, ?);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(idCurso);
         params.add(idDisciplina);

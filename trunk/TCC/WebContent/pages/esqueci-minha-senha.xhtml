@@ -1,15 +1,14 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="description" content="">
-		<meta name="author" content="Fernando Paladin">
-		<title>Locus - Esqueci Minha Senha </title>
-		
-		<link href="../css/bootstrap.css" rel="stylesheet">
-		<link href="../css/custom.css" rel="stylesheet">
-	</head>
-	<body>
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+<h:head>
+	<title>Locus - Turma</title>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="custom.css" />
+</h:head>
+<h:body>
 
 		<div id="barra">
 		</div>
@@ -34,7 +33,7 @@
 							<p class="lead"  style="text-align: center;">Não se preocupe, vamos ajudá-lo o mais rápido possível.</p>
 						</div>
 					</div>
-					<hr class="featurette-divider"> 
+					<hr class="featurette-divider" /> 
 				</div>
 
 				<!-- Conteúdo da página em si -->
@@ -43,7 +42,7 @@
 						<div class="col-md-10 center">
 							<div class="form-group">
 								<label for="nome">Instituição:</label>
-								<input type="text" size="20" class="form-control" id="nome" placeholder="Qual o nome da Instituição de Ensino?" required>
+								<input type="text" size="20" class="form-control" id="nome" placeholder="Qual o nome da Instituição de Ensino?" />
 							</div>
 
 							<div class="form-group">
@@ -52,7 +51,7 @@
 							</div>
 
 							<div class="form-group">
-								<a href="login.html" class="btn pull-left"><< Voltar</a>
+								<a href="login.jsf" class="btn pull-left">Voltar</a>
 								<input type="submit" name="submit" id="submit" class="btn btn-success btn-lg pull-right" value="Enviar" />
 							</div>
 						</div>
@@ -69,9 +68,10 @@
 		</div>
 
 		<!-- JavaScripts e Complementos -->
-        <script src="../js/jquery.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/jquery.validate.min.js"></script>
+		<h:outputScript library="primefaces" name="jquery/jquery.js"
+		target="head" />
+		<h:outputScript library="js" name="bootstrap.min.js" />
+		<h:outputScript library="js" name="bootstrap-progressbar.min.js" />
 
         <!-- Validações da Página -->
         <script>
@@ -107,5 +107,5 @@
         	});
         </script>
 
-	</body>
+	</h:body>
 </html>

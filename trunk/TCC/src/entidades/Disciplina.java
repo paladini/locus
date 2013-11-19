@@ -107,9 +107,9 @@ public class Disciplina {
 	}
 
     // ToString - NÃO ALTERAR UMA VIRGULA!
-    @Override
-    public String toString() {
-        return nome;
-    }
+//    @Override
+//    public String toString() {
+//        return nome;
+//    }
     
 }

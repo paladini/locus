@@ -101,6 +101,7 @@ public class DisciplinaMBean {
 			Disciplina disciplina = controleDisciplina.consultaDisciplina(id);
 			selecionado = disciplina;
 			
+			limparCampos();
 			atualizarListagem();
 		}
 
@@ -122,6 +123,7 @@ public class DisciplinaMBean {
 			System.out.println("Disciplina excluída!");
 
 			// Atualizando lista
+			limparCampos();
 			atualizarListagem();
 		}
 

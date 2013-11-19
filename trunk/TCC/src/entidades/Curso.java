@@ -105,9 +105,9 @@ public class Curso {
     }
 //    
     // ToString
-    @Override
-    public String toString() {
-        return nome;
-    }
+//    @Override
+//    public String toString() {
+//        return nome;
+//    }
     
 }
