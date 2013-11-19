@@ -42,6 +42,7 @@ public class ControleCurso {
             
         }else{
             modelo.update(curso);
+            this.adicionarDisciplina(curso);
         }
     }
 

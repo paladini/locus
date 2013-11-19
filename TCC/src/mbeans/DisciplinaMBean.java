@@ -1,11 +1,16 @@
 package mbeans;
 
 import java.util.ArrayList;
+
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+
 import org.primefaces.context.RequestContext;
+
 import control.ControleDisciplina;
 import entidades.Disciplina;
 
@@ -30,7 +35,7 @@ import entidades.Disciplina;
 
 
 @ManagedBean(name = "disciplinaMBean")
-@SessionScoped
+@ViewScoped
 public class DisciplinaMBean {
 
 	private ControleDisciplina controleDisciplina;

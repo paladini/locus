@@ -3,6 +3,7 @@ package mbeans;
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 
@@ -26,7 +27,7 @@ import entidades.Turma;
  */
 
 @ManagedBean(name = "turmaMBean")
-@SessionScoped
+@RequestScoped
 public class TurmaMBean {
 
 	private ControleTurma controleTurma;
