@@ -66,8 +66,12 @@ public class ControleCurso {
             
         	modelo.insert(cursoAdicionar);
         	
+        	// O ID atualmente é 0, precisa atualizar com o ID que o banco deu no auto-increment.
+        	int id = this.consultaCursoID(cursoAdicionar.getNome());
+        	cursoAdicionar.setId(id);
+        	
         	// Caso tenha alguma disciplina associada, cria as associações no banco
-        	if (cursoAdicionar.getDisciplina() != null){
+        	if (cursoAdicionar.getDisciplina().size() > 0){
         		this.adicionarDisciplina(cursoAdicionar);
         	}
         	
@@ -135,7 +139,6 @@ public class ControleCurso {
     	ArrayList<Disciplina> listaDisciplinasBanco = this.listaDisciplinasAssociadas(curso);
     	
     	// TODO: Essa forma de fazer isso está, no mínimo, ingênua.
-    	
     	// Deletando TODAS as disciplinas associadas ao curso.
     	for(int i = 0; i < listaDisciplinasBanco.size(); i++){
     		modelo.deleteCursoDisciplina(curso.getId(), listaDisciplinasBanco.get(i).getId());
@@ -155,6 +158,16 @@ public class ControleCurso {
      */
     private Curso consultaCurso(String termo) {
         return modelo.selectCurso(termo);
+    }
+    
+    /**
+     * Retorna apenas o ID do curso (necessário para a inserção).
+     * @param termo
+     * @return
+     */
+    private int consultaCursoID(String termo){
+    	Curso curso = modelo.selectCurso(termo);
+    	return curso.getId();
     }
     
     

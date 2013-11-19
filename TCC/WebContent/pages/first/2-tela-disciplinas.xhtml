@@ -69,7 +69,7 @@
 								styleClass="btn btn-md btn-success">
 								<!-- Tem erro mas funciona, why god, why? -->
 								<f:ajax event="click" listener="#{disciplinaMBean.cadastrar}"
-									render=":meuForm:minhaTabela :inserirDisciplina" />
+									render=":meuForm:minhaTabela :inserirDisciplina" execute="@form" update=":meuForm:minhaTabela :inserirDisciplina" />
 							</h:commandButton>
 						</div>
 					</div>

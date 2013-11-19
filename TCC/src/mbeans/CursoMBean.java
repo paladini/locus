@@ -15,8 +15,6 @@ import control.ControleDisciplina;
 import entidades.Curso;
 import entidades.Disciplina;
 
-
-
 /*
  * 
  * TODO Curso (ver arquivo) 
@@ -28,7 +26,6 @@ import entidades.Disciplina;
  * 
  */
 
-
 @ManagedBean(name = "cursoMBean")
 @SessionScoped
 public class CursoMBean {
@@ -39,19 +36,20 @@ public class CursoMBean {
 	// Lista de todas as disciplinas
 	private static ArrayList<Curso> lista;
 
-	// Lista de objetos pesquisados. Vai ser a lista apresentada para o usuário, já configurada para fazer filtro 
+	// Lista de objetos pesquisados. Vai ser a lista apresentada para o usuário,
+	// já configurada para fazer filtro
 	// de acordo com termos inseridos pelo usuário.
 	private static ArrayList<Curso> listaPesquisa;
-	
+
 	// Objeto selecionado na dataTable
 	private Curso selecionado;
-	
+
 	// Lista de todas as disciplinas (que ainda não estão associadas ao curso)
 	private ArrayList<Disciplina> listaTodasDisciplinas;
-	
+
 	// Lista de disciplinas deste curso
 	private ArrayList<Disciplina> listaDisciplinasDoCurso;
-	
+
 	private int id;
 	private String nome;
 
@@ -59,50 +57,52 @@ public class CursoMBean {
 
 		controleCurso = ControleCurso.getInstance();
 		controleDisciplina = ControleDisciplina.getInstance();
-		
-		if (listaTodasDisciplinas == null){
+
+		if (listaTodasDisciplinas == null) {
 			listaTodasDisciplinas = controleDisciplina.consulta();
 		}
-		
-		if (listaDisciplinasDoCurso == null){
+
+		if (listaDisciplinasDoCurso == null) {
 			listaDisciplinasDoCurso = new ArrayList<Disciplina>();
 		}
-		
+
 		if (this.getNome() == null) {
 			this.setNome("");
 		}
-		
+
 		atualizarListagem();
 	}
-	
+
 	/**
-	 * Insere um objeto no banco de dados. 
+	 * Insere um objeto no banco de dados.
+	 * 
 	 * @return Retorna para a mesma página.
 	 */
 	public String cadastrar() {
 
 		Curso curso = new Curso();
-		
+
 		System.out.println("\n----------------------");
-		System.out.println("Chegando disciplinas do curso: " + listaDisciplinasDoCurso.size() +"\n");
+		System.out.println("Chegando disciplinas do curso: "
+				+ listaDisciplinasDoCurso.size() + "\n");
 		for (Disciplina d : listaDisciplinasDoCurso) {
 			System.out.println(d + " " + d.getId());
 		}
 		System.out.println("----------------------\n");
-		
+
 		if (!(this.getNome().isEmpty() || this.getNome() == " " || this
 				.getNome() == "  ")) {
-			
+
 			// Atribuindo nome ao curso
 			curso.setNome(this.getNome());
-//			curso.setDisciplina(listaDisciplinasDoCurso);
-			
-			// Limpando a lista de disciplinas do curso
-			listaDisciplinasDoCurso = new ArrayList<Disciplina>();
-			
+			curso.setDisciplina(listaDisciplinasDoCurso);
+
 			// Adicionando curso ao banco de dados
 			controleCurso.adicionar(curso);
-			
+
+			// Limpando a lista de disciplinas do curso
+			listaDisciplinasDoCurso = new ArrayList<Disciplina>();
+
 			System.out.println("Inserido(a). " + curso.toString());
 		} else {
 			System.out.println("Erro: Não inserido(a). " + curso.toString());
@@ -113,39 +113,42 @@ public class CursoMBean {
 
 		return null;
 	}
-	
+
 	/**
 	 * Deixa o campo de input vazio. Usado após inserir disciplina.
 	 */
 	private void limparCampos() {
 		this.setNome("");
 	}
-	
+
 	/**
 	 * Edita / Atualiza um objeto no banco de dados.
+	 * 
 	 * @return Retorna para a mesma página.
 	 */
 	public String editar() {
 
-		if (this.getSelecionado() != null){
-			
-			// Pegando ID da disciplina selecionada e o nome editado pelo usuário (no edit.xhtml)
+		if (this.getSelecionado() != null) {
+
+			// Pegando ID da disciplina selecionada e o nome editado pelo
+			// usuário (no edit.xhtml)
 			String nome = this.getSelecionado().getNome();
 			int id = this.getSelecionado().getId();
-			
+
 			// Verificando dados
 			System.out.println("---------------------");
-			System.out.println("nome editado: " + this.getSelecionado().getNome());
+			System.out.println("nome editado: "
+					+ this.getSelecionado().getNome());
 			System.out.println("---------------------");
-			
+
 			// Atualizando disciplina
 			Curso atualizar = new Curso(id, nome);
 			controleCurso.atualizar(atualizar);
-			
+
 			// Atualizando dados da disciplinaSelecionada e das listas
 			Curso curso = controleCurso.consultaCurso(id);
 			selecionado = curso;
-			
+
 			atualizarListagem();
 		}
 
@@ -153,15 +156,16 @@ public class CursoMBean {
 	}
 
 	public String deletar() {
-		
+
 		// Prevenindo para ID da disciplina selecionada não ser null
-		if(this.getSelecionado() != null){
-			
+		if (this.getSelecionado() != null) {
+
 			int id = this.getSelecionado().getId();
-			
-			// Limpando a disciplina selecionada antes de excluir do banco/lista (se não dá erro)
+
+			// Limpando a disciplina selecionada antes de excluir do banco/lista
+			// (se não dá erro)
 			setSelecionado(null);
-			
+
 			// Removando da banco/lista
 			controleCurso.remover(id);
 			System.out.println("Curso excluído!");
@@ -170,12 +174,12 @@ public class CursoMBean {
 			atualizarListagem();
 		}
 
-		 return null;
+		return null;
 	}
-	
+
 	/**
 	 * Atualizar a listagem de cursos (chamado do próprio Bean, ou seja, na
-	 * primeira vez que executa) e a lista de listaPesquisa. 
+	 * primeira vez que executa) e a lista de listaPesquisa.
 	 */
 	public void atualizarListagem() {
 		lista = controleCurso.consulta();
@@ -198,7 +202,7 @@ public class CursoMBean {
 			System.out.println("Deveria mostrar todas as disciplinas agora.");
 		}
 	}
-	
+
 	public void limparSelecionadosDataTable() {
 		RequestContext.getCurrentInstance().execute(
 				"resultados.unselectAllRows()");
@@ -217,8 +221,7 @@ public class CursoMBean {
 		for (int i = 0; i < getLista().size(); i++) {
 
 			Curso esteCurso = getLista().get(i);
-			boolean cursoTemEsseTermo = esteCurso.getNome().contains(
-					termo);
+			boolean cursoTemEsseTermo = esteCurso.getNome().contains(termo);
 
 			if (cursoTemEsseTermo) {
 				if (!containsListaDisciplina(esteCurso)) {
@@ -238,14 +241,14 @@ public class CursoMBean {
 	}
 
 	private boolean containsListaDisciplina(Curso esteCurso) {
-		for (Curso c : getListaPesquisa()){
-			if (c.getNome().equals(esteCurso.getNome())){
+		for (Curso c : getListaPesquisa()) {
+			if (c.getNome().equals(esteCurso.getNome())) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -292,11 +295,12 @@ public class CursoMBean {
 
 	public void setSelecionado(Curso selecionado) {
 		this.selecionado = selecionado;
-		if (selecionado != null){
-			listaTodasDisciplinas = controleCurso.listaDisciplinasNaoAssociadas(selecionado);
-//			// Pegando os IDS do ArrayList<Integer> e adicionando no ArrayList de disciplinas do Curso.
-//			for(Integer i : listaDisciplinasSelecionadas){
-//				listaDisciplinasDoCurso.add(controleDisciplina.consultaDisciplina(i));
+		if (selecionado != null) {
+			listaTodasDisciplinas = controleDisciplina.consulta();
+			listaDisciplinasDoCurso = controleCurso.listaDisciplinasAssociadas(selecionado);
+			
+//			for(Disciplina d : listaDisciplinasDoCurso){
+//				System.out.println(d.getNome());
 //			}
 		}
 	}
