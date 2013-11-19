@@ -20,7 +20,7 @@ public class ControleCurso {
 	 * 
 	 */
 	private static ControleCurso singleton;
-	CursoDAO modelo;
+	private CursoDAO modelo;
 	
 	private ControleCurso(){
 		modelo = new CursoDAO();

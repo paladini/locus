@@ -32,9 +32,8 @@
 								alt="Menu Principal" title="Menu Principal" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href="../professor/index.jsf"><img class="menu-principal"
-								src="../../../images/principal/professor.png"
-								alt="Gerenciar Professores" title="Gerenciar Professores" /></a>
+							<img src="../../../images/principal/professor-selecionado.png"
+								alt="Gerenciar Professores" title="Gerenciar Professores" />
 						</div>
 						<div class="col-lg-2">
 							<a href="../sala/index.jsf"><img
@@ -42,8 +41,9 @@
 								alt="Gerenciar Salas" title="Gerenciar Salas" /></a>
 						</div>
 						<div class="col-lg-2">
-							<img src="../../../images/principal/turma-selecionado.png"
-								alt="Gerenciar Turmas" title="Gerenciar Turmas" />
+							<a href="../turma/index.jsf"><img
+								src="../../../images/principal/turma.png" class="menu-principal"
+								alt="Gerenciar Turmas" title="Gerenciar Turmas" /></a>
 						</div>
 						<div class="col-lg-2">
 							<a href="../escola/index.jsf"><img
@@ -60,10 +60,9 @@
 					</div>
 
 					<hr class="featurette-divider" />
-
 					<ol class="breadcrumb">
 						<li><a href="../principal.jsf">Principal</a></li>
-						<li class="active">Turmas</li>
+						<li class="active">Professores</li>
 					</ol>
 
 				</div>
@@ -74,46 +73,51 @@
 				<h:form id="inserir">
 					<div class="form-group">
 						<div class="col-md-10">
-							<h:inputText styleClass="form-control" id="turma"
-								value="#{turmaMBean.nome}"
-								valueChangeListener="#{turmaMBean.atualizarListagemPesquisa}">
-								<f:ajax event="keyup" update=":meuForm:minhaTabela" render=":meuForm:minhaTabela" />
+							<h:inputText styleClass="form-control" id="disciplina"
+								value="#{professorMBean.nome}"
+								valueChangeListener="#{professorMBean.atualizarListagemPesquisa}">
+								<f:ajax event="keyup" render=":meuForm:minhaTabela" />
 							</h:inputText>
 						</div>
 						<div class="col-md-2">
 							<h:commandButton value="Adicionar"
 								styleClass="btn btn-md btn-success"
 								onclick="PF('insert').show();">
-								<p:ajax event="click" execute="@form" render=":modal-insert"
-									update=":modal-insert" />
+								<p:ajax event="click" execute="@form" update=":modal-insert"
+									render=":modal-insert" />
 							</h:commandButton>
 						</div>
 					</div>
 				</h:form>
 
+
+
 				<!--  MODAL PARA INSERIR -->
-				<p:dialog id="dialog-insert" header="Inserir Turma" widgetVar="insert"
-					resizable="false" modal="true" width="400" height="225"
+				<p:dialog id="dialog-insert" header="Inserir Professor" widgetVar="insert"
+					resizable="false" modal="true" width="600" height="420"
 					hideEffect="clip" closeOnEscape="true">
+
 					<h:form id="modal-insert">
 						<h:panelGrid id="display" styleClass="col-lg-10 center"
 							style="margin-top: 10px; margin-bottom: 15px;">
 							<label for="nome">Nome:</label>
-							<h:inputText styleClass="form-control adicionar" id="nome"
-								value="#{turmaMBean.nome}">
-							</h:inputText>
+							<p:inputText styleClass="form-control adicionar" id="nome"
+								value="#{professorMBean.nome}">
+
+							</p:inputText>
 						</h:panelGrid>
 
 						<h:panelGrid styleClass="col-lg-10 center">
 							<p:columnGroup>
-								<label for="curso">Curso:</label>
-								<p:selectOneMenu id="curso"
-									value="#{turmaMBean.cursoSelecionado}"
-									 layout="grid"
-									columns="1" style="margin-bottom: 15px;">
-									<f:selectItems value="#{turmaMBean.listaTodosCursos}"
-										var="curso" itemLabel="#{curso.nome}" itemValue="#{curso.nome}" />
-								</p:selectOneMenu>
+								<label for="disciplinas">Disciplinas do Professor:</label>
+								<!--   layout="grid" columns="2" -->
+								<p:selectManyCheckbox style="margin-bottom: 40px;"
+									id="disciplinas" value="#{professorMBean.listaDisciplinasDoProfessor}"
+									converter="omnifaces.SelectItemsConverter" layout="grid" columns="1">
+									<f:selectItems value="#{professorMBean.listaTodasDisciplinas}"
+										var="disciplina" itemValue="#{disciplina}"
+										itemLabel="#{disciplina.nome}" />
+								</p:selectManyCheckbox>
 							</p:columnGroup>
 						</h:panelGrid>
 
@@ -121,15 +125,17 @@
 							<p:columnGroup>
 								<h:commandButton id="enviar"
 									styleClass="btn btn-lg btn-success pull-right"
-									value="Adicionar" action="#{turmaMBean.cadastrar}"
-									onclick="insert.hide();">
+									value="Adicionar" action="#{professorMBean.cadastrar}"
+									onclick="insert.hide()">
 									<f:ajax event="click" execute="@form"
 										render=":meuForm:minhaTabela :inserir"
-										listener="#{turmaMBean.cadastrar}"
+										listener="#{professorMBean.cadastrar}"
 										update=":meuForm:minhaTabela :inserir" />
 								</h:commandButton>
 							</p:columnGroup>
 						</h:panelGrid>
+						<h:messages autoUpdate="true" />
+						<p:messages autoUpdate="true" />
 					</h:form>
 				</p:dialog>
 
@@ -141,45 +147,48 @@
 
 						<h:form id="meuForm">
 							<p:dataTable id="minhaTabela" tableStyleClass="table table-hover"
-								var="turma" value="#{turmaMBean.listaPesquisa}"
-								widgetVar="resultados" rowKey="#{turma.id}"
-								selection="#{turmaMBean.selecionado}" selectionMode="single"
-								rowSelectListener="#{turmaMBean.limparSelecionadosDataTable}"
-								emptyMessage="Nenhum curso encontrado.">
+								var="curso" value="#{professorMBean.listaPesquisa}"
+								widgetVar="resultados" rowKey="#{curso.id}"
+								selection="#{professorMBean.selecionado}" selectionMode="single"
+								rowSelectListener="#{professorMBean.limparSelecionadosDataTable}"
+								emptyMessage="Nenhum professor encontrado.">
 
 								<p:column headerText="Nome" styleClass="pull-left">
-									#{turma.nome}
+									#{curso.nome}
 								</p:column>
 
-								<p:ajax event="rowSelect" update=":modal-update" render=":modal-update"
-									oncomplete="PF('edit').show();" execute="@form" onerror="alert('erro');" />
+								<p:ajax event="rowSelect" update=":dialog-update"
+									render=":dialog-update" oncomplete="PF('edit').show();"
+									onerror="alert('erro');" execute="@form" />
 								<p:ajax event="rowUnselect" />
 							</p:dataTable>
 						</h:form>
 
 						<!-- MODAL PARA EDITAR -->
-						<p:dialog id="dialog-update" header="Editar Turma" widgetVar="edit"
-							resizable="false" modal="true" width="400" height="225"
+						<p:dialog id="dialog-update" header="Editar Professor" widgetVar="edit"
+							resizable="false" modal="true" width="600" height="420"
 							hideEffect="clip" closeOnEscape="true">
 							<h:form id="modal-update">
 								<h:panelGrid id="display" styleClass="col-lg-10 center"
 									style="margin-top: 10px; margin-bottom: 15px;">
 									<label for="nome">Nome:</label>
-									<p:inputText rendered="#{turmaMBean.selecionado.nome != null}"
+									<p:inputText rendered="#{professorMBean.selecionado.nome != null}"
 										styleClass="form-control adicionar" id="nome"
-										value="#{turmaMBean.selecionado.nome}">
-									</p:inputText>
+										value="#{professorMBean.selecionado.nome}" />
 								</h:panelGrid>
 
 								<h:panelGrid styleClass="col-lg-10 center">
 									<p:columnGroup>
-										<label for="curso">Curso:</label>
-										<p:selectOneMenu id="curso"
-											value="#{turmaMBean.cursoSelecionado}" layout="grid"
-											columns="1" style="margin-bottom: 15px;">
-											<f:selectItems value="#{turmaMBean.listaTodosCursos}"
-												var="curso" itemLabel="#{curso.nome}" itemValue="#{curso.nome}" />
-										</p:selectOneMenu>
+										<label for="disciplinas">Disciplinas do Professor:</label>
+										<!--   layout="grid" columns="2" -->
+										<p:selectManyCheckbox style="margin-bottom: 40px;"
+											id="disciplinas"
+											value="#{professorMBean.vetorDisciplinasDoProfessor}"
+											 layout="grid" columns="1">
+											<f:selectItems value="#{professorMBean.listaTodasDisciplinas}"
+												var="disciplina" itemValue="#{disciplina.nome}"
+												itemLabel="#{disciplina.nome}" />
+										</p:selectManyCheckbox>
 									</p:columnGroup>
 								</h:panelGrid>
 
@@ -187,33 +196,39 @@
 									<p:columnGroup>
 										<h:commandButton id="excluir"
 											styleClass="btn btn-lg btn-danger pull-left" value="Excluir"
-											action="#{turmaMBean.deletar}" onclick="edit.hide()">
-											<f:ajax event="click" execute="@form"
+											action="#{professorMBean.deletar}">
+											<f:ajax event="click" onevent="edit.hide()"
 												render=":meuForm:minhaTabela :inserir"
-												listener="#{turmaMBean.deletar}"
-												update=":meuForm:minhaTabela :inserir" />
+												listener="#{professorMBean.deletar}"
+												update=":meuForm:minhaTabela :inserir" execute="@form"/>
 										</h:commandButton>
 
 										<h:commandButton id="enviar"
 											styleClass="btn btn-lg btn-success pull-right" value="Salvar"
-											action="#{cursoMBean.editar}" onclick="edit.hide()">
-											<f:ajax event="click" execute="@form"
+											action="#{professorMBean.editar}">
+											<f:ajax event="click" onevent="edit.hide()"
 												render=":meuForm:minhaTabela :inserir"
-												listener="#{turmaMBean.editar}"
-												update=":meuForm:minhaTabela :inserir" />
+												listener="#{professorMBean.editar}"
+												update=":meuForm:minhaTabela :inserir"
+												execute="@form" />
 										</h:commandButton>
 									</p:columnGroup>
 								</h:panelGrid>
 							</h:form>
 						</p:dialog>
-
 					</div>
 				</div>
 			</div>
-
-
-
 		</div>
+
+		<!-- Botão de voltar e avançar -->
+		<!-- <div class="row">
+				<br />
+				<div class="col-md-8 center">
+					<a href="1-dados-escola.html" class="btn btn-md btn-error pull-left"><< Voltar</a>
+					<a type="button" href="3-tela-cursos.html" class="btn btn-lg btn-success pull-right">Avançar</a>
+				</div>
+			</div> -->
 
 		<!-- Rodapé -->
 		<div class="row text-center">

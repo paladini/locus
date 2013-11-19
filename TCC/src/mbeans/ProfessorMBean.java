@@ -8,14 +8,14 @@ import javax.faces.event.ValueChangeEvent;
 
 import org.primefaces.context.RequestContext;
 
-import control.ControleCurso;
 import control.ControleDisciplina;
-import entidades.Curso;
+import control.ControleProfessor;
 import entidades.Disciplina;
+import entidades.Professor;
 
 /*
  * 
- * TODO Curso (ver arquivo) 
+ * TODO Professor (ver arquivo) 
  *  BEAN:
  *  
  *  JSF: 
@@ -24,46 +24,46 @@ import entidades.Disciplina;
  * 
  */
 
-@ManagedBean(name = "cursoMBean")
+@ManagedBean(name = "professorMBean")
 @ViewScoped
-public class CursoMBean {
+public class ProfessorMBean {
 
-	private ControleCurso controleCurso;
+	private ControleProfessor controleProfessor;
 	private ControleDisciplina controleDisciplina;
 
 	// Lista de todas as disciplinas
-	private static ArrayList<Curso> lista;
+	private ArrayList<Professor> lista;
 
 	// Lista de objetos pesquisados. Vai ser a lista apresentada para o usuário,
 	// já configurada para fazer filtro
 	// de acordo com termos inseridos pelo usuário.
-	private static ArrayList<Curso> listaPesquisa;
+	private ArrayList<Professor> listaPesquisa;
 
 	// Objeto selecionado na dataTable
-	private Curso selecionado;
+	private Professor selecionado;
 
 	// Lista de todas as disciplinas (que ainda não estão associadas ao curso)
 	private ArrayList<Disciplina> listaTodasDisciplinas;
 
 	// Lista de disciplinas deste curso
-	private ArrayList<Disciplina> listaDisciplinasDoCurso;
+	private ArrayList<Disciplina> listaDisciplinasDoProfessor;
 	
-	private String[] vetorDisciplinasDoCurso;
+	private String[] vetorDisciplinasDoProfessor;
 
 	private int id;
 	private String nome;
 
-	public CursoMBean() {
+	public ProfessorMBean() {
 
-		controleCurso = ControleCurso.getInstance();
+		controleProfessor = ControleProfessor.getInstance();
 		controleDisciplina = ControleDisciplina.getInstance();
 
 		if (listaTodasDisciplinas == null) {
 			listaTodasDisciplinas = controleDisciplina.consulta();
 		}
 
-		if (listaDisciplinasDoCurso == null) {
-			listaDisciplinasDoCurso = new ArrayList<Disciplina>();
+		if (listaDisciplinasDoProfessor == null) {
+			listaDisciplinasDoProfessor = new ArrayList<Disciplina>();
 		}
 
 		if (this.getNome() == null) {
@@ -80,32 +80,24 @@ public class CursoMBean {
 	 */
 	public String cadastrar() {
 
-		Curso curso = new Curso();
-
-		System.out.println("\n----------------------");
-		System.out.println("Chegando disciplinas do curso: "
-				+ listaDisciplinasDoCurso.size() + "\n");
-		for (Disciplina d : listaDisciplinasDoCurso) {
-			System.out.println(d + " " + d.getId());
-		}
-		System.out.println("----------------------\n");
+		Professor professor = new Professor();
 
 		if (!(this.getNome().isEmpty() || this.getNome() == " " || this
 				.getNome() == "  ")) {
 
-			// Atribuindo nome ao curso
-			curso.setNome(this.getNome());
-			curso.setDisciplina(listaDisciplinasDoCurso);
+			// Atribuindo nome ao professor
+			professor.setNome(this.getNome());
+			professor.setListaDisciplinas(listaDisciplinasDoProfessor);
 
-			// Adicionando curso ao banco de dados
-			controleCurso.adicionar(curso);
+			// Adicionando professor ao banco de dados
+			controleProfessor.adicionar(professor);
 
-			// Limpando a lista de disciplinas do curso
-			listaDisciplinasDoCurso = new ArrayList<Disciplina>();
+			// Limpando a lista de disciplinas do professor
+			listaDisciplinasDoProfessor = new ArrayList<Disciplina>();
 
-			System.out.println("Inserido(a). " + curso.toString());
+			System.out.println("Inserido(a). " + professor.toString());
 		} else {
-			System.out.println("Erro: Não inserido(a). " + curso.toString());
+			System.out.println("Erro: Não inserido(a). " + professor.toString());
 		}
 
 		limparCampos();
@@ -137,20 +129,20 @@ public class CursoMBean {
 
 			// Pegando disciplinas
 			ArrayList<Disciplina> novasDisciplinas = new ArrayList<Disciplina>();
-			for(int i = 0; i < vetorDisciplinasDoCurso.length; i++){
-				String nomeDisciplina = vetorDisciplinasDoCurso[i];
+			for(int i = 0; i < vetorDisciplinasDoProfessor.length; i++){
+				String nomeDisciplina = vetorDisciplinasDoProfessor[i];
 				Disciplina d = controleDisciplina.consultaDisciplina(nomeDisciplina);
 				novasDisciplinas.add(d);
 			}
 			
 			// Atualizando disciplina
-			Curso atualizar = new Curso(id, nome);
-			atualizar.setDisciplina(novasDisciplinas);
-			controleCurso.atualizar(atualizar);
+			Professor novoProfessor = new Professor(id, nome);
+			novoProfessor.setListaDisciplinas(novasDisciplinas);
+			controleProfessor.atualizar(novoProfessor);
 
 			// Atualizando dados da disciplinaSelecionada e das listas
-			Curso curso = controleCurso.consultaCurso(id);
-			selecionado = curso;
+			Professor professor = controleProfessor.consultaProfessor(id);
+			selecionado = professor;
 
 			atualizarListagem();
 		}
@@ -170,8 +162,9 @@ public class CursoMBean {
 			setSelecionado(null);
 
 			// Removando da banco/lista
-			controleCurso.remover(id);
-			System.out.println("Curso excluído!");
+			Professor p = new Professor(id, "");
+			controleProfessor.remover(p);
+			System.out.println("Professor excluído!");
 
 			// Atualizando lista
 			atualizarListagem();
@@ -181,16 +174,16 @@ public class CursoMBean {
 	}
 
 	/**
-	 * Atualizar a listagem de cursos (chamado do próprio Bean, ou seja, na
+	 * Atualizar a listagem de professores (chamado do próprio Bean, ou seja, na
 	 * primeira vez que executa) e a lista de listaPesquisa.
 	 */
 	public void atualizarListagem() {
-		lista = controleCurso.consulta();
-		listaPesquisa = (ArrayList<Curso>) getLista().clone();
+		lista = controleProfessor.consulta();
+		listaPesquisa = (ArrayList<Professor>) getLista().clone();
 	}
 
 	/**
-	 * Atualiza a listagem de disciplinas (chamado da View) TODO: Futuramente
+	 * Atualiza a listagem de professores (chamado da View) TODO: Futuramente
 	 * implementar de forma que não seja case-sensitive?
 	 * 
 	 * @param e
@@ -198,11 +191,11 @@ public class CursoMBean {
 	public void atualizarListagemPesquisa(ValueChangeEvent e) {
 		if (e.getNewValue().toString().length() > 0) {
 			this.pegarDisciplinaLista(e.getNewValue().toString());
-			System.out.println("Disciplina pesquisada com nome: "
+			System.out.println("Professor pesquisado com nome: "
 					+ e.getNewValue().toString());
 		} else {
 			atualizarListagem();
-			System.out.println("Deveria mostrar todas as disciplinas agora.");
+			System.out.println("Deveria mostrar todos os professores agora.");
 		}
 	}
 
@@ -223,7 +216,7 @@ public class CursoMBean {
 
 		for (int i = 0; i < getLista().size(); i++) {
 
-			Curso esteCurso = getLista().get(i);
+			Professor esteCurso = getLista().get(i);
 			boolean cursoTemEsseTermo = esteCurso.getNome().contains(termo);
 
 			if (cursoTemEsseTermo) {
@@ -243,13 +236,35 @@ public class CursoMBean {
 		}
 	}
 
-	private boolean containsListaDisciplina(Curso esteCurso) {
-		for (Curso c : getListaPesquisa()) {
-			if (c.getNome().equals(esteCurso.getNome())) {
+	private boolean containsListaDisciplina(Professor esteCurso) {
+		for (Professor p : getListaPesquisa()) {
+			if (p.getNome().equals(esteCurso.getNome())) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	
+
+	public ArrayList<Professor> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Professor> lista) {
+		this.lista = lista;
+	}
+
+	public ArrayList<Professor> getListaPesquisa() {
+		return listaPesquisa;
+	}
+
+	public void setListaPesquisa(ArrayList<Professor> listaPesquisa) {
+		this.listaPesquisa = listaPesquisa;
+	}
+
+	public Professor getSelecionado() {
+		return selecionado;
 	}
 
 	public int getId() {
@@ -268,48 +283,42 @@ public class CursoMBean {
 		this.nome = nome;
 	}
 
-	public ControleCurso getControleCurso() {
-		return controleCurso;
+	public ControleProfessor getControleProfessor() {
+		return controleProfessor;
 	}
 
-	public void setControleCurso(ControleCurso controleCurso) {
-		this.controleCurso = controleCurso;
+	public void setControleProfessor(ControleProfessor controleProfessor) {
+		this.controleProfessor = controleProfessor;
 	}
 
-	public ArrayList<Curso> getLista() {
-		return lista;
+	public ArrayList<Disciplina> getListaDisciplinasDoProfessor() {
+		return listaDisciplinasDoProfessor;
 	}
 
-	public void setLista(ArrayList<Curso> lista) {
-		CursoMBean.lista = lista;
+	public void setListaDisciplinasDoProfessor(
+			ArrayList<Disciplina> listaDisciplinasDoProfessor) {
+		this.listaDisciplinasDoProfessor = listaDisciplinasDoProfessor;
 	}
 
-	public ArrayList<Curso> getListaPesquisa() {
-		return listaPesquisa;
+	public String[] getVetorDisciplinasDoProfessor() {
+		return vetorDisciplinasDoProfessor;
 	}
 
-	public void setListaPesquisa(ArrayList<Curso> listaPesquisa) {
-		CursoMBean.listaPesquisa = listaPesquisa;
+	public void setVetorDisciplinasDoProfessor(String[] vetorDisciplinasDoProfessor) {
+		this.vetorDisciplinasDoProfessor = vetorDisciplinasDoProfessor;
 	}
 
-	public Curso getSelecionado() {
-		return selecionado;
-	}
-
-	public void setSelecionado(Curso selecionado) {
+	public void setSelecionado(Professor selecionado) {
 		this.selecionado = selecionado;
+		
 		if (selecionado != null) {
 			listaTodasDisciplinas = controleDisciplina.consulta();
-			listaDisciplinasDoCurso = controleCurso.listaDisciplinasAssociadas(selecionado);
+			listaDisciplinasDoProfessor = controleProfessor.listaDisciplinasAssociadas(selecionado);
 			
-			vetorDisciplinasDoCurso = new String[listaDisciplinasDoCurso.size()];
-			for(int i = 0; i < listaDisciplinasDoCurso.size(); i++){
-				vetorDisciplinasDoCurso[i] = listaDisciplinasDoCurso.get(i).getNome();
+			vetorDisciplinasDoProfessor = new String[listaDisciplinasDoProfessor.size()];
+			for(int i = 0; i < listaDisciplinasDoProfessor.size(); i++){
+				vetorDisciplinasDoProfessor[i] = listaDisciplinasDoProfessor.get(i).getNome();
 			}
-			
-//			for(Disciplina d : listaDisciplinasDoCurso){
-//				System.out.println(d.getNome());
-//			}
 		}
 	}
 
@@ -331,21 +340,22 @@ public class CursoMBean {
 	}
 
 	public ArrayList<Disciplina> getListaDisciplinasDoCurso() {
-		return listaDisciplinasDoCurso;
+		return listaDisciplinasDoProfessor;
 	}
 
 	public void setListaDisciplinasDoCurso(
 			ArrayList<Disciplina> listaDisciplinasDoCurso) {
-		this.listaDisciplinasDoCurso = listaDisciplinasDoCurso;
+		this.listaDisciplinasDoProfessor = listaDisciplinasDoCurso;
 	}
 
 	public String[] getVetorDisciplinasDoCurso() {
-		return vetorDisciplinasDoCurso;
+		return vetorDisciplinasDoProfessor;
 	}
 
 	public void setVetorDisciplinasDoCurso(String[] vetorDisciplinasDoCurso) {
-		this.vetorDisciplinasDoCurso = vetorDisciplinasDoCurso;
+		this.vetorDisciplinasDoProfessor = vetorDisciplinasDoCurso;
 	}
+	
 	
 	
 }
