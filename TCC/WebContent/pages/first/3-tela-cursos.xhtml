@@ -67,7 +67,6 @@
 							<h:commandButton value="Adicionar"
 								styleClass="btn btn-md btn-success"
 								onclick="PF('insert').show();">
-								<!--  CUIDADO COM O EXECUTE="@FORM", PODE DAR PROBLEMA -->
 								<p:ajax event="click" execute="@form" update=":modal-insert"
 									render=":modal-insert" />
 							</h:commandButton>
@@ -79,7 +78,7 @@
 
 				<!--  MODAL PARA INSERIR -->
 				<p:dialog id="dialog-insert" header="Inserir Curso" widgetVar="insert"
-					resizable="false" modal="true" width="600" height="500"
+					resizable="false" modal="true" width="600" height="420"
 					hideEffect="clip" closeOnEscape="true">
 
 					<h:form id="modal-insert">
@@ -98,7 +97,7 @@
 								<!--   layout="grid" columns="2" -->
 								<p:selectManyCheckbox style="margin-bottom: 40px;"
 									id="disciplinas" value="#{cursoMBean.listaDisciplinasDoCurso}"
-									converter="omnifaces.SelectItemsConverter" layout="grid" columns="2">
+									converter="omnifaces.SelectItemsConverter" layout="grid" columns="1">
 									<f:selectItems value="#{cursoMBean.listaTodasDisciplinas}"
 										var="disciplina" itemValue="#{disciplina}"
 										itemLabel="#{disciplina.nome}" />
@@ -142,8 +141,8 @@
 									#{curso.nome}
 								</p:column>
 
-								<p:ajax event="rowSelect" update=":modal-update"
-									render=":modal-update" oncomplete="PF('edit').show();"
+								<p:ajax event="rowSelect" update=":dialog-update"
+									render=":dialog-update" oncomplete="PF('edit').show();"
 									onerror="alert('erro');" execute="@form" />
 								<p:ajax event="rowUnselect" />
 							</p:dataTable>
@@ -151,7 +150,7 @@
 
 						<!-- MODAL PARA EDITAR -->
 						<p:dialog id="dialog-update" header="Editar Curso" widgetVar="edit"
-							resizable="false" modal="true" width="600" height="500"
+							resizable="false" modal="true" width="600" height="420"
 							hideEffect="clip" closeOnEscape="true">
 							<h:form id="modal-update">
 								<h:panelGrid id="display" styleClass="col-lg-10 center"
@@ -168,10 +167,10 @@
 										<!--   layout="grid" columns="2" -->
 										<p:selectManyCheckbox style="margin-bottom: 40px;"
 											id="disciplinas"
-											value="#{cursoMBean.listaDisciplinasDoCurso}"
-											converter="omnifaces.SelectItemsConverter">
+											value="#{cursoMBean.vetorDisciplinasDoCurso}"
+											 layout="grid" columns="1">
 											<f:selectItems value="#{cursoMBean.listaTodasDisciplinas}"
-												var="disciplina" itemValue="#{disciplina}"
+												var="disciplina" itemValue="#{disciplina.nome}"
 												itemLabel="#{disciplina.nome}" />
 										</p:selectManyCheckbox>
 									</p:columnGroup>
