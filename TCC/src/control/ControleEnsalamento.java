@@ -296,11 +296,16 @@ public class ControleEnsalamento {
 		int qtdnullFinal = 999999999;
 
 		for (int i = 0; i < 1000; i++) {
-			ControleEnsalamento pr = new ControleEnsalamento(); 
-			pr.Ensalar();
-			aulas = pr.getAulas();
-			pr = null;
-//			Ensalar();
+			System.out.println("i"+i);
+//			TODO ver qual a melhor maneira de fazer isto 			
+//			ControleEnsalamento pr = new ControleEnsalamento(); 
+//			pr.Ensalar();
+//			aulas = pr.getAulas();
+//			pr = null;
+			
+			Ensalar();
+			aulas = getAulas();
+			
 			int qtdnull = 0;
 			for (int j = 0; j < aulas.size(); j++) {
 				if (aulas.get(j).getProfessor() == null)

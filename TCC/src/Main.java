@@ -147,16 +147,18 @@ public class Main {
 		
 		ControleEnsalamento processarEnsalamento = new ControleEnsalamento();
 		ArrayList<Aula> aulas;
-		processarEnsalamento.Ensalar();
+//		processarEnsalamento.Ensalar();
+//		 TODO falar Daniel (ele esta fazendo mil vezes )
+		processarEnsalamento.EscolherEntreMil();
 		aulas = processarEnsalamento.getAulas(); 
 		printGradeHorario(aulas);
 
 		
 		System.out.println("====================================================================");
 		
-		processarEnsalamento.EscolherEntreMil();
-		aulas = processarEnsalamento.getAulas(); 
-		printGradeHorario(aulas);
+//		processarEnsalamento.EscolherEntreMil();
+//		aulas = processarEnsalamento.getAulas(); 
+//		printGradeHorario(aulas);
 		
 		
 // -------------------------------------------------------------------------------------	
