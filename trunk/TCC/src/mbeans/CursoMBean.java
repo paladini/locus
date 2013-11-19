@@ -3,7 +3,9 @@ package mbeans;
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
@@ -27,7 +29,7 @@ import entidades.Disciplina;
  */
 
 @ManagedBean(name = "cursoMBean")
-@SessionScoped
+@ViewScoped
 public class CursoMBean {
 
 	private ControleCurso controleCurso;
@@ -143,6 +145,7 @@ public class CursoMBean {
 
 			// Atualizando disciplina
 			Curso atualizar = new Curso(id, nome);
+			atualizar.setDisciplina(listaDisciplinasDoCurso);
 			controleCurso.atualizar(atualizar);
 
 			// Atualizando dados da disciplinaSelecionada e das listas

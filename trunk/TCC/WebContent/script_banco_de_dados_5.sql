@@ -173,13 +173,13 @@ CREATE  TABLE IF NOT EXISTS `locus`.`Disciplina_has_Professor` (
   CONSTRAINT `fk_Disciplina_has_Professor_Disciplina1`
     FOREIGN KEY (`Disciplina_idDisciplina` )
     REFERENCES `locus`.`Disciplina` (`idDisciplina` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE -- NO ACTION
+    ON UPDATE CASCADE, -- NO ACTION
   CONSTRAINT `fk_Disciplina_has_Professor_Professor1`
     FOREIGN KEY (`Professor_idProfessor` )
     REFERENCES `locus`.`Professor` (`idProfessor` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE -- NO ACTION
+    ON UPDATE CASCADE) -- NO ACTION
 ENGINE = InnoDB;
 
 
@@ -197,13 +197,13 @@ CREATE  TABLE IF NOT EXISTS `locus`.`Curso_has_Disciplina` (
   CONSTRAINT `fk_Curso_has_Disciplina_Curso1`
     FOREIGN KEY (`Curso_idCurso` )
     REFERENCES `locus`.`Curso` (`idCurso` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE -- NO ACTION
+    ON UPDATE CASCADE, -- NO ACTION
   CONSTRAINT `fk_Curso_has_Disciplina_Disciplina1`
     FOREIGN KEY (`Disciplina_idDisciplina` )
     REFERENCES `locus`.`Disciplina` (`idDisciplina` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE -- NO ACTION
+    ON UPDATE CASCADE) -- NO ACTION
 ENGINE = InnoDB;
 
 
@@ -267,21 +267,21 @@ values ("Instituição","admin","admin");
 -- select * from turma;
 
 ## essa traz todas as diciplinas associadas a um determiado curso
-select d.idDisciplina, d.nome from Curso_has_Disciplina as cd
-	inner join disciplina as d on
-		d.idDisciplina = cd.Disciplina_idDisciplina 
-where cd.Curso_idCurso = 1;
+-- select d.idDisciplina, d.nome from Curso_has_Disciplina as cd
+-- 	inner join disciplina as d on
+-- 		d.idDisciplina = cd.Disciplina_idDisciplina 
+--      where cd.Curso_idCurso = 1;
 #pego todas as diciplinas nao associadas ao curso passado por parametro
-select d.idDisciplina, d.nome
-from disciplina d
-where d.idDisciplina not in (
- select Disciplina_idDisciplina 
-	from Curso_has_Disciplina
+-- select d.idDisciplina, d.nome
+-- from disciplina d
+-- where d.idDisciplina not in (
+-- select Disciplina_idDisciplina 
+-- 	from Curso_has_Disciplina
 		
-	where Curso_idCurso = 1
-);
+-- 	where Curso_idCurso = 1
+-- );
 
-delete from Curso_has_Disciplina where Curso_idCurso = 1 and Disciplina_idDisciplina = ?; 
+-- delete from Curso_has_Disciplina where Curso_idCurso = 1 and Disciplina_idDisciplina = ?; 
 
-delete from Curso_has_Disciplina 
+-- delete from Curso_has_Disciplina 
 

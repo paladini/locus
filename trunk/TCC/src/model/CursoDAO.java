@@ -162,7 +162,7 @@ public class CursoDAO extends AbstractDAO {
     	 Connection connection = Conexao.getConexao();
          try {
 
-             String sql = "SELECT * FROM Curso where id = ?;";
+             String sql = "SELECT * FROM Curso where idCurso = ?;";
              PreparedStatement prest = connection.prepareStatement(sql);
              prest.setInt(1, id);
              ResultSet rs = prest.executeQuery();
