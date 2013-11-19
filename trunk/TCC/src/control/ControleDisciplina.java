@@ -90,6 +90,16 @@ public class ControleDisciplina {
 		 return modelo.selectDisciplina(id);
 //		return modeloHibernate.select(id);
 	}
+	
+	/**
+	 * Método para retornar somente uma disciplina (para edição dela).
+	 * 
+	 * @param termo
+	 * @return
+	 */
+	public Disciplina consultaDisciplina(String termo) {
+		return modelo.selectDisciplina(termo);
+	}
 
 	
 	/*
@@ -109,15 +119,6 @@ public class ControleDisciplina {
 		return modelo.selectComTermos(termo);
 	}
 
-	/**
-	 * Método para retornar somente uma disciplina (para edição dela).
-	 * 
-	 * @param termo
-	 * @return
-	 */
-	@Deprecated
-	public Disciplina consultaDisciplina(String termo) {
-		return modelo.selectDisciplina(termo);
-	}
+
 
 }

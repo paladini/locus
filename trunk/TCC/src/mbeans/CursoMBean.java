@@ -51,6 +51,8 @@ public class CursoMBean {
 
 	// Lista de disciplinas deste curso
 	private ArrayList<Disciplina> listaDisciplinasDoCurso;
+	
+	private String[] vetorDisciplinasDoCurso;
 
 	private int id;
 	private String nome;
@@ -137,15 +139,17 @@ public class CursoMBean {
 			String nome = this.getSelecionado().getNome();
 			int id = this.getSelecionado().getId();
 
-			// Verificando dados
-			System.out.println("---------------------");
-			System.out.println("nome editado: "
-					+ this.getSelecionado().getNome());
-			System.out.println("---------------------");
-
+			// Pegando disciplinas
+			ArrayList<Disciplina> novasDisciplinas = new ArrayList<Disciplina>();
+			for(int i = 0; i < vetorDisciplinasDoCurso.length; i++){
+				String nomeDisciplina = vetorDisciplinasDoCurso[i];
+				Disciplina d = controleDisciplina.consultaDisciplina(nomeDisciplina);
+				novasDisciplinas.add(d);
+			}
+			
 			// Atualizando disciplina
 			Curso atualizar = new Curso(id, nome);
-			atualizar.setDisciplina(listaDisciplinasDoCurso);
+			atualizar.setDisciplina(novasDisciplinas);
 			controleCurso.atualizar(atualizar);
 
 			// Atualizando dados da disciplinaSelecionada e das listas
@@ -302,6 +306,11 @@ public class CursoMBean {
 			listaTodasDisciplinas = controleDisciplina.consulta();
 			listaDisciplinasDoCurso = controleCurso.listaDisciplinasAssociadas(selecionado);
 			
+			vetorDisciplinasDoCurso = new String[listaDisciplinasDoCurso.size()];
+			for(int i = 0; i < listaDisciplinasDoCurso.size(); i++){
+				vetorDisciplinasDoCurso[i] = listaDisciplinasDoCurso.get(i).getNome();
+			}
+			
 //			for(Disciplina d : listaDisciplinasDoCurso){
 //				System.out.println(d.getNome());
 //			}
@@ -333,4 +342,14 @@ public class CursoMBean {
 			ArrayList<Disciplina> listaDisciplinasDoCurso) {
 		this.listaDisciplinasDoCurso = listaDisciplinasDoCurso;
 	}
+
+	public String[] getVetorDisciplinasDoCurso() {
+		return vetorDisciplinasDoCurso;
+	}
+
+	public void setVetorDisciplinasDoCurso(String[] vetorDisciplinasDoCurso) {
+		this.vetorDisciplinasDoCurso = vetorDisciplinasDoCurso;
+	}
+	
+	
 }
