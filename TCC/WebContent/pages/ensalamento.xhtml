@@ -73,8 +73,8 @@
 			<!-- Conteúdo da página em si -->
 			<div class="col-lg-8 center">
 				<h:form id="form">
-					<p:schedule id="schedule" value="#{ensalamentoMBean.eventModel}"
-						widgetVar="myschedule">
+					<p:schedule id="schedule" value="#{ensalamentoMBean.eventModel}" 
+						widgetVar="myschedule" >
 					</p:schedule>
 				</h:form>
 			</div>
@@ -102,17 +102,36 @@
 		$(document).ready(function() {
 
 			$(".fc-header").remove();
-			linhas = $(".fc-border-separate").children("tbody").children();
+			
+			
+			
 
-			linhas.each(function() {
-				if ($(this).attr("class") == "fc-week fc-last") {
+			linhas = $(".fc-today");
+			semana = linhas.parent().html();
+			
+			todasSemanas = $(".fc-border-separate").children("tbody").children();
+			todasSemanas.remove();
+			
+			$(".fc-border-separate").children("tbody").append(semana);
+			
+			/* linhas.each(function() {
+				
+				var that = this;
+				semana = $(this).next();
+				semana.each(function(){
+					
+					if ($(this).hasClass("fc-today")){
+						
+					}else{
+						$(that).remove();
+					}
+				});
+				
+				
+				
+			}); */
 
-				} else {
-					$(this).remove();
-				}
-			});
-
-			$(".fc-day-number").remove();
+			// $(".fc-day-number").remove(); 
 
 		});
 	</script>

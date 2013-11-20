@@ -1,6 +1,9 @@
 package mbeans;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -11,23 +14,62 @@ import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
 import control.ControleDisciplina;
+import control.ControleEnsalamento;
+import control.ControleEscola;
 import entidades.Disciplina;
 
 @ManagedBean(name = "ensalamentoMBean")
 @SessionScoped
 public class EnsalamentoMBean {
 
-
+	private ControleEnsalamento modelo;
 	private ScheduleModel eventModel;  
   
-    public EnsalamentoMBean() {  
-        eventModel = new DefaultScheduleModel();  
-//        eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));  
-//        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));  
-//        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));  
-//        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));  
-//        Date comeco = new Date()
-//        new DefaultScheduleEvent("Teste", dataComeco, dateFim)
-    } 
+    
 
+	public EnsalamentoMBean() {  
+        eventModel = new DefaultScheduleModel();  
+    } 
+	
+	
+	private void adicionarEvento(String descricao, int diaSemanaGregorianCalendar) {
+		GregorianCalendar calendarioInicio = (GregorianCalendar) GregorianCalendar.getInstance();
+		calendarioInicio.set(GregorianCalendar.DAY_OF_WEEK,	diaSemanaGregorianCalendar);
+		calendarioInicio.set(GregorianCalendar.HOUR_OF_DAY, 14);
+		calendarioInicio.set(GregorianCalendar.MINUTE, 0);
+		
+		GregorianCalendar calendarioFim = (GregorianCalendar) GregorianCalendar.getInstance();
+		calendarioFim.set(GregorianCalendar.DAY_OF_WEEK, diaSemanaGregorianCalendar);
+		calendarioFim.set(GregorianCalendar.HOUR_OF_DAY, 18);
+		calendarioInicio.set(GregorianCalendar.MINUTE, 0);
+		
+		eventModel.addEvent(new DefaultScheduleEvent(descricao, calendarioInicio.getTime(), calendarioFim.getTime()));
+		System.out.println(calendarioInicio.getTime());
+		System.out.println(calendarioFim.getTime());
+	}
+	
+	
+    
+    public Date getInitialDate(){
+    	
+    	adicionarEvento("PWEB - Daniel - TINF", GregorianCalendar.MONDAY);
+    	
+    	GregorianCalendar calendario = (GregorianCalendar) GregorianCalendar.getInstance();
+//    	calendario.set(GregorianCalendar.DAY_OF_WEEK, GregorianCalendar.MONDAY);
+//    	calendario.set(GregorianCalendar.DAY_OF_MONTH, 18);
+//    	calendario.set(GregorianCalendar.MONTH, GregorianCalendar.NOVEMBER);
+//    	calendario.set(GregorianCalendar.YEAR, 2013);
+    	System.out.println(calendario.getTime());
+    	return calendario.getTime();
+    }
+    
+    public void Ensalar(){
+    	modelo.EscolherEntreMil();
+    }
+    
+    public ScheduleModel getEventModel() {
+		return eventModel;
+	}
+    
+    
 }

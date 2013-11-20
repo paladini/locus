@@ -298,13 +298,13 @@ public class ControleEnsalamento {
 		for (int i = 0; i < 1000; i++) {
 			System.out.println("i"+i);
 //			TODO ver qual a melhor maneira de fazer isto 			
-//			ControleEnsalamento pr = new ControleEnsalamento(); 
-//			pr.Ensalar();
-//			aulas = pr.getAulas();
-//			pr = null;
+			ControleEnsalamento pr = new ControleEnsalamento(); 
+			pr.Ensalar();
+			aulas = pr.getAulas();
+			pr = null;
 			
-			Ensalar();
-			aulas = getAulas();
+//			Ensalar();
+//			aulas = getAulas();
 			
 			int qtdnull = 0;
 			for (int j = 0; j < aulas.size(); j++) {
