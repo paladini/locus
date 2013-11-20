@@ -3,49 +3,121 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
-	<h:head>
-	
-		<meta name="description" content=""></meta>
-		<meta name="author" content="Luiz Felipe M. Hickel"></meta>
-		<title>Locus - Ensalamento</title>
-		
-		<h:outputStylesheet library="css" name="bootstrap.css" />
-		<h:outputStylesheet library="css" name="custom.css" />
-	</h:head>
-	<h:body>
+<h:head>
 
-		<div id="barra">
-		</div>
-	
-		<div class="navbar-wrapper">
-			<div class="container">
-				<p class="invisivel">Voltar</p>
-			</div>
-		</div>
+	<meta name="description" content=""></meta>
+	<meta name="author" content="Luiz Felipe M. Hickel"></meta>
+	<title>Locus - Ensalamento</title>
 
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="custom.css" />
+</h:head>
+<h:body>
+
+	<div id="barra"></div>
+
+	<div class="navbar-wrapper">
 		<div class="container">
+			<p class="invisivel">Voltar</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+
+			<!-- Logo e botões para gerenciamento -->
 			<div class="row">
-				
-				<!-- Conteúdo da página em si -->
-				
-				
-				
-				
-				
-				
-							<!-- Rodapé -->
-			<div class="row text-center">
-				<footer id="rodape">
-					Entrou aqui por engano? <a href="../index.html#contato">Fique conosco.</a> | Esqueceu sua senha? <a href="esqueci-minha-senha.html" >Clique aqui</a>.
-				</footer>
+				<div class="col-md-10 center">
+					<div class="row linha-dica">
+						<div class="col-lg-2">
+							<a href="../principal.jsf"><img
+								src="../images/antigos/logo.png" height="110" width="80"
+								alt="Menu Principal" title="Menu Principal" /></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../professor/index.jsf"><img class="menu-principal"
+								src="../images/principal/professor.png"
+								alt="Gerenciar Professores" title="Gerenciar Professores" /></a>
+						</div>
+						<div class="col-lg-2">
+							<img src="../images/principal/sala-selecionado.png"
+								alt="Gerenciar Salas" title="Gerenciar Salas" />
+						</div>
+						<div class="col-lg-2">
+							<a href="../turma/index.jsf"><img
+								src="../images/principal/turma.png" class="menu-principal"
+								alt="Gerenciar Turmas" title="Gerenciar Turmas" /></a>
+						</div>
+						<div class="col-lg-2">
+							<a href="../escola/index.jsf"><img
+								src="../images/principal/escola.png" class="menu-principal"
+								alt="Gerenciar Escola" title="Gerenciar Escola" /></a>
+						</div>
+						<div class="col-lg-2">
+							<a href=""><img src="../images/principal/ensalamento.png"
+								class="menu-principal" alt="Gerar Ensalamento"
+								title="Gerar Ensalamento" /></a>
+						</div>
+					</div>
+
+					<hr class="featurette-divider" />
+
+					<ol class="breadcrumb">
+						<li><a href="../principal.jsf">Principal</a></li>
+						<li class="active">Ensalamento</li>
+					</ol>
+
+				</div>
 			</div>
+
+			<!-- Conteúdo da página em si -->
+			<div class="col-lg-8 center">
+				<h:form id="form">
+					<p:schedule id="schedule" value="#{ensalamentoMBean.eventModel}"
+						widgetVar="myschedule">
+					</p:schedule>
+				</h:form>
+			</div>
+
 		</div>
 
-		<!-- JavaScripts e Complementos -->
-        <h:outputScript library="js" name="bootstrap.min.js" />
-        
-        <!-- Validações desta página -->
-        
 
-	</h:body>
+		<!-- Rodapé -->
+		<div class="row text-center">
+			<footer id="rodape">
+				Entrou aqui por engano? <a href="../index.html#contato">Fique
+					conosco.</a> | Esqueceu sua senha? <a href="esqueci-minha-senha.html">Clique
+					aqui</a>.
+			</footer>
+		</div>
+	</div>
+
+	<!-- JavaScripts e Complementos -->
+	<h:outputScript library="primefaces" name="jquery/jquery.js"
+		target="head" />
+	<h:outputScript library="js" name="bootstrap.min.js" />
+	<h:outputScript library="js" name="locus-hoverIt.js" />
+
+	<script>
+		$(document).ready(function() {
+
+			$(".fc-header").remove();
+			linhas = $(".fc-border-separate").children("tbody").children();
+
+			linhas.each(function() {
+				if ($(this).attr("class") == "fc-week fc-last") {
+
+				} else {
+					$(this).remove();
+				}
+			});
+
+			$(".fc-day-number").remove();
+
+		});
+	</script>
+	<!-- Validações desta página -->
+
+
+</h:body>
 </html>
