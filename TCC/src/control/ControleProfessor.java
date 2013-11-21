@@ -33,6 +33,44 @@ public class ControleProfessor {
     }
     
     
+    /**
+     * Método para consultar os professores do banco de dados
+     *
+     * @return
+     */
+    public ArrayList<Professor> consultar() {
+        return modelo.consultar();
+    }
+
+    /**
+     * Método para retornar somente um professor (para tela "Editar").
+     *
+     * @param termo
+     * @return
+     */
+    public Professor consultar(String termo) {
+        return modelo.consultar(termo);
+    }
+    
+    /**
+     * Método para retornar somente um professor baseado no ID do professor.
+     * @param id
+     * @return
+     */
+    public Professor consultar(int id){
+    	return modelo.consultar(id);
+    }
+    
+    /**
+     * Retorna apenas o ID do professor (necessário para a inserção).
+     * @param termo
+     * @return
+     */
+    public int consultarID(String termo){
+    	Professor professor = modelo.consultar(termo);
+    	return professor.getId();
+    }
+    
     
     
     /**
@@ -44,7 +82,7 @@ public class ControleProfessor {
         if (professor.getNome() == null || professor.getNome() == " " || professor.getNome() == ""){
             
         }else{
-            modelo.update(professor);
+            modelo.atualizar(professor);
             this.adicionarDisciplina(professor);
         }
     }
@@ -55,7 +93,7 @@ public class ControleProfessor {
      * @param disciplina
      */
     public void remover(Professor professor) {
-        modelo.delete(professor);
+        modelo.deletar(professor);
     }
 
     /**
@@ -63,19 +101,19 @@ public class ControleProfessor {
      *
      * @param disciplinaAdicionar
      */
-public void adicionar(Professor professorAdicionar) {
+    public void inserir(Professor professorAdicionar) {
         
         // Se não existir nenhum curso com esse nome, manda inserir o curso.
-        if (consultaProfessor(professorAdicionar.getNome()) == null){
+        if (consultar(professorAdicionar.getNome()) == null){
             
-        	modelo.insert(professorAdicionar);
+        	modelo.inserir(professorAdicionar);
         	
         	// O ID atualmente é 0, precisa atualizar com o ID que o banco deu no auto-increment.
-        	int id = this.consultaProfessorID(professorAdicionar.getNome());
+        	int id = this.consultarID(professorAdicionar.getNome());
         	professorAdicionar.setId(id);
         	
         	// Caso tenha alguma disciplina associada, cria as associações no banco
-        	if (professorAdicionar.getListaDisciplinas().size() > 0){
+        	if (professorAdicionar.getDisciplina().size() > 0){
         		this.adicionarDisciplina(professorAdicionar);
         	}
         	
@@ -83,43 +121,7 @@ public void adicionar(Professor professorAdicionar) {
         
     }
 
-    /**
-     * Método para consultar os professores do banco de dados
-     *
-     * @return
-     */
-    public ArrayList<Professor> consulta() {
-        return modelo.select();
-    }
-
-    /**
-     * Método para retornar somente um professor (para tela "Editar").
-     *
-     * @param termo
-     * @return
-     */
-    public Professor consultaProfessor(String termo) {
-        return modelo.selectProfessor(termo);
-    }
     
-    /**
-     * Método para retornar somente um professor baseado no ID do professor.
-     * @param id
-     * @return
-     */
-    public Professor consultaProfessor(int id){
-    	return modelo.selectProfessor(id);
-    }
-    
-    /**
-     * Retorna apenas o ID do professor (necessário para a inserção).
-     * @param termo
-     * @return
-     */
-    public int consultaProfessorID(String termo){
-    	Professor professor = modelo.selectProfessor(termo);
-    	return professor.getId();
-    }
 
     
     /*
@@ -149,8 +151,8 @@ public void adicionar(Professor professorAdicionar) {
     	}
     	
     	// Adicionando as novas disciplinas no banco
-    	for(int i = 0; i < professor.getListaDisciplinas().size(); i++){
-    		modelo.insertProfessorDisciplina(professor.getId(), professor.getListaDisciplinas().get(i).getId());
+    	for(int i = 0; i < professor.getDisciplina().size(); i++){
+    		modelo.insertProfessorDisciplina(professor.getId(), professor.getDisciplina().get(i).getId());
     	}
     }
     

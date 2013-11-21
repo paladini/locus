@@ -59,7 +59,7 @@ public class ProfessorMBean {
 		controleDisciplina = ControleDisciplina.getInstance();
 
 		if (listaTodasDisciplinas == null) {
-			listaTodasDisciplinas = controleDisciplina.consulta();
+			listaTodasDisciplinas = controleDisciplina.consultar();
 		}
 
 		if (listaDisciplinasDoProfessor == null) {
@@ -87,10 +87,10 @@ public class ProfessorMBean {
 
 			// Atribuindo nome ao professor
 			professor.setNome(this.getNome());
-			professor.setListaDisciplinas(listaDisciplinasDoProfessor);
+			professor.setDisciplina(listaDisciplinasDoProfessor);
 
 			// Adicionando professor ao banco de dados
-			controleProfessor.adicionar(professor);
+			controleProfessor.inserir(professor);
 
 			// Limpando a lista de disciplinas do professor
 			listaDisciplinasDoProfessor = new ArrayList<Disciplina>();
@@ -131,17 +131,17 @@ public class ProfessorMBean {
 			ArrayList<Disciplina> novasDisciplinas = new ArrayList<Disciplina>();
 			for(int i = 0; i < vetorDisciplinasDoProfessor.length; i++){
 				String nomeDisciplina = vetorDisciplinasDoProfessor[i];
-				Disciplina d = controleDisciplina.consultaDisciplina(nomeDisciplina);
+				Disciplina d = controleDisciplina.consultar(nomeDisciplina);
 				novasDisciplinas.add(d);
 			}
 			
 			// Atualizando disciplina
 			Professor novoProfessor = new Professor(id, nome);
-			novoProfessor.setListaDisciplinas(novasDisciplinas);
+			novoProfessor.setDisciplina(novasDisciplinas);
 			controleProfessor.atualizar(novoProfessor);
 
 			// Atualizando dados da disciplinaSelecionada e das listas
-			Professor professor = controleProfessor.consultaProfessor(id);
+			Professor professor = controleProfessor.consultar(id);
 			selecionado = professor;
 
 			atualizarListagem();
@@ -178,7 +178,7 @@ public class ProfessorMBean {
 	 * primeira vez que executa) e a lista de listaPesquisa.
 	 */
 	public void atualizarListagem() {
-		lista = controleProfessor.consulta();
+		lista = controleProfessor.consultar();
 		listaPesquisa = (ArrayList<Professor>) getLista().clone();
 	}
 
@@ -312,7 +312,7 @@ public class ProfessorMBean {
 		this.selecionado = selecionado;
 		
 		if (selecionado != null) {
-			listaTodasDisciplinas = controleDisciplina.consulta();
+			listaTodasDisciplinas = controleDisciplina.consultar();
 			listaDisciplinasDoProfessor = controleProfessor.listaDisciplinasAssociadas(selecionado);
 			
 			vetorDisciplinasDoProfessor = new String[listaDisciplinasDoProfessor.size()];

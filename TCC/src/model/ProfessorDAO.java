@@ -19,29 +19,27 @@ import java.util.ArrayList;
 public class ProfessorDAO extends AbstractDAO{
     
     /**
-     * Faz consulta no banco de dados e retorna todos os professores.
+     * Retorna uma lista com todos os professores cadastrados no banco de dados.
      *
      * @return
      */
-    public ArrayList<Professor> select() {
-
+    public ArrayList<Professor> consultar() {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM Professor";
+            String sql = "SELECT * FROM professor;";
             PreparedStatement prest = connection.prepareStatement(sql);
             ResultSet rs = prest.executeQuery();
 
             ArrayList<Professor> listaProfessores = new ArrayList<Professor>();
             while (rs.next()) {
                 Professor professor = new Professor();
-                int id = rs.getInt("idProfessor");
+                int id = rs.getInt("idprofessor");
                 String nome = rs.getString("nome");
                 professor.setId(id);
                 professor.setNome(nome);
                 listaProfessores.add(professor);
             }
-
             connection.close();
             return listaProfessores;
         } catch (SQLException ex) {
@@ -51,15 +49,15 @@ public class ProfessorDAO extends AbstractDAO{
     }
 
     /**
-     * Faz consulta no banco de dados e retorna apenas um professor com esse nome.
+     * Retorna um professor do banco de dados, de acordo com o nome do professor fornecido.
      *
      * @return
      */
-    public Professor selectProfessor(String nomeProfessor) {
+    public Professor consultar(String nomeProfessor) {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM Professor where nome = ?;";
+            String sql = "SELECT * FROM professor where nome = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setString(1, nomeProfessor);
             ResultSet rs = prest.executeQuery();
@@ -71,7 +69,7 @@ public class ProfessorDAO extends AbstractDAO{
             rs.next();
 
             // Pega os dados desse registro e guarda em variáveis
-            int id = rs.getInt("idProfessor");
+            int id = rs.getInt("idprofessor");
             String nome = rs.getString("nome");
 
             // Seta os dados na disciplina criada
@@ -87,15 +85,15 @@ public class ProfessorDAO extends AbstractDAO{
     }
     
     /**
-     * Faz consulta no banco de dados e retorna apenas um professor com esse nome.
+     * Retorna um professor do banco de dados, de acordo com o ID fornecido.
      *
      * @return
      */
-    public Professor selectProfessor(int idProfessor) {
+    public Professor consultar(int idProfessor) {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM Professor where idProfessor = ?;";
+            String sql = "SELECT * FROM professor where idprofessor = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, idProfessor);
             ResultSet rs = prest.executeQuery();
@@ -106,7 +104,7 @@ public class ProfessorDAO extends AbstractDAO{
             // Pega o primeiro registro do retorno da consulta
             if (rs.next()){
             	 // Pega os dados desse registro e guarda em variáveis
-                int id = rs.getInt("idProfessor");
+                int id = rs.getInt("idprofessor");
                 String nome = rs.getString("nome");
 
                 // Seta os dados na disciplina criada
@@ -124,7 +122,181 @@ public class ProfessorDAO extends AbstractDAO{
         }
         return null;
     }
+    
+    /**
+     * Insere um novo professor no banco de dados, de acordo com o Professor fornecido.
+     * @param professor
+     */
+    public void inserir(Professor professor) {
+        String sql = "INSERT INTO professor (nome) VALUES (?);";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(professor.getNome());
+        operacaoEscrita(sql, params);
+    }
+    
+    /**
+     * Atualiza um professor no banco de dados, de acordo com o Professor fornecido.
+     * @param professor
+     */
+    public void atualizar(Professor professor) {
+        String sql = "UPDATE professor SET nome = ? WHERE idprofessor = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(professor.getNome());
+        params.add(professor.getId());
+        operacaoEscrita(sql, params);
+    }
 
+    /**
+     * Deleta um professor do banco de dados, de acordo com o Professor fornecido.
+     * @param professor
+     */
+    public void deletar(Professor professor) {
+
+        // Chama um outro método para excluir as disciplinas associadas a esse curso.
+        this.deletarAssociacoes(professor);
+
+        String sql = "DELETE FROM professor WHERE idprofessor = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(professor.getId());
+        operacaoEscrita(sql, params);
+    }
+    
+    /*
+     * 
+     *    ======================================================================
+     * 
+     *                   Métodos de interação professor-disciplina
+     * 
+     *    ======================================================================
+     * 
+     */
+
+    
+    /**
+     * Retorna a lista de todas as disciplinas associadas à esse professor
+     *
+     * @param professor 
+     */
+    public ArrayList<Disciplina> listaDisciplinasAssociadas(Professor professor) {
+        Connection connection = Conexao.getConexao();
+        try {
+
+            String sql = "select d.iddisciplina, d.nome from disciplina_has_professor as cd inner join disciplina as d on "
+                    + "d.iddisciplina = cd.disciplina_iddisciplina where cd.professor_idprofessor = ? order by d.nome;";
+            PreparedStatement prest = connection.prepareStatement(sql);
+            prest.setInt(1, professor.getId());
+            ResultSet rs = prest.executeQuery();
+
+            ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
+            while (rs.next()) {
+                Disciplina disciplina = new Disciplina();
+                int id = rs.getInt("iddisciplina");
+                String nome = rs.getString("nome");
+                disciplina.setId(id);
+                disciplina.setNome(nome);
+                listaDisciplinas.add(disciplina);
+            }
+
+            connection.close();
+            return listaDisciplinas;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Retorna a lista de todas as disciplinas não associadas à esse professor
+     *
+     * @param professor
+     */
+    public ArrayList<Disciplina> listaDisciplinasNaoAssociadas(Professor professor) {
+        Connection connection = Conexao.getConexao();
+        try {
+
+            String sql = "select d.iddisciplina, d.nome from disciplina d where d.iddisciplina not in "
+                    + "(select disciplina_iddisciplina from disciplina_has_professor where professor_idprofessor = ?) order by d.nome;";
+            PreparedStatement prest = connection.prepareStatement(sql);
+            prest.setInt(1, professor.getId());
+            ResultSet rs = prest.executeQuery();
+
+            ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
+            while (rs.next()) {
+                Disciplina disciplina = new Disciplina();
+                int id = rs.getInt("iddisciplina");
+                String nome = rs.getString("nome");
+                disciplina.setId(id);
+                disciplina.setNome(nome);
+                listaDisciplinas.add(disciplina);
+            }
+
+            connection.close();
+            return listaDisciplinas;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Adiciona uma disciplina ao professor.
+     *
+     * @param curso
+     */
+    public void insertProfessorDisciplina(int idProfessor, int idDisciplina) {
+        String sql = "INSERT INTO disciplina_has_professor (disciplina_iddisciplina, professor_idprofessor) VALUES (?, ?);";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(idDisciplina);
+        params.add(idProfessor);
+        operacaoEscrita(sql, params);
+    }
+
+    /**
+     * Deleta uma disciplina associada ao professor.
+     *
+     * @param idProfessor
+     * @param idDisciplina
+     */
+    public void deleteProfessorDisciplina(int idProfessor, int idDisciplina) {
+        String sql = "delete from disciplina_has_professor where disciplina_iddisciplina = ? and professor_idprofessor = ?;";
+
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(idDisciplina);
+        params.add(idProfessor);
+        operacaoEscrita(sql, params);
+    }
+
+    /*
+     * ============================================
+     * 
+     *                Métodos Privados
+     * 
+     * ============================================
+     */
+    
+    /**
+     * Deleta todas as associações entre professor e disciplina. 
+     *
+     * @param professor
+     */
+    private void deletarAssociacoes(Professor professor) {
+        String sql = "delete from disciplina_has_professor where professor_idprofessor = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(professor.getId());
+        operacaoEscrita(sql, params);
+    }
+    
+    
+    
+    
+    
+    /*
+     * ==============================================
+     * 
+     *             POSSIVELMENTE DEPRECIADOS
+     *             
+     * ==============================================
+     */
     /**
      * Faz uma consulta no banco de dados pesquisando pelos termos digitados até
      * o momento.
@@ -132,6 +304,7 @@ public class ProfessorDAO extends AbstractDAO{
      * @param termos Termos digitados pelo usuário.
      * @return
      */
+    @Deprecated
     public ArrayList<Professor> selectComTermos(String termos) {
 
         Connection connection = Conexao.getConexao();
@@ -158,158 +331,6 @@ public class ProfessorDAO extends AbstractDAO{
             System.out.println(ex.getMessage());
         }
         return null;
-    }
-
-    public void insert(Professor professor) {
-        String sql = "INSERT INTO Professor (nome) VALUES (?);";
-        ArrayList<Object> params = new ArrayList<Object>();
-        params.add(professor.getNome());
-        operacaoEscrita(sql, params);
-    }
-
-    public void update(Professor professor) {
-        String sql = "UPDATE Professor SET nome = ? WHERE idProfessor = ?;";
-        ArrayList<Object> params = new ArrayList<Object>();
-        params.add(professor.getNome());
-        params.add(professor.getId());
-        operacaoEscrita(sql, params);
-    }
-
-    public void delete(Professor professor) {
-
-        // Chama um outro método para excluir as disciplinas associadas a esse curso.
-        this.deleteAssociacoes(professor);
-
-        String sql = "DELETE FROM Professor WHERE idProfessor = ?;";
-        ArrayList<Object> params = new ArrayList<Object>();
-        params.add(professor.getId());
-        operacaoEscrita(sql, params);
-    }
-    
-    /*
-     * 
-     *    ======================================================================
-     * 
-     *                   Métodos de interação curso-disciplina
-     * 
-     *    ======================================================================
-     * 
-     */
-
-    
-    /**
-     * Retorna a lista de todas as disciplinas associadas à esse curso
-     *
-     * @param curso
-     */
-    public ArrayList<Disciplina> listaDisciplinasAssociadas(Professor professor) {
-        Connection connection = Conexao.getConexao();
-        try {
-
-            String sql = "select d.idDisciplina, d.nome from Disciplina_has_Professor as cd inner join Disciplina as d on "
-                    + "d.idDisciplina = cd.Disciplina_idDisciplina where cd.Professor_idProfessor = ? order by d.nome;";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setInt(1, professor.getId());
-            ResultSet rs = prest.executeQuery();
-
-            ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
-            while (rs.next()) {
-                Disciplina disciplina = new Disciplina();
-                int id = rs.getInt("idDisciplina");
-                String nome = rs.getString("nome");
-                disciplina.setId(id);
-                disciplina.setNome(nome);
-                listaDisciplinas.add(disciplina);
-            }
-
-            connection.close();
-            return listaDisciplinas;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
-    }
-
-    /**
-     * Retorna a lista de todas as disciplinas não associadas à esse curso
-     *
-     * @param professor
-     */
-    public ArrayList<Disciplina> listaDisciplinasNaoAssociadas(Professor professor) {
-        Connection connection = Conexao.getConexao();
-        try {
-
-            String sql = "select d.idDisciplina, d.nome from Disciplina d where d.idDisciplina not in "
-                    + "(select Disciplina_idDisciplina from Disciplina_has_Professor where Professor_idProfessor = ?) order by d.nome;";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setInt(1, professor.getId());
-            ResultSet rs = prest.executeQuery();
-
-            ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
-            while (rs.next()) {
-                Disciplina disciplina = new Disciplina();
-                int id = rs.getInt("idDisciplina");
-                String nome = rs.getString("nome");
-                disciplina.setId(id);
-                disciplina.setNome(nome);
-                listaDisciplinas.add(disciplina);
-            }
-
-            connection.close();
-            return listaDisciplinas;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
-    }
-
-    /**
-     * Adiciona uma disciplina ao professor.
-     *
-     * @param curso
-     */
-    public void insertProfessorDisciplina(int idProfessor, int idDisciplina) {
-        String sql = "INSERT INTO Disciplina_has_Professor (Disciplina_idDisciplina, Professor_idProfessor) VALUES (?, ?);";
-        ArrayList<Object> params = new ArrayList<Object>();
-        params.add(idDisciplina);
-        params.add(idProfessor);
-        operacaoEscrita(sql, params);
-    }
-
-    /**
-     * Deleta uma disciplina associada ao professor.
-     *
-     * @param idProfessor
-     * @param idDisciplina
-     */
-    public void deleteProfessorDisciplina(int idProfessor, int idDisciplina) {
-        String sql = "delete from Disciplina_has_Professor where Disciplina_idDisciplina = ? and Professor_idProfessor = ?;";
-
-        ArrayList<Object> params = new ArrayList<Object>();
-        params.add(idDisciplina);
-        params.add(idProfessor);
-        operacaoEscrita(sql, params);
-    }
-
-    /*
-     * ============================================
-     * 
-     *                Métodos Privados
-     * 
-     * ============================================
-     */
-    
-    /**
-     * Deleta todas as associações entre professor e disciplina. 
-     * (Necessário para poder excluir o professor sem deixar dependências).
-     *
-     * @param professor
-     */
-    private void deleteAssociacoes(Professor professor) {
-        String sql = "delete from Disciplina_has_Professor where Professor_idProfessor = ?;";
-        ArrayList<Object> params = new ArrayList<Object>();
-        params.add(professor.getId());
-        operacaoEscrita(sql, params);
     }
     
 }
