@@ -38,9 +38,11 @@ public class DiaDAO extends AbstractDAO {
                  Dia dia = new Dia();
                  int id = rs.getInt("iddia");
                  String nome = rs.getString("nome");
+                 boolean ativo = rs.getBoolean("ativo");
 
                  dia.setId(id);
                  dia.setNome(nome);
+                 dia.setAtivo(ativo);
 
                  listaDias.add(preparaTurnosDoDia(dia));
                  
@@ -71,15 +73,15 @@ public class DiaDAO extends AbstractDAO {
 
             // Pega o primeiro registro do retorno da consulta
             if (rs.next()) {
-                // Cria uma nova disciplina
-                Dia dia = new Dia();
-                // Pega os dados desse registro e guarda em variáveis
-                int id = rs.getInt("iddia");
-                String nome = rs.getString("nome");
+            	 
+            	Dia dia = new Dia();
+                 int id = rs.getInt("iddia");
+                 String nome = rs.getString("nome");
+                 boolean ativo = rs.getBoolean("ativo");
 
-                // Seta os dados na disciplina criada
-                dia.setId(id);
-                dia.setNome(nome);
+                 dia.setId(id);
+                 dia.setNome(nome);
+                 dia.setAtivo(ativo);
 
                 connection.close();
                 return preparaTurnosDoDia(dia);
@@ -109,15 +111,15 @@ public class DiaDAO extends AbstractDAO {
 
              // Pega o primeiro registro do retorno da consulta
              if (rs.next()) {
-                 // Cria uma nova disciplina
-                 Dia dia = new Dia();
-                 // Pega os dados desse registro e guarda em variáveis
+            	
+            	 Dia dia = new Dia();
                  int id = rs.getInt("iddia");
                  String nome = rs.getString("nome");
+                 boolean ativo = rs.getBoolean("ativo");
 
-                 // Seta os dados na disciplina criada
                  dia.setId(id);
                  dia.setNome(nome);
+                 dia.setAtivo(ativo);
 
                  connection.close();
                  return preparaTurnosDoDia(dia);
@@ -136,7 +138,7 @@ public class DiaDAO extends AbstractDAO {
      * @param dia
      */
     public void inserir(Dia dia) {
-        String sql = "INSERT INTO dia (nome) VALUES (?);";
+        String sql = "INSERT INTO dia (nome, ativo) VALUES (?, 0);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(dia.getNome());
         operacaoEscrita(sql, params);
@@ -147,9 +149,10 @@ public class DiaDAO extends AbstractDAO {
      * @param dia
      */
     public void atualizar(Dia dia) {
-        String sql = "UPDATE dia SET nome = ? where iddia = ?;";
+        String sql = "UPDATE dia SET nome = ?, ativo = ? where iddia = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(dia.getNome());
+        params.add(dia.isAtivo());
         params.add(dia.getId());
         operacaoEscrita(sql, params);
     }
@@ -163,6 +166,15 @@ public class DiaDAO extends AbstractDAO {
     	String sql = "DELETE FROM dia WHERE iddia = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(dia.getId());
+        operacaoEscrita(sql, params);
+    }
+    
+    /**
+     * Deixa todos os turnos inativos
+     */
+    public void tudoInativo(){
+    	String sql = "UPDATE dia SET ativo = 0 WHERE iddia != -1;";
+        ArrayList<Object> params = new ArrayList<Object>();
         operacaoEscrita(sql, params);
     }
     
@@ -195,8 +207,10 @@ public class DiaDAO extends AbstractDAO {
                 Turno turno = new Turno();
                 int id = rs.getInt("idturno");
                 String nome = rs.getString("nome");
+                boolean ativo = rs.getBoolean("ativo");
                 turno.setId(id);
                 turno.setNome(nome);
+                turno.setAtivo(ativo);
                 listaTurnos.add(turno);
             }
 
@@ -225,11 +239,13 @@ public class DiaDAO extends AbstractDAO {
 
             ArrayList<Turno> listaTurnos = new ArrayList<Turno>();
             while (rs.next()) {
-                Turno turno = new Turno();
+            	Turno turno = new Turno();
                 int id = rs.getInt("idturno");
                 String nome = rs.getString("nome");
+                boolean ativo = rs.getBoolean("ativo");
                 turno.setId(id);
                 turno.setNome(nome);
+                turno.setAtivo(ativo);
                 listaTurnos.add(turno);
             }
 

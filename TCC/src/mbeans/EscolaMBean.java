@@ -58,48 +58,26 @@ public class EscolaMBean {
 
 		// Populando lista com todos os dias da semana
 		if (listaTodosDias == null) {
-			listaTodosDias = new ArrayList<Dia>();
-
-			Dia segunda = new Dia("Segunda-feira");
-			Dia terca = new Dia("Terca-feira");
-			Dia quarta = new Dia("Quarta-feira");
-			Dia quinta = new Dia("Quinta-feira");
-			Dia sexta = new Dia("Sexta-feira");
-			Dia sabado = new Dia("Sabado");
-
-			listaTodosDias.add(segunda);
-			listaTodosDias.add(terca);
-			listaTodosDias.add(quarta);
-			listaTodosDias.add(quinta);
-			listaTodosDias.add(sexta);
-			listaTodosDias.add(sabado);
+			listaTodosDias = controleDia.consulta();
 		}
 
 		// Populando lista com todos os turnos
 		if (listaTodosTurnos == null) {
-			listaTodosTurnos = new ArrayList<Turno>();
-
-			Turno matutino = new Turno("Matutino");
-			Turno vespertino = new Turno("Vespertino");
-			Turno noturno = new Turno("Noturno");
-
-			listaTodosTurnos.add(matutino);
-			listaTodosTurnos.add(vespertino);
-			listaTodosTurnos.add(noturno);
+			listaTodosTurnos = controleTurno.consultar();
 		}
 
 		novaSenha = "";
 		nomeEscola = "";
 
 		// Setando dias
-		listaDiasSelecionados = controleDia.consulta();
+		listaDiasSelecionados = controleDia.consultarAtivos();
 		vetorDias = new String[listaDiasSelecionados.size()];
 		for (int i = 0; i < listaDiasSelecionados.size(); i++) {
 			vetorDias[i] = listaDiasSelecionados.get(i).getNome();
 		}
 
 		// Setando turnos
-		listaTurnosSelecionados = controleTurno.consulta();
+		listaTurnosSelecionados = controleTurno.consultarAtivos();
 		vetorTurnos = new String[listaTurnosSelecionados.size()];
 		for (int i = 0; i < listaTurnosSelecionados.size(); i++) {
 			vetorTurnos[i] = listaTurnosSelecionados.get(i).getNome();
@@ -141,6 +119,16 @@ public class EscolaMBean {
 
 		if (erro == true) {
 			return null;
+		}
+
+		// Setando os dias selecionados para ativo = true
+		for(Dia d : listaDiasSelecionados){
+			d.setAtivo(true);
+		}
+		
+		// Setando os turnos selecionados para ativo = true
+		for(Turno t : listaTurnosSelecionados){
+			t.setAtivo(true);
 		}
 
 		// Continua o método normal
@@ -185,21 +173,22 @@ public class EscolaMBean {
 		// Validações da página
 		FacesContext context = FacesContext.getCurrentInstance();
 		boolean erro = false;
-		if (nomeEscola.length() == 0 || nomeEscola.isEmpty()) {
+		if (admin.getNomeEscola().length() == 0 || admin.getNomeEscola().isEmpty()) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_WARN, "Campo obrigatório",
 					"Nome da instituição é de preenchimento obrigatório"));
 			erro = true;
 		}
 
-		if (novaSenha.length() == 0 || novaSenha.isEmpty()) {
+		if (admin.getSenha().length() == 0 || admin.getSenha().isEmpty()) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_WARN, "Campo obrigatório",
 					"Senha é de preenchimento obrigatório"));
 			erro = true;
 		}
 
-		if (listaDiasSelecionados.size() == 0 || listaTurnosSelecionados.size() == 0) {
+		if (listaDiasSelecionados.size() == 0
+				|| listaTurnosSelecionados.size() == 0) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_WARN, "Campo obrigatório",
 					"Pelo menos um turno e dia são obrigatórios."));
@@ -216,6 +205,7 @@ public class EscolaMBean {
 		for (int i = 0; i < vetorDias.length; i++) {
 			String termo = vetorDias[i];
 			Dia dia = new Dia(termo);
+			dia.setAtivo(true);
 			diasSelecionados.add(dia);
 		}
 
@@ -224,16 +214,17 @@ public class EscolaMBean {
 		for (int i = 0; i < vetorTurnos.length; i++) {
 			String termo = vetorTurnos[i];
 			Turno turno = new Turno(termo);
+			turno.setAtivo(true);
 			turnosSelecionados.add(turno);
 		}
 
 		listaDiasSelecionados = diasSelecionados;
 		listaTurnosSelecionados = turnosSelecionados;
-		
+
 		// Atualizando dados do Admin e de Turnos/Dias
 		Admin escolaPrimeiraEntrada = new Admin();
-		escolaPrimeiraEntrada.setNomeEscola(nomeEscola);
-		escolaPrimeiraEntrada.setSenha(novaSenha);
+		escolaPrimeiraEntrada.setNomeEscola(admin.getSenha());
+		escolaPrimeiraEntrada.setSenha(admin.getSenha());
 
 		if (modelo.atualizarNomeEscola(escolaPrimeiraEntrada) == 0) {
 			if (modelo.atualizarSenha(escolaPrimeiraEntrada.getSenha()) == 0) {
@@ -352,10 +343,9 @@ public class EscolaMBean {
 		return listaTurnosSelecionados;
 	}
 
-	public void setListaTurnosSelecionados(ArrayList<Turno> listaTurnosSelecionados) {
+	public void setListaTurnosSelecionados(
+			ArrayList<Turno> listaTurnosSelecionados) {
 		this.listaTurnosSelecionados = listaTurnosSelecionados;
 	}
-	
-	
 
 }

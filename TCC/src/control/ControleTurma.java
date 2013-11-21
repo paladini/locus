@@ -32,64 +32,70 @@ public class ControleTurma {
     
     
     
+    /**
+     * Retorna uma lista com todas as Turmas do banco de dados.
+     * @return 
+     */
+    public ArrayList<Turma> consultar(){
+        return modelo.consultar();
+    }
+    
+    /**
+     * Retorna uma Turma do banco de dados, de acordo com o nome da turma informado.
+     * @param termo
+     * @return 
+     */
+    public Turma consultar(String termo){
+        return modelo.consultar(termo);
+    }
+    
+   /**
+    * Retorna uma Turma do banco de dados, de acordo com o ID fornecido.
+    * @param id
+    * @return
+    */
+    public Turma consultar(int id){
+    	return modelo.consultar(id);
+    }
+    
+    
+    
+    
+    
     
     
     /**
-     * Método para atualizar turma no banco de dados.
+     * Atualiza uma Turma no banco de dados.
      * @param antiga
      * @param nova 
      */
     public void atualizar(Turma nova){
-        modelo.update(nova);
+        modelo.atualizar(nova);
     }
     
     
     /**
-     * Método para remover turma no banco de dados
+     * Remove uma Turma do banco de dados
      * @param turma 
      */
     public void remover(Turma turma){
-        modelo.delete(turma);
+        modelo.deletar(turma);
     }
     
     
     /**
-     * Método para adicionar uma turma ao banco de dados.
+     * Insere uma nova Turma no banco de dados.
      * @param turmaAdicionar 
      */
-    public void adicionar(Turma turmaAdicionar){
+    public void inserir(Turma turmaAdicionar){
         // Se não existir nenhum curso com esse nome, manda inserir o curso.
-        if (consultaTurma(turmaAdicionar.getNome()) == null){
-            modelo.insert(turmaAdicionar);
+        if (consultar(turmaAdicionar.getNome()) == null){
+            modelo.inserir(turmaAdicionar);
         }
     }
     
     
-    /**
-     * Método para consultar as turmas do banco de dados
-     * @return 
-     */
-    public ArrayList<Turma> consulta(){
-        return modelo.select();
-    }
-    
-    /**
-     * Método para retornar somente uma turma (para edição dela).
-     * @param termo
-     * @return 
-     */
-    public Turma consultaTurma(String termo){
-        return modelo.selectTurma(termo);
-    }
-    
-   /**
-    * Retorna uma turma de acordo com o ID fornecido.
-    * @param id
-    * @return
-    */
-    public Turma consultaTurma(int id){
-    	return modelo.selectTurma(id);
-    }
+  
     
     /*
      * 

@@ -15,6 +15,17 @@ public class Turno {
     // Atributos
     private int id;
     private String nome;
+    
+    /**
+     * Apenas para facilitar o manuseio dos Dias e Turnos no banco de dados.
+     * 
+     * Ativo = true:
+     *    Este turno faz parte do calendário escolar da instituição.
+     *    
+     * Ativo = false:
+     *    Este turno não faz parte do calendário escolar da instituição
+     */
+    private boolean ativo = false;
     private ArrayList<Dia> listaDias = new ArrayList<Dia>();
 
     // Construtores
@@ -78,6 +89,14 @@ public class Turno {
 
 	public void setListaDias(ArrayList<Dia> listaDias) {
 		this.listaDias = listaDias;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
     
     

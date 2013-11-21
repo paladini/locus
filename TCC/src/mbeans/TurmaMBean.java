@@ -3,8 +3,6 @@ package mbeans;
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
 
@@ -12,8 +10,10 @@ import org.primefaces.context.RequestContext;
 
 import control.ControleCurso;
 import control.ControleTurma;
+import control.ControleTurno;
 import entidades.Curso;
 import entidades.Turma;
+import entidades.Turno;
 
 /*
  * 
@@ -33,6 +33,7 @@ public class TurmaMBean {
 
 	private ControleTurma controleTurma;
 	private ControleCurso controleCurso;
+	private ControleTurno controleTurno;
 
 	// Lista de todas as turmas
 	private ArrayList<Turma> lista;
@@ -43,12 +44,14 @@ public class TurmaMBean {
 
 	// Lista de todos os cursos
 	private ArrayList<Curso> listaTodosCursos;
+	private ArrayList<Turno> listaTodosTurnos;
 
 	private Turma selecionado;
 
 	private int id;
 	private String nome;
 	private String cursoSelecionado;
+	private String turnoSelecionado;
 
 	public TurmaMBean() {
 
@@ -62,18 +65,30 @@ public class TurmaMBean {
 			controleCurso = ControleCurso.getInstance();
 		}
 
+		if (controleTurno == null) {
+			controleTurno = ControleTurno.getInstance();
+		}
+
 		// Inicializando listaTodosCursos
 		if (listaTodosCursos == null) {
-			listaTodosCursos = controleCurso.consulta();
+			listaTodosCursos = controleCurso.consultar();
+		}
+
+		if (listaTodosTurnos == null) {
+			listaTodosTurnos = controleTurno.consultar();
 		}
 
 		// Inicializando variável nome
 		if (this.getNome() == null) {
 			this.setNome("");
 		}
-		
-		if (this.getCursoSelecionado() == null){
+
+		if (this.getCursoSelecionado() == null) {
 			this.setCursoSelecionado("");
+		}
+		
+		if(this.getTurnoSelecionado() == null){
+			this.setTurnoSelecionado("");
 		}
 
 		controleTurma = ControleTurma.getInstance();
@@ -83,31 +98,27 @@ public class TurmaMBean {
 
 	public String cadastrar() {
 
-		
-
 		if (!(this.getNome().isEmpty() || this.getNome() == " " || this
 				.getNome() == "  ")) {
 
 			// Criando turma
 			Turma turma = new Turma();
 			turma.setNome(this.getNome());
-			
-			System.out.println("Curso selecionado no menu: " + cursoSelecionado.toString().toString());
-			
+
 			// Setando o curso na Turma
-			Curso novoCurso = controleCurso.consultaCurso(cursoSelecionado);
+			Curso novoCurso = controleCurso.consultar(cursoSelecionado);
 			turma.setCurso(novoCurso);
 
-			// System.out.println("Curso selecionado: " +
-			// turma.getCurso().getNome());
+			// Setando o turno
+			System.out.println("Turno selecionado: " + turnoSelecionado);
+			turma.setTurno(this.preparaTurnoInt());
 
 			// Adicionando turma ao banco de dados
-			controleTurma.adicionar(turma);
+			controleTurma.inserir(turma);
 
-			
 			limparCampos();
 			atualizarListagem();
-			
+
 			System.out.println("metodo cadastrar Ok");
 
 		} else {
@@ -126,14 +137,19 @@ public class TurmaMBean {
 			int id = this.getSelecionado().getId();
 
 			// Pegando curso associado à turma
-			Curso novoCurso = controleCurso.consultaCurso(cursoSelecionado);		
+			Curso novoCurso = controleCurso.consultar(cursoSelecionado);
+
+			// Pegando id do Turno
+			int idTurno = this.preparaTurnoInt();
+			System.out.println("ID turno tem valor de: " + idTurno);
 			
 			// Atualizando turma
-			Turma turmaAtualizar = new Turma(id, nome, novoCurso);
+			Turma turmaAtualizar = new Turma(id, nome, novoCurso,
+					idTurno);
 			controleTurma.atualizar(turmaAtualizar);
 
 			// Atualizando dados do selecionado e das listas
-			Turma turma = controleTurma.consultaTurma(id);
+			Turma turma = controleTurma.consultar(id);
 			selecionado = turma;
 
 			// Atualizando lista
@@ -178,7 +194,7 @@ public class TurmaMBean {
 	 * primeira vez que executa) e a listaPesquisadas
 	 */
 	public void atualizarListagem() {
-		this.setLista(controleTurma.consulta());
+		this.setLista(controleTurma.consultar());
 		listaPesquisa = (ArrayList<Turma>) this.getLista().clone();
 	}
 
@@ -213,6 +229,7 @@ public class TurmaMBean {
 	private void limparCampos() {
 		this.setNome("");
 		this.setCursoSelecionado("");
+		this.setTurnoSelecionado("");
 	}
 
 	/**
@@ -294,12 +311,14 @@ public class TurmaMBean {
 
 	public void setSelecionado(Turma selecionado) {
 		this.selecionado = selecionado;
-		if(selecionado != null){
-			
+		if (selecionado != null) {
+
 			// Pegando o curso selecionado
-			listaTodosCursos = controleCurso.consulta();
+			listaTodosCursos = controleCurso.consultar();
+			listaTodosTurnos = controleTurno.consultar();
 			cursoSelecionado = selecionado.getCurso().getNome();
-			
+			turnoSelecionado = preparaTurnoString(selecionado.getTurno());
+
 		}
 	}
 
@@ -333,6 +352,58 @@ public class TurmaMBean {
 
 	public void setListaTodosCursos(ArrayList<Curso> listaTodosCursos) {
 		this.listaTodosCursos = listaTodosCursos;
+	}
+
+	public ControleTurno getControleTurno() {
+		return controleTurno;
+	}
+
+	public void setControleTurno(ControleTurno controleTurno) {
+		this.controleTurno = controleTurno;
+	}
+
+	public ArrayList<Turno> getListaTodosTurnos() {
+		return listaTodosTurnos;
+	}
+
+	public void setListaTodosTurnos(ArrayList<Turno> listaTodosTurnos) {
+		this.listaTodosTurnos = listaTodosTurnos;
+	}
+
+	public String getTurnoSelecionado() {
+		return turnoSelecionado;
+	}
+
+	public void setTurnoSelecionado(String turnoSelecionado) {
+		this.turnoSelecionado = turnoSelecionado;
+	}
+
+	private int preparaTurnoInt() {
+		System.out.println("Turno selecionado: " + turnoSelecionado);
+		if (turnoSelecionado.equals("Matutino")) {
+			return 0;
+		}
+		if (turnoSelecionado.equals("Vespertino")) {
+			return 1;
+		}
+		if (turnoSelecionado.equals("Noturno")) {
+			return 2;
+		}
+		return -100;
+	}
+
+	private String preparaTurnoString(int turno) {
+		if (turno == 0) {
+			return "Matutino";
+		}
+
+		if (turno == 1) {
+			return "Vespertino";
+		}
+		if (turno == 2) {
+			return "Noturno";
+		}
+		return "Algo de errado!";
 	}
 
 }

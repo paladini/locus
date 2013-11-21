@@ -25,6 +25,111 @@ public class ControleTurno {
 	}
 	
 	
+	
+	
+	 /**
+     * Retorna todos os Turnos ativos no banco de dados.
+     * @return
+     */
+    public ArrayList<Turno> consultarAtivos(){
+    	
+    	ArrayList<Turno> listaTodosTurnos = modelo.consultar();
+    	ArrayList<Turno> listaTurnosAtivos = new ArrayList<Turno>();
+    	
+    	for(Turno t : listaTodosTurnos){
+    		if(t.isAtivo()){
+    			listaTurnosAtivos.add(t);
+    		}
+    	}
+    	
+    	return listaTurnosAtivos;
+    }
+	
+	
+	/**
+	 * Atualiza os turnos no banco de dados
+	 * @param listaTurnos
+	 */
+	public void atualizarTurnos(ArrayList<Turno> listaTurnos){
+		
+		// Pegando ID correto do banco
+		for(Turno t : listaTurnos){
+			t.setId(this.consultarID(t.getNome()));
+		}
+		
+		// Salvando o banco pois vou deixar todo o banco como "inativo"
+		ArrayList<Turno> banco = modelo.consultar();
+		
+		// Deixando o banco como inativo
+		modelo.tudoInativo();
+		
+		for(Turno t : listaTurnos){
+			
+			// Verificando se está ativo ou não
+			boolean estaAtivo = false;
+			for(Turno temp : banco){
+				if(temp.getId() == t.getId()){
+					if(temp.isAtivo()){
+						estaAtivo = true;
+					}
+				}
+			}
+			
+			// Se o turno que está vindo da View está ativo
+			if(t.isAtivo()){
+				
+				// Se no banco estiver ativo  não faz nada
+				if(estaAtivo){
+					
+				}else{ // caso o turno do banco não esteja ativo, como o turno vindo da View está ativo, precisa ativar isso
+					modelo.atualizar(t);
+				}
+				
+			}else{ // se o turno que está na view não está ativo
+				
+				// Se no banco estiver ativo, desativa
+				if(estaAtivo){
+					modelo.atualizar(t);
+				}else{ // se não está ativo, não faz nada.
+					
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Verifica se o dado turno está ativo no banco de dados.
+	 * @param turno
+	 * @return
+	 */
+	@Deprecated
+	private boolean estaAtivo(Turno turno){
+		Turno banco = modelo.consultar(turno.getId());
+		return banco.isAtivo();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * =================================
+	 * 
+	 *   POSSIVELMENTE DESNECESSÁRIOS
+	 * 
+	 * =================================
+	 */
+	
 	/**
 	 * Retorna uma lista com todos os Turnos cadastrados no banco de dados.
 	 * @return
@@ -50,6 +155,17 @@ public class ControleTurno {
 	public Turno consultar(int idTurno){
 		return modelo.consultar(idTurno);
 	}
+	
+	/**
+	 * Retorna o ID de um Turno, de acordo com o nome do turno fornecido.
+	 * @param termo
+	 * @return
+	 */
+	public int consultarID(String termo){
+		Turno t = modelo.consultar(termo);
+		return t.getId();
+	}
+	
 	
 	/**
 	 * Insere um Turno no banco de dados.

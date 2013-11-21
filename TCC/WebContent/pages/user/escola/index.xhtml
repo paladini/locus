@@ -67,14 +67,14 @@
 								<label for="nome">Nome da Instituição:</label>
 								<p:inputText size="20" styleClass="form-control" id="nome" autocomplete="off"
 								style="padding: 6px 12px;" 
-								placeholder="Nome da Instituição" value="#{escolaMBean.escola.nomeEscola}" required="true" requiredMessage="Este campo é obrigatório."/>
+								placeholder="Nome da Instituição" value="#{escolaMBean.admin.nomeEscola}" required="true" requiredMessage="Este campo é obrigatório."/>
 							</div>
 
 							<div class="form-group">
 								<label for="senha">Senha:</label>
 								<p:inputText size="20" styleClass="form-control" id="senha" autocomplete="off" type="password"
 								placeholder="Digite uma nova senha para acesso" required="true" requiredMessage="Este campo é obrigatório." 
-								style="padding: 6px 12px;" value="#{escolaMBean.login.senha}"
+								style="padding: 6px 12px;" value="#{escolaMBean.admin.senha}"
 								/>
 							</div>
 						</div>
@@ -85,16 +85,13 @@
 							
 							<div class="col-md-4" id="calendario">
 									
-									<p:selectManyCheckbox style="margin-bottom: 40px;" value="#{escolaMBean.vetorDias}" layout="pageDirection" >
-											<f:selectItems value="#{escolaMBean.listaTodosDias}" var="dia" itemValue="#{dia.nome}" itemLabel="#{dia.nome}" />
-									</p:selectManyCheckbox>
-								
-							</div>
-							<div class="col-md-4">
-								
-									<p:selectManyCheckbox style="margin-bottom: 40px;" id="turnos" value="#{escolaMBean.vetorTurnos}" layout="pageDirection">
-											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno.nome}" itemLabel="#{turno.nome}" />
-									</p:selectManyCheckbox>
+									<ui:repeat var="dia" value="#{escolaMBean.listaTodosDias}">
+										<label><h:outputText value="#{dia.nome}" />:</label>
+										<p:selectManyCheckbox id="turnos" value="#{escolaMBean.vetorTurnos}">
+											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno.nome}" styleClass="padding-left: 10px;" itemLabel="#{turno.nome}" />
+										</p:selectManyCheckbox>
+									</ui:repeat>
+									<div style="margin-bottom: 40px;" />
 								
 							</div>
 							

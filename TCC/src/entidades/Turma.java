@@ -40,17 +40,29 @@ public class Turma {
         this.curso = idCurso;
     }
 
-    public Turma(String nome, Curso curso, int id,int turno ) {
+    public Turma(int id, String nome, Curso curso, int turno) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.curso = curso;
-		this.id = id;
 		this.turno = turno;
 		Instituicao i = Instituicao.getInstance();
 		i.addListaTurmas(this);
 	}
-    
-    public Turma(String nome, Curso idCurso) {
+
+	public Turma(int id, String nome, Curso curso, ArrayList<Aula> aulas,
+			int turno) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.curso = curso;
+		this.aulas = aulas;
+		this.turno = turno;
+		Instituicao i = Instituicao.getInstance();
+		i.addListaTurmas(this);
+	}
+
+	public Turma(String nome, Curso idCurso) {
         this.nome = nome;
         this.curso = idCurso;
     }

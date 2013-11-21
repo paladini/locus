@@ -14,6 +14,19 @@ public class Dia {
     // Vari�veis
     private int id;
     private String nome;
+    
+    /**
+     * Apenas para facilitar o manuseio dos Dias e Turnos no banco de dados.
+     * 
+     * Ativo = true:
+     *    Este turno faz parte do calendário escolar da instituição.
+     *    
+     * Ativo = false:
+     *    Este turno não faz parte do calendário escolar da instituição
+     */
+    private boolean ativo;
+    
+    
     private Turno t1;
 	private Turno t2;
 	private Turno t3;
@@ -99,5 +112,15 @@ public class Dia {
 	public void setT3(Turno t3) {
 		this.t3 = t3;
 	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
+	
     
 }

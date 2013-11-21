@@ -4,16 +4,14 @@
  */
 package model;
 
-import entidades.Dia;
-import entidades.Disciplina;
-import entidades.Professor;
-import entidades.Turno;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import entidades.Dia;
+import entidades.Turno;
 
 /**
  *
@@ -38,9 +36,11 @@ public class TurnoDAO extends AbstractDAO {
                 Turno turno = new Turno();
                 int id = rs.getInt("idturno");
                 String nome = rs.getString("nome");
+                boolean ativo = rs.getBoolean("ativo");
 
                 turno.setId(id);
                 turno.setNome(nome);
+                turno.setAtivo(ativo);
                 
                 listaTurnos.add(turno);
                
@@ -69,15 +69,15 @@ public class TurnoDAO extends AbstractDAO {
 
             // Pega o primeiro registro do retorno da consulta
             if (rs.next()) {
-                // Cria uma nova disciplina
-                Turno turno = new Turno();
-                // Pega os dados desse registro e guarda em variáveis
+            	
+            	Turno turno = new Turno();
                 int id = rs.getInt("idturno");
                 String nome = rs.getString("nome");
+                boolean ativo = rs.getBoolean("ativo");
 
-                // Seta os dados na disciplina criada
                 turno.setId(id);
                 turno.setNome(nome);
+                turno.setAtivo(ativo);
 
                 connection.close();
                 return turno;
@@ -107,15 +107,15 @@ public class TurnoDAO extends AbstractDAO {
 
             // Pega o primeiro registro do retorno da consulta
             if (rs.next()) {
-                // Cria uma nova disciplina
-                Turno turno = new Turno();
-                // Pega os dados desse registro e guarda em variáveis
+            	
+            	Turno turno = new Turno();
                 int id = rs.getInt("idturno");
                 String nome = rs.getString("nome");
+                boolean ativo = rs.getBoolean("ativo");
 
-                // Seta os dados na disciplina criada
                 turno.setId(id);
                 turno.setNome(nome);
+                turno.setAtivo(ativo);
 
                 connection.close();
                 return turno;
@@ -134,7 +134,7 @@ public class TurnoDAO extends AbstractDAO {
      * @param turno
      */
     public void inserir(Turno turno) {
-        String sql = "INSERT INTO turno (nome) VALUES (?);";
+        String sql = "INSERT INTO turno (nome, ativo) VALUES (?, 0);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(turno.getNome());
         operacaoEscrita(sql, params);
@@ -145,9 +145,10 @@ public class TurnoDAO extends AbstractDAO {
      * @param turno
      */
     public void atualizar(Turno turno) {
-        String sql = "UPDATE turno SET nome = ? where idturno = ?;";
+        String sql = "UPDATE turno SET nome = ?, ativo = ? where idturno = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(turno.getNome());
+        params.add(turno.isAtivo());
         params.add(turno.getId());
         operacaoEscrita(sql, params);
     }
@@ -164,6 +165,15 @@ public class TurnoDAO extends AbstractDAO {
     	String sql = "DELETE FROM turno WHERE idturno = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(turno.getId());
+        operacaoEscrita(sql, params);
+    }
+    
+    /**
+     * Deixa todos os turnos inativos
+     */
+    public void tudoInativo(){
+    	String sql = "UPDATE turno SET ativo = 0 WHERE idturno != -1;";
+        ArrayList<Object> params = new ArrayList<Object>();
         operacaoEscrita(sql, params);
     }
     
@@ -197,8 +207,10 @@ public class TurnoDAO extends AbstractDAO {
                 Dia dia = new Dia();
                 int id = rs.getInt("iddia");
                 String nome = rs.getString("nome");
+                boolean ativo = rs.getBoolean("ativo");
                 dia.setId(id);
                 dia.setNome(nome);
+                dia.setAtivo(ativo);
                 listaDias.add(dia);
             }
 
@@ -230,8 +242,10 @@ public class TurnoDAO extends AbstractDAO {
             	Dia dia = new Dia();
                 int id = rs.getInt("iddia");
                 String nome = rs.getString("nome");
+                boolean ativo = rs.getBoolean("ativo");
                 dia.setId(id);
                 dia.setNome(nome);
+                dia.setAtivo(ativo);
                 listaDias.add(dia);
             }
 

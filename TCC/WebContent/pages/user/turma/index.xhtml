@@ -77,7 +77,8 @@
 							<h:inputText styleClass="form-control" id="turma"
 								value="#{turmaMBean.nome}"
 								valueChangeListener="#{turmaMBean.atualizarListagemPesquisa}">
-								<f:ajax event="keyup" update=":meuForm:minhaTabela" render=":meuForm:minhaTabela" />
+								<f:ajax event="keyup" update=":meuForm:minhaTabela"
+									render=":meuForm:minhaTabela" />
 							</h:inputText>
 						</div>
 						<div class="col-md-2">
@@ -92,9 +93,9 @@
 				</h:form>
 
 				<!--  MODAL PARA INSERIR -->
-				<p:dialog id="dialog-insert" header="Inserir Turma" widgetVar="insert"
-					resizable="false" modal="true" width="400" height="225"
-					hideEffect="clip" closeOnEscape="true">
+				<p:dialog id="dialog-insert" header="Inserir Turma"
+					widgetVar="insert" resizable="false" modal="true" width="400"
+					height="300" hideEffect="clip" closeOnEscape="true">
 					<h:form id="modal-insert">
 						<h:panelGrid id="display" styleClass="col-lg-10 center"
 							style="margin-top: 10px; margin-bottom: 15px;">
@@ -107,12 +108,29 @@
 						<h:panelGrid styleClass="col-lg-10 center">
 							<p:columnGroup>
 								<label for="curso">Curso:</label>
+							</p:columnGroup>
+							<p:columnGroup>
 								<p:selectOneMenu id="curso"
-									value="#{turmaMBean.cursoSelecionado}"
-									 layout="grid"
+									value="#{turmaMBean.cursoSelecionado}" layout="grid"
 									columns="1" style="margin-bottom: 15px;">
 									<f:selectItems value="#{turmaMBean.listaTodosCursos}"
-										var="curso" itemLabel="#{curso.nome}" itemValue="#{curso.nome}" />
+										var="curso" itemLabel="#{curso.nome}"
+										itemValue="#{curso.nome}" />
+								</p:selectOneMenu>
+							</p:columnGroup>
+						</h:panelGrid>
+
+						<h:panelGrid styleClass="col-lg-10 center">
+							<p:columnGroup>
+								<label for="curso">Turno:</label>
+							</p:columnGroup>
+							<p:columnGroup>
+								<p:selectOneMenu id="turno"
+									value="#{turmaMBean.turnoSelecionado}" layout="grid"
+									columns="1" style="margin-bottom: 15px;">
+									<f:selectItems value="#{turmaMBean.listaTodosTurnos}"
+										var="turno" itemLabel="#{turno.nome}"
+										itemValue="#{turno.nome}" />
 								</p:selectOneMenu>
 							</p:columnGroup>
 						</h:panelGrid>
@@ -151,16 +169,17 @@
 									#{turma.nome}
 								</p:column>
 
-								<p:ajax event="rowSelect" update=":modal-update" render=":modal-update"
-									oncomplete="PF('edit').show();" execute="@form" onerror="alert('erro');" />
+								<p:ajax event="rowSelect" update=":modal-update"
+									render=":modal-update" oncomplete="PF('edit').show();"
+									execute="@form" onerror="alert('erro');" />
 								<p:ajax event="rowUnselect" />
 							</p:dataTable>
 						</h:form>
 
 						<!-- MODAL PARA EDITAR -->
-						<p:dialog id="dialog-update" header="Editar Turma" widgetVar="edit"
-							resizable="false" modal="true" width="400" height="225"
-							hideEffect="clip" closeOnEscape="true">
+						<p:dialog id="dialog-update" header="Editar Turma"
+							widgetVar="edit" resizable="false" modal="true" width="400"
+							height="300" hideEffect="clip" closeOnEscape="true">
 							<h:form id="modal-update">
 								<h:panelGrid id="display" styleClass="col-lg-10 center"
 									style="margin-top: 10px; margin-bottom: 15px;">
@@ -174,11 +193,29 @@
 								<h:panelGrid styleClass="col-lg-10 center">
 									<p:columnGroup>
 										<label for="curso">Curso:</label>
+									</p:columnGroup>
+									<p:columnGroup>
 										<p:selectOneMenu id="curso"
 											value="#{turmaMBean.cursoSelecionado}" layout="grid"
 											columns="1" style="margin-bottom: 15px;">
 											<f:selectItems value="#{turmaMBean.listaTodosCursos}"
-												var="curso" itemLabel="#{curso.nome}" itemValue="#{curso.nome}" />
+												var="curso" itemLabel="#{curso.nome}"
+												itemValue="#{curso.nome}" />
+										</p:selectOneMenu>
+									</p:columnGroup>
+								</h:panelGrid>
+
+								<h:panelGrid styleClass="col-lg-10 center">
+									<p:columnGroup>
+										<label for="curso">Turno:</label>
+									</p:columnGroup>
+									<p:columnGroup>
+										<p:selectOneMenu id="turno"
+											value="#{turmaMBean.turnoSelecionado}" layout="grid"
+											columns="1" style="margin-bottom: 15px;">
+											<f:selectItems value="#{turmaMBean.listaTodosTurnos}"
+												var="turno" itemLabel="#{turno.nome}"
+												itemValue="#{turno.nome}" />
 										</p:selectOneMenu>
 									</p:columnGroup>
 								</h:panelGrid>
