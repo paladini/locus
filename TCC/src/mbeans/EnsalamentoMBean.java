@@ -17,6 +17,7 @@ import control.ControleDisciplina;
 import control.ControleEnsalamento;
 import control.ControleEscola;
 import entidades.Disciplina;
+import entidades.Aula;
 
 @ManagedBean(name = "ensalamentoMBean")
 @SessionScoped
@@ -67,6 +68,10 @@ public class EnsalamentoMBean {
     public void Ensalar(){
     	modelo.Ensalar();
     }
+    public ArrayList<Aula> getEnsalamento(){
+    	return modelo.getAulas();
+    }
+    
     
     public ScheduleModel getEventModel() {
 		return eventModel;
