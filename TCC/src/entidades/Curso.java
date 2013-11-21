@@ -99,5 +99,7 @@ public class Curso {
 	public void setTurmas(ArrayList<Turma> turmas) {
 		this.turmas = turmas;
 	}
+	
+	
 
 }

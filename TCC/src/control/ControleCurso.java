@@ -6,7 +6,10 @@ package control;
 
 import entidades.Curso;
 import entidades.Disciplina;
+import entidades.Turma;
+
 import java.util.ArrayList;
+
 import model.CursoDAO;
 
 /**
@@ -32,8 +35,52 @@ public class ControleCurso {
 		return singleton;
 	}
 
+    
+	
+	
+	
+	
+	
+	
+	  /**
+     * Retorna uma lista de Cursos do banco de dados.
+     *
+     * @return Retorna todos os cursos do banco de dados.
+     */
+    public ArrayList<Curso> consultar() {
+        return modelo.consultar();
+    }
+    
     /**
-     * Método para atualizar curso no banco de dados.
+     * Retorna um Curso do banco de dados, de acordo com o ID fornecido.
+     * @param id Id do curso desejado. 
+     * @return Retorna um único curso.
+     */
+    public Curso consultar(int id){
+    	return modelo.consultar(id);
+    }
+
+    /**
+     * Retorna um Curso do banco de dados, de acordo com o nome do curso fornecido.
+     * @param termo
+     * @return
+     */
+    public Curso consultar(String termo) {
+        return modelo.consultar(termo);
+    }
+    
+    /**
+     * Retorna o ID de um curso, de acordo com o nome do curso fornecido.
+     * @param termo
+     * @return
+     */
+    public int consultarID(String termo){
+    	Curso curso = modelo.consultar(termo);
+    	return curso.getId();
+    }
+	
+	/**
+     * Atualiza um curso do banco de dados.
      *
      * @param curso
      */
@@ -41,18 +88,18 @@ public class ControleCurso {
         if (curso.getNome() == null || curso.getNome() == " " || curso.getNome() == ""){
             
         }else{
-            modelo.update(curso);
+            modelo.atualizar(curso);
             this.adicionarDisciplina(curso);
         }
     }
 
     /**
-     * Método para remover curso no banco de dados
+     * Remove um curso do banco de dados.
      *
      * @param disciplina
      */
     public void remover(int idCurso) {
-        modelo.delete(idCurso);
+        modelo.deletar(idCurso);
     }
 
     /**
@@ -60,19 +107,19 @@ public class ControleCurso {
      *
      * @param disciplinaAdicionar
      */
-    public void adicionar(Curso cursoAdicionar) {
+    public void inserir(Curso cursoAdicionar) {
         
         // Se não existir nenhum curso com esse nome, manda inserir o curso.
-        if (consultaCurso(cursoAdicionar.getNome()) == null){
+        if (consultar(cursoAdicionar.getNome()) == null){
             
-        	modelo.insert(cursoAdicionar);
+        	modelo.inserir(cursoAdicionar);
         	
         	// O ID atualmente é 0, precisa atualizar com o ID que o banco deu no auto-increment.
-        	int id = this.consultaCursoID(cursoAdicionar.getNome());
+        	int id = this.consultarID(cursoAdicionar.getNome());
         	cursoAdicionar.setId(id);
         	
         	// Caso tenha alguma disciplina associada, cria as associações no banco
-        	if (cursoAdicionar.getDisciplina().size() > 0){
+        	if (cursoAdicionar.getDisciplinas().size() > 0){
         		this.adicionarDisciplina(cursoAdicionar);
         	}
         	
@@ -80,24 +127,7 @@ public class ControleCurso {
         
     }
 
-    /**
-     * Método para consultar os cursos do banco de dados
-     *
-     * @return Retorna todos os cursos do banco de dados.
-     */
-    public ArrayList<Curso> consulta() {
-        return modelo.select();
-    }
-    
-    /**
-     * Método para pegar o curso pelo seu ID. 
-     * @param id Id do curso desejado. 
-     * @return Retorna um único curso.
-     */
-    public Curso consultaCurso(int id){
-    	return modelo.select(id);
-    }
-
+  
     
     /*
      * 
@@ -146,32 +176,29 @@ public class ControleCurso {
     	}
     	
     	// Adicionando as novas disciplinas no banco
-    	for(int i = 0; i < curso.getDisciplina().size(); i++){
-    		modelo.insertCursoDisciplina(curso.getId(), curso.getDisciplina().get(i).getId());
+    	for(int i = 0; i < curso.getDisciplinas().size(); i++){
+    		modelo.insertCursoDisciplina(curso.getId(), curso.getDisciplinas().get(i).getId());
     	}
     }
     
+    
+    /*
+     * 
+     *    ======================================================================
+     * 
+     *                   Métodos de interação curso-turma
+     * 
+     *    ======================================================================
+     * 
+     */
     /**
-     * Método para retornar somente um curso (para tela "Editar").
-     * Embora pareça desnecessário, é bom para verificar se um curso com o mesmo já existe, para validar no banco.
-     * @param termo
+     * Retorna uma lista de turmas associadas ao Curso.
+     * @param curso
      * @return
      */
-    public Curso consultaCurso(String termo) {
-        return modelo.selectCurso(termo);
+    public ArrayList<Turma> listaTurmasAssociadas(Curso curso){
+    	return modelo.listaTurmasAssociadas(curso);
     }
-    
-    /**
-     * Retorna apenas o ID do curso (necessário para a inserção).
-     * @param termo
-     * @return
-     */
-    public int consultaCursoID(String termo){
-    	Curso curso = modelo.selectCurso(termo);
-    	return curso.getId();
-    }
-    
-    
     
     
     

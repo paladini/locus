@@ -61,7 +61,7 @@ public class CursoMBean {
 		controleDisciplina = ControleDisciplina.getInstance();
 
 		if (listaTodasDisciplinas == null) {
-			listaTodasDisciplinas = controleDisciplina.consulta();
+			listaTodasDisciplinas = controleDisciplina.consultar();
 		}
 
 		if (listaDisciplinasDoCurso == null) {
@@ -107,10 +107,10 @@ public class CursoMBean {
 
 			// Atribuindo nome ao curso
 			curso.setNome(this.getNome());
-			curso.setDisciplina(listaDisciplinasDoCurso);
+			curso.setDisciplinas(listaDisciplinasDoCurso);
 
 			// Adicionando curso ao banco de dados
-			controleCurso.adicionar(curso);
+			controleCurso.inserir(curso);
 
 			// Limpando a lista de disciplinas do curso
 			listaDisciplinasDoCurso = new ArrayList<Disciplina>();
@@ -152,17 +152,17 @@ public class CursoMBean {
 			for (int i = 0; i < vetorDisciplinasDoCurso.length; i++) {
 				String nomeDisciplina = vetorDisciplinasDoCurso[i];
 				Disciplina d = controleDisciplina
-						.consultaDisciplina(nomeDisciplina);
+						.consultar(nomeDisciplina);
 				novasDisciplinas.add(d);
 			}
 
 			// Atualizando disciplina
 			Curso atualizar = new Curso(id, nome);
-			atualizar.setDisciplina(novasDisciplinas);
+			atualizar.setDisciplinas(novasDisciplinas);
 			controleCurso.atualizar(atualizar);
 
 			// Atualizando dados da disciplinaSelecionada e das listas
-			Curso curso = controleCurso.consultaCurso(id);
+			Curso curso = controleCurso.consultar(id);
 			selecionado = curso;
 
 			atualizarListagem();
@@ -195,7 +195,7 @@ public class CursoMBean {
 
 	public String avancar() {
 
-		lista = controleCurso.consulta();
+		lista = controleCurso.consultar();
 		if (lista.size() == 0) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
@@ -213,7 +213,7 @@ public class CursoMBean {
 	 * primeira vez que executa) e a lista de listaPesquisa.
 	 */
 	public void atualizarListagem() {
-		lista = controleCurso.consulta();
+		lista = controleCurso.consultar();
 		listaPesquisa = (ArrayList<Curso>) getLista().clone();
 	}
 
@@ -327,7 +327,7 @@ public class CursoMBean {
 	public void setSelecionado(Curso selecionado) {
 		this.selecionado = selecionado;
 		if (selecionado != null) {
-			listaTodasDisciplinas = controleDisciplina.consulta();
+			listaTodasDisciplinas = controleDisciplina.consultar();
 			listaDisciplinasDoCurso = controleCurso
 					.listaDisciplinasAssociadas(selecionado);
 
