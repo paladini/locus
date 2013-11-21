@@ -28,7 +28,8 @@ public class EnsalamentoMBean {
     
 
 	public EnsalamentoMBean() {  
-        eventModel = new DefaultScheduleModel();  
+        eventModel = new DefaultScheduleModel(); 
+        adicionarEvento("teste", GregorianCalendar.MONDAY);
     } 
 	
 	
@@ -64,7 +65,7 @@ public class EnsalamentoMBean {
     }
     
     public void Ensalar(){
-    	modelo.EscolherEntreMil();
+    	modelo.Ensalar();
     }
     
     public ScheduleModel getEventModel() {
