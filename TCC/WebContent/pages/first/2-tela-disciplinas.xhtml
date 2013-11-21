@@ -126,7 +126,7 @@
 											action="#{disciplinaMBean.deletar}">
 											<f:ajax event="click" onevent="edit.hide()"
 												render=":meuForm:minhaTabela"
-												listener="#{disciplinaMBean.deletar}" />
+												listener="#{disciplinaMBean.deletar}" execute="@form" />
 										</h:commandButton>
 
 										<h:commandButton id="enviar"
@@ -134,7 +134,7 @@
 											action="#{disciplinaMBean.editar}">
 											<f:ajax event="click" onevent="edit.hide()"
 												render=":meuForm:minhaTabela"
-												listener="#{disciplinaMBean.editar}" />
+												listener="#{disciplinaMBean.editar}" execute="@form" />
 										</h:commandButton>
 									</p:columnGroup>
 								</h:panelGrid>

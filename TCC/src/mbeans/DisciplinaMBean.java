@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
@@ -34,12 +32,12 @@ public class DisciplinaMBean {
 	private ControleDisciplina controleDisciplina;
 
 	// Lista de todas as disciplinas
-	private static ArrayList<Disciplina> lista;
+	private ArrayList<Disciplina> lista;
 
 	// Lista de disciplinas pesquisadas (fiz isso para evitar muitas consultas
 	// ao banco de dados)
-	private static ArrayList<Disciplina> listaPesquisa;
-	private Disciplina selecionado;
+	private ArrayList<Disciplina> listaPesquisa;
+	private Disciplina disciplinaSelecionada;
 
 	private int id;
 	private String nome;
@@ -78,11 +76,12 @@ public class DisciplinaMBean {
 			Disciplina disciplina = new Disciplina();
 			disciplina.setNome(this.getNome());
 
-			controleDisciplina.adicionar(disciplina);
+			controleDisciplina.inserir(disciplina);
 		} else {
 			System.out.println("Disciplina não inserida.");
 		}
-
+		
+		disciplinaSelecionada = null;
 		limparCampos();
 		atualizarListagem();
 
@@ -101,15 +100,17 @@ public class DisciplinaMBean {
 			System.out.println("---------------------");
 			System.out.println("nome editado: "
 					+ this.getDisciplinaSelecionada().getNome());
+			System.out.println("Id: " + id);
 			System.out.println("---------------------");
 
 			// Atualizando disciplina
 			Disciplina disciplinaAtualizar = new Disciplina(id, nome);
+			System.out.println(disciplinaAtualizar.texto());
 			controleDisciplina.atualizar(disciplinaAtualizar);
 
 			// Atualizando dados da disciplinaSelecionada e das listas
-			Disciplina disciplina = controleDisciplina.consultaDisciplina(id);
-			selecionado = disciplina;
+			Disciplina disciplina = controleDisciplina.consultar(id);
+			disciplinaSelecionada = disciplina;
 
 			limparCampos();
 			atualizarListagem();
@@ -143,7 +144,7 @@ public class DisciplinaMBean {
 	
 	public String avancar(){
 		
-		lista = controleDisciplina.consulta();
+		lista = controleDisciplina.consultar();
 		if(lista.size() == 0){
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Adicione uma disciplina!","Antes de prosseguir, adicione pelo menos uma disciplina."));
@@ -160,7 +161,7 @@ public class DisciplinaMBean {
 	 * listaDisciplinasPesquisadas tem todas as disciplinas.
 	 */
 	public void atualizarListagem() {
-		this.setListaDisciplinas(controleDisciplina.consulta());
+		this.setListaDisciplinas(controleDisciplina.consultar());
 		listaPesquisa = (ArrayList<Disciplina>) this.getListaDisciplinas()
 				.clone();
 	}
@@ -265,12 +266,12 @@ public class DisciplinaMBean {
 	}
 
 	public Disciplina getDisciplinaSelecionada() {
-		System.out.println("Get Disciplina selecionada: " + selecionado);
-		return selecionado;
+		System.out.println("Get Disciplina selecionada: " + disciplinaSelecionada);
+		return disciplinaSelecionada;
 	}
 
 	public void setDisciplinaSelecionada(Disciplina disciplinaSelecionada) {
-		this.selecionado = disciplinaSelecionada;
+		this.disciplinaSelecionada = disciplinaSelecionada;
 		System.out.println("Set Disciplina selecionada: "
 				+ disciplinaSelecionada);
 	}
@@ -280,7 +281,7 @@ public class DisciplinaMBean {
 	}
 
 	public void setListaDisciplinas(ArrayList<Disciplina> listaDisciplinas) {
-		DisciplinaMBean.lista = listaDisciplinas;
+		this.lista = listaDisciplinas;
 	}
 
 	public ArrayList<Disciplina> getListaDisciplinasPesquisadas() {
@@ -288,6 +289,6 @@ public class DisciplinaMBean {
 	}
 
 	public void setListaDisciplinasPesquisadas(ArrayList<Disciplina> lista) {
-		DisciplinaMBean.listaPesquisa = lista;
+		this.listaPesquisa = lista;
 	}
 }

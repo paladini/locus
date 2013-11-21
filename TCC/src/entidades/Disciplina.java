@@ -25,15 +25,14 @@ public class Disciplina {
     private int id;
 	private String nome;
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
-	
-//	private ArrayList<Curso> cursos = new ArrayList<Curso>();
+	private ArrayList<Curso> cursos = new ArrayList<Curso>();
 
-	// Construtores
-//    public Disciplina(int id, String nome, ArrayList<Curso> cursos){
-//    	this.id = id;
-//        this.nome = nome;
-//        this.cursos = cursos;
-//    }
+//	 Construtores
+    public Disciplina(int id, String nome, ArrayList<Curso> cursos){
+    	this.id = id;
+        this.nome = nome;
+        this.cursos = cursos;
+    }
 	
 	public Disciplina(int id, String nome) {
         super();
@@ -92,5 +91,15 @@ public class Disciplina {
 	public void setProfessores(ArrayList<Professor> professores) {
 		this.professores = professores;
 	}
+
+	public ArrayList<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(ArrayList<Curso> cursos) {
+		this.cursos = cursos;
+	}
+	
+	
     
 }

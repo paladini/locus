@@ -23,19 +23,19 @@ public class DisciplinaDAO extends AbstractDAO {
      *
      * @return
      */
-    public ArrayList<Disciplina> select() {
+    public ArrayList<Disciplina> consultar() {
 
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM Disciplina order by nome;";
+            String sql = "SELECT * FROM disciplina order by nome;";
             PreparedStatement prest = connection.prepareStatement(sql);
             ResultSet rs = prest.executeQuery();
 
             ArrayList<Disciplina> listaClientes = new ArrayList<Disciplina>();
             while (rs.next()) {
                 Disciplina c = new Disciplina();
-                int id = rs.getInt("idDisciplina");
+                int id = rs.getInt("iddisciplina");
                 String nome = rs.getString("nome");
                 c.setId(id);
                 c.setNome(nome);
@@ -51,16 +51,14 @@ public class DisciplinaDAO extends AbstractDAO {
     }
 
     /**
-     * Faz consulta no banco de dados e retorna apenas uma disciplina com esse
-     * nome.
-     *
+     * Returna uma disciplina do banco de dados, de acordo com o nome da disciplina fornecido.
      * @return
      */
-    public Disciplina selectDisciplina(String nomeDisciplina) {
+    public Disciplina consultar(String nomeDisciplina) {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM Disciplina where nome = ?;";
+            String sql = "SELECT * FROM disciplina where nome = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setString(1, nomeDisciplina);
             ResultSet rs = prest.executeQuery();
@@ -72,7 +70,7 @@ public class DisciplinaDAO extends AbstractDAO {
             rs.next();
 
             // Pega os dados desse registro e guarda em variáveis
-            int id = rs.getInt("idDisciplina");
+            int id = rs.getInt("iddisciplina");
             String nome = rs.getString("nome");
 
             // Seta os dados na disciplina criada
@@ -89,16 +87,14 @@ public class DisciplinaDAO extends AbstractDAO {
 
     
     /**
-     * Faz consulta no banco de dados e retorna apenas uma disciplina com esse
-     * id.
-     *
+     * Retorna uma Disciplina do banco de dados, de acordo com o ID fornecido.
      * @return
      */
-    public Disciplina selectDisciplina(int idDisciplina) {
+    public Disciplina consultar(int idDisciplina) {
         Connection connection = Conexao.getConexao();
         try {
 
-            String sql = "SELECT * FROM Disciplina where idDisciplina = ?;";
+            String sql = "SELECT * FROM disciplina where iddisciplina = ?;";
             PreparedStatement prest = connection.prepareStatement(sql);
             prest.setInt(1, idDisciplina);
             ResultSet rs = prest.executeQuery();
@@ -110,7 +106,7 @@ public class DisciplinaDAO extends AbstractDAO {
             rs.next();
 
             // Pega os dados desse registro e guarda em variáveis
-            int id = rs.getInt("idDisciplina");
+            int id = rs.getInt("iddisciplina");
             String nome = rs.getString("nome");
 
             // Seta os dados na disciplina criada
@@ -125,68 +121,93 @@ public class DisciplinaDAO extends AbstractDAO {
         return null;
     }
     
+   
     /**
-     * Faz uma consulta no banco de dados pesquisando pelos termos digitados até
-     * o momento.
-     *
-     * @param termos Termos digitados pelo usuário.
-     * @return
+     * Insere no banco de dados a disciplina fornecida.
+     * @param disciplina Disciplina a ser inserida.
      */
-    public ArrayList<Disciplina> selectComTermos(String termos) {
-
-        Connection connection = Conexao.getConexao();
-        try {
-
-            String sql = "SELECT * FROM Disciplina where nome like ?;";
-            PreparedStatement prest = connection.prepareStatement(sql);
-            prest.setString(1, termos + "%");
-            ResultSet rs = prest.executeQuery();
-
-            ArrayList<Disciplina> listaClientes = new ArrayList<Disciplina>();
-            while (rs.next()) {
-                Disciplina c = new Disciplina();
-                int id = rs.getInt("idDisciplina");
-                String nome = rs.getString("nome");
-                c.setId(id);
-                c.setNome(nome);
-                listaClientes.add(c);
-            }
-
-            connection.close();
-            return listaClientes;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
-    }
-
-    public void insert(Disciplina disciplina) {
-        String sql = "INSERT INTO Disciplina (nome) VALUES (?);";
+    public void inserir(Disciplina disciplina) {
+        String sql = "INSERT INTO disciplina (nome) VALUES (?);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(disciplina.getNome());
         operacaoEscrita(sql, params);
     }
-
-    public void update(Disciplina disciplinaNova) {
-        String sql = "UPDATE Disciplina SET nome = ? WHERE idDisciplina = ?;";
+    
+    /**
+     * Atualiza no banco de dados a disciplina fornecida. 
+     * @param disciplinaNova Disciplina a ser atualizada.
+     */
+    public void atualizar(Disciplina disciplinaNova) {
+        String sql = "UPDATE disciplina SET nome = ? WHERE iddisciplina = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(disciplinaNova.getNome());
         params.add(disciplinaNova.getId());
         operacaoEscrita(sql, params);
     }
-
-    public void delete(Disciplina disciplinaAntiga) {
-        deleteAssociacoes(disciplinaAntiga);
-        String sql = "DELETE FROM Disciplina WHERE idDisciplina = ?;";
+    
+    /**
+     * Deleta do banco de dados a Disciplina que foi fornecida (através do ID).
+     * @param disciplinaAntiga Disciplina a ser deletada.
+     */
+    public void deletar(Disciplina disciplinaAntiga) {
+        deletarAssociacoes(disciplinaAntiga);
+        String sql = "DELETE FROM disciplina WHERE iddisciplina = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(disciplinaAntiga.getId());
         operacaoEscrita(sql, params);
     }
     
-     private void deleteAssociacoes(Disciplina disciplina) {
-        String sql = "delete from Curso_has_Disciplina where Disciplina_idDisciplina = ?;";
+    /**
+     * Deleta todas as associações da disciplina com cursos.
+     * @param disciplina
+     */
+     private void deletarAssociacoes(Disciplina disciplina) {
+        String sql = "delete from curso_has_disciplina where disciplina_iddiscilpina = ?;"
+        		+ "delete from disciplina_has_professor where disciplina_iddisciplina = ?;";
         ArrayList<Object> params = new ArrayList<Object>();
+        params.add(disciplina.getId());
         params.add(disciplina.getId());
         operacaoEscrita(sql, params);
     }
+     
+     /*
+      *=====================================================================================
+      *
+      *                             POSSIVELMENTE DEPRECIADOS
+      *
+      *=====================================================================================
+      */
+     /**
+      * Faz uma consulta no banco de dados pesquisando pelos termos digitados até
+      * o momento.
+      *
+      * @param termos Termos digitados pelo usuário.
+      * @return
+      */
+     @Deprecated
+     public ArrayList<Disciplina> selectComTermos(String termos) {
+
+         Connection connection = Conexao.getConexao();
+         try {
+             String sql = "SELECT * FROM disciplina where nome like ?;";
+             PreparedStatement prest = connection.prepareStatement(sql);
+             prest.setString(1, termos + "%");
+             ResultSet rs = prest.executeQuery();
+
+             ArrayList<Disciplina> listaClientes = new ArrayList<Disciplina>();
+             while (rs.next()) {
+                 Disciplina c = new Disciplina();
+                 int id = rs.getInt("iddisciplina");
+                 String nome = rs.getString("nome");
+                 c.setId(id);
+                 c.setNome(nome);
+                 listaClientes.add(c);
+             }
+             connection.close();
+             return listaClientes;
+         } catch (SQLException ex) {
+             System.out.println(ex.getMessage());
+         }
+         return null;
+     }
 }

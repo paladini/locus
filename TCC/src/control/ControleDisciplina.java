@@ -9,6 +9,7 @@ import entidades.Disciplina;
 import java.util.ArrayList;
 
 import model.DisciplinaDAO;
+
 //import model.DisciplinaDAOHibernate;
 
 /**
@@ -22,11 +23,9 @@ public class ControleDisciplina {
 	 */
 	private static ControleDisciplina singleton;
 	DisciplinaDAO modelo;
-//	DisciplinaDAOHibernate modeloHibernate;
 
 	private ControleDisciplina() {
 		modelo = new DisciplinaDAO();
-//		modeloHibernate = new DisciplinaDAOHibernate();
 	}
 
 	public static ControleDisciplina getInstance() {
@@ -35,78 +34,76 @@ public class ControleDisciplina {
 		return singleton;
 	}
 
+	
 	/**
-	 * Método para atualizar disciplina no banco de dados.
+	 * Retorna uma lista com todas as disciplinas cadastradas no banco de dados.
+	 * 
+	 * @return
+	 */
+	public ArrayList<Disciplina> consultar() {
+		return modelo.consultar();
+	}
+
+	/**
+	 * Retorna uma disciplina do banco de dados, de acordo com o ID fornecido.
+	 * 
+	 * @param termo
+	 * @return
+	 */
+	public Disciplina consultar(int id) {
+		return modelo.consultar(id);
+	}
+
+	/**
+	 * Retorna uma disciplina do banco de dados, de acordo com o nome fornecido.
+	 * 
+	 * @param termo
+	 * @return
+	 */
+	public Disciplina consultar(String termo) {
+		return modelo.consultar(termo);
+	}
+
+	
+	
+	
+	/**
+	 * Atualiza no banco de dados a disciplina fornecida.
 	 * 
 	 * @param disciplina
 	 */
 	public void atualizar(Disciplina disciplina) {
-		 modelo.update(disciplina);
-//		modeloHibernate.update(disciplina);
+		modelo.atualizar(disciplina);
 	}
 
 	/**
-	 * Método para remover disciplina no banco de dados
+	 * Remova do banco de dados a Disciplina, de acordo com o ID fornecido.
 	 * 
 	 * @param disciplina
 	 */
 	public void remover(int idDisciplina) {
 		Disciplina disciplina = new Disciplina();
 		disciplina.setId(idDisciplina);
-		 modelo.delete(disciplina);
-//		modeloHibernate.delete(disciplina);
+		modelo.deletar(disciplina);
 	}
 
 	/**
-	 * Método para adicionar uma disciplina ao banco de dados.
+	 * Insere uma disciplina no banco de dados.
 	 * 
 	 * @param disciplinaAdicionar
 	 */
-	public void adicionar(Disciplina disciplina) {
+	public void inserir(Disciplina disciplina) {
 		// Se não existir nenhum curso com esse nome, manda inserir o curso.
-		 if (consultaDisciplina(disciplina.getNome()) == null){
-			 modelo.insert(disciplina);
-		 }
-//		modeloHibernate.insert(disciplina);
+		if (consultar(disciplina.getNome()) == null) {
+			modelo.inserir(disciplina);
+		}
 	}
 
-	/**
-	 * Método para consultar as disciplinas do banco de dados
-	 * 
-	 * @return
-	 */
-	public ArrayList<Disciplina> consulta() {
-		 return modelo.select();
-//		return modeloHibernate.select();
-	}
 
-	/**
-	 * Método para retornar somente uma disciplina por Id (para edição dela).
-	 * 
-	 * @param termo
-	 * @return
-	 */
-	public Disciplina consultaDisciplina(int id) {
-		 return modelo.selectDisciplina(id);
-//		return modeloHibernate.select(id);
-	}
-	
-	/**
-	 * Método para retornar somente uma disciplina (para edição dela).
-	 * 
-	 * @param termo
-	 * @return
-	 */
-	public Disciplina consultaDisciplina(String termo) {
-		return modelo.selectDisciplina(termo);
-	}
-
-	
 	/*
 	 * 
-	 *                 POSSIVELMENTE DEPRECIADOS (DELETAR FUTURAMENTE, SE NÃO FOREM NECESSÁRIOS DE FATO)
-	 * 
-	 * 
+	 * POSSIVELMENTE DEPRECIADOS (DELETAR FUTURAMENTE, SE NÃO FOREM NECESSÁRIOS
+	 * DE FATO)
 	 */
 	/**
 	 * Método para consultar as disciplinas com nomes que começam com os termos
@@ -118,7 +115,5 @@ public class ControleDisciplina {
 	public ArrayList<Disciplina> consultaComTermos(String termo) {
 		return modelo.selectComTermos(termo);
 	}
-
-
 
 }
