@@ -16,8 +16,14 @@ import org.primefaces.model.ScheduleModel;
 import control.ControleDisciplina;
 import control.ControleEnsalamento;
 //import control.ControleEscola;
+import entidades.Curso;
+import entidades.Dia;
 import entidades.Disciplina;
 import entidades.Aula;
+import entidades.Professor;
+import entidades.Sala;
+import entidades.Turma;
+import entidades.Turno;
 
 @ManagedBean(name = "ensalamentoMBean")
 @SessionScoped
@@ -28,6 +34,16 @@ public class EnsalamentoMBean {
 
 	public EnsalamentoMBean() {
 		eventModel = new DefaultScheduleModel();
+		Curso curso1 = new Curso("inf1", 1, null, null);
+		Turma turma1 = new Turma(1, "t1", curso1, 1);
+		Sala sala1 = new Sala("sala1", 1);
+		Disciplina disciplina1 = new Disciplina("POO2", 1,new ArrayList<Professor>());
+		Professor professor1 = new Professor("Daniel",new ArrayList<Disciplina>(), 1);
+		Turno turno = new Turno("turno1");
+		Dia dia =new Dia("segunda");
+		Aula aula = new Aula(professor1,turma1,sala1,turno,curso1,disciplina1,dia,turno,1);
+		adicionarEvento(aula.texto2(), GregorianCalendar.FRIDAY);
+		
 
 		adicionarEvento("teste \n teste2", GregorianCalendar.MONDAY);
 //		adicionarAulas();

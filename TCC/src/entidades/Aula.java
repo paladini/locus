@@ -86,6 +86,7 @@ public class Aula {
 	public String texto2() {
 		StringBuilder sb = new StringBuilder();
 		
+		sb.append("\n" );
 		sb.append("professor=" );
 		sb.append( professor != null ? professor.texto() : "( A contratar )" );
 		sb.append("\n");
