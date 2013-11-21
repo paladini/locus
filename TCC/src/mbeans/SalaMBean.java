@@ -74,7 +74,7 @@ public class SalaMBean {
 			Sala sala = new Sala();
 			sala.setNome(this.getNome());
 
-			controleSala.adicionar(sala);
+			controleSala.inserir(sala);
 		} else {
 			System.out.println("Sala não inserida.");
 		}
@@ -102,7 +102,7 @@ public class SalaMBean {
 			controleSala.atualizar(salaAtualizar);
 			
 			// Atualizando dados da disciplinaSelecionada e das listas
-			Sala sala = controleSala.consultaSala(id);
+			Sala sala = controleSala.consultar(id);
 			selecionado = sala;
 			
 			atualizarListagem();
@@ -138,7 +138,7 @@ public class SalaMBean {
 	 * primeira vez que executa) e a listaPesquisadas
 	 */
 	public void atualizarListagem() {
-		this.setLista(controleSala.consulta());
+		this.setLista(controleSala.consultar());
 		listaPesquisa = (ArrayList<Sala>) this.getLista().clone();
 	}
 

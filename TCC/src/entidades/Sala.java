@@ -4,11 +4,7 @@
  */
 package entidades;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * Classe que define o objeto Sala.
@@ -47,7 +43,7 @@ public class Sala {
         this.nome = nome;
     }
     
-    // Métodos
+    // Mï¿½todos
     
     public String texto() {
 		if (nome==null) {

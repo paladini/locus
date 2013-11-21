@@ -4,18 +4,15 @@
  */
 package model;
 
-import entidades.Curso;
-import entidades.Disciplina;
-import entidades.Turma;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import control.ControleCurso;
-import control.ControleTurno;
+import entidades.Curso;
+import entidades.Disciplina;
+import entidades.Turma;
 
 /**
  *

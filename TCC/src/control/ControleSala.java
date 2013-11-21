@@ -12,11 +12,9 @@ public class ControleSala {
 	// Padrão de projeto Singleton
 	private static ControleSala singleton;
 	SalaDAO modelo;
-//	SalaDAOHibernate modeloHibernate;
 
 	private ControleSala() {
 		modelo = new SalaDAO();
-//		modeloHibernate = new SalaDAOHibernate();
 	}
 
 	public static ControleSala getInstance() {
@@ -27,76 +25,68 @@ public class ControleSala {
 
 	
 	
-	
-	
-	
-	
+	/**
+	 * Retorna uma lista com todas Salas do banco de dados.
+	 * 
+	 * @return
+	 */
+	public ArrayList<Sala> consultar() {
+		 return modelo.consultar();
+	}
+
+	/**
+	 * Retorna uma Sala do banco de dados, de acordo com o ID fornecido.
+	 * 
+	 * @param termo
+	 * @return
+	 */
+	public Sala consultar(int id) {
+		 return modelo.consultar(id);
+	}
 	
 	/**
-	 * Método para atualizar sala no banco de dados.
+	 * Retorna uma Sala do banco de dados, de acordo com o nome da sala fornecido.
+	 * 
+	 * @param termo
+	 * @return
+	 */
+	public Sala consultar(String termo) {
+		return modelo.consultar(termo);
+	}
+	
+	/**
+	 * Atualiza uma Sala no banco de dados.
 	 * 
 	 * @param sala
 	 */
 	public void atualizar(Sala sala) {
-		 modelo.update(sala);
-//		modeloHibernate.update(disciplina);
+		 modelo.atualizar(sala);
 	}
 
 	/**
-	 * Método para remover sala no banco de dados
+	 * Remove uma Sala do banco de dados.
 	 * 
 	 * @param idSala ID da sala a ser removida.
 	 */
 	public void remover(int idSala) {
 		Sala sala = new Sala();
 		sala.setId(idSala);
-		modelo.delete(sala);
-//		modeloHibernate.delete(sala);
+		modelo.deletar(sala);
 	}
 
 	/**
-	 * Método para adicionar uma sala ao banco de dados.
+	 * Insere uma Sala no banco de dados.
 	 * 
 	 * @param disciplinaAdicionar
 	 */
-	public void adicionar(Sala sala) {
+	public void inserir(Sala sala) {
 		// Se não existir nenhum curso com esse nome, manda inserir o curso.
-		 if (consultaSala(sala.getNome()) == null){
-			 modelo.insert(sala);
+		 if (consultar(sala.getNome()) == null){
+			 modelo.inserir(sala);
 		 }
-//		modeloHibernate.insert(disciplina);
 	}
 
-	/**
-	 * Método para consultar as salas do banco de dados
-	 * 
-	 * @return
-	 */
-	public ArrayList<Sala> consulta() {
-		 return modelo.select();
-//		return modeloHibernate.select();
-	}
-
-	/**
-	 * Método para retornar somente uma sala por Id (para edição dela).
-	 * 
-	 * @param termo
-	 * @return
-	 */
-	public Sala consultaSala(int id) {
-		 return modelo.selectSala(id);
-//		return modeloHibernate.select(id);
-	}
 	
-	/**
-	 * Método para retornar somente uma sala (para edição dela).
-	 * 
-	 * @param termo
-	 * @return
-	 */
-	public Sala consultaSala(String termo) {
-		return modelo.selectSala(termo);
-	}
 
 	
 	

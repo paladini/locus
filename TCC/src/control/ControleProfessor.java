@@ -4,13 +4,11 @@
  */
 package control;
 
-import entidades.Curso;
-import entidades.Disciplina;
-import entidades.Professor;
-
 import java.util.ArrayList;
 
 import model.ProfessorDAO;
+import entidades.Disciplina;
+import entidades.Professor;
 
 /**
  *

@@ -2,8 +2,6 @@ package control;
 
 import model.AdminDAO;
 import entidades.Admin;
-import entidades.Dia;
-import entidades.Turno;
 
 public class ControleAdmin {
 
