@@ -83,6 +83,25 @@ public class Aula {
 //				+ "]";
 		return sb.toString();
 	}
+	public String texto2() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("professor=" );
+		sb.append( professor != null ? professor.texto() : "( A contratar )" );
+		sb.append("\n");
+		sb.append( "turma=" );
+		sb.append( turma.texto() );
+		sb.append("\n");
+		sb.append( "sala="  );
+		sb.append( sala.texto() );
+		sb.append("\n");
+		sb.append( "disciplina=" );
+		sb.append( disciplina.texto() );
+		sb.append("\n");
+		sb.append( "Turno =  " );
+		sb.append( turno.texto() );
+		return sb.toString();
+	}
 
 	// gets e sets
 	public Professor getProfessor() {

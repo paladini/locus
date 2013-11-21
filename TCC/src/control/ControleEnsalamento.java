@@ -382,7 +382,6 @@ public class ControleEnsalamento {
 	
 	
 	
-	
 	public ArrayList<Aula> getAulas() {
 		return aulas;
 	}

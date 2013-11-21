@@ -40,8 +40,8 @@
 								alt="Gerenciar Professores" title="Gerenciar Professores" /></a>
 						</div>
 						<div class="col-lg-2">
-							<img src="../images/principal/sala-selecionado.png"
-								alt="Gerenciar Salas" title="Gerenciar Salas" />
+							<a href="../salas/index.jsf"><img src="../images/principal/sala.png"
+								alt="Gerenciar Salas" title="Gerenciar Salas" class="menu-principal"/></a>
 						</div>
 						<div class="col-lg-2">
 							<a href="../turma/index.jsf"><img
@@ -54,7 +54,7 @@
 								alt="Gerenciar Escola" title="Gerenciar Escola" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href=""><img src="../images/principal/ensalamento.png"
+							<a href=""><img src="../images/principal/ensalamento-selecionado.png"
 								class="menu-principal" alt="Gerar Ensalamento"
 								title="Gerar Ensalamento" /></a>
 						</div>
@@ -74,7 +74,8 @@
 			<div class="col-lg-8 center">
 				<h:form id="form">
 					<p:schedule id="schedule" value="#{ensalamentoMBean.eventModel}" 
-						widgetVar="myschedule" >
+						widgetVar="myschedule" view="basicWeek"
+						 showHeader="false" locale="pt" columnFormat="dddd">
 					</p:schedule>
 				</h:form>
 			</div>
@@ -98,42 +99,21 @@
 	<h:outputScript library="js" name="bootstrap.min.js" />
 	<h:outputScript library="js" name="locus-hoverIt.js" />
 
-	<script>
-		$(document).ready(function() {
-
-			$(".fc-header").remove();
-			
-			
-			
-
-			linhas = $(".fc-today");
-			semana = linhas.parent().html();
-			
-			todasSemanas = $(".fc-border-separate").children("tbody").children();
-			todasSemanas.remove();
-			
-			$(".fc-border-separate").children("tbody").append(semana);
-			
-			/* linhas.each(function() {
-				
-				var that = this;
-				semana = $(this).next();
-				semana.each(function(){
-					
-					if ($(this).hasClass("fc-today")){
-						
-					}else{
-						$(that).remove();
-					}
-				});
-				
-				
-				
-			}); */
-
-// 			 $(".fc-day-number").remove(); 
-
-		});
+	
+	<script type="text/javascript">  
+    PrimeFaces.locales['pt'] = {  
+        dayNames: ['Domingo','Segunda','Terca','Quarta','Quinta','Sexta','Sabado'],  
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],  
+        dayNamesMin: ['D','S','T','Q','Q','S','S'],  
+        firstDay: 1,  
+        isRTL: false,  
+        yearSuffix: '',  
+        week: 'Semana', 
+        day: 'Dia' 
+    };
+    
+    
+        
 	</script>
 	<!-- Validações desta página -->
 

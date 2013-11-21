@@ -29,11 +29,12 @@ public class Main {
 		// Curso curso5 = new Curso("Inf5",5,null,null);
 
 		// turmas
-		Turma turma1 = new Turma("t1", curso1, 1, 1);
-		Turma turma2 = new Turma("t2", curso1, 2, 1);
-		Turma turma3 = new Turma("t3", curso1, 3, 1);
-		Turma turma4 = new Turma("t4", curso1, 4, 1);
-		Turma turma5 = new Turma("t5", curso1, 5, 1);
+		Turma turma1 = new Turma(1, "t1", curso1, 1);
+		Turma turma2 = new Turma(2, "t2", curso1, 1);
+		Turma turma3 = new Turma(3, "t3", curso1, 1);
+		Turma turma4 = new Turma(4, "t4", curso1, 1);
+		Turma turma5 = new Turma(5, "t5", curso1, 1);
+		
 
 		// Instituicao.addListaTurmas(new Turma("t1", curso1, 1));
 		// Instituicao.addListaTurmas(new Turma("t2", curso1, 1));
@@ -149,7 +150,7 @@ public class Main {
 		ArrayList<Aula> aulas;
 //		processarEnsalamento.Ensalar();
 //		 TODO falar Daniel (ele esta fazendo mil vezes )
-		processarEnsalamento.EscolherEntreMil();
+		processarEnsalamento.Ensalar();
 		aulas = processarEnsalamento.getAulas(); 
 		printGradeHorario(aulas);
 
