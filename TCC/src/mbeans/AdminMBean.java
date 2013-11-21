@@ -7,36 +7,39 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import control.ControleLogin;
-import entidades.Login;
+import control.ControleAdmin;
+import entidades.Admin;
 
-@ManagedBean(name = "loginMBean")
+@ManagedBean(name = "adminMBean")
 @ViewScoped
-public class LoginMBean {
+public class AdminMBean {
 	
-	private ControleLogin controle;
-//	private Login login;
+	// Atributos
+	private ControleAdmin controle;
+	private Admin admin;
 	
-	private String login;
-	private String password;
-	
-	public LoginMBean(){
+	public AdminMBean(){
+		if (controle == null){
+			controle = ControleAdmin.getInstance();
+		}
 		
-		controle = ControleLogin.getInstance();
-		
+		if (admin == null){
+			admin = new Admin("","","",null);
+		}
 	}
 	
-	public String entrar() throws IOException{
+	public String autenticarLogin() throws IOException{
 		
 		// Instanciando FacesContext
 		FacesContext context = FacesContext.getCurrentInstance(); 
 		
 		// Criando o objeto loginTentativa com os dados inseridos pelo usuário
-		Login loginTentativa = new Login(login, password);
+		Admin loginTentativa = new Admin(admin.getLogin(), admin.getSenha());
+		
 		String redirecionamento = "";
 		
 		// Validando o Login
-		int resultadoValidacao = controle.validaLogin(loginTentativa);
+		int resultadoValidacao = controle.autenticarLogin(loginTentativa);
 		
 		// Direcionando de acordo com a validação
 		switch (resultadoValidacao) {
@@ -56,20 +59,20 @@ public class LoginMBean {
 		return redirecionamento;
 	}
 
-	public String getLogin() {
-		return login;
+	public ControleAdmin getControle() {
+		return controle;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setControle(ControleAdmin controle) {
+		this.controle = controle;
 	}
 
-	public String getPassword() {
-		return password;
+	public Admin getAdmin() {
+		return admin;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 
 }

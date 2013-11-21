@@ -76,14 +76,14 @@
 							
 							<div class="col-md-4" id="calendario">
 									
-									<p:selectManyCheckbox style="margin-bottom: 40px;" id="dias" value="#{escolaMBean.escola.dias}" converter="omnifaces.SelectItemsConverter" layout="pageDirection" >
+									<p:selectManyCheckbox style="margin-bottom: 40px;" id="dias" value="#{escolaMBean.listaDiasSelecionados}" converter="omnifaces.SelectItemsConverter" layout="pageDirection" >
 											<f:selectItems value="#{escolaMBean.listaTodosDias}" var="dia" itemValue="#{dia}" itemLabel="#{dia.nome}" />
 									</p:selectManyCheckbox>
 								
 							</div>
 							<div class="col-md-4">
 								
-									<p:selectManyCheckbox style="margin-bottom: 40px;" id="turnos" value="#{escolaMBean.escola.turnos}" converter="omnifaces.SelectItemsConverter" layout="pageDirection">
+									<p:selectManyCheckbox style="margin-bottom: 40px;" id="turnos" value="#{escolaMBean.listaTurnosSelecionados}" converter="omnifaces.SelectItemsConverter" layout="pageDirection">
 											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno}" itemLabel="#{turno.nome}" />
 									</p:selectManyCheckbox>
 								

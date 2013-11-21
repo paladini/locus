@@ -7,33 +7,30 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import control.ControleAdmin;
 import control.ControleDia;
-import control.ControleEscola;
-import control.ControleLogin;
 import control.ControleTurno;
+import entidades.Admin;
 import entidades.Dia;
-import entidades.Escola;
-import entidades.Login;
 import entidades.Turno;
 
 @ManagedBean(name = "escolaMBean")
 @ViewScoped
 public class EscolaMBean {
 
-	private ControleEscola modelo;
-	private Escola escola;
-	private Login login;
+	private ControleAdmin modelo;
+	private Admin admin;
 
 	// TODO: Cuidar do primeiro acesso.
-
 	// Alguns controles necessários
 	ControleDia controleDia;
 	ControleTurno controleTurno;
-	ControleLogin controleLogin;
 
 	// Lista de turnos e dias
 	private ArrayList<Dia> listaTodosDias;
+	private ArrayList<Dia> listaDiasSelecionados;
 	private ArrayList<Turno> listaTodosTurnos;
+	private ArrayList<Turno> listaTurnosSelecionados;
 
 	// Vetores dos dias e turnos selecionados
 	private String[] vetorTurnos;
@@ -44,10 +41,10 @@ public class EscolaMBean {
 	private String nomeEscola;
 
 	public EscolaMBean() {
-		modelo = ControleEscola.getInstance();
+		modelo = ControleAdmin.getInstance();
 
-		if (escola == null) {
-			escola = modelo.consultar();
+		if (admin == null) {
+			admin = modelo.consultar();
 		}
 
 		// Inicializando os controles necessários
@@ -57,15 +54,6 @@ public class EscolaMBean {
 
 		if (controleTurno == null) {
 			controleTurno = ControleTurno.getInstance();
-		}
-
-		if (controleLogin == null) {
-			controleLogin = ControleLogin.getInstance();
-		}
-
-		// Instanciando Login
-		if (login == null) {
-			login = controleLogin.consultar();
 		}
 
 		// Populando lista com todos os dias da semana
@@ -104,17 +92,17 @@ public class EscolaMBean {
 		nomeEscola = "";
 
 		// Setando dias
-		getEscola().setDias(controleDia.consulta());
-		vetorDias = new String[getEscola().getDias().size()];
-		for (int i = 0; i < getEscola().getDias().size(); i++) {
-			vetorDias[i] = getEscola().getDias().get(i).getNome();
+		listaDiasSelecionados = controleDia.consulta();
+		vetorDias = new String[listaDiasSelecionados.size()];
+		for (int i = 0; i < listaDiasSelecionados.size(); i++) {
+			vetorDias[i] = listaDiasSelecionados.get(i).getNome();
 		}
 
 		// Setando turnos
-		getEscola().setTurnos(controleTurno.consulta());
-		vetorTurnos = new String[getEscola().getTurnos().size()];
-		for (int i = 0; i < getEscola().getTurnos().size(); i++) {
-			vetorTurnos[i] = getEscola().getTurnos().get(i).getNome();
+		listaTurnosSelecionados = controleTurno.consulta();
+		vetorTurnos = new String[listaTurnosSelecionados.size()];
+		for (int i = 0; i < listaTurnosSelecionados.size(); i++) {
+			vetorTurnos[i] = listaTurnosSelecionados.get(i).getNome();
 		}
 
 	}
@@ -143,7 +131,8 @@ public class EscolaMBean {
 			erro = true;
 		}
 
-		if (escola.getDias().size() == 0 || escola.getTurnos().size() == 0) {
+		if (listaDiasSelecionados.size() == 0
+				|| listaTurnosSelecionados.size() == 0) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_WARN, "Campo obrigatório",
 					"Pelo menos um turno e dia são obrigatórios."));
@@ -155,20 +144,18 @@ public class EscolaMBean {
 		}
 
 		// Continua o método normal
-		// Criando nome para Escola
-		Escola escolaPrimeiraEntrada = new Escola(nomeEscola);
+		Admin escolaPrimeiraEntrada = new Admin();
+		escolaPrimeiraEntrada.setNomeEscola(nomeEscola);
+		escolaPrimeiraEntrada.setSenha(novaSenha);
 
-		if (modelo.mudarNome(escolaPrimeiraEntrada) == 0) {
+		if (modelo.atualizarNomeEscola(escolaPrimeiraEntrada) == 0) {
+			if (modelo.atualizarSenha(escolaPrimeiraEntrada.getSenha()) == 0) {
 
-			// Adicionando todos os horários
-			if (modelo.adicionarHorario(escola) == 0) {
-
-				controleLogin.modificarSenha(novaSenha);
-				// controleLogin.primeiroAcesso(); // Define o últimoAcesso como
-				// agora.
-				System.out
-						.println("Aparentemente tudo certo com o Dados Escola.");
+				controleDia.atualizarDias(listaDiasSelecionados);
+				controleTurno.atualizarTurnos(listaTurnosSelecionados);
+				// modelo.atualizarUltimoAcesso();
 				return "2-tela-disciplinas.xhtml?faces-redirect=true";
+
 			} else {
 				context.addMessage(
 						null,
@@ -176,7 +163,6 @@ public class EscolaMBean {
 								"Algo deu errado",
 								"Por favor, verifique a validade de todos os campos antes de prosseguir."));
 			}
-
 		} else {
 			context.addMessage(
 					null,
@@ -213,7 +199,7 @@ public class EscolaMBean {
 			erro = true;
 		}
 
-		if (escola.getDias().size() == 0 || escola.getTurnos().size() == 0) {
+		if (listaDiasSelecionados.size() == 0 || listaTurnosSelecionados.size() == 0) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_WARN, "Campo obrigatório",
 					"Pelo menos um turno e dia são obrigatórios."));
@@ -241,40 +227,37 @@ public class EscolaMBean {
 			turnosSelecionados.add(turno);
 		}
 
-		getEscola().setDias(diasSelecionados);
-		getEscola().setTurnos(turnosSelecionados);
+		listaDiasSelecionados = diasSelecionados;
+		listaTurnosSelecionados = turnosSelecionados;
+		
+		// Atualizando dados do Admin e de Turnos/Dias
+		Admin escolaPrimeiraEntrada = new Admin();
+		escolaPrimeiraEntrada.setNomeEscola(nomeEscola);
+		escolaPrimeiraEntrada.setSenha(novaSenha);
 
-		// Mudando nome da escola;
-		if (modelo.mudarNome(escola) == 0) {
+		if (modelo.atualizarNomeEscola(escolaPrimeiraEntrada) == 0) {
+			if (modelo.atualizarSenha(escolaPrimeiraEntrada.getSenha()) == 0) {
 
-			// Adicionando todos os horários
-			if (modelo.adicionarHorario(escola) == 0) {
-
-				controleLogin.modificarSenha(login.getSenha());
-
-				System.out
-						.println("Aparentemente tudo certo com o Dados Escola.");
+				controleDia.atualizarDias(listaDiasSelecionados);
+				controleTurno.atualizarTurnos(listaTurnosSelecionados);
+				// modelo.atualizarUltimoAcesso();
 				return null;
-			}
 
+			} else {
+				context.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"Algo deu errado",
+								"Por favor, verifique a validade de todos os campos antes de prosseguir."));
+			}
+		} else {
+			context.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Algo deu errado",
+							"Por favor, verifique a validade de todos os campos antes de prosseguir."));
 		}
 		return null;
-	}
-
-	public ControleEscola getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(ControleEscola modelo) {
-		this.modelo = modelo;
-	}
-
-	public Escola getEscola() {
-		return escola;
-	}
-
-	public void setEscola(Escola escola) {
-		this.escola = escola;
 	}
 
 	public ArrayList<Dia> getListaTodosDias() {
@@ -317,28 +300,12 @@ public class EscolaMBean {
 		this.controleTurno = controleTurno;
 	}
 
-	public ControleLogin getControleLogin() {
-		return controleLogin;
-	}
-
-	public void setControleLogin(ControleLogin controleLogin) {
-		this.controleLogin = controleLogin;
-	}
-
 	public String getNomeEscola() {
 		return nomeEscola;
 	}
 
 	public void setNomeEscola(String nomeEscola) {
 		this.nomeEscola = nomeEscola;
-	}
-
-	public Login getLogin() {
-		return login;
-	}
-
-	public void setLogin(Login login) {
-		this.login = login;
 	}
 
 	public String[] getVetorTurnos() {
@@ -356,5 +323,39 @@ public class EscolaMBean {
 	public void setVetorDias(String[] vetorDias) {
 		this.vetorDias = vetorDias;
 	}
+
+	public ControleAdmin getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(ControleAdmin modelo) {
+		this.modelo = modelo;
+	}
+
+	public Admin getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
+
+	public ArrayList<Dia> getListaDiasSelecionados() {
+		return listaDiasSelecionados;
+	}
+
+	public void setListaDiasSelecionados(ArrayList<Dia> listaDiasSelecionados) {
+		this.listaDiasSelecionados = listaDiasSelecionados;
+	}
+
+	public ArrayList<Turno> getListaTurnosSelecionados() {
+		return listaTurnosSelecionados;
+	}
+
+	public void setListaTurnosSelecionados(ArrayList<Turno> listaTurnosSelecionados) {
+		this.listaTurnosSelecionados = listaTurnosSelecionados;
+	}
+	
+	
 
 }

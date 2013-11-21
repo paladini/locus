@@ -45,19 +45,19 @@
 								<label for="login">Login:</label>
 								<p:inputText styleClass="form-control" autocomplete="off" id="login" 
 								placeholder="Nome de usuário" style="padding: 6px 12px;" required="true" 
-								requiredMessage="Campo de Login é obrigatório." value="#{loginMBean.login}" />
+								requiredMessage="Campo de Login é obrigatório." value="#{adminMBean.admin.login}" />
 							</div>
 
 							<div class="form-group">
 								<label for="senha">Senha: </label>
 								<p:inputText styleClass="form-control" autocomplete="off" id="senha" type="password"
 								placeholder="Senha" style="padding: 6px 12px;" required="true" 
-								requiredMessage="Campo de Senha é obrigatório" value="#{loginMBean.password}" />
+								requiredMessage="Campo de Senha é obrigatório" value="#{adminMBean.admin.senha}" />
 									
 							</div>
 							
 							<div class="form-actions">
-								<h:commandButton value="Entrar" styleClass="btn btn-default btn-lg" action="#{loginMBean.entrar}">
+								<h:commandButton value="Entrar" styleClass="btn btn-default btn-lg" action="#{adminMBean.autenticarLogin}">
 								</h:commandButton>
 							</div>
 						</fieldset>
