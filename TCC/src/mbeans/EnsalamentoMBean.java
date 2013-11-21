@@ -33,7 +33,7 @@ public class EnsalamentoMBean {
         adicionarEvento("teste", GregorianCalendar.MONDAY);
     } 
 	
-	
+//	 TODO FALAR DANIEL MÉTODO NAO ESTÁ ADICIONANDO EVENTO
 	private void adicionarEvento(String descricao, int diaSemanaGregorianCalendar) {
 		GregorianCalendar calendarioInicio = (GregorianCalendar) GregorianCalendar.getInstance();
 		calendarioInicio.set(GregorianCalendar.DAY_OF_WEEK,	diaSemanaGregorianCalendar);
