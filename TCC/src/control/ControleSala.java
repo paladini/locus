@@ -2,9 +2,7 @@ package control;
 
 import java.util.ArrayList;
 
-import model.DisciplinaDAO;
 import model.SalaDAO;
-import entidades.Disciplina;
 import entidades.Sala;
 
 public class ControleSala {

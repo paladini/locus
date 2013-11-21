@@ -4,6 +4,8 @@
  */
 package entidades;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author silvio
@@ -13,6 +15,7 @@ public class Turno {
     // Atributos
     private int id;
     private String nome;
+    private ArrayList<Dia> listaDias = new ArrayList<Dia>();
 
     // Construtores
     public Turno() {
@@ -20,6 +23,13 @@ public class Turno {
 		Instituicao i = Instituicao.getInstance();
 		i.addListaPeriodos(this);
 	}
+    
+    public Turno(String nome) {
+    	super();
+    	this.nome = nome;
+    	Instituicao i = Instituicao.getInstance();
+		i.addListaPeriodos(this);
+    }
     
     public Turno(String nome, int id) {
 		super();
@@ -29,11 +39,16 @@ public class Turno {
 		i.addListaPeriodos(this);
 	}
     
-    public Turno(String nome) {
-        this.nome = nome;
-    }
-    
-    // Métodos
+	public Turno(int id, String nome, ArrayList<Dia> listaDias) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.listaDias = listaDias;
+		Instituicao i = Instituicao.getInstance();
+		i.addListaPeriodos(this);
+	}
+
+	// Métodos
     public String texto() {
 		if (nome==null) {
 			 return "null";
@@ -57,6 +72,13 @@ public class Turno {
         this.nome = nome;
     }
     
+    public ArrayList<Dia> getListaDias() {
+		return listaDias;
+	}
+
+	public void setListaDias(ArrayList<Dia> listaDias) {
+		this.listaDias = listaDias;
+	}
     
     
 }

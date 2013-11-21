@@ -6,12 +6,14 @@ package control;
 
 import java.util.ArrayList;
 
+import entidades.Curso;
 import entidades.Dia;
+import entidades.Turno;
 import model.DiaDAO;
 
 /**
  *
- * @author silvio
+ * @author fernando_paladini
  */
 public class ControleDia {
     
@@ -30,65 +32,176 @@ public class ControleDia {
     	return controleDia;
     }
     
+    
+    
+    
+    
+    /**
+     * Retorna uma lista de todos os Dias cadastrados no banco de dados.
+     * @return
+     */
     public ArrayList<Dia> consulta(){
-    	return modelo.consulta();
+    	return modelo.consultar();
+    }
+    
+    /**
+     * Retorna um Dia do banco de dados, de acordo com o nome do dia fornecido.
+     * @param dia
+     * @return
+     */
+    public Dia consultar(String dia){
+    	return modelo.consultar(dia);
+    }
+    
+    /**
+     * Retorna um Dia do banco de dados, de acordo com o ID fornecido.
+     * @param dia
+     * @return
+     */
+    public Dia consultar(int dia){
+    	return modelo.consultar(dia);
+    }
+    
+    /**
+     * Retorna um ID de dia do banco de dados, de acordo com o nome do dia fornecido.
+     * @param nomeDia
+     * @return
+     */
+    public int consultarID(String nomeDia){
+    	Dia d = this.consultar(nomeDia);
+    	return d.getId();
     }
     
     
+    
+    
+    /**
+     * Atualiza um dia do banco de dados.
+     *
+     * @param curso
+     */
+    public void atualizar(Dia dia) {
+        if (dia.getNome() == null || dia.getNome() == " " || dia.getNome() == ""){
+            
+        }else{
+            modelo.atualizar(dia);
+            this.adicionarTurno(dia);
+        }
+    }
+    
+    
+    /**
+     * Insere um Dia no banco de dados - SOMENTE SE ESSE DIA AINDA NÃO EXISTIR
+     * @param dia 
+     */
+    public void inserir(Dia dia){
+        
+        // Faz uma query no banco de dados buscando algum Dia com o mesmo nome do que está prestes a ser inserido.
+        Dia diaBanco = modelo.consultar(dia.getNome());
+        
+        /*
+         * Se o diaBanco for igual a null ou diferente do nome do "dia", insere no banco de dados.
+         */
+        if (diaBanco == null){
+        	modelo.inserir(dia);
+        	
+        	// O ID atualmente é 0, precisa atualizar com o ID que o banco deu no auto-increment.
+        	int id = this.consultarID(dia.getNome());
+        	dia.setId(id);
+        	
+        	// Caso tenha alguma disciplina associada, cria as associações no banco
+        	if (dia.getT1() != null | dia.getT2() != null | dia.getT3() != null){
+        		this.adicionarTurno(dia);
+        	}
+        }
+        
+    }
+    
+    /**
+     * Remove um Dia do banco de dados - SOMENTE SE ESSE DIA JÁ EXISTIR
+     * @param dia 
+     */
+    public void deletar(Dia dia){
+        // Faz uma query no banco de dados buscando algum Dia com o mesmo nome do que está prestes a ser inserido.
+        Dia diaBanco = modelo.consultar(dia.getNome());
+        
+        /*
+         * Se o diaBanco for igual a null ou diferente do nome do "dia", insere no banco de dados.
+         */
+        if (diaBanco != null){
+            modelo.deletar(dia);
+        }
+    }
     
     /**
      * Faz uma consulta no banco e checa se esse dia já existe
      */
     public Boolean checarDia(Dia dia){
-        if (modelo.selectDia(dia.getNome()) != null){
+        if (modelo.consultar(dia.getNome()) != null){
             return true;
         }else{
             return false;
         }
     }
     
+    /*
+     * 
+     *    ======================================================================
+     * 
+     *                   Métodos de interação turno-dia
+     * 
+     *    ======================================================================
+     * 
+     */
+    
     /**
-     * Método para retornar um objeto dia baseado no seu nome
-     * @param dia
+     * Atualiza todos os turnos desse dia no banco de dados.
+     * 1) Deleta todos os turnos antigos desse dia do banco.
+     * 2) Adiciona todos os novos turnos (getListaDias()) desse turno no banco.
+     * @param dia Turno com uma lista de dias não nula.
+     */
+    private void adicionarTurno(Dia dia){
+    	
+    	ArrayList<Turno> listaTurnos = this.listaTurnosAssociados(dia);
+    	
+    	// TODO: Essa forma de fazer isso está, no mínimo, ingênua.
+    	// Deletando TODOS os dias associadas ao turno.
+    	for(int i = 0; i < listaTurnos.size(); i++){
+    		modelo.deletarTurnoDia(dia.getId(), listaTurnos.get(i).getId());
+    	}
+    	
+    	// Adicionando os novos dias ao banco.
+    	if(dia.getT1() != null){
+    		modelo.inserirTurnoDia(dia.getId(), dia.getT1().getId());
+    	}
+    	
+    	if(dia.getT2() != null){
+    		modelo.inserirTurnoDia(dia.getId(), dia.getT2().getId());
+    	}
+    	
+    	if(dia.getT3() != null){
+    		modelo.inserirTurnoDia(dia.getId(), dia.getT3().getId());
+    	}
+    }
+    
+    /**
+     * Retorna a lista de turnos associadas à esse Dia.
+     *
+     * @param professor
      * @return
      */
-    public Dia consultarDia(String dia){
-    	return modelo.selectDia(dia);
+    public ArrayList<Turno> listaTurnosAssociados(Dia dia) {
+        return modelo.listaTurnosAssociados(dia);
     }
-    
-    
+
     /**
-     * Adiciona dia na tabela "Dia" somente se esse dia não existir ainda
-     * @param dia 
+     * Retorna a lista de turnos não associadas à esse Dia.
+     *
+     * @param professor
+     * @return
      */
-    public void adicionarDia(Dia dia){
-        
-        // Faz uma query no banco de dados buscando algum Dia com o mesmo nome do que está prestes a ser inserido.
-        Dia diaBanco = modelo.selectDia(dia.getNome());
-        
-        /*
-         * Se o diaBanco for igual a null ou diferente do nome do "dia", insere no banco de dados.
-         */
-        if (diaBanco == null){
-            modelo.insert(dia);
-        }
-        
-    }
-    
-    /**
-     * Remove dia na tabela "Dia" somente se esse dia já existir
-     * @param dia 
-     */
-    public void removerDia(Dia dia){
-        // Faz uma query no banco de dados buscando algum Dia com o mesmo nome do que está prestes a ser inserido.
-        Dia diaBanco = modelo.selectDia(dia.getNome());
-        
-        /*
-         * Se o diaBanco for igual a null ou diferente do nome do "dia", insere no banco de dados.
-         */
-        if (diaBanco != null){
-            modelo.delete(dia);
-        }
+    public ArrayList<Turno> listaTurnosNaoAssociados(Dia dia) {
+        return modelo.listaTurnosNaoAssociados(dia);
     }
     
     

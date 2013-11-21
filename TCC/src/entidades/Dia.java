@@ -3,11 +3,7 @@
  * and open the template in the editor.
  */
 package entidades;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 /**
  * Classe que define a entidade Dia.
  * @author fernando_paladini
@@ -15,7 +11,7 @@ import javax.persistence.Id;
 @Entity
 public class Dia {
     
-    // Variáveis
+    // Variï¿½veis
     private int id;
     private String nome;
     private Turno t1;
