@@ -262,9 +262,11 @@ public class DiaDAO extends AbstractDAO {
      *
      * @param curso
      */
-    public void inserirTurnoDia(int idTurno, int idDia) {
+    public void inserirTurnoDia(int idDia, int idTurno) {
         String sql = "INSERT INTO turno_has_dia (dia_iddia, turno_idturno) VALUES (?, ?);";
         ArrayList<Object> params = new ArrayList<Object>();
+        System.out.println("idDIa: " + idDia);
+        System.out.println("idTurno: "  + idTurno);
         params.add(idDia);
         params.add(idTurno);
         operacaoEscrita(sql, params);
@@ -281,6 +283,15 @@ public class DiaDAO extends AbstractDAO {
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(idDia);
         params.add(idTurno);
+        operacaoEscrita(sql, params);
+    }
+    
+    /**
+     * Deleta todas as relações entre turno e dia do banco de dados.
+     */
+    public void deletarTodosTurnoDia(){
+    	String sql = "delete from turno_has_dia where dia_iddia != -1;";
+        ArrayList<Object> params = new ArrayList<Object>();
         operacaoEscrita(sql, params);
     }
     
@@ -315,21 +326,23 @@ public class DiaDAO extends AbstractDAO {
     	if(listaTurnos.size() > 0){
     		
     		for(Turno t : listaTurnos){
-    			
-    			if(t.getNome() == "Matutino"){
-    				dia.setT1(t);
+    			if(t != null){
+    				if(t.getNome().equals("Matutino")){
+        				dia.getListaTurnosSelecionados().add(t.getNome());
+        			}
+        			
+        			if(t.getNome().equals("Vespertino")){
+        				dia.getListaTurnosSelecionados().add(t.getNome());
+        			}
+        			
+        			if(t.getNome().equals("Noturno")){
+        				dia.getListaTurnosSelecionados().add(t.getNome());
+        			}
+        			
+        			
+        			
     			}
-    			
-    			if(t.getNome() == "Vespertino"){
-    				dia.setT2(t);
-    			}
-    			
-    			if(t.getNome() == "Noturno"){
-    				dia.setT3(t);
-    			}
-    			
     		}
-    		
     	}
     	return dia;
     	

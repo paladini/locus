@@ -84,19 +84,15 @@
 							</div>
 							
 							<div class="col-md-4" id="calendario">
-									
 									<ui:repeat var="dia" value="#{escolaMBean.listaTodosDias}">
 										<label><h:outputText value="#{dia.nome}" />:</label>
-										<p:selectManyCheckbox id="turnos" value="#{escolaMBean.vetorTurnos}">
-											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno.nome}" styleClass="padding-left: 10px;" itemLabel="#{turno.nome}" />
+										<p:selectManyCheckbox value="#{dia.listaTurnosSelecionados}" style="margin-bottom: 5px">
+											<f:selectItems value="#{escolaMBean.listaTodosTurnos}" var="turno" itemValue="#{turno.nome}" itemLabel="#{turno.nome}&amp;nbsp;&amp;nbsp;" />
 										</p:selectManyCheckbox>
 									</ui:repeat>
 									<div style="margin-bottom: 40px;" />
-								
 							</div>
-							
 						</div>
-					
 				</div>
 			</div>
 			

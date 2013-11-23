@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 package entidades;
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 /**
  * Classe que define a entidade Dia.
@@ -26,23 +28,18 @@ public class Dia {
      */
     private boolean ativo;
     
-    
+    private ArrayList<String> listaTurnosSelecionados = new ArrayList<String>(); // apenas para o JSF
+    private String[] vetorTurnosSelecionados; // teste
     private Turno t1;
 	private Turno t2;
 	private Turno t3;
 
     // Construtores
     public Dia() {
+    	super();
     	Instituicao i = Instituicao.getInstance();
     	i.addListaDias(this);
     }
-    
-    public String texto() {
-		if (nome==null) {
-			 return "null";
-		}
-    	return nome;
-	}
     
     public Dia(String nome, int id) {
 		super();
@@ -64,15 +61,29 @@ public class Dia {
 	}
     
     public Dia(String nome) {
-        this.nome = nome;
+    	super();
+    	this.nome = nome;
+    	Instituicao i = Instituicao.getInstance();
+		i.addListaDias(this);
     }
     
     public Dia(int id, String nome) {
-        this.id = id;
+    	super();
+    	this.id = id;
         this.nome = nome;
+        Instituicao i = Instituicao.getInstance();
+		i.addListaDias(this);
     }
     
     // Métodos
+    
+    public String texto() {
+		if (nome==null) {
+			 return "null";
+		}
+    	return nome;
+	}
+    
     public int getId() {
         return id;
     }
@@ -95,6 +106,8 @@ public class Dia {
 
 	public void setT1(Turno t1) {
 		this.t1 = t1;
+		vetorTurnosSelecionados[0] = t1.getNome();
+		listaTurnosSelecionados.add(0, t1.getNome());
 	}
 
 	public Turno getT2() {
@@ -103,6 +116,8 @@ public class Dia {
 
 	public void setT2(Turno t2) {
 		this.t2 = t2;
+		vetorTurnosSelecionados[1] = t2.getNome();
+		listaTurnosSelecionados.add(1, t2.getNome());
 	}
 
 	public Turno getT3() {
@@ -111,6 +126,8 @@ public class Dia {
 
 	public void setT3(Turno t3) {
 		this.t3 = t3;
+		vetorTurnosSelecionados[2] = t3.getNome();
+		listaTurnosSelecionados.add(2, t3.getNome());
 	}
 
 	public boolean isAtivo() {
@@ -120,7 +137,36 @@ public class Dia {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+
+	public void instanciarTurnosSelecionados(int tamanho){
+		this.vetorTurnosSelecionados = new String[tamanho];
+	}
+	
+//	public ArrayList<Turno> getListaTurnos() {
+//		return listaTurnos;
+//	}
+//
+//	public void setListaTurnos(ArrayList<Turno> listaTurnos) {
+//		this.listaTurnos = listaTurnos;
+//	}
+
+	public ArrayList<String> getListaTurnosSelecionados() {
+		return listaTurnosSelecionados;
+	}
+
+	public void setListaTurnosSelecionados(ArrayList<String> listaTurnosSelecionados) {
+		this.listaTurnosSelecionados = listaTurnosSelecionados;
+	}
+
+	public String[] getVetorTurnosSelecionados() {
+		return vetorTurnosSelecionados;
+	}
+
+	public void setVetorTurnosSelecionados(String[] vetorTurnosSelecionados) {
+		this.vetorTurnosSelecionados = vetorTurnosSelecionados;
+	}
+
 	
 	
-    
+	
 }

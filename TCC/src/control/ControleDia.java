@@ -32,97 +32,21 @@ public class ControleDia {
 		return controleDia;
 	}
 
-	/**
-	 * Retorna todos os Dias ativos no banco de dados.
-	 * 
-	 * @return
-	 */
-	public ArrayList<Dia> consultarAtivos() {
-
-		ArrayList<Dia> listaTodosDias = modelo.consultar();
-		ArrayList<Dia> listaDiasAtivos = new ArrayList<Dia>();
-
-		for (Dia d : listaTodosDias) {
-			if (d.isAtivo()) {
-				listaDiasAtivos.add(d);
-			}
-		}
-
-		return listaDiasAtivos;
+	
+	
+	
+	public void atualizarDias(Dia dia){
+		this.adicionarTurno(dia);
 	}
-
-	/**
-	 * Atualiza os dias no banco de dados
-	 * 
-	 * @param listaDias
-	 */
-	public void atualizarDias(ArrayList<Dia> listaDias) {
-
-		// Pegando ID correto do banco
-		for (Dia dia : listaDias) {
-			dia.setId(this.consultarID(dia.getNome()));
-		}
-
-		// Salvando o banco pois vou deixar todo o banco como "inativo"
-		ArrayList<Dia> banco = modelo.consultar();
-
-		// Deixando o banco como inativo
-		modelo.tudoInativo();
-
-		for (Dia dia : listaDias) {
-
-			// Verificando se está ativo ou não
-			boolean estaAtivo = false;
-			for (Dia temp : banco) {
-				if (temp.getId() == dia.getId()) {
-					if (temp.isAtivo()) {
-						estaAtivo = true;
-					}
-				}
-			}
-
-			// Se o turno que está vindo da View está ativo
-			if (dia.isAtivo()) {
-
-				// Se no banco estiver ativo não faz nada
-				if (estaAtivo) {
-
-				} else { // caso o turno do banco não esteja ativo, como o turno
-							// vindo da View está ativo, precisa ativar isso
-					modelo.atualizar(dia);
-				}
-
-			} else { // se o turno que está na view não está ativo
-
-				// Se no banco estiver ativo, desativa
-				if (estaAtivo) {
-					modelo.atualizar(dia);
-				} else { // se não está ativo, não faz nada.
-
-				}
-			}
-		}
-	}
-
-	/**
-	 * Verifica se o dado dia está ativo no banco de dados.
-	 * 
-	 * @param dia
-	 * @return
-	 */
-	@Deprecated
-	private boolean estaAtivo(Dia dia) {
-		Dia banco = modelo.consultar(dia.getId());
-		return banco.isAtivo();
-	}
-
+	
 	/**
 	 * Retorna uma lista de todos os Dias cadastrados no banco de dados.
 	 * 
 	 * @return
 	 */
 	public ArrayList<Dia> consulta() {
-		return modelo.consultar();
+		ArrayList<Dia> listaDias = modelo.consultar();
+		return listaDias;
 	}
 
 	/**
@@ -252,27 +176,23 @@ public class ControleDia {
 	 *            Turno com uma lista de dias não nula.
 	 */
 	private void adicionarTurno(Dia dia) {
-
-		ArrayList<Turno> listaTurnos = this.listaTurnosAssociados(dia);
-
-		// TODO: Essa forma de fazer isso está, no mínimo, ingênua.
-		// Deletando TODOS os dias associadas ao turno.
-		for (int i = 0; i < listaTurnos.size(); i++) {
-			modelo.deletarTurnoDia(dia.getId(), listaTurnos.get(i).getId());
+		
+		
+		
+		for(int i = 0; i < dia.getVetorTurnosSelecionados().length; i++){
+			
+			if(dia.getVetorTurnosSelecionados()[i] != null ){
+				
+				ControleTurno ct = ControleTurno.getInstance();
+				Turno t = ct.consultar(dia.getVetorTurnosSelecionados()[i]);
+				modelo.inserirTurnoDia(dia.getId(), t.getId());
+			}
+			
 		}
-
-		// Adicionando os novos dias ao banco.
-		if (dia.getT1() != null) {
-			modelo.inserirTurnoDia(dia.getId(), dia.getT1().getId());
-		}
-
-		if (dia.getT2() != null) {
-			modelo.inserirTurnoDia(dia.getId(), dia.getT2().getId());
-		}
-
-		if (dia.getT3() != null) {
-			modelo.inserirTurnoDia(dia.getId(), dia.getT3().getId());
-		}
+	}
+	
+	public void deletarTodosTurnoDia(){
+		modelo.deletarTodosTurnoDia();
 	}
 
 	/**

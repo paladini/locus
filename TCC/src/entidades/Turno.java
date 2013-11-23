@@ -58,6 +58,11 @@ public class Turno {
 		Instituicao i = Instituicao.getInstance();
 		i.addListaPeriodos(this);
 	}
+	
+	
+	public void adicionarDia(Dia d){
+		this.getListaDias().add(d);
+	}
 
 	// Métodos
     public String texto() {

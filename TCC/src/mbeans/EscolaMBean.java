@@ -28,14 +28,9 @@ public class EscolaMBean {
 
 	// Lista de turnos e dias
 	private ArrayList<Dia> listaTodosDias;
-	private ArrayList<Dia> listaDiasSelecionados;
 	private ArrayList<Turno> listaTodosTurnos;
-	private ArrayList<Turno> listaTurnosSelecionados;
-
-	// Vetores dos dias e turnos selecionados
-	private String[] vetorTurnos;
-	private String[] vetorDias;
-
+	private String[] turnosSelecionadosOrdenados;
+	
 	// Atributos para o primeira entrada
 	private String novaSenha;
 	private String nomeEscola;
@@ -69,20 +64,6 @@ public class EscolaMBean {
 		novaSenha = "";
 		nomeEscola = "";
 
-		// Setando dias
-		listaDiasSelecionados = controleDia.consultarAtivos();
-		vetorDias = new String[listaDiasSelecionados.size()];
-		for (int i = 0; i < listaDiasSelecionados.size(); i++) {
-			vetorDias[i] = listaDiasSelecionados.get(i).getNome();
-		}
-
-		// Setando turnos
-		listaTurnosSelecionados = controleTurno.consultarAtivos();
-		vetorTurnos = new String[listaTurnosSelecionados.size()];
-		for (int i = 0; i < listaTurnosSelecionados.size(); i++) {
-			vetorTurnos[i] = listaTurnosSelecionados.get(i).getNome();
-		}
-
 	}
 
 	/**
@@ -109,26 +90,8 @@ public class EscolaMBean {
 			erro = true;
 		}
 
-		if (listaDiasSelecionados.size() == 0
-				|| listaTurnosSelecionados.size() == 0) {
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_WARN, "Campo obrigatório",
-					"Pelo menos um turno e dia são obrigatórios."));
-			erro = true;
-		}
-
 		if (erro == true) {
 			return null;
-		}
-
-		// Setando os dias selecionados para ativo = true
-		for(Dia d : listaDiasSelecionados){
-			d.setAtivo(true);
-		}
-		
-		// Setando os turnos selecionados para ativo = true
-		for(Turno t : listaTurnosSelecionados){
-			t.setAtivo(true);
 		}
 
 		// Continua o método normal
@@ -139,8 +102,7 @@ public class EscolaMBean {
 		if (modelo.atualizarNomeEscola(escolaPrimeiraEntrada) == 0) {
 			if (modelo.atualizarSenha(escolaPrimeiraEntrada.getSenha()) == 0) {
 
-				controleDia.atualizarDias(listaDiasSelecionados);
-				controleTurno.atualizarTurnos(listaTurnosSelecionados);
+				this.cadastrarDiasETurnos();
 				// modelo.atualizarUltimoAcesso();
 				return "2-tela-disciplinas.xhtml?faces-redirect=true";
 
@@ -173,7 +135,8 @@ public class EscolaMBean {
 		// Validações da página
 		FacesContext context = FacesContext.getCurrentInstance();
 		boolean erro = false;
-		if (admin.getNomeEscola().length() == 0 || admin.getNomeEscola().isEmpty()) {
+		if (admin.getNomeEscola().length() == 0
+				|| admin.getNomeEscola().isEmpty()) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_WARN, "Campo obrigatório",
 					"Nome da instituição é de preenchimento obrigatório"));
@@ -187,51 +150,26 @@ public class EscolaMBean {
 			erro = true;
 		}
 
-		if (listaDiasSelecionados.size() == 0
-				|| listaTurnosSelecionados.size() == 0) {
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_WARN, "Campo obrigatório",
-					"Pelo menos um turno e dia são obrigatórios."));
-			erro = true;
-		}
-
 		if (erro == true) {
 			return null;
 		}
 
-		// Pegando os checkboxes selecionados
-		// Dias
-		ArrayList<Dia> diasSelecionados = new ArrayList<Dia>();
-		for (int i = 0; i < vetorDias.length; i++) {
-			String termo = vetorDias[i];
-			Dia dia = new Dia(termo);
-			dia.setAtivo(true);
-			diasSelecionados.add(dia);
-		}
-
-		// Turnos
-		ArrayList<Turno> turnosSelecionados = new ArrayList<Turno>();
-		for (int i = 0; i < vetorTurnos.length; i++) {
-			String termo = vetorTurnos[i];
-			Turno turno = new Turno(termo);
-			turno.setAtivo(true);
-			turnosSelecionados.add(turno);
-		}
-
-		listaDiasSelecionados = diasSelecionados;
-		listaTurnosSelecionados = turnosSelecionados;
-
 		// Atualizando dados do Admin e de Turnos/Dias
 		Admin escolaPrimeiraEntrada = new Admin();
-		escolaPrimeiraEntrada.setNomeEscola(admin.getSenha());
+		escolaPrimeiraEntrada.setNomeEscola(admin.getNomeEscola());
 		escolaPrimeiraEntrada.setSenha(admin.getSenha());
 
 		if (modelo.atualizarNomeEscola(escolaPrimeiraEntrada) == 0) {
 			if (modelo.atualizarSenha(escolaPrimeiraEntrada.getSenha()) == 0) {
 
-				controleDia.atualizarDias(listaDiasSelecionados);
-				controleTurno.atualizarTurnos(listaTurnosSelecionados);
+				this.cadastrarDiasETurnos();
 				// modelo.atualizarUltimoAcesso();
+				
+				context.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"Salvo com sucesso!",
+								"Suas modificações foram salvas com sucesso."));
 				return null;
 
 			} else {
@@ -251,6 +189,25 @@ public class EscolaMBean {
 		return null;
 	}
 
+	private void cadastrarDiasETurnos() {
+		
+		controleDia.deletarTodosTurnoDia();
+		
+		for (Dia d : listaTodosDias) {
+			
+			d.instanciarTurnosSelecionados(listaTodosTurnos.size());
+			int i = 0;
+
+			for (Turno item : listaTodosTurnos) {
+			    String name = item.getNome();
+			    d.getVetorTurnosSelecionados()[i++] = d.getListaTurnosSelecionados().contains(name) ? name : null;
+			}
+			
+			controleDia.atualizarDias(d);
+		}
+	}
+	
+	
 	public ArrayList<Dia> getListaTodosDias() {
 		return listaTodosDias;
 	}
@@ -299,22 +256,6 @@ public class EscolaMBean {
 		this.nomeEscola = nomeEscola;
 	}
 
-	public String[] getVetorTurnos() {
-		return vetorTurnos;
-	}
-
-	public void setVetorTurnos(String[] vetorTurnos) {
-		this.vetorTurnos = vetorTurnos;
-	}
-
-	public String[] getVetorDias() {
-		return vetorDias;
-	}
-
-	public void setVetorDias(String[] vetorDias) {
-		this.vetorDias = vetorDias;
-	}
-
 	public ControleAdmin getModelo() {
 		return modelo;
 	}
@@ -331,21 +272,22 @@ public class EscolaMBean {
 		this.admin = admin;
 	}
 
-	public ArrayList<Dia> getListaDiasSelecionados() {
-		return listaDiasSelecionados;
+	public String[] getTurnosSelecionadosOrdenados() {
+		return turnosSelecionadosOrdenados;
 	}
 
-	public void setListaDiasSelecionados(ArrayList<Dia> listaDiasSelecionados) {
-		this.listaDiasSelecionados = listaDiasSelecionados;
+	public void setTurnosSelecionadosOrdenados(String[] turnosSelecionadosOrdenados) {
+		this.turnosSelecionadosOrdenados = turnosSelecionadosOrdenados;
 	}
 
-	public ArrayList<Turno> getListaTurnosSelecionados() {
-		return listaTurnosSelecionados;
-	}
-
-	public void setListaTurnosSelecionados(
-			ArrayList<Turno> listaTurnosSelecionados) {
-		this.listaTurnosSelecionados = listaTurnosSelecionados;
-	}
+	
+	
+//	public ArrayList<Dia> getListaDiasSelecionados() {
+//		return listaDiasSelecionados;
+//	}
+//
+//	public void setListaDiasSelecionados(ArrayList<Dia> listaDiasSelecionados) {
+//		this.listaDiasSelecionados = listaDiasSelecionados;
+//	}
 
 }
