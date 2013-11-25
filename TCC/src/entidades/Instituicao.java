@@ -3,6 +3,14 @@ package entidades;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.CursoDAO;
+import model.DiaDAO;
+import model.DisciplinaDAO;
+import model.ProfessorDAO;
+import model.SalaDAO;
+import model.TurmaDAO;
+import model.TurnoDAO;
+
 public class Instituicao {
 
 	// variaveis
@@ -19,17 +27,31 @@ public class Instituicao {
 	private ArrayList<Dia> listaDias;
 	private ArrayList<Turma> listaTurmas;
 	private ArrayList<Aula> listAulas;
+	SalaDAO salaDAO = new SalaDAO();
+	CursoDAO cursoDAO = new CursoDAO();
+	DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+	ProfessorDAO professorDAO = new  ProfessorDAO();
+	TurnoDAO turnoDAO = new TurnoDAO();
+	DiaDAO diaDAO = new DiaDAO();
+	TurmaDAO turmaDAO = new TurmaDAO();
+	
 
 	// contrutores
 	private Instituicao(){
-		listaSala = new ArrayList<Sala>();
-		listaCurso = new ArrayList<Curso>();
-		listaDisciplinas = new ArrayList<Disciplina>();
-		listaProfessores = new ArrayList<Professor>();
-		listaPeriodos = new ArrayList<Turno>();
-		listaDias = new ArrayList<Dia>();
-		listaTurmas = new ArrayList<Turma>();
+		init();
+	}
+	
+	public void init(){
+		//TODO alterar a inicialização para puxar os dados do banco
+		listaSala =salaDAO.consultar();
+		listaCurso =cursoDAO.consultar();
+		listaDisciplinas = disciplinaDAO.consultar();
+		listaProfessores = professorDAO.consultar();
+		listaPeriodos = turnoDAO.consultar();
+		listaDias = diaDAO.consultar();
+		listaTurmas = turmaDAO.consultar();
 		listAulas = new ArrayList<Aula>();
+		
 	}
 	
 	public static Instituicao getInstance(){

@@ -2,6 +2,12 @@
 
 import java.util.ArrayList;
 
+import model.CursoDAO;
+import model.DisciplinaDAO;
+import model.ProfessorDAO;
+import model.SalaDAO;
+import model.TurmaDAO;
+
 import control.ControleEnsalamento;
 import entidades.Aula;
 import entidades.Curso;
@@ -119,29 +125,72 @@ public class Main {
 //		Instituicao.addListaTurmas(turma4);
 //		Instituicao.addListaTurmas(turma5);
 		// sala
-		i.addListaSala(sala1);
-		i.addListaSala(sala2);
-		i.addListaSala(sala3);
-		i.addListaSala(sala4);
-		i.addListaSala(sala5);
-		i.addListaSala(sala6);
-		i.addListaSala(sala7);
-		i.addListaSala(sala8);
-		i.addListaSala(sala9);
-		i.addListaSala(sala10);
-		// disciplina
-		i.addListaDisciplinas(disciplina1);
-		i.addListaDisciplinas(disciplina2);
-		i.addListaDisciplinas(disciplina3);
-		i.addListaDisciplinas(disciplina4);
-		i.addListaDisciplinas(disciplina5);
-		// professor
-		i.addListaProfessores(professor1);
-		i.addListaProfessores(professor2);
-		i.addListaProfessores(professor3);
-		i.addListaProfessores(professor4);
-		i.addListaProfessores(professor5);
+		
+		i.init();
+		
+//		i.addListaSala(sala1);
+//		i.addListaSala(sala2);
+//		i.addListaSala(sala3);
+//		i.addListaSala(sala4);
+//		i.addListaSala(sala5);
+//		i.addListaSala(sala6);
+//		i.addListaSala(sala7);
+//		i.addListaSala(sala8);
+//		i.addListaSala(sala9);
+//		i.addListaSala(sala10);
+//		// disciplina
+//		i.addListaDisciplinas(disciplina1);
+//		i.addListaDisciplinas(disciplina2);
+//		i.addListaDisciplinas(disciplina3);
+//		i.addListaDisciplinas(disciplina4);
+//		i.addListaDisciplinas(disciplina5);
+//		// professor
+//		i.addListaProfessores(professor1);
+//		i.addListaProfessores(professor2);
+//		i.addListaProfessores(professor3);
+//		i.addListaProfessores(professor4);
+//		i.addListaProfessores(professor5);
 
+		CursoDAO cursoDAO = new CursoDAO();
+		cursoDAO.inserir(curso1);
+		
+		TurmaDAO turmaDao = new TurmaDAO();
+		turmaDao.inserir(turma1);
+		turmaDao.inserir(turma2);
+		turmaDao.inserir(turma3);
+		turmaDao.inserir(turma4);
+		turmaDao.inserir(turma5);
+		
+		SalaDAO salaDAO = new SalaDAO();
+		salaDAO.inserir(sala1);
+		salaDAO.inserir(sala2);
+		salaDAO.inserir(sala3);
+		salaDAO.inserir(sala4);
+		salaDAO.inserir(sala5);
+		salaDAO.inserir(sala6);
+		salaDAO.inserir(sala7);
+		salaDAO.inserir(sala8);
+		salaDAO.inserir(sala9);
+		salaDAO.inserir(sala10);
+		
+		DisciplinaDAO disciplinaDAO = new  DisciplinaDAO();
+		disciplinaDAO.inserir(disciplina1);
+		disciplinaDAO.inserir(disciplina2);
+		disciplinaDAO.inserir(disciplina3);
+		disciplinaDAO.inserir(disciplina4);
+		disciplinaDAO.inserir(disciplina5);
+		
+		ProfessorDAO professorDAO = new  ProfessorDAO();
+		professorDAO.inserir(professor1);
+		professorDAO.inserir(professor2);
+		professorDAO.inserir(professor3);
+		professorDAO.inserir(professor4);
+		professorDAO.inserir(professor5);
+		
+		
+		
+		
+		
 		
 //---------------------------------------------------------------------
 //		TODO codigo certo

@@ -2,6 +2,9 @@ package control;
 
 import java.util.ArrayList;
 
+import model.AulaDao;
+import model.ProfessorDAO;
+
 import entidades.Aula;
 import entidades.Curso;
 import entidades.Dia;
@@ -17,6 +20,7 @@ public class ControleEnsalamento {
 	private ArrayList<Aula> aulas;
 	ArrayList<Aula> aulasFinal;
 	Instituicao instituicao = Instituicao.getInstance();
+	AulaDao aulaDao = new AulaDao();
 	
 
 	public ControleEnsalamento(){
@@ -377,8 +381,25 @@ public class ControleEnsalamento {
 //
 //	}// fim EscolherEntreMil
 
+	public void Persistir(){
+		for (int i = 0; i < aulas.size(); i++) {
+			aulaDao.inserir(aulas.get(i));
+		}
+	}
 	
-	
+	/*
+	 * Pega todos os professores do BD
+	 */
+	public void ConsultarByProfessor() {
+		ProfessorDAO professorDAO = new ProfessorDAO();
+		professorDAO.consultar();
+	}
+	/*
+	 * Pega um professor especifico do BD
+	 */
+	public void ConsultarByProfessor(int id) {
+		aulaDao.consultarByProfessor(id);
+	}
 	
 	
 	

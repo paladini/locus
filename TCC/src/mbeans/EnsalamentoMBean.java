@@ -29,7 +29,7 @@ import entidades.Turno;
 @SessionScoped
 public class EnsalamentoMBean {
 
-	private ControleEnsalamento modelo;
+	private ControleEnsalamento controleEnsalamento;
 	private ScheduleModel eventModel;
 
 	public EnsalamentoMBean() {
@@ -88,11 +88,22 @@ public class EnsalamentoMBean {
 	}
 
 	public void Ensalar() {
-		modelo.Ensalar();
+		controleEnsalamento.Ensalar();
+		controleEnsalamento.Persistir();
+		
 	}
 
+	public void consultarByProfessor(){
+		controleEnsalamento.ConsultarByProfessor();
+	}
+	
+	public void consultarByProfessor(int id){
+		controleEnsalamento.ConsultarByProfessor(id);
+	}
+
+
 	public ArrayList<Aula> getEnsalamento() {
-		return modelo.getAulas();
+		return controleEnsalamento.getAulas();
 	}
 
 	public ScheduleModel getEventModel() {
