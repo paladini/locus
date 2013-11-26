@@ -36,6 +36,8 @@ public class EnsalamentoMBean {
 	private ControleEnsalamento controleEnsalamento;
 	private ScheduleModel eventModel;
 	
+	private SelectItem professorSelecionado = new SelectItem();
+	
 
 	public EnsalamentoMBean() {
 		eventModel = new DefaultScheduleModel();
@@ -159,6 +161,10 @@ public class EnsalamentoMBean {
 	public void consultarByProfessor(int id){
 		controleEnsalamento.ConsultarByProfessor(id);
 	}
+	public ArrayList<Aula> ConsultarByProfessorSelectItem(SelectItem professor){
+		int id = (Integer)professor.getValue();
+		return controleEnsalamento.ConsultarBySala(id);
+	}
 
 
 	public ArrayList<Aula> getEnsalamento() {
@@ -195,5 +201,27 @@ public class EnsalamentoMBean {
 			adicionarEvento(descricao, diaSemanaGregorianCalendar);
 		}
 	}
+
+	public ControleEnsalamento getControleEnsalamento() {
+		return controleEnsalamento;
+	}
+
+	public void setControleEnsalamento(ControleEnsalamento controleEnsalamento) {
+		this.controleEnsalamento = controleEnsalamento;
+	}
+
+	public SelectItem getProfessorSelecionado() {
+		return professorSelecionado;
+	}
+
+	public void setProfessorSelecionado(SelectItem professorSelecionado) {
+		this.professorSelecionado = professorSelecionado;
+	}
+
+	public void setEventModel(ScheduleModel eventModel) {
+		this.eventModel = eventModel;
+	}
+	
+	
 
 }

@@ -2,6 +2,8 @@ package control;
 
 import java.util.ArrayList;
 
+import javax.faces.model.SelectItem;
+
 import model.AulaDao;
 import model.CursoDAO;
 import model.ProfessorDAO;
@@ -412,6 +414,8 @@ public class ControleEnsalamento {
 	public ArrayList<Aula> ConsultarByProfessor(int id) {
 		return aulaDao.consultarByProfessor(id);
 	}
+	
+	
 
 	public ArrayList<Aula> ConsultarByTurma(int id) {
 		return aulaDao.consultarByTurma(id);

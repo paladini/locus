@@ -84,7 +84,7 @@
 			<h:form>
 			<div style="float: left; padding-left: 10px;">
 					
-					<p:selectOneMenu value="#{buttonBean.number}" >
+					<p:selectOneMenu value="#{ensalamentoMBean.professorSelecionado}" valueChangeListener="#{ensalamentoMBean.consultarByProfessorSelectItem}" >
 						<f:selectItem itemLabel="Professores" itemValue="" />
 						<f:selectItems
 							value="#{ensametoMBean.getValuesComboBoxProfessor()}"  />
