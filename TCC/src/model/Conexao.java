@@ -34,7 +34,6 @@ public class Conexao {
             return null;
         } catch (SQLException e) {
             //Não conseguindo se conectar ao banco  
-        	System.out.println(e.getMessage());
             System.out.println("Nao foi possivel conectar ao Banco de Dados.");
             return null;
         }
