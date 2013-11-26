@@ -85,9 +85,11 @@
 			<div style="float: left; padding-left: 10px;">
 					
 					<p:selectOneMenu value="#{ensalamentoMBean.professorSelecionado}" valueChangeListener="#{ensalamentoMBean.consultarByProfessorSelectItem}" >
+					<!-- converter="omnifaces.SelectItemsConverter" -->
+					
 						<f:selectItem itemLabel="Professores" itemValue="" />
-						<f:selectItems
-							value="#{ensametoMBean.getValuesComboBoxProfessor()}"  />
+						<f:selectItems value="#{ensametoMBean.getValuesComboBoxProfessor()}"  />
+						<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
 						
 					</p:selectOneMenu>
 			</div>

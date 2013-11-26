@@ -35,8 +35,12 @@ public class EnsalamentoMBean {
 
 	private ControleEnsalamento controleEnsalamento;
 	private ScheduleModel eventModel;
-	
+
 	private SelectItem professorSelecionado = new SelectItem();
+	private SelectItem turmaSelecionado = new SelectItem();
+	private SelectItem cursoSelecionado = new SelectItem();
+	private SelectItem salaSelecionado = new SelectItem();
+
 	
 
 	public EnsalamentoMBean() {
@@ -44,15 +48,18 @@ public class EnsalamentoMBean {
 		Curso curso1 = new Curso("inf1", 1, null, null);
 		Turma turma1 = new Turma(1, "t1", curso1, 1);
 		Sala sala1 = new Sala("sala1", 1);
-		Disciplina disciplina1 = new Disciplina("POO2", 1,new ArrayList<Professor>());
-		Professor professor1 = new Professor("Daniel",new ArrayList<Disciplina>(), 1);
+		Disciplina disciplina1 = new Disciplina("POO2", 1,
+				new ArrayList<Professor>());
+		Professor professor1 = new Professor("Daniel",
+				new ArrayList<Disciplina>(), 1);
 		Turno turno = new Turno("turno1");
-		Dia dia =new Dia("segunda");
-		Aula aula = new Aula(professor1,turma1,sala1,turno,curso1,disciplina1,dia,turno,1);
+		Dia dia = new Dia("segunda");
+		Aula aula = new Aula(professor1, turma1, sala1, turno, curso1,
+				disciplina1, dia, turno, 1);
 		adicionarEvento(aula.texto2(), GregorianCalendar.FRIDAY);
 
 		adicionarEvento("teste \n teste2", GregorianCalendar.MONDAY);
-//		adicionarAulas();
+		// adicionarAulas();
 	}
 
 	// TODO FALAR DANIEL MÉTODO NAO ESTÁ ADICIONANDO EVENTO
@@ -96,76 +103,94 @@ public class EnsalamentoMBean {
 	public void Ensalar() {
 		controleEnsalamento.Ensalar();
 		controleEnsalamento.Persistir();
-		
-		
+
 	}
-	
+
 	public Collection<SelectItem> getValuesComboBoxProfessor() {
-		   
-        //SelectItem si = new SelectItem();
+
+		// SelectItem si = new SelectItem();
 		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
-        ArrayList<Professor> professores = controleEnsalamento.ConsultarByProfessor();
-        Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
-       
-        for (Professor professor : professores) {
-            listaComboBox.add(new SelectItem(professor.getId(), professor.getNome()));
-        }
-       
-        
-        return listaComboBox;
-    }
+		ArrayList<Professor> professores = controleEnsalamento
+				.ConsultarByProfessor();
+		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
+
+		for (Professor professor : professores) {
+			listaComboBox.add(new SelectItem(professor.getId(), professor
+					.getNome()));
+		}
+
+		return listaComboBox;
+	}
+
 	public Collection<SelectItem> getValuesComboBoxTurma() {
-		
-		//SelectItem si = new SelectItem();
+
+		// SelectItem si = new SelectItem();
 		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
 		ArrayList<Turma> turmas = controleEnsalamento.ConsultarByTurma();
 		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
-		
+
 		for (Turma turma : turmas) {
 			listaComboBox.add(new SelectItem(turma.getId(), turma.getNome()));
 		}
-		
+
 		return listaComboBox;
 	}
+
 	public Collection<SelectItem> getValuesComboBoxSala() {
-		
-		//SelectItem si = new SelectItem();
+
+		// SelectItem si = new SelectItem();
 		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
 		ArrayList<Sala> salas = controleEnsalamento.ConsultarBySala();
 		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
-		
+
 		for (Sala sala : salas) {
 			listaComboBox.add(new SelectItem(sala.getId(), sala.getNome()));
 		}
-		
+
 		return listaComboBox;
 	}
+
 	public Collection<SelectItem> getValuesComboBoxCurso() {
-		
-		//SelectItem si = new SelectItem();
+
+		// SelectItem si = new SelectItem();
 		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
 		ArrayList<Curso> cursos = controleEnsalamento.ConsultarByCurso();
 		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
-		
+
 		for (Curso curso : cursos) {
 			listaComboBox.add(new SelectItem(curso.getId(), curso.getNome()));
 		}
-		
+
 		return listaComboBox;
 	}
 
-	public void consultarByProfessor(){
+	public void consultarByProfessor() {
 		controleEnsalamento.ConsultarByProfessor();
 	}
-	
-	public void consultarByProfessor(int id){
+
+	public void consultarByProfessor(int id) {
 		controleEnsalamento.ConsultarByProfessor(id);
 	}
-	public ArrayList<Aula> ConsultarByProfessorSelectItem(SelectItem professor){
-		int id = (Integer)professor.getValue();
-		return controleEnsalamento.ConsultarBySala(id);
+
+	public void ConsultarByProfessorSelectItem(SelectItem professor) {
+		int id = (Integer) professor.getValue();
+		adicionarAulasLista(controleEnsalamento.ConsultarByProfessor(id));
 	}
 
+	public void ConsultarByTurmaSelectItem(SelectItem turma) {
+		int id = (Integer) turma.getValue();
+		adicionarAulasLista(controleEnsalamento.ConsultarByTurma(id));
+	}
+
+	public void ConsultarBySalaSelectItem(SelectItem sala) {
+		int id = (Integer) sala.getValue();
+		adicionarAulasLista(controleEnsalamento.ConsultarBySala(id));
+	}
+
+	public void ConsultarByCursoSelectItem(SelectItem curso) {
+		int id = (Integer) curso.getValue();
+		adicionarAulasLista(controleEnsalamento.ConsultarByCurso(id));
+	}
 
 	public ArrayList<Aula> getEnsalamento() {
 		return controleEnsalamento.getAulas();
@@ -178,24 +203,49 @@ public class EnsalamentoMBean {
 	public void adicionarAulas() {
 		Ensalar();
 		ArrayList<Aula> array = getEnsalamento();
-		
+
 		for (int i = 0; i < array.size(); i++) {
 			String descricao = array.get(i).texto2();
-			int diaSemanaGregorianCalendar=0;
+			int diaSemanaGregorianCalendar = 0;
 			if (array.get(i).getDia().getNome() == "seg") {
-				 diaSemanaGregorianCalendar = GregorianCalendar.MONDAY;
+				diaSemanaGregorianCalendar = GregorianCalendar.MONDAY;
 			}
 			if (array.get(i).getDia().getNome() == "ter") {
-				 diaSemanaGregorianCalendar = GregorianCalendar.TUESDAY;
+				diaSemanaGregorianCalendar = GregorianCalendar.TUESDAY;
 			}
 			if (array.get(i).getDia().getNome() == "qua") {
-				 diaSemanaGregorianCalendar = GregorianCalendar.WEDNESDAY;
+				diaSemanaGregorianCalendar = GregorianCalendar.WEDNESDAY;
 			}
 			if (array.get(i).getDia().getNome() == "qui") {
-				 diaSemanaGregorianCalendar = GregorianCalendar.THURSDAY;
+				diaSemanaGregorianCalendar = GregorianCalendar.THURSDAY;
 			}
 			if (array.get(i).getDia().getNome() == "sex") {
-				 diaSemanaGregorianCalendar = GregorianCalendar.FRIDAY;
+				diaSemanaGregorianCalendar = GregorianCalendar.FRIDAY;
+			}
+
+			adicionarEvento(descricao, diaSemanaGregorianCalendar);
+		}
+	}
+
+	public void adicionarAulasLista(ArrayList<Aula> arrayList) {
+
+		for (int i = 0; i < arrayList.size(); i++) {
+			String descricao = arrayList.get(i).texto2();
+			int diaSemanaGregorianCalendar = 0;
+			if (arrayList.get(i).getDia().getNome() == "seg") {
+				diaSemanaGregorianCalendar = GregorianCalendar.MONDAY;
+			}
+			if (arrayList.get(i).getDia().getNome() == "ter") {
+				diaSemanaGregorianCalendar = GregorianCalendar.TUESDAY;
+			}
+			if (arrayList.get(i).getDia().getNome() == "qua") {
+				diaSemanaGregorianCalendar = GregorianCalendar.WEDNESDAY;
+			}
+			if (arrayList.get(i).getDia().getNome() == "qui") {
+				diaSemanaGregorianCalendar = GregorianCalendar.THURSDAY;
+			}
+			if (arrayList.get(i).getDia().getNome() == "sex") {
+				diaSemanaGregorianCalendar = GregorianCalendar.FRIDAY;
 			}
 
 			adicionarEvento(descricao, diaSemanaGregorianCalendar);
@@ -221,7 +271,30 @@ public class EnsalamentoMBean {
 	public void setEventModel(ScheduleModel eventModel) {
 		this.eventModel = eventModel;
 	}
-	
-	
 
+	public SelectItem getTurmaSelecionado() {
+		return turmaSelecionado;
+	}
+
+	public void setTurmaSelecionado(SelectItem turmaSelecionado) {
+		this.turmaSelecionado = turmaSelecionado;
+	}
+
+	public SelectItem getCursoSelecionado() {
+		return cursoSelecionado;
+	}
+
+	public void setCursoSelecionado(SelectItem cursoSelecionado) {
+		this.cursoSelecionado = cursoSelecionado;
+	}
+
+	public SelectItem getSalaSelecionado() {
+		return salaSelecionado;
+	}
+
+	public void setSalaSelecionado(SelectItem salaSelecionado) {
+		this.salaSelecionado = salaSelecionado;
+	}
+	
+	
 }
