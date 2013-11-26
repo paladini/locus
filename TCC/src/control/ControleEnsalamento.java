@@ -3,7 +3,10 @@ package control;
 import java.util.ArrayList;
 
 import model.AulaDao;
+import model.CursoDAO;
 import model.ProfessorDAO;
+import model.SalaDAO;
+import model.TurmaDAO;
 
 import entidades.Aula;
 import entidades.Curso;
@@ -16,25 +19,22 @@ import entidades.Turma;
 import entidades.Turno;
 
 public class ControleEnsalamento {
-	
+
 	private ArrayList<Aula> aulas;
 	ArrayList<Aula> aulasFinal;
 	Instituicao instituicao = Instituicao.getInstance();
 	AulaDao aulaDao = new AulaDao();
-	
 
-	public ControleEnsalamento(){
+	public ControleEnsalamento() {
 		init();
 	}
-	
 
 	private void init() {
-		
+
 		instituicao.setListAulas(new ArrayList<Aula>());
 		aulas = instituicao.getListAulas();
-		
-	}
 
+	}
 
 	public void Ensalar() {
 		init();
@@ -90,7 +90,7 @@ public class ControleEnsalamento {
 						aula.setTurma(turma.get(k));
 						// ArrayList<Disciplina> disciplinas = instituicao
 						// .getListaDisciplinas();
-						//  Verificar semestre
+						// Verificar semestre
 						ArrayList<Disciplina> disciplinas = aula.getCurso()
 								.getDisciplinas();
 						if (k2 == disciplinas.size()) {
@@ -102,7 +102,7 @@ public class ControleEnsalamento {
 						ArrayList<Professor> professors = instituicao
 								.getListaProfessores();
 						// ---------------------------------------------
-						// //  alocar o professor somente se ele estiver
+						// // alocar o professor somente se ele estiver
 						// for (int l = 0; l < professors.size(); l++) {
 						// for (int l2 = 0; l2 < professors.get(l)
 						// .getDisciplina().size(); l2++) {
@@ -115,7 +115,7 @@ public class ControleEnsalamento {
 						// }
 						// }
 						// --------------------------------------------------------------------
-						//  array tem que estar fora do for de aulas
+						// array tem que estar fora do for de aulas
 						if (k2 == 0) {
 
 							for (int l = 0; l < disciplinas.size(); l++) {
@@ -127,7 +127,7 @@ public class ControleEnsalamento {
 						int x = 0;
 						int aumenta = 0;
 
-						int limite = professors.size(); //  CALCULAR O
+						int limite = professors.size(); // CALCULAR O
 														// LIMITE DINAMICAMENTE
 						ArrayList<Integer> conjuntoNumerosRandom = RandomControlado
 								.retornaRandom(limite);
@@ -202,7 +202,7 @@ public class ControleEnsalamento {
 							break;
 
 						}
-						//  sysout método ensalar
+						// sysout método ensalar
 						// System.out.println(aula.toString());
 						// System.out.println();
 
@@ -213,42 +213,43 @@ public class ControleEnsalamento {
 			} // curso
 
 		} // for turno
-		
+
 		AddDisciplinasNull();
-		
+
 	} // fim ensalar
 
-	
 	public void AddDisciplinasNull() {
 		ArrayList<Disciplina> disciplinasCurso = new ArrayList<Disciplina>();
 		for (int q = 0; q < aulas.size(); q++) {
 
 			// Copiando todas as disciplinas para disciplinasCurso
 			disciplinasCurso.addAll(aulas.get(q).getCurso().getDisciplinas());
-			
-			//pegar as disciplinas já ensaladas da turma da aula do for Q, inclusive as disciplinas nulas
+
+			// pegar as disciplinas já ensaladas da turma da aula do for Q,
+			// inclusive as disciplinas nulas
 			ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 			int turma = aulas.get(q).getTurma().getId();
 			for (int i = 0; i < aulas.size(); i++) {
-				if (turma == aulas.get(i).getTurma().getId() ) {
-					disciplinas.add( aulas.get(i).getDisciplina());
+				if (turma == aulas.get(i).getTurma().getId()) {
+					disciplinas.add(aulas.get(i).getDisciplina());
 				}
-				
+
 			}
-//			ArrayList<Disciplina> disciplinas2 = new ArrayList<Disciplina>();
-//			int x = disciplinasCurso.size();
-//			for (int i = 0; i < x; i++) {
-//				for (int j = 0; j < disciplinas.size(); j++) {
-//					if (disciplinasCurso.get(i)==disciplinas.get(j)) {
-////						disciplinas2.add(disciplinasCurso.get(i));
-//						disciplinasCurso.remove(i);
-//						
-//					}
-//				}
-//			}
-//			
-			
-			//pegar as disciplinas que não foram ensaladas para a turma da aula do for Q
+			// ArrayList<Disciplina> disciplinas2 = new ArrayList<Disciplina>();
+			// int x = disciplinasCurso.size();
+			// for (int i = 0; i < x; i++) {
+			// for (int j = 0; j < disciplinas.size(); j++) {
+			// if (disciplinasCurso.get(i)==disciplinas.get(j)) {
+			// // disciplinas2.add(disciplinasCurso.get(i));
+			// disciplinasCurso.remove(i);
+			//
+			// }
+			// }
+			// }
+			//
+
+			// pegar as disciplinas que não foram ensaladas para a turma da aula
+			// do for Q
 			ArrayList<Disciplina> disciplinasNaoEnsaladas = new ArrayList<Disciplina>();
 			for (Disciplina disciplinaCurso : disciplinasCurso) {
 				if (disciplinas.contains(disciplinaCurso))
@@ -256,38 +257,35 @@ public class ControleEnsalamento {
 				else
 					disciplinasNaoEnsaladas.add(disciplinaCurso);
 			}
-			
-			
-			
-//			for (int i = 0; i < disciplinasNaoEnsaladas.size(); i++) {
-//				if (aulas.get(q).getDisciplina() == null) {
-//					aulas.get(q).setDisciplina(disciplinasNaoEnsaladas.get(i));
-//				} else {
-//					break;
-//				}
-//
-//			}
-			
+
+			// for (int i = 0; i < disciplinasNaoEnsaladas.size(); i++) {
+			// if (aulas.get(q).getDisciplina() == null) {
+			// aulas.get(q).setDisciplina(disciplinasNaoEnsaladas.get(i));
+			// } else {
+			// break;
+			// }
+			//
+			// }
+
 			int indiceDisciplinasNaoEnsaladas = 0;
 			for (int i = 0; i < aulas.size(); i++) {
-				if (turma == aulas.get(i).getTurma().getId() ) {
-					
+				if (turma == aulas.get(i).getTurma().getId()) {
+
 					if (aulas.get(i).getDisciplina() == null) {
-						aulas.get(i).setDisciplina(disciplinasNaoEnsaladas.get(indiceDisciplinasNaoEnsaladas));
+						aulas.get(i).setDisciplina(
+								disciplinasNaoEnsaladas
+										.get(indiceDisciplinasNaoEnsaladas));
 						indiceDisciplinasNaoEnsaladas++;
 					} else {
 						;
 					}
 				}
-				
+
 			}
 
-			
 		}
-		
+
 	}// fim AddDisciplinaNull
-	
-	
 
 	/**
 	 * escolhe o melhor ensalamento entre os 1000
@@ -295,29 +293,28 @@ public class ControleEnsalamento {
 	 * @param listAulas
 	 */
 	public void EscolherEntreMil() {
-		
-		
+
 		int qtdnullFinal = 999999999;
 
 		for (int i = 0; i < 1000; i++) {
-			System.out.println("i"+i);
-//			TODO ver qual a melhor maneira de fazer isto 			
-			ControleEnsalamento pr = new ControleEnsalamento(); 
+			System.out.println("i" + i);
+			// TODO ver qual a melhor maneira de fazer isto
+			ControleEnsalamento pr = new ControleEnsalamento();
 			pr.Ensalar();
 			aulas = pr.getAulas();
 			pr = null;
-			
-//			Ensalar();
-//			aulas = getAulas();
-			
+
+			// Ensalar();
+			// aulas = getAulas();
+
 			int qtdnull = 0;
 			for (int j = 0; j < aulas.size(); j++) {
 				if (aulas.get(j).getProfessor() == null)
 					qtdnull = qtdnull + 1;
 			}// for listAulas
 			if (qtdnullFinal > qtdnull) {
-//				qtdnullFinal = qtdnull;
-//				aulasFinal = aulas;
+				// qtdnullFinal = qtdnull;
+				// aulasFinal = aulas;
 				qtdnullFinal = qtdnull;
 				armazenarEnsalamentoFinal();
 				System.out.println(qtdnull);
@@ -326,83 +323,110 @@ public class ControleEnsalamento {
 			}// if qtd
 
 		}// for 1000
-		
+
 		aulas = aulasFinal;
-		
-//		int cont = 0;
-//		for (int j = 0; j < aulasFinal.size(); j++) {
-//			System.out.println(aulasFinal.get(j).toString());
-//
-//			cont = cont + 1;
-//			if (cont == 5) {
-//				cont = 0;
-//				System.out.println();
-//				System.out.println();
-//			}
-//
-//		}// sysout aulasFInal
-		
+
+		// int cont = 0;
+		// for (int j = 0; j < aulasFinal.size(); j++) {
+		// System.out.println(aulasFinal.get(j).toString());
+		//
+		// cont = cont + 1;
+		// if (cont == 5) {
+		// cont = 0;
+		// System.out.println();
+		// System.out.println();
+		// }
+		//
+		// }// sysout aulasFInal
+
 	}// fim EscolherEntreMil
-	
-	
-	private void armazenarEnsalamentoFinal(){
+
+	private void armazenarEnsalamentoFinal() {
 		aulasFinal = new ArrayList<Aula>();
 		for (Aula a : aulas) {
 			aulasFinal.add(a);
 		}
 	}
-	
-//			TODO ver com o daniel segunda(18/11/2013)
-//	public ArrayList<Aula> EnsalarCerto() {
-//		ArrayList<Aula> aulasFinal = new ArrayList<Aula>();
-//		int qtdnullFinal = 999999999;
-//
-//		for (int i = 0; i < 1000; i++) {
-//			//			ProcessoRandom.this.Ensalar();
-//			ProcessoRandom processarEnsalamento = new ProcessoRandom();
-//			ArrayList<Aula> listAulas;
-//			processarEnsalamento.Ensalar();
-//			listAulas = processarEnsalamento.getAulas();
-//			
-//			int qtdnull = 0;
-//			for (int j = 0; j < listAulas.size(); j++) {
-//				if (listAulas.get(j).getProfessor() == null)
-//					qtdnull = qtdnull + 1;
-//			}// for listAulas
-//			if (qtdnullFinal > qtdnull) {
-//				qtdnullFinal = qtdnull;
-//				aulasFinal = listAulas;
-//			}// if qtd
-//
-//			processarEnsalamento.AddDisciplinasNull();
-//			aulasFinal = processarEnsalamento.getAulas();
-//		}// for 1000
-//		return aulasFinal;
-//
-//	}// fim EscolherEntreMil
 
-	public void Persistir(){
+	// TODO ver com o daniel segunda(18/11/2013)
+	// public ArrayList<Aula> EnsalarCerto() {
+	// ArrayList<Aula> aulasFinal = new ArrayList<Aula>();
+	// int qtdnullFinal = 999999999;
+	//
+	// for (int i = 0; i < 1000; i++) {
+	// // ProcessoRandom.this.Ensalar();
+	// ProcessoRandom processarEnsalamento = new ProcessoRandom();
+	// ArrayList<Aula> listAulas;
+	// processarEnsalamento.Ensalar();
+	// listAulas = processarEnsalamento.getAulas();
+	//
+	// int qtdnull = 0;
+	// for (int j = 0; j < listAulas.size(); j++) {
+	// if (listAulas.get(j).getProfessor() == null)
+	// qtdnull = qtdnull + 1;
+	// }// for listAulas
+	// if (qtdnullFinal > qtdnull) {
+	// qtdnullFinal = qtdnull;
+	// aulasFinal = listAulas;
+	// }// if qtd
+	//
+	// processarEnsalamento.AddDisciplinasNull();
+	// aulasFinal = processarEnsalamento.getAulas();
+	// }// for 1000
+	// return aulasFinal;
+	//
+	// }// fim EscolherEntreMil
+
+	public void Persistir() {
 		for (int i = 0; i < aulas.size(); i++) {
 			aulaDao.inserir(aulas.get(i));
 		}
 	}
-	
+
 	/*
 	 * Pega todos os professores do BD
 	 */
-	public void ConsultarByProfessor() {
+	public ArrayList<Professor> ConsultarByProfessor() {
 		ProfessorDAO professorDAO = new ProfessorDAO();
-		professorDAO.consultar();
+		return professorDAO.consultar();
 	}
+
+	public ArrayList<Turma> ConsultarByTurma() {
+		TurmaDAO turmaDAO = new TurmaDAO();
+		return turmaDAO.consultar();
+	}
+
+	public ArrayList<Sala> ConsultarBySala() {
+		SalaDAO salaDAO = new SalaDAO();
+		return salaDAO.consultar();
+	}
+
+	public ArrayList<Curso> ConsultarByCurso() {
+		CursoDAO cursoDAO = new CursoDAO();
+		return cursoDAO.consultar();
+	}
+
 	/*
-	 * Pega um professor especifico do BD
+	 * Pega um professor especifico do BD ensalado
 	 */
-	public void ConsultarByProfessor(int id) {
-		aulaDao.consultarByProfessor(id);
+	public ArrayList<Aula> ConsultarByProfessor(int id) {
+		return aulaDao.consultarByProfessor(id);
 	}
-	
-	
-	
+
+	public ArrayList<Aula> ConsultarByTurma(int id) {
+		return aulaDao.consultarByTurma(id);
+	}
+	public ArrayList<Aula> ConsultarBySala(int id) {
+		return aulaDao.consultarBySala(id);
+	}
+	public ArrayList<Aula> ConsultarByCurso(int id) {
+		return aulaDao.consultarByCurso(id);
+	}
+
+	public ArrayList<Aula> Consultar() {
+		return aulaDao.consultar();
+	}
+
 	public ArrayList<Aula> getAulas() {
 		return aulas;
 	}
@@ -410,11 +434,5 @@ public class ControleEnsalamento {
 	public void setAulas(ArrayList<Aula> aulas) {
 		this.aulas = aulas;
 	}
-	
+
 }
-
-	
-	
-	
-	
-

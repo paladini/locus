@@ -30,31 +30,33 @@
 				<div class="col-md-10 center">
 					<div class="row linha-dica">
 						<div class="col-lg-2">
-							<a href="../principal.jsf"><img
+							<a href="user/principal.jsf"><img
 								src="../images/antigos/logo.png" height="110" width="80"
 								alt="Menu Principal" title="Menu Principal" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href="../professor/index.jsf"><img class="menu-principal"
+							<a href="user/professor/index.jsf"><img class="menu-principal"
 								src="../images/principal/professor.png"
 								alt="Gerenciar Professores" title="Gerenciar Professores" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href="../salas/index.jsf"><img src="../images/principal/sala.png"
-								alt="Gerenciar Salas" title="Gerenciar Salas" class="menu-principal"/></a>
+							<a href="user/salas/index.jsf"><img
+								src="../images/principal/sala.png" alt="Gerenciar Salas"
+								title="Gerenciar Salas" class="menu-principal" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href="../turma/index.jsf"><img
+							<a href="user/turma/index.jsf"><img
 								src="../images/principal/turma.png" class="menu-principal"
 								alt="Gerenciar Turmas" title="Gerenciar Turmas" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href="../escola/index.jsf"><img
+							<a href="user/escola/index.jsf"><img
 								src="../images/principal/escola.png" class="menu-principal"
 								alt="Gerenciar Escola" title="Gerenciar Escola" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href=""><img src="../images/principal/ensalamento-selecionado.png"
+							<a href=""><img
+								src="../images/principal/ensalamento-selecionado.png"
 								class="menu-principal" alt="Gerar Ensalamento"
 								title="Gerar Ensalamento" /></a>
 						</div>
@@ -63,7 +65,7 @@
 					<hr class="featurette-divider" />
 
 					<ol class="breadcrumb">
-						<li><a href="../principal.jsf">Principal</a></li>
+						<li><a href="user/principal.jsf">Principal</a></li>
 						<li class="active">Ensalamento</li>
 					</ol>
 
@@ -71,78 +73,90 @@
 			</div>
 
 			<!-- Conteúdo da página em si -->
-			
-			
-			
-			
-			
-			
-			
-			
-			<h:form>  
-  
-    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">  
-  
-        <h:outputText value="Professores: " />  
-        <p:selectOneMenu value="#{buttonBean.number}">  
-            <f:selectItem itemLabel="Selecione" itemValue="" /> 
-              <f:selectItems value="#{formBean.cars}" /> 
-            <f:selectItem itemLabel="Option 1" itemValue="1" />  
-            <f:selectItem itemLabel="Option 2" itemValue="2" />  
-            <f:selectItem itemLabel="Option 3" itemValue="3" />  
-        </p:selectOneMenu>  
-  
-	  
-  
-    </h:panelGrid>  
-  
-    <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" />  
-  
-    <p:dialog header="Selected Values" modal="true" showEffect="fade" hideEffect="fade" widgetVar="dlg">  
-        <h:panelGrid columns="1" id="display">  
-            <h:outputText value="Value 1: #{buttonBean.number}" />  
-  
-            <h:outputText value="Value 2: #{formBean.car}" />  
-  
-            <h:outputText value="Value 3: #{pprBean.city}" />  
-  
-            <h:outputText value="Value 4: #{autoCompleteBean.selectedPlayer1.name}" rendered="#{not empty autoCompleteBean.selectedPlayer1}" />  
-  
-            <h:outputText value="Value 5: #{autoCompleteBean.selectedPlayer2.name}" rendered="#{not empty autoCompleteBean.selectedPlayer2}" />  
-        </h:panelGrid>  
-    </p:dialog>  
-  
-</h:form>
-			
-			
-			
-			
-			
-			
-			
-			
-			<div class="col-lg-8 center">
-				<h:form id="form">
-					<p:schedule id="schedule" value="#{ensalamentoMBean.eventModel}" 
-						widgetVar="myschedule" view="basicWeek"
-						 showHeader="false" locale="pt" columnFormat="dddd">
-					</p:schedule>
-				
+
+
+
+
+
+
+		
+
+			<h:form>
+			<div style="float: left; padding-left: 10px;">
 					
-				</h:form>
+					<p:selectOneMenu value="#{buttonBean.number}" >
+						<f:selectItem itemLabel="Professores" itemValue="" />
+						<f:selectItems
+							value="#{ensametoMBean.getValuesComboBoxProfessor()}"  />
+						
+					</p:selectOneMenu>
 			</div>
+			<div style="float: left; padding-left: 10px;">
+				
+				<p:selectOneMenu value="#{buttonBean.number}">
+					<f:selectItem itemLabel="Turmas" itemValue="" />
+					<f:selectItems value="#{ensametoMBean.getValuesComboBoxTurma()}" />
 
+				</p:selectOneMenu>
+			</div>
+			<div style="float: left; padding-left: 10px;">
+				
+				<p:selectOneMenu value="#{buttonBean.number}">
+					<f:selectItem itemLabel="Salas" itemValue="" />
+					<f:selectItems value="#{ensametoMBean.getValuesComboBoxSala()}" />
+
+				</p:selectOneMenu>
+			</div>
+			<div style="float: left; padding-left: 10px;">
+				
+				<p:selectOneMenu value="#{buttonBean.number}">
+					<f:selectItem itemLabel="Cursos" itemValue="" />
+					<f:selectItems value="#{ensametoMBean.getValuesComboBoxCurso()}" />
+
+				</p:selectOneMenu>
+			</div>
+			
+			
+			<div style="float: right; padding-right: 10px;">
+				<p:commandButton action="#{ensalamentoMBean.Ensalar()}" value="Gerar Ensalamento"></p:commandButton>
+			</div>
+			
+			
+			<div style="clear: both;" ></div>
+			
+			
+			
+			</h:form>
+
+
+
+
+
+
+
+
+		<div class="col-lg-8 center">
+			<h:form id="form">
+				<p:schedule id="schedule" value="#{ensalamentoMBean.eventModel}"
+					widgetVar="myschedule" view="basicWeek" showHeader="false"
+					locale="pt" columnFormat="dddd">
+				</p:schedule>
+
+
+			</h:form>
 		</div>
 
+	</div>
 
-		<!-- Rodapé -->
-		<div class="row text-center">
-			<footer id="rodape">
-				Entrou aqui por engano? <a href="../index.html#contato">Fique
-					conosco.</a> | Esqueceu sua senha? <a href="esqueci-minha-senha.html">Clique
-					aqui</a>.
-			</footer>
-		</div>
+
+	<!-- Rodapé -->
+	<div class="row text-center">
+		<footer id="rodape">
+			Entrou aqui por engano? <a href="../index.html#contato">Fique
+				conosco.</a> | Esqueceu sua senha? <a href="esqueci-minha-senha.html">Clique
+				aqui</a>.
+		</footer>
+	</div>
 	</div>
 
 	<!-- JavaScripts e Complementos -->
@@ -151,7 +165,7 @@
 	<h:outputScript library="js" name="bootstrap.min.js" />
 	<h:outputScript library="js" name="locus-hoverIt.js" />
 
-	
+
 	<script type="text/javascript">  
     PrimeFaces.locales['pt'] = {  
         dayNames: ['Domingo','Segunda','Terca','Quarta','Quinta','Sexta','Sabado'],  

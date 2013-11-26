@@ -1,6 +1,7 @@
 package mbeans;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -8,11 +9,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
+import control.ControleAdmin;
 import control.ControleDisciplina;
 import control.ControleEnsalamento;
 //import control.ControleEscola;
@@ -31,6 +35,7 @@ public class EnsalamentoMBean {
 
 	private ControleEnsalamento controleEnsalamento;
 	private ScheduleModel eventModel;
+	
 
 	public EnsalamentoMBean() {
 		eventModel = new DefaultScheduleModel();
@@ -43,7 +48,6 @@ public class EnsalamentoMBean {
 		Dia dia =new Dia("segunda");
 		Aula aula = new Aula(professor1,turma1,sala1,turno,curso1,disciplina1,dia,turno,1);
 		adicionarEvento(aula.texto2(), GregorianCalendar.FRIDAY);
-		
 
 		adicionarEvento("teste \n teste2", GregorianCalendar.MONDAY);
 //		adicionarAulas();
@@ -91,6 +95,61 @@ public class EnsalamentoMBean {
 		controleEnsalamento.Ensalar();
 		controleEnsalamento.Persistir();
 		
+		
+	}
+	
+	public Collection<SelectItem> getValuesComboBoxProfessor() {
+		   
+        //SelectItem si = new SelectItem();
+		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
+        ArrayList<Professor> professores = controleEnsalamento.ConsultarByProfessor();
+        Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
+       
+        for (Professor professor : professores) {
+            listaComboBox.add(new SelectItem(professor.getId(), professor.getNome()));
+        }
+       
+        
+        return listaComboBox;
+    }
+	public Collection<SelectItem> getValuesComboBoxTurma() {
+		
+		//SelectItem si = new SelectItem();
+		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
+		ArrayList<Turma> turmas = controleEnsalamento.ConsultarByTurma();
+		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
+		
+		for (Turma turma : turmas) {
+			listaComboBox.add(new SelectItem(turma.getId(), turma.getNome()));
+		}
+		
+		return listaComboBox;
+	}
+	public Collection<SelectItem> getValuesComboBoxSala() {
+		
+		//SelectItem si = new SelectItem();
+		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
+		ArrayList<Sala> salas = controleEnsalamento.ConsultarBySala();
+		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
+		
+		for (Sala sala : salas) {
+			listaComboBox.add(new SelectItem(sala.getId(), sala.getNome()));
+		}
+		
+		return listaComboBox;
+	}
+	public Collection<SelectItem> getValuesComboBoxCurso() {
+		
+		//SelectItem si = new SelectItem();
+		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
+		ArrayList<Curso> cursos = controleEnsalamento.ConsultarByCurso();
+		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
+		
+		for (Curso curso : cursos) {
+			listaComboBox.add(new SelectItem(curso.getId(), curso.getNome()));
+		}
+		
+		return listaComboBox;
 	}
 
 	public void consultarByProfessor(){
