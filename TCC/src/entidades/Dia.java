@@ -37,16 +37,12 @@ public class Dia {
     // Construtores
     public Dia() {
     	super();
-    	Instituicao i = Instituicao.getInstance();
-    	i.addListaDias(this);
     }
     
     public Dia(String nome, int id) {
 		super();
 		this.nome = nome;
 		this.id = id;
-		Instituicao i = Instituicao.getInstance();
-		i.addListaDias(this);
 	}
     
     public Dia(String nome, int id, Turno t1, Turno t2, Turno t3) {
@@ -56,23 +52,17 @@ public class Dia {
 		this.t1 = t1;
 		this.t2 = t2;
 		this.t3 = t3;
-		Instituicao i = Instituicao.getInstance();
-		i.addListaDias(this);
 	}
     
     public Dia(String nome) {
     	super();
     	this.nome = nome;
-    	Instituicao i = Instituicao.getInstance();
-		i.addListaDias(this);
     }
     
     public Dia(int id, String nome) {
     	super();
     	this.id = id;
         this.nome = nome;
-        Instituicao i = Instituicao.getInstance();
-		i.addListaDias(this);
     }
     
     // Métodos

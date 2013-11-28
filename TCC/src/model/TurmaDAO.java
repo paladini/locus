@@ -54,7 +54,7 @@ public class TurmaDAO extends AbstractDAO{
                 listaTurmas.add(turma);
             }
 
-            connection.close();
+//            connection.close();
             return listaTurmas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -95,7 +95,7 @@ public class TurmaDAO extends AbstractDAO{
                 turma.setCurso(curso);
                 this.preparaTurnoConsulta(turma, idTurno);
 
-                connection.close();
+//                connection.close();
                 return turma;
             }
         } catch (SQLException ex) {
@@ -137,7 +137,7 @@ public class TurmaDAO extends AbstractDAO{
                 turma.setCurso(curso);
                 this.preparaTurnoConsulta(turma, idTurno);
 
-                connection.close();
+//                connection.close();
                 return turma;
             }
         } catch (SQLException ex) {

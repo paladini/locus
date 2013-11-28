@@ -40,7 +40,6 @@ public class Professor {
 		this.disciplina = disciplina;
 		this.id = id;
 		inicializarDisponibilidade(5, 3);
-		i.addListaProfessores(this);
 	}
     
     // Métodos
@@ -64,6 +63,7 @@ public class Professor {
 	}
     
     private void inicializarDisponibilidade() {
+    	
     	disponibilidade = new boolean[i.getListaDias().size()][i
 				.getListaPeriodos().size()];
 	}

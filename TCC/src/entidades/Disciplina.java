@@ -38,8 +38,6 @@ public class Disciplina {
 	
 	public Disciplina() {
 		super();
-		Instituicao i = Instituicao.getInstance();
-		i.addListaDisciplinas(this);
 	}
     
     public Disciplina(String nome, int id, ArrayList<Professor> professores) {
@@ -47,8 +45,6 @@ public class Disciplina {
 		this.nome = nome;
 		this.id = id;
 		this.professores = professores;
-		Instituicao i = Instituicao.getInstance();
-		i.addListaDisciplinas(this);
 	}
     
     // Métodos

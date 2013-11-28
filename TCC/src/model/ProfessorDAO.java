@@ -40,7 +40,7 @@ public class ProfessorDAO extends AbstractDAO{
                 professor.setNome(nome);
                 listaProfessores.add(professor);
             }
-            connection.close();
+//            connection.close();
             return listaProfessores;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -76,7 +76,7 @@ public class ProfessorDAO extends AbstractDAO{
             professor.setId(id);
             professor.setNome(nome);
 
-            connection.close();
+//            connection.close();
             return professor;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -114,7 +114,7 @@ public class ProfessorDAO extends AbstractDAO{
                 connection.close();
                 return professor;
             }
-            connection.close();
+//            connection.close();
             return professor;
            
         } catch (SQLException ex) {

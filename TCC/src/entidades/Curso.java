@@ -12,6 +12,7 @@ public class Curso {
 	private int id;
 	private String nome;
 
+
 	private ArrayList<Disciplina> disciplinas;
 	private ArrayList<Turma> turmas;
 
@@ -25,9 +26,6 @@ public class Curso {
 	public Curso() {
 		super();
 		disciplinas = new ArrayList<Disciplina>();
-
-		Instituicao i = Instituicao.getInstance();
-		i.addListaCurso(this);
 	}
 
 	public Curso(int id, String nome) {
@@ -50,8 +48,6 @@ public class Curso {
 		this.id = id;
 		this.turmas = new ArrayList<Turma>();
 		this.disciplinas = new ArrayList<Disciplina>();
-		Instituicao i = Instituicao.getInstance();
-		i.addListaCurso(this);
 
 	}
 

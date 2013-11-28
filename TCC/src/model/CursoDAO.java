@@ -42,8 +42,6 @@ public class CursoDAO extends AbstractDAO {
             ArrayList<Curso> listaCurso = new ArrayList<Curso>();
             
             /* Enquanto rs.next() for true, ou seja, enquanto existir mais um curso,
-             * ele vai fazendo os comandos que estão ai dentro. Quando não existir
-             * mais um curso (rs.next() == false), ele sai do Loop, fecha a conexão
              * e retorna o ArrayList com todos os cursos.
              */
             while (rs.next()) {
@@ -51,9 +49,6 @@ public class CursoDAO extends AbstractDAO {
                 /*
                  * Cria um curso.
                  * 
-                 * Pega os dados DESSE RESULTADO ESPECÍFICO do banco de dados. Para isso:
-                 * Cria variáveis de acordo com os atributos desse objeto
-                 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
                  * correspondente no banco de dados (rs.getInt("idCurso"). 
                  * 
                  */
@@ -61,25 +56,17 @@ public class CursoDAO extends AbstractDAO {
                 int id = rs.getInt("idcurso");
                 String nome = rs.getString("nome");
                 
-                /* Depois que criou as variáveis e pegou os dados do banco,
-                 * coloca esses dados dentro do objeto criado logo acima.
-                 * Porque? Porque você vai adicionar Objetos no ArrayList, e depois 
-                 * vamos retornar esse arraylist. 
-                 * 
-                 * Se os dados nao fossem colocados em um Objeto, onde iriamos colocar
-                 * os dados de cada linha que retornou no banco de dados? Objetos é o jeito
-                 * certo de se fazer, só para contextualizar pq isso é necessário. 
-                 */ 
                 c.setId(id);
                 c.setNome(nome);
                 listaCurso.add(c);
             }
 
-            connection.close();
+            //connection.close();
             return listaCurso;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
+        } 
+        
         return null;
     }
 
@@ -103,7 +90,6 @@ public class CursoDAO extends AbstractDAO {
                 // Cria uma nova disciplina
                 Curso curso = new Curso();
 
-                // Pega os dados desse registro e guarda em variáveis
                 int id = rs.getInt("idcurso");
                 String nome = rs.getString("nome");
 
@@ -111,10 +97,10 @@ public class CursoDAO extends AbstractDAO {
                 curso.setId(id);
                 curso.setNome(nome);
 
-                connection.close();
+//                connection.close();
                 return curso;
             }else{
-                connection.close();
+//                connection.close();
                 return null;
             }
 
@@ -149,7 +135,7 @@ public class CursoDAO extends AbstractDAO {
                  return c;
              }
 
-             connection.close();
+//             connection.close();
              return null;
          } catch (SQLException ex) {
              System.out.println(ex.getMessage());
@@ -186,7 +172,6 @@ public class CursoDAO extends AbstractDAO {
      */
     public void deletar(int idCurso) {
 
-//         Chama um outro método para excluir as disciplinas associadas a esse curso.
         this.deletarAssociacoes(idCurso);
 
         String sql = "DELETE FROM curso WHERE idcurso = ?;";
@@ -199,7 +184,6 @@ public class CursoDAO extends AbstractDAO {
      * 
      *    ======================================================================
      * 
-     *                   Métodos de interação curso-disciplina
      * 
      *    ======================================================================
      * 
@@ -238,7 +222,6 @@ public class CursoDAO extends AbstractDAO {
     }
 
     /**
-     * Retorna a lista de todas as disciplinas não associadas à esse curso
      *
      * @param curso
      */
@@ -302,7 +285,6 @@ public class CursoDAO extends AbstractDAO {
      * 
      *    ======================================================================
      * 
-     *                   Métodos de interação curso-turma
      * 
      *    ======================================================================
      * 
@@ -335,7 +317,7 @@ public class CursoDAO extends AbstractDAO {
                 
                 turma.setId(id);
                 turma.setNome(nome);
-                turma.setCurso(curso); // O curso desta turma é o mesmo que está sendo enviado pelo método (clausala "where idcurso = esteCurso")
+                turma.setCurso(curso);
                 listaTurmas.add(turma);
             }
 
@@ -353,13 +335,10 @@ public class CursoDAO extends AbstractDAO {
     /*
      * ============================================
      * 
-     *                Métodos Privados
      * 
      * ============================================
      */
     /**
-     * Deleta todas as associações entre curso e disciplina. (Necessário para
-     * poder excluir o curso sem deixar dependências).
      *
      * @param curso
      */
@@ -381,10 +360,7 @@ public class CursoDAO extends AbstractDAO {
      * ============================================
      */
     /**
-     * Faz uma consulta no banco de dados pesquisando pelos termos digitados até
      * o momento.
-     *
-     * @param termos Termos digitados pelo usuário.
      * @return
      */
     @Deprecated

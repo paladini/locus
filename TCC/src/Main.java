@@ -7,6 +7,7 @@ import model.DisciplinaDAO;
 import model.ProfessorDAO;
 import model.SalaDAO;
 import model.TurmaDAO;
+import model.TurnoDAO;
 
 import control.ControleEnsalamento;
 import entidades.Aula;
@@ -16,6 +17,7 @@ import entidades.Instituicao;
 import entidades.Professor;
 import entidades.Sala;
 import entidades.Turma;
+import entidades.Turno;
 
 public class Main {
 
@@ -33,6 +35,12 @@ public class Main {
 		// Curso curso3 = new Curso("Inf3",3,null,null);
 		// Curso curso4 = new Curso("Inf4",4,null,null);
 		// Curso curso5 = new Curso("Inf5",5,null,null);
+		
+		//turno
+		Turno turno1 = new Turno("Matutino",0);
+		Turno turno2 = new Turno("Vespertino",1);
+		Turno turno3 = new Turno("Noturno",2);
+		
 
 		// turmas
 		Turma turma1 = new Turma(1, "t1", curso1, 1);
@@ -40,6 +48,7 @@ public class Main {
 		Turma turma3 = new Turma(3, "t3", curso1, 1);
 		Turma turma4 = new Turma(4, "t4", curso1, 1);
 		Turma turma5 = new Turma(5, "t5", curso1, 1);
+		
 		
 
 		// Instituicao.addListaTurmas(new Turma("t1", curso1, 1));
@@ -154,6 +163,12 @@ public class Main {
 		CursoDAO cursoDAO = new CursoDAO();
 		cursoDAO.inserir(curso1);
 		
+		TurnoDAO turnoDAO = new TurnoDAO();
+		turnoDAO.inserir(turno1);
+		turnoDAO.inserir(turno2);
+		turnoDAO.inserir(turno3);
+		
+			
 		TurmaDAO turmaDao = new TurmaDAO();
 		turmaDao.inserir(turma1);
 		turmaDao.inserir(turma2);
@@ -193,12 +208,10 @@ public class Main {
 		
 		
 //---------------------------------------------------------------------
-//		TODO codigo certo
 		
 		ControleEnsalamento processarEnsalamento = new ControleEnsalamento();
 		ArrayList<Aula> aulas;
 //		processarEnsalamento.Ensalar();
-//		 TODO falar Daniel (ele esta fazendo mil vezes )
 		processarEnsalamento.Ensalar();
 		aulas = processarEnsalamento.getAulas(); 
 		printGradeHorario(aulas);

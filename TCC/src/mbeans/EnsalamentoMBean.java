@@ -118,8 +118,10 @@ public class EnsalamentoMBean {
 			listaComboBox.add(new SelectItem(professor.getId(), professor
 					.getNome()));
 		}
-
+		SelectItem item = new SelectItem("---");
+		listaComboBox.add(item);
 		return listaComboBox;
+		
 	}
 
 	public Collection<SelectItem> getValuesComboBoxTurma() {
@@ -132,7 +134,8 @@ public class EnsalamentoMBean {
 		for (Turma turma : turmas) {
 			listaComboBox.add(new SelectItem(turma.getId(), turma.getNome()));
 		}
-
+		SelectItem item = new SelectItem("---");
+		listaComboBox.add(item);
 		return listaComboBox;
 	}
 

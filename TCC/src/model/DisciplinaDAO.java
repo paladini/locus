@@ -42,7 +42,7 @@ public class DisciplinaDAO extends AbstractDAO {
                 listaClientes.add(c);
             }
 
-            connection.close();
+//            connection.close();
             return listaClientes;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -77,7 +77,7 @@ public class DisciplinaDAO extends AbstractDAO {
             disciplina.setId(id);
             disciplina.setNome(nome);
 
-            connection.close();
+//            connection.close();
             return disciplina;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -113,7 +113,7 @@ public class DisciplinaDAO extends AbstractDAO {
             disciplina.setId(id);
             disciplina.setNome(nome);
 
-            connection.close();
+//            connection.close();
             return disciplina;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

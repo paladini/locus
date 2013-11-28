@@ -51,7 +51,7 @@ public class SalaDAO extends AbstractDAO{
                 listaSalas.add(sala);
             }
 
-            connection.close();
+//            connection.close();
             return listaSalas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -91,7 +91,7 @@ public class SalaDAO extends AbstractDAO{
                 sala.setUsar2(usar2);
                 sala.setUsar3(usar3);
                 
-                connection.close();
+//                connection.close();
                 return sala;
             }else{
             	return null;
@@ -137,7 +137,7 @@ public class SalaDAO extends AbstractDAO{
                 sala.setUsar2(usar2);
                 sala.setUsar3(usar3);
 
-                connection.close();
+//                connection.close();
                 return sala;
 
             }else{
@@ -236,7 +236,7 @@ public class SalaDAO extends AbstractDAO{
                 listaSalas.add(sala);
             }
 
-            connection.close();
+//            connection.close();
             return listaSalas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

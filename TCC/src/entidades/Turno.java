@@ -38,16 +38,12 @@ public class Turno {
     public Turno(String nome) {
     	super();
     	this.nome = nome;
-    	Instituicao i = Instituicao.getInstance();
-		i.addListaPeriodos(this);
     }
     
     public Turno(String nome, int id) {
 		super();
 		this.nome = nome;
 		this.id = id;
-		Instituicao i = Instituicao.getInstance();
-		i.addListaPeriodos(this);
 	}
     
 	public Turno(int id, String nome, ArrayList<Dia> listaDias) {
@@ -55,8 +51,6 @@ public class Turno {
 		this.id = id;
 		this.nome = nome;
 		this.listaDias = listaDias;
-		Instituicao i = Instituicao.getInstance();
-		i.addListaPeriodos(this);
 	}
 	
 	

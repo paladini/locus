@@ -22,16 +22,12 @@ public class Sala {
     // Construtores
 	public Sala() {
 		super();
-		Instituicao i = Instituicao.getInstance();
-		i.addListaSala(this);
 	}
 	
 	public Sala(String nome, int id) {
 		super();
 		this.nome = nome;
 		this.id = id;
-		Instituicao i = Instituicao.getInstance();
-		i.addListaSala(this);
 	}
     
     public Sala(String nome){

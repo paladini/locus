@@ -26,7 +26,7 @@ public abstract class AbstractDAO {
             preparacao(ps, lista);
             
             ps.executeUpdate();
-            connection.close();
+            //connection.close();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }

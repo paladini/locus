@@ -25,8 +25,6 @@ public class Turma {
     // Construtores
     public Turma() {
     	super();
-    	Instituicao i = Instituicao.getInstance();
-		i.addListaTurmas(this);
     }
     
     public Turma(int id, String nome){
@@ -46,8 +44,6 @@ public class Turma {
 		this.nome = nome;
 		this.curso = curso;
 		this.turno = turno;
-		Instituicao i = Instituicao.getInstance();
-		i.addListaTurmas(this);
 	}
 
 	public Turma(int id, String nome, Curso curso, ArrayList<Aula> aulas,
@@ -58,8 +54,6 @@ public class Turma {
 		this.curso = curso;
 		this.aulas = aulas;
 		this.turno = turno;
-		Instituicao i = Instituicao.getInstance();
-		i.addListaTurmas(this);
 	}
 
 	public Turma(String nome, Curso idCurso) {
