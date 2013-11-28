@@ -92,7 +92,7 @@ public class AulaDao extends AbstractDAO {
                 listaAula.add(a);
             }
 
-            connection.close();
+             
             return listaAula;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -167,7 +167,7 @@ public class AulaDao extends AbstractDAO {
 				listaAula.add(a);
 			}
 			
-			connection.close();
+			 
 			return listaAula;
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
@@ -241,7 +241,7 @@ public class AulaDao extends AbstractDAO {
 				listaAula.add(a);
 			}
 			
-			connection.close();
+			 
 			return listaAula;
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
@@ -315,7 +315,7 @@ public class AulaDao extends AbstractDAO {
 				listaAula.add(a);
 			}
 			
-			connection.close();
+			 
 			return listaAula;
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
@@ -389,7 +389,7 @@ public class AulaDao extends AbstractDAO {
 				listaAula.add(a);
 			}
 			
-			connection.close();
+			 
 			return listaAula;
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
@@ -463,7 +463,7 @@ public class AulaDao extends AbstractDAO {
 				listaAula.add(a);
 			}
 			
-			connection.close();
+			 
 			return listaAula;
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
@@ -537,7 +537,7 @@ public class AulaDao extends AbstractDAO {
 				listaAula.add(a);
 			}
 			
-			connection.close();
+			 
 			return listaAula;
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
@@ -611,7 +611,7 @@ public class AulaDao extends AbstractDAO {
 				listaAula.add(a);
 			}
 			
-			connection.close();
+			 
 			return listaAula;
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());

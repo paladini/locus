@@ -45,7 +45,6 @@ public class TurnoDAO extends AbstractDAO {
                 listaTurnos.add(turno);
                
             }
-            connection.close();
             return listaTurnos;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -79,10 +78,10 @@ public class TurnoDAO extends AbstractDAO {
                 turno.setNome(nome);
                 turno.setAtivo(ativo);
 
-                connection.close();
+                 
                 return turno;
             }else{
-                connection.close();
+                 
                 return null;
             }
         } catch (SQLException ex) {
@@ -117,10 +116,10 @@ public class TurnoDAO extends AbstractDAO {
                 turno.setNome(nome);
                 turno.setAtivo(ativo);
 
-                connection.close();
+                 
                 return turno;
             }else{
-                connection.close();
+                 
                 return null;
             }
         } catch (SQLException ex) {
@@ -134,7 +133,7 @@ public class TurnoDAO extends AbstractDAO {
      * @param turno
      */
     public void inserir(Turno turno) {
-        String sql = "INSERT INTO turno (nome, ativo) VALUES (?, 0);";
+        String sql = "INSERT INTO turno (nome, ativo) VALUES (?, 1);";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(turno.getNome());
         operacaoEscrita(sql, params);
@@ -214,7 +213,7 @@ public class TurnoDAO extends AbstractDAO {
                 listaDias.add(dia);
             }
 
-            connection.close();
+             
             return listaDias;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -249,7 +248,7 @@ public class TurnoDAO extends AbstractDAO {
                 listaDias.add(dia);
             }
 
-            connection.close();
+             
             return listaDias;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

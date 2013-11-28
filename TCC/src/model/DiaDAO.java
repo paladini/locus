@@ -47,7 +47,6 @@ public class DiaDAO extends AbstractDAO {
                  listaDias.add(preparaTurnosDoDia(dia));
                  
              }
-             connection.close();
              return listaDias;
              
          } catch (SQLException ex) {
@@ -83,10 +82,8 @@ public class DiaDAO extends AbstractDAO {
                  dia.setNome(nome);
                  dia.setAtivo(ativo);
 
-                connection.close();
                 return preparaTurnosDoDia(dia);
             }else{
-                connection.close();
                 return null;
             }
         } catch (SQLException ex) {
@@ -121,10 +118,8 @@ public class DiaDAO extends AbstractDAO {
                  dia.setNome(nome);
                  dia.setAtivo(ativo);
 
-                 connection.close();
                  return preparaTurnosDoDia(dia);
              }else{
-                 connection.close();
                  return null;
              }
          } catch (SQLException ex) {
@@ -214,7 +209,6 @@ public class DiaDAO extends AbstractDAO {
                 listaTurnos.add(turno);
             }
 
-            connection.close();
             return listaTurnos;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -249,7 +243,6 @@ public class DiaDAO extends AbstractDAO {
                 listaTurnos.add(turno);
             }
 
-            connection.close();
             return listaTurnos;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

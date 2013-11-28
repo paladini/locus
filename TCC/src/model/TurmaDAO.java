@@ -54,7 +54,7 @@ public class TurmaDAO extends AbstractDAO{
                 listaTurmas.add(turma);
             }
 
-//            connection.close();
+//             
             return listaTurmas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -95,7 +95,7 @@ public class TurmaDAO extends AbstractDAO{
                 turma.setCurso(curso);
                 this.preparaTurnoConsulta(turma, idTurno);
 
-//                connection.close();
+//                 
                 return turma;
             }
         } catch (SQLException ex) {
@@ -137,7 +137,7 @@ public class TurmaDAO extends AbstractDAO{
                 turma.setCurso(curso);
                 this.preparaTurnoConsulta(turma, idTurno);
 
-//                connection.close();
+//                 
                 return turma;
             }
         } catch (SQLException ex) {
@@ -233,7 +233,7 @@ public class TurmaDAO extends AbstractDAO{
                 curso.setId(id);
                 curso.setNome(nome);
 
-                connection.close();
+                 
                 return curso;
             }
         } catch (SQLException ex) {
@@ -376,7 +376,7 @@ public class TurmaDAO extends AbstractDAO{
                 listaTurmas.add(turma);
             }
 
-            connection.close();
+             
             return listaTurmas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -405,7 +405,7 @@ public class TurmaDAO extends AbstractDAO{
             prest.setString(3, turmaAntiga.getNome());
 
             prest.execute();
-            connection.close();
+             
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

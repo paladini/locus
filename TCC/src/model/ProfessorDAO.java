@@ -40,7 +40,7 @@ public class ProfessorDAO extends AbstractDAO{
                 professor.setNome(nome);
                 listaProfessores.add(professor);
             }
-//            connection.close();
+//             
             return listaProfessores;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -76,7 +76,7 @@ public class ProfessorDAO extends AbstractDAO{
             professor.setId(id);
             professor.setNome(nome);
 
-//            connection.close();
+//             
             return professor;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -111,10 +111,10 @@ public class ProfessorDAO extends AbstractDAO{
                 professor.setId(id);
                 professor.setNome(nome);
 
-                connection.close();
+                 
                 return professor;
             }
-//            connection.close();
+//             
             return professor;
            
         } catch (SQLException ex) {
@@ -197,7 +197,7 @@ public class ProfessorDAO extends AbstractDAO{
                 listaDisciplinas.add(disciplina);
             }
 
-            connection.close();
+             
             return listaDisciplinas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -230,7 +230,7 @@ public class ProfessorDAO extends AbstractDAO{
                 listaDisciplinas.add(disciplina);
             }
 
-            connection.close();
+             
             return listaDisciplinas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -325,7 +325,7 @@ public class ProfessorDAO extends AbstractDAO{
                 listaProfessores.add(professor);
             }
 
-            connection.close();
+             
             return listaProfessores;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

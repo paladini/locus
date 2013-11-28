@@ -31,8 +31,8 @@ public class Turno {
     // Construtores
     public Turno() {
 		super();
-		Instituicao i = Instituicao.getInstance();
-		i.addListaPeriodos(this);
+//		Instituicao i = Instituicao.getInstance();
+//		i.addListaPeriodos(this);
 	}
     
     public Turno(String nome) {

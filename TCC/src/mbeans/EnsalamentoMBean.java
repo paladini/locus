@@ -33,7 +33,7 @@ import entidades.Turno;
 @SessionScoped
 public class EnsalamentoMBean {
 
-	private ControleEnsalamento controleEnsalamento;
+	private ControleEnsalamento controleEnsalamento = ControleEnsalamento.getInstance();
 	private ScheduleModel eventModel;
 
 	private SelectItem professorSelecionado = new SelectItem();
@@ -45,14 +45,14 @@ public class EnsalamentoMBean {
 
 	public EnsalamentoMBean() {
 		eventModel = new DefaultScheduleModel();
-		Curso curso1 = new Curso("inf1", 1, null, null);
-		Turma turma1 = new Turma(1, "t1", curso1, 1);
-		Sala sala1 = new Sala("sala1", 1);
+		Curso curso1 = new Curso("Tec. Inf.", 1, null, null);
+		Turma turma1 = new Turma(1, "V2", curso1, 1);
+		Sala sala1 = new Sala("G24", 1);
 		Disciplina disciplina1 = new Disciplina("POO2", 1,
 				new ArrayList<Professor>());
 		Professor professor1 = new Professor("Daniel",
 				new ArrayList<Disciplina>(), 1);
-		Turno turno = new Turno("turno1");
+		Turno turno = new Turno("Vesp.");
 		Dia dia = new Dia("segunda");
 		Aula aula = new Aula(professor1, turma1, sala1, turno, curso1,
 				disciplina1, dia, turno, 1);
@@ -109,7 +109,6 @@ public class EnsalamentoMBean {
 	public Collection<SelectItem> getValuesComboBoxProfessor() {
 
 		// SelectItem si = new SelectItem();
-		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
 		ArrayList<Professor> professores = controleEnsalamento
 				.ConsultarByProfessor();
 		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
@@ -118,8 +117,6 @@ public class EnsalamentoMBean {
 			listaComboBox.add(new SelectItem(professor.getId(), professor
 					.getNome()));
 		}
-		SelectItem item = new SelectItem("---");
-		listaComboBox.add(item);
 		return listaComboBox;
 		
 	}
@@ -127,22 +124,18 @@ public class EnsalamentoMBean {
 	public Collection<SelectItem> getValuesComboBoxTurma() {
 
 		// SelectItem si = new SelectItem();
-		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
 		ArrayList<Turma> turmas = controleEnsalamento.ConsultarByTurma();
 		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
 
 		for (Turma turma : turmas) {
 			listaComboBox.add(new SelectItem(turma.getId(), turma.getNome()));
 		}
-		SelectItem item = new SelectItem("---");
-		listaComboBox.add(item);
 		return listaComboBox;
 	}
 
 	public Collection<SelectItem> getValuesComboBoxSala() {
 
 		// SelectItem si = new SelectItem();
-		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
 		ArrayList<Sala> salas = controleEnsalamento.ConsultarBySala();
 		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
 
@@ -156,7 +149,6 @@ public class EnsalamentoMBean {
 	public Collection<SelectItem> getValuesComboBoxCurso() {
 
 		// SelectItem si = new SelectItem();
-		ControleEnsalamento controleEnsalamento = new ControleEnsalamento();
 		ArrayList<Curso> cursos = controleEnsalamento.ConsultarByCurso();
 		Collection<SelectItem> listaComboBox = new ArrayList<SelectItem>();
 

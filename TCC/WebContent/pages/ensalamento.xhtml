@@ -35,12 +35,12 @@
 								alt="Menu Principal" title="Menu Principal" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href="user/professor/index.jsf"><img class="menu-principal"
-								src="../images/principal/professor.png"
+							<a href="user/professor/index.jsf"><img
+								class="menu-principal" src="../images/principal/professor.png"
 								alt="Gerenciar Professores" title="Gerenciar Professores" /></a>
 						</div>
 						<div class="col-lg-2">
-							<a href="user/salas/index.jsf"><img
+							<a href="user/sala/index.jsf"><img
 								src="../images/principal/sala.png" alt="Gerenciar Salas"
 								title="Gerenciar Salas" class="menu-principal" /></a>
 						</div>
@@ -73,92 +73,91 @@
 			</div>
 
 			<!-- Conteúdo da página em si -->
+			<div class="col-lg-8 center">
+				<h:form>
+					<div style="float: left; padding-left: 10px;">
+
+						<p:selectOneMenu value="#{ensalamentoMBean.professorSelecionado}"
+							valueChangeListener="#{ensalamentoMBean.consultarByProfessorSelectItem}">
+							<!-- converter="omnifaces.SelectItemsConverter" -->
+
+							<f:selectItem itemLabel="Professores" itemValue="" />
+							<f:selectItems
+								value="#{ensalamentoMBean.valuesComboBoxProfessor}" />
+							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
+
+						</p:selectOneMenu>
+					</div>
+					<div style="float: left; padding-left: 10px;">
+
+						<p:selectOneMenu value="#{ensalamentoMBean.turmaSelecionado}"
+							valueChangeListener="#{ensalamentoMBean.consultarByTurmaSelectItem}">
+							<f:selectItem itemLabel="Turmas" itemValue="" />
+							<f:selectItems value="#{ensalamentoMBean.valuesComboBoxTurma}" />
+
+						</p:selectOneMenu>
+					</div>
+					<div style="float: left; padding-left: 10px;">
+
+						<p:selectOneMenu value="#{ensalamentoMBean.salaSelecionado}"
+							valueChangeListener="#{ensalamentoMBean.consultarBySalaSelectItem}">
+							<f:selectItem itemLabel="Salas" itemValue="" />
+							<f:selectItems value="#{ensalamentoMBean.valuesComboBoxSala}" />
+
+						</p:selectOneMenu>
+					</div>
+					<div style="float: left; padding-left: 10px;">
+
+						<p:selectOneMenu value="#{ensalamentoMBean.cursoSelecionado}"
+							valueChangeListener="#{ensalamentoMBean.consultarByCursoSelectItem}">
+							<f:selectItem itemLabel="Cursos" itemValue="" />
+							<f:selectItems value="#{ensalamentoMBean.valuesComboBoxCurso}" />
+
+						</p:selectOneMenu>
+					</div>
+				</h:form>
+				<h:form>
+					<div style="float: right; padding-right: 10px;">
+						<p:commandButton action="#{ensalamentoMBean.Ensalar}"
+							value="Gerar Ensalamento"></p:commandButton>
+					</div>
+
+
+					<div style="clear: both;"></div>
+
+
+
+				</h:form>
 
 
 
 
 
 
-		
 
-			<h:form>
-			<div style="float: left; padding-left: 10px;">
-					
-					<p:selectOneMenu value="#{ensalamentoMBean.professorSelecionado}" valueChangeListener="#{ensalamentoMBean.consultarByProfessorSelectItem}" >
-					<!-- converter="omnifaces.SelectItemsConverter" -->
-					
-						<f:selectItem itemLabel="Professores" itemValue="" />
-						<f:selectItems value="#{ensametoMBean.getValuesComboBoxProfessor()}"  />
-						<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
-						
-					</p:selectOneMenu>
+
+
+				<h:form id="form">
+					<p:schedule id="schedule" value="#{ensalamentoMBean.eventModel}"
+						widgetVar="myschedule" view="basicWeek" showHeader="false"
+						locale="pt" columnFormat="dddd">
+					</p:schedule>
+
+
+				</h:form>
 			</div>
-			<div style="float: left; padding-left: 10px;">
-				
-				<p:selectOneMenu value="#{buttonBean.number}">
-					<f:selectItem itemLabel="Turmas" itemValue="" />
-					<f:selectItems value="#{ensametoMBean.getValuesComboBoxTurma()}" />
 
-				</p:selectOneMenu>
-			</div>
-			<div style="float: left; padding-left: 10px;">
-				
-				<p:selectOneMenu value="#{buttonBean.number}">
-					<f:selectItem itemLabel="Salas" itemValue="" />
-					<f:selectItems value="#{ensametoMBean.getValuesComboBoxSala()}" />
-
-				</p:selectOneMenu>
-			</div>
-			<div style="float: left; padding-left: 10px;">
-				
-				<p:selectOneMenu value="#{buttonBean.number}">
-					<f:selectItem itemLabel="Cursos" itemValue="" />
-					<f:selectItems value="#{ensametoMBean.getValuesComboBoxCurso()}" />
-
-				</p:selectOneMenu>
-			</div>
-			
-			
-			<div style="float: right; padding-right: 10px;">
-				<p:commandButton action="#{ensalamentoMBean.Ensalar()}" value="Gerar Ensalamento"></p:commandButton>
-			</div>
-			
-			
-			<div style="clear: both;" ></div>
-			
-			
-			
-			</h:form>
-
-
-
-
-
-
-
-
-		<div class="col-lg-8 center">
-			<h:form id="form">
-				<p:schedule id="schedule" value="#{ensalamentoMBean.eventModel}"
-					widgetVar="myschedule" view="basicWeek" showHeader="false"
-					locale="pt" columnFormat="dddd">
-				</p:schedule>
-
-
-			</h:form>
 		</div>
 
-	</div>
 
-
-	<!-- Rodapé -->
-	<div class="row text-center">
-		<footer id="rodape">
-			Entrou aqui por engano? <a href="../index.html#contato">Fique
-				conosco.</a> | Esqueceu sua senha? <a href="esqueci-minha-senha.html">Clique
-				aqui</a>.
-		</footer>
-	</div>
+		<!-- Rodapé -->
+		<div class="row text-center">
+			<footer id="rodape">
+				Entrou aqui por engano? <a href="../index.html#contato">Fique
+					conosco.</a> | Esqueceu sua senha? <a href="esqueci-minha-senha.html">Clique
+					aqui</a>.
+			</footer>
+		</div>
 	</div>
 
 	<!-- JavaScripts e Complementos -->
@@ -168,20 +167,18 @@
 	<h:outputScript library="js" name="locus-hoverIt.js" />
 
 
-	<script type="text/javascript">  
-    PrimeFaces.locales['pt'] = {  
-        dayNames: ['Domingo','Segunda','Terca','Quarta','Quinta','Sexta','Sabado'],  
-        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],  
-        dayNamesMin: ['D','S','T','Q','Q','S','S'],  
-        firstDay: 1,  
-        isRTL: false,  
-        yearSuffix: '',  
-        week: 'Semana', 
-        day: 'Dia' 
-    };
-    
-    
-        
+	<script type="text/javascript">
+		PrimeFaces.locales['pt'] = {
+			dayNames : [ 'Domingo', 'Segunda', 'Terca', 'Quarta', 'Quinta',
+					'Sexta', 'Sabado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			firstDay : 1,
+			isRTL : false,
+			yearSuffix : '',
+			week : 'Semana',
+			day : 'Dia'
+		};
 	</script>
 	<!-- Validações desta página -->
 

@@ -61,7 +61,7 @@ public class CursoDAO extends AbstractDAO {
                 listaCurso.add(c);
             }
 
-            //connection.close();
+            // 
             return listaCurso;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -97,10 +97,10 @@ public class CursoDAO extends AbstractDAO {
                 curso.setId(id);
                 curso.setNome(nome);
 
-//                connection.close();
+//                 
                 return curso;
             }else{
-//                connection.close();
+//                 
                 return null;
             }
 
@@ -135,7 +135,7 @@ public class CursoDAO extends AbstractDAO {
                  return c;
              }
 
-//             connection.close();
+//              
              return null;
          } catch (SQLException ex) {
              System.out.println(ex.getMessage());
@@ -213,7 +213,7 @@ public class CursoDAO extends AbstractDAO {
                 listaDisciplinas.add(disciplina);
             }
 
-            connection.close();
+             
             return listaDisciplinas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -245,7 +245,7 @@ public class CursoDAO extends AbstractDAO {
                 listaDisciplinas.add(disciplina);
             }
 
-            connection.close();
+             
             return listaDisciplinas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -321,7 +321,7 @@ public class CursoDAO extends AbstractDAO {
                 listaTurmas.add(turma);
             }
 
-            connection.close();
+             
             return listaTurmas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -384,7 +384,7 @@ public class CursoDAO extends AbstractDAO {
                 listaCursos.add(c);
             }
 
-            connection.close();
+             
             return listaCursos;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

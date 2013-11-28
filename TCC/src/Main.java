@@ -163,10 +163,10 @@ public class Main {
 		CursoDAO cursoDAO = new CursoDAO();
 		cursoDAO.inserir(curso1);
 		
-		TurnoDAO turnoDAO = new TurnoDAO();
-		turnoDAO.inserir(turno1);
-		turnoDAO.inserir(turno2);
-		turnoDAO.inserir(turno3);
+//		TurnoDAO turnoDAO = new TurnoDAO();
+//		turnoDAO.inserir(turno1);
+//		turnoDAO.inserir(turno2);
+//		turnoDAO.inserir(turno3);
 		
 			
 		TurmaDAO turmaDao = new TurmaDAO();
@@ -209,7 +209,7 @@ public class Main {
 		
 //---------------------------------------------------------------------
 		
-		ControleEnsalamento processarEnsalamento = new ControleEnsalamento();
+		ControleEnsalamento processarEnsalamento = ControleEnsalamento.getInstance();
 		ArrayList<Aula> aulas;
 //		processarEnsalamento.Ensalar();
 		processarEnsalamento.Ensalar();

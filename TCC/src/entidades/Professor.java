@@ -19,7 +19,7 @@ public class Professor {
     private String nome;
     private ArrayList<Disciplina> disciplina;
     private boolean[][] disponibilidade;
-    Instituicao i = Instituicao.getInstance();
+//    Instituicao i = Instituicao.getInstance();
     
     // Construtores
     public Professor() {
@@ -63,7 +63,7 @@ public class Professor {
 	}
     
     private void inicializarDisponibilidade() {
-    	
+    	Instituicao i = Instituicao.getInstance();
     	disponibilidade = new boolean[i.getListaDias().size()][i
 				.getListaPeriodos().size()];
 	}

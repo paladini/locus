@@ -22,12 +22,21 @@ import entidades.Turno;
 
 public class ControleEnsalamento {
 
+	
+	private static ControleEnsalamento singleton;
 	private ArrayList<Aula> aulas;
 	ArrayList<Aula> aulasFinal;
 	Instituicao instituicao = Instituicao.getInstance();
 	AulaDao aulaDao = new AulaDao();
-
-	public ControleEnsalamento() {
+	
+	public static ControleEnsalamento getInstance(){
+		if (singleton == null){
+			singleton = new ControleEnsalamento();
+		}
+		return singleton;
+	}
+	
+	private ControleEnsalamento() {
 		init();
 	}
 
@@ -51,6 +60,8 @@ public class ControleEnsalamento {
 
 				// verificacao turmas do turno
 				ArrayList<Turma> turma = new ArrayList<Turma>();
+				ControleTurma turmas = ControleTurma.getInstance();
+				curso.get(j).setTurmas(turmas.consultar());
 				for (int k = 0; k < curso.get(j).getTurmas().size(); k++) {
 					if (i == curso.get(j).getTurmas().get(k).getTurno()) {
 						turma.add(curso.get(j).getTurmas().get(k));
@@ -73,21 +84,39 @@ public class ControleEnsalamento {
 						Aula aula = a; // foi adicionada
 						ArrayList<Sala> salas = instituicao.getListaSala();
 						aula.setSala(salas.get(k));
+						
+						ControleTurno controleTurno = ControleTurno.getInstance();
 						if (i == 0) {
-							Turno turno = new Turno("manha", i);
-							aula.setTurno(turno);
+							aula.setTurno(controleTurno.consultar(i));
 							aula.getSala().setUsar1(true);
 						}
 						if (i == 1) {
-							Turno turno = new Turno("tarde", i);
-							aula.setTurno(turno);
+							aula.setTurno(controleTurno.consultar(i));
 							aula.getSala().setUsar2(true);
 						}
 						if (i == 2) {
-							Turno turno = new Turno("noite", i);
-							aula.setTurno(turno);
+							aula.setTurno(controleTurno.consultar(i));
 							aula.getSala().setUsar3(true);
 						}
+						
+						// Antigo (sem BD)
+//						if (i == 0) {
+//							Turno turno = new Turno("manha", i);
+//							aula.setTurno(turno);
+//							aula.getSala().setUsar1(true);
+//						}
+//						if (i == 1) {
+//							Turno turno = new Turno("tarde", i);
+//							aula.setTurno(turno);
+//							aula.getSala().setUsar2(true);
+//						}
+//						if (i == 2) {
+//							Turno turno = new Turno("noite", i);
+//							aula.setTurno(turno);
+//							aula.getSala().setUsar3(true);
+//						}
+						
+						
 						aula.setCurso(curso.get(j));
 						aula.setTurma(turma.get(k));
 						// ArrayList<Disciplina> disciplinas = instituicao
@@ -176,34 +205,39 @@ public class ControleEnsalamento {
 
 						// --------------------------------------------
 
-						for (int l = 0; l < 5; l++) {
-							Dia dia = new Dia("", l);
-							instituicao.getListaDias().add(dia);
-						}
-
+						
+						
 						// imprimir
-						for (int l = 0; l < 5; l++) {
-
-							if (l < 5) {
-								turma.get(k).getAulas().add(aula);
-								if (k2 == 0)
-									aula.setDia(new Dia("seg", k2));
-								if (k2 == 1)
-									aula.setDia(new Dia("ter", k2));
-								if (k2 == 2)
-									aula.setDia(new Dia("qua", k2));
-								if (k2 == 3)
-									aula.setDia(new Dia("qui", k2));
-								if (k2 == 4)
-									aula.setDia(new Dia("sex", k2));
-
-								// System.out.println(aula.toString());
-								aulas.add(aula);
-
-							}
-							break;
-
-						}
+						ControleDia controleDia = ControleDia.getInstance();
+							aula.setDia(controleDia.consultar(k2));
+							aulas.add(aula);
+						
+//						for (int l = 0; l < 5; l++) {
+//							Dia dia = new Dia("", l);
+//							instituicao.getListaDias().add(dia);
+//						}
+						
+//						for (int l = 0; l < 5; l++) {
+//
+//							if (l < 5) {
+//								turma.get(k).getAulas().add(aula);
+//								if (k2 == 0)
+//									aula.setDia(new Dia("seg", k2));
+//								if (k2 == 1)
+//									aula.setDia(new Dia("ter", k2));
+//								if (k2 == 2)
+//									aula.setDia(new Dia("qua", k2));
+//								if (k2 == 3)
+//									aula.setDia(new Dia("qui", k2));
+//								if (k2 == 4)
+//									aula.setDia(new Dia("sex", k2));
+//								// System.out.println(aula.toString());
+//								aulas.add(aula);
+//
+//							}
+//							break;
+//
+//						}
 						// sysout método ensalar
 						// System.out.println(aula.toString());
 						// System.out.println();
