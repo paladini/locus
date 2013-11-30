@@ -83,8 +83,12 @@ public class EnsalamentoMBean {
 				diaSemanaGregorianCalendar);
 		calendarioFim.set(GregorianCalendar.HOUR_OF_DAY, 18);
 		calendarioInicio.set(GregorianCalendar.MINUTE, 0);
-		eventModel.addEvent(new DefaultScheduleEvent(descricao,
-				calendarioInicio.getTime(), calendarioFim.getTime()));
+		
+		// Criando o evento com corzinhas viadas
+		DefaultScheduleEvent evento = new DefaultScheduleEvent(descricao,calendarioInicio.getTime(), calendarioFim.getTime());
+		evento.setStyleClass("evento-locus");
+		
+		eventModel.addEvent(evento);
 		System.out.println(calendarioInicio.getTime());
 		System.out.println(calendarioFim.getTime());
 	}
