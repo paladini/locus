@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.model.DefaultScheduleEvent;
@@ -24,8 +25,10 @@ import entidades.Sala;
 import entidades.Turma;
 import entidades.Turno;
 
+
+// Troquei de SessionScoped pra view Scoped não sei pq diabos.
 @ManagedBean(name = "ensalamentoMBean")
-@SessionScoped
+@ViewScoped
 public class EnsalamentoMBean {
 
 	private ControleEnsalamento controleEnsalamento = ControleEnsalamento
@@ -242,7 +245,8 @@ public class EnsalamentoMBean {
 	public ScheduleModel getEventModel() {
 		return eventModel;
 	}
-
+	
+	@Deprecated
 	public void adicionarAulas() {
 		Ensalar();
 		ArrayList<Aula> array = getEnsalamento();
@@ -269,7 +273,8 @@ public class EnsalamentoMBean {
 			adicionarEvento(descricao, diaSemanaGregorianCalendar);
 		}
 	}
-
+	
+	@Deprecated
 	public void adicionarAulasLista(ArrayList<Aula> arrayList) {
 
 		for (int i = 0; i < arrayList.size(); i++) {

@@ -131,14 +131,14 @@
 					
 
 					<div style="float: right; padding-right: 10px;">
-						<p:commandButton actionListener="#{ensalamentoMBean.Ensalar}"
-							value="Gerar Ensalamento" update=":form:schedule" >
+						<h:commandButton actionListener="#{ensalamentoMBean.Ensalar}"
+							value="Gerar Ensalamento" styleClass="btn btn-lg btn-success" update=":form:schedule" >
 							<!-- <p:ajax event="click" execute="@form" update=":form:schedule"
 								render=":form:schedule" />
 							<p:effect type="pulsate" event="load" delay="1000">
 								<f:param name="mode" value="'show'" />
 							</p:effect> -->
-						</p:commandButton>
+						</h:commandButton>
 					</div>
 
 					<div style="clear: both;"></div>

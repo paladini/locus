@@ -35,7 +35,10 @@ public class ControleEnsalamento {
 	}
 
 	private void init() {
-
+		
+		// Atualizando tudo
+		instituicao.init();
+		
 		instituicao.setListAulas(new ArrayList<Aula>());
 		aulas = instituicao.getListAulas();
 
@@ -471,6 +474,9 @@ public class ControleEnsalamento {
 		
 		// Deleta o ensalamento anterior
 		aulaDao.deletar();
+		
+		// Imprimindo no console pra facilitar as coisas
+		printGradeHorario(aulas);
 		
 		// Detecta se o professor está nulo.
 		// Se estiver, atibui id 1 para ele, pois este é o ID convencionado para ser o ID dos professores nulos.
