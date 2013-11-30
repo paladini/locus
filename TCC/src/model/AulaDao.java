@@ -29,7 +29,7 @@ public class AulaDao extends AbstractDAO {
 		try {
 
 			// Faz a consulta ao banco de dados
-			String sql = "SELECT * FROM aula";
+			String sql = "SELECT * FROM aula;";
 			PreparedStatement prest = connection.prepareStatement(sql);
 			ResultSet rs = prest.executeQuery();
 
@@ -62,8 +62,8 @@ public class AulaDao extends AbstractDAO {
 				int idturma = rs.getInt("idturma");
 				int idsala = rs.getInt("idsala");
 				int idturno = rs.getInt("idturno");
-				int idcurso = rs.getInt("idturno");
-				int iddisciplina = rs.getInt("iddisciplina");
+				int idcurso = rs.getInt("idcurso");
+				int iddisciplina = rs.getInt("iddiscilpina");
 				String nome = rs.getString("nome");
 				int iddia = rs.getInt("iddia");
 
@@ -139,7 +139,7 @@ public class AulaDao extends AbstractDAO {
 				int idsala = rs.getInt("idsala");
 				int idturno = rs.getInt("idturno");
 				int idcurso = rs.getInt("idturno");
-				int iddisciplina = rs.getInt("iddisciplina");
+				int iddisciplina = rs.getInt("iddiscilpina");
 				String nome = rs.getString("nome");
 				int iddia = rs.getInt("iddia");
 
@@ -215,7 +215,7 @@ public class AulaDao extends AbstractDAO {
 				int idsala = rs.getInt("idsala");
 				int idturno = rs.getInt("idturno");
 				int idcurso = rs.getInt("idturno");
-				int iddisciplina = rs.getInt("iddisciplina");
+				int iddisciplina = rs.getInt("iddiscilpina");
 				String nome = rs.getString("nome");
 				int iddia = rs.getInt("iddia");
 
@@ -291,7 +291,7 @@ public class AulaDao extends AbstractDAO {
 				int idsala = rs.getInt("idsala");
 				int idturno = rs.getInt("idturno");
 				int idcurso = rs.getInt("idturno");
-				int iddisciplina = rs.getInt("iddisciplina");
+				int iddisciplina = rs.getInt("iddiscilpina");
 				String nome = rs.getString("nome");
 				int iddia = rs.getInt("iddia");
 
@@ -367,7 +367,7 @@ public class AulaDao extends AbstractDAO {
 				int idsala = rs.getInt("idsala");
 				int idturno = rs.getInt("idturno");
 				int idcurso = rs.getInt("idturno");
-				int iddisciplina = rs.getInt("iddisciplina");
+				int iddisciplina = rs.getInt("iddiscilpina");
 				String nome = rs.getString("nome");
 				int iddia = rs.getInt("iddia");
 
@@ -443,7 +443,7 @@ public class AulaDao extends AbstractDAO {
 				int idsala = rs.getInt("idsala");
 				int idturno = rs.getInt("idturno");
 				int idcurso = rs.getInt("idturno");
-				int iddisciplina = rs.getInt("iddisciplina");
+				int iddisciplina = rs.getInt("iddiscilpina");
 				String nome = rs.getString("nome");
 				int iddia = rs.getInt("iddia");
 
@@ -519,7 +519,7 @@ public class AulaDao extends AbstractDAO {
 				int idsala = rs.getInt("idsala");
 				int idturno = rs.getInt("idturno");
 				int idcurso = rs.getInt("idturno");
-				int iddisciplina = rs.getInt("iddisciplina");
+				int iddisciplina = rs.getInt("iddiscilpina");
 				String nome = rs.getString("nome");
 				int iddia = rs.getInt("iddia");
 
@@ -595,7 +595,7 @@ public class AulaDao extends AbstractDAO {
 				int idsala = rs.getInt("idsala");
 				int idturno = rs.getInt("idturno");
 				int idcurso = rs.getInt("idturno");
-				int iddisciplina = rs.getInt("iddisciplina");
+				int iddisciplina = rs.getInt("iddiscilpina");
 				String nome = rs.getString("nome");
 				int iddia = rs.getInt("iddia");
 

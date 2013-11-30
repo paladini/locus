@@ -7,23 +7,18 @@ import java.util.GregorianCalendar;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
-import control.ControleAdmin;
-import control.ControleDisciplina;
 import control.ControleEnsalamento;
+import entidades.Aula;
 //import control.ControleEscola;
 import entidades.Curso;
 import entidades.Dia;
 import entidades.Disciplina;
-import entidades.Aula;
 import entidades.Professor;
 import entidades.Sala;
 import entidades.Turma;
@@ -33,7 +28,8 @@ import entidades.Turno;
 @SessionScoped
 public class EnsalamentoMBean {
 
-	private ControleEnsalamento controleEnsalamento = ControleEnsalamento.getInstance();
+	private ControleEnsalamento controleEnsalamento = ControleEnsalamento
+			.getInstance();
 	private ScheduleModel eventModel;
 
 	private SelectItem professorSelecionado = new SelectItem();
@@ -41,28 +37,34 @@ public class EnsalamentoMBean {
 	private SelectItem cursoSelecionado = new SelectItem();
 	private SelectItem salaSelecionado = new SelectItem();
 
-	
-
 	public EnsalamentoMBean() {
 		eventModel = new DefaultScheduleModel();
-		Curso curso1 = new Curso("Tec. Inf.", 1, null, null);
-		Turma turma1 = new Turma(1, "V2", curso1, 1);
-		Sala sala1 = new Sala("G24", 1);
-		Disciplina disciplina1 = new Disciplina("POO2", 1,
-				new ArrayList<Professor>());
-		Professor professor1 = new Professor("Daniel",
-				new ArrayList<Disciplina>(), 1);
-		Turno turno = new Turno("Vesp.");
-		Dia dia = new Dia("segunda");
-		Aula aula = new Aula(professor1, turma1, sala1, turno, curso1,
-				disciplina1, dia, turno, 1);
-		adicionarEvento(aula.texto2(), GregorianCalendar.FRIDAY);
 
-		adicionarEvento("teste \n teste2", GregorianCalendar.MONDAY);
+		// Carregando os valores do ensalamento antigo na tabela
+		ArrayList<Aula> ensalado = controleEnsalamento.Consultar();
+		if(ensalado != null){
+			criarTabela(ensalado);
+		}
+		
+
+		// Curso curso1 = new Curso("Tec. Inf.", 1, null, null);
+		// Turma turma1 = new Turma(1, "V2", curso1, 1);
+		// Sala sala1 = new Sala("G24", 1);
+		// Disciplina disciplina1 = new Disciplina("POO2", 1,
+		// new ArrayList<Professor>());
+		// Professor professor1 = new Professor("Daniel",
+		// new ArrayList<Disciplina>(), 1);
+		// Turno turno = new Turno("Vesp.");
+		// Dia dia = new Dia("segunda");
+		// Aula aula = new Aula(professor1, turma1, sala1, turno, curso1,
+		// disciplina1, dia, turno, 1);
+		// adicionarEvento(aula.texto2(), GregorianCalendar.FRIDAY);
+		//
+		// adicionarEvento("teste \n teste2", GregorianCalendar.MONDAY);
 		// adicionarAulas();
 	}
 
-	// TODO FALAR DANIEL MÉTODO NAO ESTÁ ADICIONANDO EVENTO
+	// TODO FALAR DANIEL Mï¿½TODO NAO ESTï¿½ ADICIONANDO EVENTO
 	private void adicionarEvento(String descricao,
 			int diaSemanaGregorianCalendar) {
 		GregorianCalendar calendarioInicio = (GregorianCalendar) GregorianCalendar
@@ -104,6 +106,53 @@ public class EnsalamentoMBean {
 		controleEnsalamento.Ensalar();
 		controleEnsalamento.Persistir();
 
+		// Cria uma nova tabela com os novos valores
+		ArrayList<Aula> ensalado = controleEnsalamento.Consultar();
+		criarTabela(ensalado);
+
+	}
+
+	private void criarTabela(ArrayList<Aula> ensalado) {
+
+		// Limpa a tabela
+		eventModel.clear();
+
+		for (Aula a : ensalado) {
+
+			System.out.println("Dia da aula: " + a.getDia().getId());
+			switch (a.getDia().getId()) {
+			case 1:
+				adicionarEvento(a.texto2(), GregorianCalendar.MONDAY);
+				break;
+
+			case 2:
+				adicionarEvento(a.texto2(), GregorianCalendar.TUESDAY);
+				break;
+
+			case 3:
+				adicionarEvento(a.texto2(), GregorianCalendar.WEDNESDAY);
+				break;
+
+			case 4:
+				adicionarEvento(a.texto2(), GregorianCalendar.THURSDAY);
+				break;
+
+			case 5:
+				adicionarEvento(a.texto2(), GregorianCalendar.FRIDAY);
+				break;
+
+			case 6:
+				adicionarEvento(a.texto2(), GregorianCalendar.SATURDAY);
+				break;
+
+			case 7:
+				adicionarEvento(a.texto2(), GregorianCalendar.SUNDAY);
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 
 	public Collection<SelectItem> getValuesComboBoxProfessor() {
@@ -118,7 +167,7 @@ public class EnsalamentoMBean {
 					.getNome()));
 		}
 		return listaComboBox;
-		
+
 	}
 
 	public Collection<SelectItem> getValuesComboBoxTurma() {
@@ -290,6 +339,5 @@ public class EnsalamentoMBean {
 	public void setSalaSelecionado(SelectItem salaSelecionado) {
 		this.salaSelecionado = salaSelecionado;
 	}
-	
-	
+
 }

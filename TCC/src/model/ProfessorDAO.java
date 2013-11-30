@@ -38,7 +38,13 @@ public class ProfessorDAO extends AbstractDAO{
                 String nome = rs.getString("nome");
                 professor.setId(id);
                 professor.setNome(nome);
-                listaProfessores.add(professor);
+                
+                // ID 1 é o ID reservado para o professor nulo, no ensalamento.
+                // Para não exibir para o usuário esse "professor", previna a adição desse "professor" na lista.
+                if(id != 1){
+                	listaProfessores.add(professor);
+                }
+                
             }
 //             
             return listaProfessores;
@@ -76,8 +82,12 @@ public class ProfessorDAO extends AbstractDAO{
             professor.setId(id);
             professor.setNome(nome);
 
-//             
-            return professor;
+            // ID 1 é o ID reservado para o professor nulo, no ensalamento.
+            // Para não exibir para o usuário esse "professor", previna a adição desse "professor" na lista.
+            if(id != 1){
+            	return professor;
+            }
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -111,8 +121,12 @@ public class ProfessorDAO extends AbstractDAO{
                 professor.setId(id);
                 professor.setNome(nome);
 
-                 
-                return professor;
+                
+                // ID 1 é o ID reservado para o professor nulo, no ensalamento.
+                // Para não exibir para o usuário esse "professor", previna a adição desse "professor" na lista.
+                if(id != 1){
+                	return professor;
+                }
             }
 //             
             return professor;

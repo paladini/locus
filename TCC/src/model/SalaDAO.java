@@ -121,7 +121,7 @@ public class SalaDAO extends AbstractDAO{
             
             if (rs.next()){
             	// Pega o primeiro registro do retorno da consulta
-                rs.next();
+//                rs.next();
                 
                 // Pega os dados desse registro e guarda em variáveis
                 int idSala = rs.getInt("idsala");

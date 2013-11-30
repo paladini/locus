@@ -201,7 +201,13 @@ public class DisciplinaDAO extends AbstractDAO {
                  String nome = rs.getString("nome");
                  p.setId(id);
                  p.setNome(nome);
-                 listaProfessores.add(p);
+                 
+                 // ID 1 é o ID reservado para o professor nulo, no ensalamento.
+                 // Para não exibir para o usuário esse "professor", previna a adição desse "professor" na lista.
+                 if(id != 1){
+                	 listaProfessores.add(p);
+                 }
+                 
              }
              return listaProfessores;
          } catch (SQLException ex) {

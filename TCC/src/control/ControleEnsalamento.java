@@ -468,10 +468,19 @@ public class ControleEnsalamento {
 	// }// fim EscolherEntreMil
 
 	public void Persistir() {
-//		aulaDao.deletar();
+		
+		// Deleta o ensalamento anterior
+		aulaDao.deletar();
+		
+		// Detecta se o professor está nulo.
+		// Se estiver, atibui id 1 para ele, pois este é o ID convencionado para ser o ID dos professores nulos.
+		// Depois disso, insere a aula no banco.
 		for (int i = 0; i < aulas.size(); i++) {
+			if(aulas.get(i).getProfessor() == null){
+				Professor p = new Professor(1, "A contratar");
+				aulas.get(i).setProfessor(p);
+			}
 			aulaDao.inserir(aulas.get(i));
-			
 		}
 	}
 
