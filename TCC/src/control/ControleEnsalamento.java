@@ -252,7 +252,7 @@ public class ControleEnsalamento {
 //							break;
 //
 //						}
-						// sysout método ensalar
+						// sysout mï¿½todo ensalar
 						// System.out.println(aula.toString());
 						// System.out.println();
 
@@ -275,7 +275,7 @@ public class ControleEnsalamento {
 			// Copiando todas as disciplinas para disciplinasCurso
 			disciplinasCurso.addAll(aulas.get(q).getCurso().getDisciplinas());
 
-			// pegar as disciplinas já ensaladas da turma da aula do for Q,
+			// pegar as disciplinas jï¿½ ensaladas da turma da aula do for Q,
 			// inclusive as disciplinas nulas
 			ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 			int turma = aulas.get(q).getTurma().getId();
@@ -298,7 +298,7 @@ public class ControleEnsalamento {
 			// }
 			//
 
-			// pegar as disciplinas que não foram ensaladas para a turma da aula
+			// pegar as disciplinas que nï¿½o foram ensaladas para a turma da aula
 			// do for Q
 			ArrayList<Disciplina> disciplinasNaoEnsaladas = new ArrayList<Disciplina>();
 			for (Disciplina disciplinaCurso : disciplinasCurso) {

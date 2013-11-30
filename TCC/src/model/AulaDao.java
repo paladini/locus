@@ -127,7 +127,7 @@ public class AulaDao extends AbstractDAO {
 				/*
 				 * Cria um curso.
 				 * 
-				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
+				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
 				 * Cria variáveis de acordo com os atributos desse objeto
 				 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
 				 * correspondente no banco de dados (rs.getInt("idCurso"). 
@@ -201,7 +201,7 @@ public class AulaDao extends AbstractDAO {
 				/*
 				 * Cria um curso.
 				 * 
-				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
+				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
 				 * Cria variáveis de acordo com os atributos desse objeto
 				 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
 				 * correspondente no banco de dados (rs.getInt("idCurso"). 
@@ -275,7 +275,7 @@ public class AulaDao extends AbstractDAO {
 				/*
 				 * Cria um curso.
 				 * 
-				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
+				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
 				 * Cria variáveis de acordo com os atributos desse objeto
 				 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
 				 * correspondente no banco de dados (rs.getInt("idCurso"). 
@@ -349,7 +349,7 @@ public class AulaDao extends AbstractDAO {
 				/*
 				 * Cria um curso.
 				 * 
-				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
+				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
 				 * Cria variáveis de acordo com os atributos desse objeto
 				 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
 				 * correspondente no banco de dados (rs.getInt("idCurso"). 
@@ -423,7 +423,7 @@ public class AulaDao extends AbstractDAO {
 				/*
 				 * Cria um curso.
 				 * 
-				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
+				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
 				 * Cria variáveis de acordo com os atributos desse objeto
 				 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
 				 * correspondente no banco de dados (rs.getInt("idCurso"). 
@@ -497,7 +497,7 @@ public class AulaDao extends AbstractDAO {
 				/*
 				 * Cria um curso.
 				 * 
-				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
+				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
 				 * Cria variáveis de acordo com os atributos desse objeto
 				 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
 				 * correspondente no banco de dados (rs.getInt("idCurso"). 
@@ -571,7 +571,7 @@ public class AulaDao extends AbstractDAO {
 				/*
 				 * Cria um curso.
 				 * 
-				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
+				 * Pega os dados DESSE RESULTADO ESPEC�FICO do banco de dados. Para isso:
 				 * Cria variáveis de acordo com os atributos desse objeto
 				 * (nesse caso, só tem ID e NOME), e para cada variável pega o campo/coluna
 				 * correspondente no banco de dados (rs.getInt("idCurso"). 
@@ -630,9 +630,12 @@ public class AulaDao extends AbstractDAO {
 
 
 	public void inserir(Aula aula) {
-        String sql = "INSERT INTO aula (idaula, idprofessor, idturma, idsala, idturno, idcurso, iddisciplina, nome, iddia) VALUES (?,?,?,?,?,?,?,?,?);";
+//		String sql = "INSERT INTO aula (idaula, idprofessor, idturma, idsala, idturno, idcurso, iddisciplina, nome, iddia) VALUES (?,?,?,?,?,?,?,?,?);";
+        String sql = "INSERT INTO aula (idprofessor, idturma, idsala, idturno, idcurso, iddisciplina, nome, iddia) VALUES (?,?,?,?,?,?,?,?,?);";
         ArrayList<Object> params = new ArrayList<Object>();
-        params.add(aula.getId());
+//        System.out.println("Aula ID:" + aula.getId());
+//        System.out.println("Professor: " + aula.getProfessor().getNome());
+//        params.add(aula.getId());
         params.add(aula.getProfessor().getId());
         params.add(aula.getTurma().getId());
         params.add(aula.getSala().getId());
