@@ -30,6 +30,5 @@
 	<classpathentry kind="lib" path="libs/swing-layout-1.0.3.jar"/>
 	<classpathentry kind="lib" path="libs/swing-worker-1.1.jar"/>
 	<classpathentry kind="lib" path="libs/primefaces-4.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Arq"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

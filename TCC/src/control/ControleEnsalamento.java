@@ -49,10 +49,15 @@ public class ControleEnsalamento {
 
 	public void Ensalar() {
 		init();
+		ArrayList<Curso> curso = instituicao.getListaCurso();
+//		imprimi
+		for (int i = 0; i < curso.size(); i++) {
+			System.out.println(curso.get(i).imprimi());
+		}
+		
 		// turno
 		for (int i = 0; i < 3; i++) {
 
-			ArrayList<Curso> curso = instituicao.getListaCurso();
 			int tamanhocurso = curso.size();
 
 			// curso
@@ -60,14 +65,19 @@ public class ControleEnsalamento {
 
 				// verificacao turmas do turno
 				ArrayList<Turma> turma = new ArrayList<Turma>();
-				ControleTurma turmas = ControleTurma.getInstance();
-				curso.get(j).setTurmas(turmas.consultar());
+				ArrayList<Turma> turma2 = instituicao.getListaTurmas();
+				curso.get(j).setTurmas(turma2);
+//				imprimi
+				for (int k = 0; k <turma2.size(); k++) {
+					turma2.get(k);
+				}
+				
 				for (int k = 0; k < curso.get(j).getTurmas().size(); k++) {
 					if (i == curso.get(j).getTurmas().get(k).getTurno()) {
 						turma.add(curso.get(j).getTurmas().get(k));
 					}
 				}
-				// ArrayList<Turma> turma = curso.get(j).getTurmas();
+//				 ArrayList<Turma> turma = curso.get(j).getTurmas();
 				int tamanhoturma = turma.size();
 				// turma
 				for (int k = 0; k < tamanhoturma; k++) {
@@ -77,25 +87,23 @@ public class ControleEnsalamento {
 					ArrayList<Disciplina> DisciplinasVerific = new ArrayList<Disciplina>();
 					// aulas
 					for (int k2 = 0; k2 < 5; k2++) {
-						Aula a = new Aula("aula" + k2);
+						Aula aula = new Aula("aula" + k2);
 						// turma.get(k).getGrade().getAulas().add(a);
 						// Aula aula =
 						// turma.get(k).getGrade().getAulas().get(k2);
-						Aula aula = a; // foi adicionada
 						ArrayList<Sala> salas = instituicao.getListaSala();
 						aula.setSala(salas.get(k));
 						
-						ControleTurno controleTurno = ControleTurno.getInstance();
 						if (i == 0) {
-							aula.setTurno(controleTurno.consultar(i));
+							aula.setTurno(instituicao.getListaPeriodos().get(i));
 							aula.getSala().setUsar1(true);
 						}
 						if (i == 1) {
-							aula.setTurno(controleTurno.consultar(i));
+							aula.setTurno(instituicao.getListaPeriodos().get(i));
 							aula.getSala().setUsar2(true);
 						}
 						if (i == 2) {
-							aula.setTurno(controleTurno.consultar(i));
+							aula.setTurno(instituicao.getListaPeriodos().get(i));
 							aula.getSala().setUsar3(true);
 						}
 						
@@ -122,8 +130,16 @@ public class ControleEnsalamento {
 						// ArrayList<Disciplina> disciplinas = instituicao
 						// .getListaDisciplinas();
 						// Verificar semestre
-						ArrayList<Disciplina> disciplinas = aula.getCurso()
-								.getDisciplinas();
+						ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>(); 
+						for (int q = 0; q < instituicao.getListaDisciplinas().size(); q++) {
+							
+						
+						for (int l = 0; l <instituicao.getListaDisciplinas().get(q).getCursos().size() ; l++) {
+							if (curso.get(i).getId() == instituicao.getListaDisciplinas().get(q).getCursos().get(l).getId() ) {
+								disciplinas.add(instituicao.getListaDisciplinas().get(q));
+							}
+						}
+						}
 						if (k2 == disciplinas.size()) {
 							// disciplina == null break
 							break;
@@ -206,10 +222,8 @@ public class ControleEnsalamento {
 						// --------------------------------------------
 
 						
-						
 						// imprimir
-						ControleDia controleDia = ControleDia.getInstance();
-							aula.setDia(controleDia.consultar(k2));
+							aula.setDia(instituicao.getListaDias().get(k2));
 							aulas.add(aula);
 						
 //						for (int l = 0; l < 5; l++) {

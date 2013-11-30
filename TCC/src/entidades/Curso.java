@@ -95,6 +95,10 @@ public class Curso {
 	public void setTurmas(ArrayList<Turma> turmas) {
 		this.turmas = turmas;
 	}
+	public String imprimi() {
+		return "Curso [id=" + id + ", nome=" + nome + ", disciplinas="
+				+ disciplinas + ", turmas=" + turmas + "]";
+	}
 	
 	
 
