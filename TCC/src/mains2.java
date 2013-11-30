@@ -13,7 +13,6 @@ public class mains2 {
 
 		ControleEnsalamento processarEnsalamento = ControleEnsalamento.getInstance();
 		ArrayList<Aula> aulas;
-//		processarEnsalamento.Ensalar();
 		processarEnsalamento.Ensalar();
 		aulas = processarEnsalamento.getAulas();
 		printGradeHorario(aulas);
@@ -27,7 +26,7 @@ public class mains2 {
 		
 	}
 	
-	private static void printGradeHorario(ArrayList<Aula> aulas){
+	public static void printGradeHorario(ArrayList<Aula> aulas){
 		int cont = 0;
 		
 		for (Aula aula : aulas) {

@@ -42,7 +42,7 @@ public class Instituicao {
 	}
 	
 	public void init(){
-		//TODO alterar a inicializa��o para puxar os dados do banco
+		//TODO alterar a inicializa��o para puxar os dados do banco
 		listaSala =salaDAO.consultar();
 		listaCurso =cursoDAO.consultar();
 		listaDisciplinas = disciplinaDAO.consultar();
@@ -51,6 +51,25 @@ public class Instituicao {
 		listaDias = diaDAO.consultar();
 		listaTurmas = turmaDAO.consultar();
 		listAulas = new ArrayList<Aula>();
+		
+		// Associações
+		
+		// Associações do Curso do disciplina e turma
+		for(int i = 0; i < listaCurso.size(); i++){
+			listaCurso.get(i).setDisciplinas(cursoDAO.listaDisciplinasAssociadas(listaCurso.get(i)));
+			listaCurso.get(i).setTurmas(cursoDAO.listaTurmasAssociadas(listaCurso.get(i)));
+		}
+		
+		// Associações do Professor com disciplina
+		for(int i = 0; i < listaProfessores.size(); i++){
+			listaProfessores.get(i).setDisciplina(professorDAO.listaDisciplinasAssociadas(listaProfessores.get(i)));
+		}
+		
+		// Associações da Disciplina com professor e curso.
+		for(int i = 0; i < listaDisciplinas.size(); i++){
+			listaDisciplinas.get(i).setCursos(disciplinaDAO.listaDisciplinasAssociadas(listaDisciplinas.get(i)));
+			listaDisciplinas.get(i).setProfessores(disciplinaDAO.listaProfessoresAssociados(listaDisciplinas.get(i)));
+		}
 		
 	}
 	

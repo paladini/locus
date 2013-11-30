@@ -2,40 +2,34 @@ package control;
 
 import java.util.ArrayList;
 
-import javax.faces.model.SelectItem;
-
 import model.AulaDao;
 import model.CursoDAO;
 import model.ProfessorDAO;
 import model.SalaDAO;
 import model.TurmaDAO;
-
 import entidades.Aula;
 import entidades.Curso;
-import entidades.Dia;
 import entidades.Disciplina;
 import entidades.Instituicao;
 import entidades.Professor;
 import entidades.Sala;
 import entidades.Turma;
-import entidades.Turno;
 
 public class ControleEnsalamento {
 
-	
 	private static ControleEnsalamento singleton;
 	private ArrayList<Aula> aulas;
 	ArrayList<Aula> aulasFinal;
 	Instituicao instituicao = Instituicao.getInstance();
 	AulaDao aulaDao = new AulaDao();
-	
-	public static ControleEnsalamento getInstance(){
-		if (singleton == null){
+
+	public static ControleEnsalamento getInstance() {
+		if (singleton == null) {
 			singleton = new ControleEnsalamento();
 		}
 		return singleton;
 	}
-	
+
 	private ControleEnsalamento() {
 		init();
 	}
@@ -50,11 +44,11 @@ public class ControleEnsalamento {
 	public void Ensalar() {
 		init();
 		ArrayList<Curso> curso = instituicao.getListaCurso();
-//		imprimi
+		// imprimi
 		for (int i = 0; i < curso.size(); i++) {
 			System.out.println(curso.get(i).imprimi());
 		}
-		
+
 		// turno
 		for (int i = 0; i < 3; i++) {
 
@@ -67,17 +61,18 @@ public class ControleEnsalamento {
 				ArrayList<Turma> turma = new ArrayList<Turma>();
 				ArrayList<Turma> turma2 = instituicao.getListaTurmas();
 				curso.get(j).setTurmas(turma2);
-//				imprimi
-				for (int k = 0; k <turma2.size(); k++) {
+				// imprimi
+				for (int k = 0; k < turma2.size(); k++) {
 					turma2.get(k);
+					System.out.println(turma2.get(k));
 				}
-				
+
 				for (int k = 0; k < curso.get(j).getTurmas().size(); k++) {
 					if (i == curso.get(j).getTurmas().get(k).getTurno()) {
 						turma.add(curso.get(j).getTurmas().get(k));
 					}
 				}
-//				 ArrayList<Turma> turma = curso.get(j).getTurmas();
+				// ArrayList<Turma> turma = curso.get(j).getTurmas();
 				int tamanhoturma = turma.size();
 				// turma
 				for (int k = 0; k < tamanhoturma; k++) {
@@ -92,8 +87,10 @@ public class ControleEnsalamento {
 						// Aula aula =
 						// turma.get(k).getGrade().getAulas().get(k2);
 						ArrayList<Sala> salas = instituicao.getListaSala();
+
+						// isso aqui vai dar problema - Fernando
 						aula.setSala(salas.get(k));
-						
+
 						if (i == 0) {
 							aula.setTurno(instituicao.getListaPeriodos().get(i));
 							aula.getSala().setUsar1(true);
@@ -106,43 +103,64 @@ public class ControleEnsalamento {
 							aula.setTurno(instituicao.getListaPeriodos().get(i));
 							aula.getSala().setUsar3(true);
 						}
-						
+
 						// Antigo (sem BD)
-//						if (i == 0) {
-//							Turno turno = new Turno("manha", i);
-//							aula.setTurno(turno);
-//							aula.getSala().setUsar1(true);
-//						}
-//						if (i == 1) {
-//							Turno turno = new Turno("tarde", i);
-//							aula.setTurno(turno);
-//							aula.getSala().setUsar2(true);
-//						}
-//						if (i == 2) {
-//							Turno turno = new Turno("noite", i);
-//							aula.setTurno(turno);
-//							aula.getSala().setUsar3(true);
-//						}
-						
-						
+						// if (i == 0) {
+						// Turno turno = new Turno("manha", i);
+						// aula.setTurno(turno);
+						// aula.getSala().setUsar1(true);
+						// }
+						// if (i == 1) {
+						// Turno turno = new Turno("tarde", i);
+						// aula.setTurno(turno);
+						// aula.getSala().setUsar2(true);
+						// }
+						// if (i == 2) {
+						// Turno turno = new Turno("noite", i);
+						// aula.setTurno(turno);
+						// aula.getSala().setUsar3(true);
+						// }
+
 						aula.setCurso(curso.get(j));
 						aula.setTurma(turma.get(k));
+
+						// Testando esse trecho do código
+						System.out.println("Nome do curso"
+								+ aula.getCurso().getNome());
+						System.out.println("Turma: "
+								+ aula.getTurma().getNome());
+						System.out.println("-----------------\n");
+
 						// ArrayList<Disciplina> disciplinas = instituicao
 						// .getListaDisciplinas();
 						// Verificar semestre
-						ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>(); 
-						for (int q = 0; q < instituicao.getListaDisciplinas().size(); q++) {
-							
-						
-						for (int l = 0; l <instituicao.getListaDisciplinas().get(q).getCursos().size() ; l++) {
-							if (curso.get(i).getId() == instituicao.getListaDisciplinas().get(q).getCursos().get(l).getId() ) {
-								disciplinas.add(instituicao.getListaDisciplinas().get(q));
+						ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+						for (int q = 0; q < instituicao.getListaDisciplinas()
+								.size(); q++) {
+
+							for (int l = 0; l < instituicao
+									.getListaDisciplinas().get(q).getCursos()
+									.size(); l++) {
+								
+								// Imprimindo curso
+								System.out.println("l=" + l);
+								
+								
+								if (curso.get(j).getId() == instituicao
+										.getListaDisciplinas().get(q)
+										.getCursos().get(l).getId()) {
+									disciplinas.add(instituicao
+											.getListaDisciplinas().get(q));
+								}
 							}
-						}
 						}
 						if (k2 == disciplinas.size()) {
 							// disciplina == null break
 							break;
+						}
+
+						for (Disciplina d : disciplinas) {
+							System.out.println("Disciplina: " + d.getNome());
 						}
 
 						// aula.setDisciplina(disciplinas.get(k2));
@@ -221,37 +239,59 @@ public class ControleEnsalamento {
 
 						// --------------------------------------------
 
-						
 						// imprimir
-							aula.setDia(instituicao.getListaDias().get(k2));
-							aulas.add(aula);
+						aula.setDia(instituicao.getListaDias().get(k2));
+						System.out.println("Dia do curso: "
+								+ aula.getDia().getNome());
+
+						// Imprimindo pra verificar consistencia de tudo
+						System.out.println(aula.getNome() + ": ");
+						System.out.println("Nome do curso"
+								+ aula.getCurso().getNome());
+						System.out.println("Acontece no dia "
+								+ aula.getDia().getNome() + " no periodo "
+								+ aula.getTurno().getNome());
 						
-//						for (int l = 0; l < 5; l++) {
-//							Dia dia = new Dia("", l);
-//							instituicao.getListaDias().add(dia);
-//						}
+						// Tirei o Print do professor pois tem alguns professores que podem estar como null
+//						System.out.println("Professor: "
+//								+ aula.getProfessor().getNome());
+
+//						System.out.println("Disciplina: "
+//								+ aula.getDisciplina().getNome());
 						
-//						for (int l = 0; l < 5; l++) {
-//
-//							if (l < 5) {
-//								turma.get(k).getAulas().add(aula);
-//								if (k2 == 0)
-//									aula.setDia(new Dia("seg", k2));
-//								if (k2 == 1)
-//									aula.setDia(new Dia("ter", k2));
-//								if (k2 == 2)
-//									aula.setDia(new Dia("qua", k2));
-//								if (k2 == 3)
-//									aula.setDia(new Dia("qui", k2));
-//								if (k2 == 4)
-//									aula.setDia(new Dia("sex", k2));
-//								// System.out.println(aula.toString());
-//								aulas.add(aula);
-//
-//							}
-//							break;
-//
-//						}
+						System.out.println("Sala: " + aula.getSala().getNome());
+						System.out.println("Turma: "
+								+ aula.getTurma().getNome());
+						System.out.println("-----------------\n");
+
+						aulas.add(aula);
+
+						// for (int l = 0; l < 5; l++) {
+						// Dia dia = new Dia("", l);
+						// instituicao.getListaDias().add(dia);
+						// }
+
+						// for (int l = 0; l < 5; l++) {
+						//
+						// if (l < 5) {
+						// turma.get(k).getAulas().add(aula);
+						// if (k2 == 0)
+						// aula.setDia(new Dia("seg", k2));
+						// if (k2 == 1)
+						// aula.setDia(new Dia("ter", k2));
+						// if (k2 == 2)
+						// aula.setDia(new Dia("qua", k2));
+						// if (k2 == 3)
+						// aula.setDia(new Dia("qui", k2));
+						// if (k2 == 4)
+						// aula.setDia(new Dia("sex", k2));
+						// // System.out.println(aula.toString());
+						// aulas.add(aula);
+						//
+						// }
+						// break;
+						//
+						// }
 						// sysout m�todo ensalar
 						// System.out.println(aula.toString());
 						// System.out.println();
@@ -428,8 +468,10 @@ public class ControleEnsalamento {
 	// }// fim EscolherEntreMil
 
 	public void Persistir() {
+//		aulaDao.deletar();
 		for (int i = 0; i < aulas.size(); i++) {
 			aulaDao.inserir(aulas.get(i));
+			
 		}
 	}
 
@@ -462,15 +504,15 @@ public class ControleEnsalamento {
 	public ArrayList<Aula> ConsultarByProfessor(int id) {
 		return aulaDao.consultarByProfessor(id);
 	}
-	
-	
 
 	public ArrayList<Aula> ConsultarByTurma(int id) {
 		return aulaDao.consultarByTurma(id);
 	}
+
 	public ArrayList<Aula> ConsultarBySala(int id) {
 		return aulaDao.consultarBySala(id);
 	}
+
 	public ArrayList<Aula> ConsultarByCurso(int id) {
 		return aulaDao.consultarByCurso(id);
 	}
@@ -485,6 +527,21 @@ public class ControleEnsalamento {
 
 	public void setAulas(ArrayList<Aula> aulas) {
 		this.aulas = aulas;
+	}
+	
+	private void printGradeHorario(ArrayList<Aula> aulas){
+		int cont = 0;
+		
+		for (Aula aula : aulas) {
+			System.out.println(aula.texto());
+			cont++;
+			if (cont == 5) {
+				System.out.println();
+				System.out.println();
+				cont = 0;
+			}
+		}
+		
 	}
 
 }

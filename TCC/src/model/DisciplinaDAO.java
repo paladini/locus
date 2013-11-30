@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import entidades.Curso;
 import entidades.Disciplina;
+import entidades.Professor;
 
 /**
  *
@@ -169,6 +171,79 @@ public class DisciplinaDAO extends AbstractDAO {
         params.add(disciplina.getId());
         operacaoEscrita(sql, params);
     }
+     
+     /*
+      *=====================================================================================
+      *
+      *                      ASSOCIAÇÕES DE DISCIPLINA COM CURSOS E PROFESSORES
+      *
+      *=====================================================================================
+      */
+     /**
+      * Retorna uma lista com todos os professores associadas a essa disciplina
+      * @param disciplina
+      * @return
+      */
+     public ArrayList<Professor> listaProfessoresAssociados(Disciplina disciplina){
+    	 Connection connection = Conexao.getConexao();
+         try {
+
+             String sql = "select * from disciplina_has_professor as cd inner join professor as d on "
+                     + "d.idprofessor = cd.professor_idprofessor where cd.disciplina_iddisciplina = ? order by d.nome;";
+             PreparedStatement prest = connection.prepareStatement(sql);
+             prest.setInt(1, disciplina.getId());
+             ResultSet rs = prest.executeQuery();
+
+             ArrayList<Professor> listaProfessores = new ArrayList<Professor>();
+             while (rs.next()) {
+                 Professor p = new Professor();
+                 int id = rs.getInt("idprofessor");
+                 String nome = rs.getString("nome");
+                 p.setId(id);
+                 p.setNome(nome);
+                 listaProfessores.add(p);
+             }
+             return listaProfessores;
+         } catch (SQLException ex) {
+             System.out.println(ex.getMessage());
+         }
+         return null;
+     }
+     
+     /**
+      * Retorna uma lista com todos os cursos associados com essa disciplina.
+      * @param disciplina
+      * @return
+      */
+     public ArrayList<Curso> listaDisciplinasAssociadas(Disciplina disciplina){
+    	 Connection connection = Conexao.getConexao();
+         try {
+
+             String sql = "select * from curso_has_disciplina as cd inner join curso as d on "
+                     + "d.idcurso = cd.curso_idcurso where cd.disciplina_iddiscilpina = ? order by d.nome;";
+             PreparedStatement prest = connection.prepareStatement(sql);
+             prest.setInt(1, disciplina.getId());
+             ResultSet rs = prest.executeQuery();
+
+             ArrayList<Curso> listaCursos = new ArrayList<Curso>();
+             while (rs.next()) {
+                 Curso d = new Curso();
+                 int id = rs.getInt("idcurso");
+                 String nome = rs.getString("nome");
+                 d.setId(id);
+                 d.setNome(nome);
+                 listaCursos.add(d);
+             }
+
+              
+             return listaCursos;
+         } catch (SQLException ex) {
+             System.out.println(ex.getMessage());
+         }
+         return null;
+     }
+     
+     
      
      /*
       *=====================================================================================

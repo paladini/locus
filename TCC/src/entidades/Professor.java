@@ -23,15 +23,18 @@ public class Professor {
     
     // Construtores
     public Professor() {
+    	inicializarDisponibilidade(5, 3);
     }
     
     public Professor(String nome) {
         this.nome = nome;
+        inicializarDisponibilidade(5, 3);
     }
 
     public Professor(int id, String nome) {
         this.id = id;
         this.nome = nome;
+        inicializarDisponibilidade(5, 3);
     }
     
     public Professor(String nome, ArrayList<Disciplina> disciplina, int id) {

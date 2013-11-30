@@ -209,15 +209,15 @@ public class Main {
 		
 //---------------------------------------------------------------------
 		
-		ControleEnsalamento processarEnsalamento = ControleEnsalamento.getInstance();
-		ArrayList<Aula> aulas;
+//		ControleEnsalamento processarEnsalamento = ControleEnsalamento.getInstance();
+//		ArrayList<Aula> aulas;
+////		processarEnsalamento.Ensalar();
 //		processarEnsalamento.Ensalar();
-		processarEnsalamento.Ensalar();
-		aulas = processarEnsalamento.getAulas(); 
-		printGradeHorario(aulas);
-
-		
-		System.out.println("====================================================================");
+//		aulas = processarEnsalamento.getAulas(); 
+//		printGradeHorario(aulas);
+//
+//		
+//		System.out.println("====================================================================");
 		
 //		processarEnsalamento.EscolherEntreMil();
 //		aulas = processarEnsalamento.getAulas(); 
