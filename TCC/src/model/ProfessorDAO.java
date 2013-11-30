@@ -86,6 +86,8 @@ public class ProfessorDAO extends AbstractDAO{
             // Para não exibir para o usuário esse "professor", previna a adição desse "professor" na lista.
             if(id != 1){
             	return professor;
+            }else{
+            	return null;
             }
             
         } catch (SQLException ex) {
@@ -129,7 +131,7 @@ public class ProfessorDAO extends AbstractDAO{
                 }
             }
 //             
-            return professor;
+            return null;
            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

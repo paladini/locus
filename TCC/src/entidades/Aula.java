@@ -46,62 +46,89 @@ public class Aula {
 		i.addListAulas(this);
 	}
 
-	
-//	public String texto() {
-//		return "Aula [professor=" + professor + ", turma=" + turma + ", sala="
-//				+ sala + ", periodo=" + turno + ", curso=" + curso
-//				+ ", disciplina=" + disciplina + ", nome=" + nome + ", Dia = "
-//				+ dia + ",Turno =  " + turno + ", Id=  "+ id + "]";
-//	}
-	
-	
+	// public String texto() {
+	// return "Aula [professor=" + professor + ", turma=" + turma + ", sala="
+	// + sala + ", periodo=" + turno + ", curso=" + curso
+	// + ", disciplina=" + disciplina + ", nome=" + nome + ", Dia = "
+	// + dia + ",Turno =  " + turno + ", Id=  "+ id + "]";
+	// }
+
 	public String texto() {
 		StringBuilder sb = new StringBuilder();
-		
-		sb.append("Aula [professor=" );
-		sb.append( professor != null ? professor.texto() : "( A contratar )" );
-		sb.append( ", turma=" );
-		sb.append( turma.texto() );
-		sb.append( ", sala="  );
-		sb.append( sala.texto() );
-		sb.append( ", disciplina=" );
-		sb.append( disciplina.texto() );
-		sb.append( ", nome=" );
-		sb.append( nome );
-		sb.append(", Dia = " );
-		sb.append(dia.texto()  );
-		sb.append( ",Turno =  " );
-		sb.append( turno.texto() );
-		sb.append( ", Id=  " );
-		sb.append( id );
-		sb.append( "]" );
-//		return "Aula [professor=" + professor.texto() + ", turma="
-//				+ turma.texto() + ", sala=" + sala.texto() + ", periodo="
-//				+ turno.texto() + ", curso=" + curso.texto() + ", disciplina="
-//				+ disciplina.texto() + ", nome=" + nome + ", Dia = "
-//				+ dia.texto() + ",Turno =  " + turno.texto() + ", Id=  " + id
-//				+ "]";
+
+		sb.append("Aula [professor=");
+		sb.append(professor != null ? professor.texto() : "( A contratar )");
+		sb.append(", turma=");
+		sb.append(turma.texto());
+		sb.append(", sala=");
+		sb.append(sala.texto());
+		sb.append(", disciplina=");
+		sb.append(disciplina.texto());
+		sb.append(", nome=");
+		sb.append(nome);
+		sb.append(", Dia = ");
+		sb.append(dia.texto());
+		sb.append(",Turno =  ");
+		sb.append(turno.texto());
+		sb.append(", Id=  ");
+		sb.append(id);
+		sb.append("]");
+		// return "Aula [professor=" + professor.texto() + ", turma="
+		// + turma.texto() + ", sala=" + sala.texto() + ", periodo="
+		// + turno.texto() + ", curso=" + curso.texto() + ", disciplina="
+		// + disciplina.texto() + ", nome=" + nome + ", Dia = "
+		// + dia.texto() + ",Turno =  " + turno.texto() + ", Id=  " + id
+		// + "]";
 		return sb.toString();
 	}
+
 	public String texto2() {
 		StringBuilder sb = new StringBuilder();
-		
-		sb.append("\n" );
-		sb.append("professor=" );
-		sb.append( professor != null ? professor.texto() : "( A contratar )" );
+
 		sb.append("\n");
-		sb.append( "turma=" );
-		sb.append( turma.texto() );
+		sb.append("professor=");
+		sb.append(professor != null ? professor.texto() : "( A contratar )");
 		sb.append("\n");
-		sb.append( "sala="  );
-		sb.append( sala.texto() );
+		sb.append("turma=");
+		sb.append(turma.texto());
 		sb.append("\n");
-		sb.append( "disciplina=" );
-		sb.append( disciplina.texto() );
+		sb.append("sala=");
+		sb.append(sala.texto());
 		sb.append("\n");
-		sb.append( "Turno =  " );
-		sb.append( turno.texto() );
+		sb.append("disciplina=");
+		sb.append(disciplina.texto());
+		sb.append("\n");
+		sb.append("Turno =  ");
+		sb.append(turno.texto());
 		return sb.toString();
+	}
+
+	public String textoFinalEnsalamento() {
+		
+		String texto = "";
+		String espaco = "     ";
+		
+		texto += "\n";
+		texto += espaco + "Turma: " + turma.getNome();
+		texto += "\n";
+		
+		texto += "Sala: " + sala.getNome();
+		texto += "\n";
+		
+		texto += "Disciplina: " + disciplina.getNome();
+		texto += "\n";
+		
+		if(professor != null){
+			texto += "Professor: " + professor.getNome();
+		}else{
+			texto += "(A contratar)";
+		}
+		texto += "\n";
+		
+		texto += "Turno: " + turno.getNome();
+//		texto += "\n";
+		
+		return texto;
 	}
 
 	// gets e sets

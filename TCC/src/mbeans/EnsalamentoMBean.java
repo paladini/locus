@@ -80,7 +80,6 @@ public class EnsalamentoMBean {
 				diaSemanaGregorianCalendar);
 		calendarioFim.set(GregorianCalendar.HOUR_OF_DAY, 18);
 		calendarioInicio.set(GregorianCalendar.MINUTE, 0);
-
 		eventModel.addEvent(new DefaultScheduleEvent(descricao,
 				calendarioInicio.getTime(), calendarioFim.getTime()));
 		System.out.println(calendarioInicio.getTime());
@@ -89,7 +88,7 @@ public class EnsalamentoMBean {
 
 	public Date getInitialDate() {
 
-		adicionarEvento("PWEB - Daniel - TINF", GregorianCalendar.MONDAY);
+//		adicionarEvento("PWEB - Daniel - TINF", GregorianCalendar.MONDAY);
 
 		GregorianCalendar calendario = (GregorianCalendar) GregorianCalendar
 				.getInstance();
@@ -122,31 +121,31 @@ public class EnsalamentoMBean {
 			System.out.println("Dia da aula: " + a.getDia().getId());
 			switch (a.getDia().getId()) {
 			case 1:
-				adicionarEvento(a.texto2(), GregorianCalendar.MONDAY);
+				adicionarEvento(a.textoFinalEnsalamento(), GregorianCalendar.MONDAY);
 				break;
 
 			case 2:
-				adicionarEvento(a.texto2(), GregorianCalendar.TUESDAY);
+				adicionarEvento(a.textoFinalEnsalamento(), GregorianCalendar.TUESDAY);
 				break;
 
 			case 3:
-				adicionarEvento(a.texto2(), GregorianCalendar.WEDNESDAY);
+				adicionarEvento(a.textoFinalEnsalamento(), GregorianCalendar.WEDNESDAY);
 				break;
 
 			case 4:
-				adicionarEvento(a.texto2(), GregorianCalendar.THURSDAY);
+				adicionarEvento(a.textoFinalEnsalamento(), GregorianCalendar.THURSDAY);
 				break;
 
 			case 5:
-				adicionarEvento(a.texto2(), GregorianCalendar.FRIDAY);
+				adicionarEvento(a.textoFinalEnsalamento(), GregorianCalendar.FRIDAY);
 				break;
 
 			case 6:
-				adicionarEvento(a.texto2(), GregorianCalendar.SATURDAY);
+				adicionarEvento(a.textoFinalEnsalamento(), GregorianCalendar.SATURDAY);
 				break;
 
 			case 7:
-				adicionarEvento(a.texto2(), GregorianCalendar.SUNDAY);
+				adicionarEvento(a.textoFinalEnsalamento(), GregorianCalendar.SUNDAY);
 				break;
 
 			default:

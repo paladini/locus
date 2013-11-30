@@ -57,8 +57,7 @@
 						<div class="col-lg-2">
 							<a href=""><img
 								src="../images/principal/ensalamento-selecionado.png"
-								alt="Gerar Ensalamento"
-								title="Gerar Ensalamento" /></a>
+								alt="Gerar Ensalamento" title="Gerar Ensalamento" /></a>
 						</div>
 					</div>
 
@@ -74,6 +73,8 @@
 
 			<!-- Conteúdo da página em si -->
 			<div class="col-lg-10 center">
+
+				<!-- Filtros do ensalamento -->
 				<h:form>
 					<div style="float: left; padding-left: 10px;">
 
@@ -116,17 +117,29 @@
 						</p:selectOneMenu>
 					</div>
 				</h:form>
-				
+
 				<!-- Botão para ensalar -->
 				<h:form>
-					<div style="float: right; padding-right: 10px;">
-						<p:commandButton action="#{ensalamentoMBean.Ensalar}"
-							value="Gerar Ensalamento" update=":form:schedule" >
-								<p:ajax event="click" execute="@form" update=":form:schedule"
-									render=":form:schedule" />
-							</p:commandButton>
-					</div>
 
+					<!-- Imagem de carregando 
+					<p:messages id="loading-message">
+						<p:effect type="pulsate" event="load" delay="1000">
+							<f:param name="mode" value="'show'" />
+						</p:effect>
+					</p:messages> <p:growl id="loading-growl" showDetail="true"/>   -->
+					
+					
+
+					<div style="float: right; padding-right: 10px;">
+						<p:commandButton actionListener="#{ensalamentoMBean.Ensalar}"
+							value="Gerar Ensalamento" update=":form:schedule" >
+							<!-- <p:ajax event="click" execute="@form" update=":form:schedule"
+								render=":form:schedule" />
+							<p:effect type="pulsate" event="load" delay="1000">
+								<f:param name="mode" value="'show'" />
+							</p:effect> -->
+						</p:commandButton>
+					</div>
 
 					<div style="clear: both;"></div>
 				</h:form>
@@ -144,8 +157,6 @@
 						widgetVar="myschedule" view="basicWeek" showHeader="false"
 						locale="pt" columnFormat="dddd">
 					</p:schedule>
-
-
 				</h:form>
 			</div>
 
