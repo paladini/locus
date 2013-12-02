@@ -1,5 +1,6 @@
 package control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import model.AulaDao;
@@ -15,8 +16,10 @@ import entidades.Professor;
 import entidades.Sala;
 import entidades.Turma;
 
-public class ControleEnsalamento {
 
+public class ControleEnsalamento implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private static ControleEnsalamento singleton;
 	private ArrayList<Aula> aulas;
 	ArrayList<Aula> aulasFinal;

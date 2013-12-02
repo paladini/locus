@@ -1,5 +1,6 @@
 package mbeans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -17,6 +18,7 @@ import org.primefaces.model.ScheduleModel;
 
 import control.ControleEnsalamento;
 import control.ControleProfessor;
+import control.ControleTurma;
 import entidades.Aula;
 //import control.ControleEscola;
 import entidades.Curso;
@@ -30,8 +32,13 @@ import entidades.Turno;
 // Troquei de SessionScoped pra view Scoped não sei pq diabos.
 @ManagedBean(name = "ensalamentoMBean")
 @ViewScoped
-public class EnsalamentoMBean {
+public class EnsalamentoMBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private ControleEnsalamento controleEnsalamento = ControleEnsalamento
 			.getInstance();
 	private ScheduleModel eventModel;
@@ -102,8 +109,8 @@ public class EnsalamentoMBean {
 		}
 
 		eventModel.addEvent(evento);
-		System.out.println(calendarioInicio.getTime());
-		System.out.println(calendarioFim.getTime());
+//		System.out.println(calendarioInicio.getTime());
+//		System.out.println(calendarioFim.getTime());
 	}
 
 	public Date getInitialDate() {
@@ -138,7 +145,7 @@ public class EnsalamentoMBean {
 
 		for (Aula a : ensalado) {
 
-			System.out.println("Dia da aula: " + a.getDia().getId());
+//			System.out.println("Dia da aula: " + a.getDia().getId());
 			switch (a.getDia().getId()) {
 			case 1:
 				adicionarEvento(a.textoFinalEnsalamento(),
@@ -243,12 +250,25 @@ public class EnsalamentoMBean {
 
 	}
 
+
+	private String var;
+	public String getVar() {
+		return var;
+	}
+	public void setVar(String var) {
+		this.var = var;
+	}
+	public void valueChangeMethod(ValueChangeEvent e){
+		System.out.println("ENTROU ASD");
+	}
+	
 	public void consultarByProfessorSelectItem(ValueChangeEvent e) { // SelectItem
 																		// professor
 
+		System.out.println("ENTROU");
+		
 		professor = e.getNewValue().toString();
 		ControleProfessor cp = ControleProfessor.getInstance();
-		System.out.println("Professor String: " + professor);
 		Professor professorBanco = cp.consultar(professor);
 
 		int id = professorBanco.getId();
@@ -258,9 +278,15 @@ public class EnsalamentoMBean {
 
 	}
 
-	public void ConsultarByTurmaSelectItem(SelectItem turma) {
-		int id = (Integer) turma.getValue();
-		adicionarAulasLista(controleEnsalamento.ConsultarByTurma(id));
+	public void ConsultarByTurmaSelectItem(ValueChangeEvent e) {
+		String turma = e.getNewValue().toString();
+		
+		ControleTurma ct = ControleTurma.getInstance();
+		Turma t = ct.consultar(turma);
+//		int id = (Integer) turma.getValue();
+		
+		ArrayList<Aula> ensalado = controleEnsalamento.ConsultarByTurma(t.getId());
+		criarTabela(ensalado);
 	}
 
 	public void ConsultarBySalaSelectItem(SelectItem sala) {

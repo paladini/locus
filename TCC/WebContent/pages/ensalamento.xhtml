@@ -76,9 +76,17 @@
 
 				<!-- Filtros do ensalamento -->
 				<h:form>
+				<div style="float: left; padding-left: 10px;">
+
+					<h:selectOneMenu value="#{ensalamentoMBean.var}" onchange="submit()" valueChangeListener="#{ensalamentoMBean.valueChangeMethod}">
+					   	<f:selectItem itemLabel="QWE" itemValue="QWE" />
+					   	<f:selectItem itemLabel="ASD" itemValue="ASD" />
+					</h:selectOneMenu>
+					</div>
+					
 					<div style="float: left; padding-left: 10px;">
 
-						<p:selectOneMenu value="#{ensalamentoMBean.professor}"
+						<h:selectOneMenu value="#{ensalamentoMBean.professor}" onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarByProfessorSelectItem}">
 							<!-- converter="omnifaces.SelectItemsConverter" -->
 
@@ -87,16 +95,16 @@
 								var="c" itemLabel="#{c.nome}" itemValue="#{c.nome}" />
 							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
 
-						</p:selectOneMenu>
+						</h:selectOneMenu>
 					</div>
 					<div style="float: left; padding-left: 10px;">
 
-						<p:selectOneMenu value="#{ensalamentoMBean.turmaSelecionado}"
+						<h:selectOneMenu 
 							valueChangeListener="#{ensalamentoMBean.consultarByTurmaSelectItem}">
 							<f:selectItem itemLabel="Turmas" itemValue="" />
-							<f:selectItems value="#{ensalamentoMBean.valuesComboBoxTurma}" />
+							<f:selectItems value="#{ensalamentoMBean.valuesComboBoxTurma}" var="t" itemLabel="#{t.nome}" itemValue="#{t.nome}" />
 
-						</p:selectOneMenu>
+						</h:selectOneMenu>
 					</div>
 					<div style="float: left; padding-left: 10px;">
 
@@ -194,7 +202,7 @@
 			day : 'Dia'
 		};
 
-		$(document).ready(function() {
+		//$(document).ready(function() {
 			
 			/* classe = $(".fc-event-inner-normal");
 			classe.each(function() {
@@ -205,12 +213,12 @@
 			classe = $(".fc-event-inner-contratar");
 			classe.each(function() {
 				evento = $(this).children(".fc-event-inner");
-				evento.css("background-color", "#5dd265");
+				evento.css("background-color", "#4ab051");
 			});
 
 			
 
-		 });
+		 //});
 	</script>
 	<!-- Validações desta página -->
 

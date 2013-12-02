@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +9,9 @@ import java.util.ArrayList;
 
 import entidades.Aula;
 
-public class AulaDao extends AbstractDAO {
+public class AulaDao extends AbstractDAO implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	ProfessorDAO professorDAO = new ProfessorDAO();
 	TurmaDAO turmaDAO = new TurmaDAO();
 	SalaDAO salaDAO = new SalaDAO();
