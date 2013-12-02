@@ -78,13 +78,13 @@
 				<h:form>
 					<div style="float: left; padding-left: 10px;">
 
-						<p:selectOneMenu value="#{ensalamentoMBean.professorSelecionado}"
+						<p:selectOneMenu value="#{ensalamentoMBean.professor}"
 							valueChangeListener="#{ensalamentoMBean.consultarByProfessorSelectItem}">
 							<!-- converter="omnifaces.SelectItemsConverter" -->
 
 							<f:selectItem itemLabel="Professores" itemValue="" />
-							<f:selectItems
-								value="#{ensalamentoMBean.valuesComboBoxProfessor}" />
+							<f:selectItems value="#{ensalamentoMBean.listaProfessores}"
+								var="c" itemLabel="#{c.nome}" itemValue="#{c.nome}" />
 							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
 
 						</p:selectOneMenu>
@@ -127,12 +127,13 @@
 							<f:param name="mode" value="'show'" />
 						</p:effect>
 					</p:messages> <p:growl id="loading-growl" showDetail="true"/>   -->
-					
-					
+
+
 
 					<div style="float: right; padding-right: 10px;">
 						<h:commandButton actionListener="#{ensalamentoMBean.Ensalar}"
-							value="Gerar Ensalamento" styleClass="btn btn-lg btn-success" update=":form:schedule" >
+							value="Gerar Ensalamento" styleClass="btn btn-lg btn-success"
+							update=":form:schedule">
 							<!-- <p:ajax event="click" execute="@form" update=":form:schedule"
 								render=":form:schedule" />
 							<p:effect type="pulsate" event="load" delay="1000">
@@ -147,7 +148,7 @@
 
 
 
-	
+
 
 
 
@@ -180,7 +181,7 @@
 	<h:outputScript library="js" name="locus-hoverIt.js" />
 
 
-	<script type="text/javascript">
+	<script>
 		PrimeFaces.locales['pt'] = {
 			dayNames : [ 'Domingo', 'Segunda', 'Terca', 'Quarta', 'Quinta',
 					'Sexta', 'Sabado' ],
@@ -192,6 +193,24 @@
 			week : 'Semana',
 			day : 'Dia'
 		};
+
+		$(document).ready(function() {
+			
+			/* classe = $(".fc-event-inner-normal");
+			classe.each(function() {
+				evento = $(this).children(".fc-event-inner");
+				evento.css("background-color", "#5dd265");
+			}); */
+			
+			classe = $(".fc-event-inner-contratar");
+			classe.each(function() {
+				evento = $(this).children(".fc-event-inner");
+				evento.css("background-color", "#5dd265");
+			});
+
+			
+
+		 });
 	</script>
 	<!-- Validações desta página -->
 

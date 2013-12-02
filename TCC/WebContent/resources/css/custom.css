@@ -1,10 +1,21 @@
 /* Cores do "eventos" no Ensalamento */
 .evento-locus{
-	background-color: #4cb64f;
+	background-color: #5dd265;
+	border: 0px;
 }
 
 .fc-event-inner{
-	background-color: #4cb64f;
+	border: 0px;
+	padding: 3px 3px 3px 3px;
+	background-color: #5dd265;
+}
+
+.fc-event-inner-normal{
+	/* background-color: #5dd265 !important; */
+}
+
+.fc-event-inner-contratar{
+	/* background-color: #4ab051 !important; */
 }
 
 /* Logo do site na "primeira entrada" */
@@ -128,7 +139,7 @@ body{
 	margin-top: 80px;
 }
 
-/* ======== COMPONENTE INVIS√çVEL NA P√ÅGINA ============= */
+/* ======== COMPONENTE INVIS√VEL NA P√GINA ============= */
 .invisivel{
 	display: none;
 }
