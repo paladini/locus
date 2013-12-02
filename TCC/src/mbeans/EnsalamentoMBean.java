@@ -117,6 +117,8 @@ public class EnsalamentoMBean {
 		criarTabela(ensalado);
 
 	}
+	
+	
 
 	private void criarTabela(ArrayList<Aula> ensalado) {
 
@@ -219,12 +221,15 @@ public class EnsalamentoMBean {
 	}
 
 	public void consultarByProfessor(int id) {
-		controleEnsalamento.ConsultarByProfessor(id);
+		 controleEnsalamento.ConsultarByProfessor(id);
+		
 	}
 
 	public void ConsultarByProfessorSelectItem(SelectItem professor) {
 		int id = (Integer) professor.getValue();
-		adicionarAulasLista(controleEnsalamento.ConsultarByProfessor(id));
+		ArrayList<Aula> ensalado = controleEnsalamento.ConsultarByProfessor(id);
+		criarTabela(ensalado);
+		
 	}
 
 	public void ConsultarByTurmaSelectItem(SelectItem turma) {

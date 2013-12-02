@@ -177,6 +177,7 @@ public class ProfessorMBean {
 	 * Atualizar a listagem de professores (chamado do próprio Bean, ou seja, na
 	 * primeira vez que executa) e a lista de listaPesquisa.
 	 */
+	@SuppressWarnings("unchecked")
 	public void atualizarListagem() {
 		lista = controleProfessor.consultar();
 		listaPesquisa = (ArrayList<Professor>) getLista().clone();

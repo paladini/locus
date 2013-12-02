@@ -85,7 +85,7 @@ public class Main {
 
 		// professor
 		Professor professor1 = new Professor("Daniel",
-				new ArrayList<Disciplina>(), 1);
+				new ArrayList<Disciplina>(), 6);
 		Professor professor2 = new Professor("Arthur",
 				new ArrayList<Disciplina>(), 2);
 		Professor professor3 = new Professor("Estevao",
