@@ -226,7 +226,7 @@ public class EnsalamentoMBean implements Serializable {
 		return professores;
 	}
 
-	public Collection<SelectItem> getValuesComboBoxTurma() {
+	public ArrayList<Turma>  getValuesComboBoxTurma() {
 
 		// SelectItem si = new SelectItem();
 		ArrayList<Turma> turmas = controleEnsalamento.ConsultarByTurma();
@@ -235,10 +235,10 @@ public class EnsalamentoMBean implements Serializable {
 		for (Turma turma : turmas) {
 			listaComboBox.add(new SelectItem(turma.getId(), turma.getNome()));
 		}
-		return listaComboBox;
+		return turmas;
 	}
 
-	public Collection<SelectItem> getValuesComboBoxSala() {
+	public ArrayList<Sala> getValuesComboBoxSala() {
 
 		// SelectItem si = new SelectItem();
 		ArrayList<Sala> salas = controleEnsalamento.ConsultarBySala();
@@ -248,10 +248,10 @@ public class EnsalamentoMBean implements Serializable {
 			listaComboBox.add(new SelectItem(sala.getId(), sala.getNome()));
 		}
 
-		return listaComboBox;
+		return salas;
 	}
 
-	public Collection<SelectItem> getValuesComboBoxCurso() {
+	public ArrayList<Curso> getValuesComboBoxCurso() {
 
 		// SelectItem si = new SelectItem();
 		ArrayList<Curso> cursos = controleEnsalamento.ConsultarByCurso();
@@ -261,7 +261,7 @@ public class EnsalamentoMBean implements Serializable {
 			listaComboBox.add(new SelectItem(curso.getId(), curso.getNome()));
 		}
 
-		return listaComboBox;
+		return cursos;
 	}
 
 	public void consultarByProfessor() {

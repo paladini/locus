@@ -76,12 +76,13 @@
 
 				<!-- Filtros do ensalamento -->
 				<h:form>
-				
-				
-					
+
+
+
 					<div style="float: left; padding-left: 10px;">
 
-							<h:selectOneMenu value="#{ensalamentoMBean.professor}" onchange="submit()"
+						<h:selectOneMenu value="#{ensalamentoMBean.professor}"
+							onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarByProfessorSelectItem}">
 							<!-- converter="omnifaces.SelectItemsConverter" -->
 
@@ -92,53 +93,58 @@
 
 						</h:selectOneMenu>
 					</div>
+				</h:form>
+				<h:form>
+					<div style="float: left; padding-left: 10px;">
 
-				<div style="float: left; padding-left: 10px;">
-
-						<h:selectOneMenu value="#{ensalamentoMBean.turma}" onchange="submit()"
+						<h:selectOneMenu value="#{ensalamentoMBean.turma}"
+							onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarByTurmaSelectItem}">
 							<!-- converter="omnifaces.SelectItemsConverter" -->
 
 							<f:selectItem itemLabel="Turmas" itemValue="" />
-							<f:selectItems value="#{ensalamentoMBean.listaTurmas}"
-								var="c" itemLabel="#{c.nome}" itemValue="#{c.nome}" />
+							<f:selectItems value="#{ensalamentoMBean.listaTurmas}" var="c"
+								itemLabel="#{c.nome}" itemValue="#{c.nome}" />
 							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
 
 						</h:selectOneMenu>
 					</div>
+				</h:form>
+				<h:form>
+					<div style="float: left; padding-left: 10px;">
 
-				<div style="float: left; padding-left: 10px;">
-
-						<h:selectOneMenu value="#{ensalamentoMBean.sala}" onchange="submit()"
+						<h:selectOneMenu value="#{ensalamentoMBean.sala}"
+							onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarBySalaSelectItem}">
 							<!-- converter="omnifaces.SelectItemsConverter" -->
 
 							<f:selectItem itemLabel="Salas" itemValue="" />
-							<f:selectItems value="#{ensalamentoMBean.listaSalas}"
-								var="c" itemLabel="#{c.nome}" itemValue="#{c.nome}" />
+							<f:selectItems value="#{ensalamentoMBean.listaSalas}" var="c"
+								itemLabel="#{c.nome}" itemValue="#{c.nome}" />
 							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
 
 						</h:selectOneMenu>
 					</div>
+				</h:form>
+				<h:form>
+					<div style="float: left; padding-left: 10px;">
 
-				<div style="float: left; padding-left: 10px;">
-
-						<h:selectOneMenu value="#{ensalamentoMBean.curso}" onchange="submit()"
+						<h:selectOneMenu value="#{ensalamentoMBean.curso}"
+							onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarByCursoSelectItem}">
 							<!-- converter="omnifaces.SelectItemsConverter" -->
 
 							<f:selectItem itemLabel="Cursos" itemValue="" />
-							<f:selectItems value="#{ensalamentoMBean.listaCursos}"
-								var="c" itemLabel="#{c.nome}" itemValue="#{c.nome}" />
+							<f:selectItems value="#{ensalamentoMBean.listaCursos}" var="c"
+								itemLabel="#{c.nome}" itemValue="#{c.nome}" />
 							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
 
 						</h:selectOneMenu>
 					</div>
-
-
-
-
 				</h:form>
+
+
+
 
 				<!-- Botão para ensalar -->
 				<h:form>
@@ -217,22 +223,20 @@
 		};
 
 		//$(document).ready(function() {
-			
-			/* classe = $(".fc-event-inner-normal");
-			classe.each(function() {
-				evento = $(this).children(".fc-event-inner");
-				evento.css("background-color", "#5dd265");
-			}); */
-			
-			classe = $(".fc-event-inner-contratar");
-			classe.each(function() {
-				evento = $(this).children(".fc-event-inner");
-				evento.css("background-color", "#4ab051");
-			});
 
-			
+		/* classe = $(".fc-event-inner-normal");
+		classe.each(function() {
+			evento = $(this).children(".fc-event-inner");
+			evento.css("background-color", "#5dd265");
+		}); */
 
-		 //});
+		classe = $(".fc-event-inner-contratar");
+		classe.each(function() {
+			evento = $(this).children(".fc-event-inner");
+			evento.css("background-color", "#4ab051");
+		});
+
+		//});
 	</script>
 	<!-- Validações desta página -->
 
