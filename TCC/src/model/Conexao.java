@@ -36,7 +36,7 @@ public abstract class Conexao {
     			String mydatabase = "mydb";        //nome do seu banco de dados  
     			String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
     			String username = "root";        //nome de um usuário de seu BD        
-    			String password = "";      //sua senha de acesso  
+    			String password = "1506";      //sua senha de acesso  
     			connection = DriverManager.getConnection(url, username, password);
 //    			Connection connection = DriverManager.getConnection(url, username, password);
     			//String url = "jdbc:mysql://10.3.60.249:3306/teste?user=root&password=root";

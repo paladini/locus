@@ -16,8 +16,10 @@ import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
+import control.ControleCurso;
 import control.ControleEnsalamento;
 import control.ControleProfessor;
+import control.ControleSala;
 import control.ControleTurma;
 import entidades.Aula;
 //import control.ControleEscola;
@@ -43,13 +45,22 @@ public class EnsalamentoMBean implements Serializable {
 			.getInstance();
 	private ScheduleModel eventModel;
 
-	private SelectItem professorSelecionado = new SelectItem();
 	private String professor = "";
+	private String turma = "";
+	private String curso = "";
+	private String sala = "";
+	private ArrayList<Professor> listaProfessores;
+	private ArrayList<Turma> listaTurmas;
+	private ArrayList<Curso> listaCursos;
+	private ArrayList<Sala> listaSalas;
+
+
+	private SelectItem professorSelecionado = new SelectItem();
 	private SelectItem turmaSelecionado = new SelectItem();
 	private SelectItem cursoSelecionado = new SelectItem();
 	private SelectItem salaSelecionado = new SelectItem();
-	private ArrayList<Professor> listaProfessores;
 
+	
 	public EnsalamentoMBean() {
 		eventModel = new DefaultScheduleModel();
 
@@ -62,6 +73,18 @@ public class EnsalamentoMBean implements Serializable {
 		if (listaProfessores == null) {
 			ControleProfessor cp = ControleProfessor.getInstance();
 			listaProfessores = cp.consultar();
+		}
+		if (listaTurmas == null) {
+			ControleTurma ct = ControleTurma.getInstance();
+			listaTurmas = ct.consultar();
+		}
+		if (listaSalas == null) {
+			ControleSala cs = ControleSala.getInstance();
+			listaSalas = cs.consultar();
+		}
+		if (listaCursos == null) {
+			ControleCurso cc = ControleCurso.getInstance();
+			listaCursos = cc.consultar();
 		}
 
 		// Curso curso1 = new Curso("Tec. Inf.", 1, null, null);
@@ -265,7 +288,7 @@ public class EnsalamentoMBean implements Serializable {
 	public void consultarByProfessorSelectItem(ValueChangeEvent e) { // SelectItem
 																		// professor
 
-		System.out.println("ENTROU");
+		System.out.println("ENTROU Professor");
 		
 		professor = e.getNewValue().toString();
 		ControleProfessor cp = ControleProfessor.getInstance();
@@ -279,24 +302,50 @@ public class EnsalamentoMBean implements Serializable {
 	}
 
 	public void ConsultarByTurmaSelectItem(ValueChangeEvent e) {
-		String turma = e.getNewValue().toString();
+		// turma
+
+		System.out.println("ENTROU Turma");
 		
+		turma = e.getNewValue().toString();
 		ControleTurma ct = ControleTurma.getInstance();
-		Turma t = ct.consultar(turma);
-//		int id = (Integer) turma.getValue();
-		
-		ArrayList<Aula> ensalado = controleEnsalamento.ConsultarByTurma(t.getId());
+		Turma turmaBanco = ct.consultar(turma);
+
+		int id = turmaBanco.getId();
+		System.out.println("Id da turma no selectItem: " + id);
+		ArrayList<Aula> ensalado = controleEnsalamento.ConsultarByTurma(id);
 		criarTabela(ensalado);
+}
+
+	public void ConsultarBySalaSelectItem(ValueChangeEvent e) {
+		// sala
+
+		System.out.println("ENTROU Sala");
+		
+		sala = e.getNewValue().toString();
+		ControleSala cs = ControleSala.getInstance();
+		Sala salaBanco = cs.consultar(sala);
+
+		int id = salaBanco.getId();
+		System.out.println("Id da sala no selectItem: " + id);
+		ArrayList<Aula> ensalado = controleEnsalamento.ConsultarBySala(id);
+		criarTabela(ensalado);
+
 	}
 
-	public void ConsultarBySalaSelectItem(SelectItem sala) {
-		int id = (Integer) sala.getValue();
-		adicionarAulasLista(controleEnsalamento.ConsultarBySala(id));
-	}
+	public void ConsultarByCursoSelectItem(ValueChangeEvent e) {
+		// curso
 
-	public void ConsultarByCursoSelectItem(SelectItem curso) {
-		int id = (Integer) curso.getValue();
-		adicionarAulasLista(controleEnsalamento.ConsultarByCurso(id));
+		System.out.println("ENTROU Curso");
+		
+		curso = e.getNewValue().toString();
+		ControleCurso cc = ControleCurso.getInstance();
+		Curso cursoBanco = cc.consultar(curso);
+
+		int id = cursoBanco.getId();
+		System.out.println("Id do curso no selectItem: " + id);
+		ArrayList<Aula> ensalado = controleEnsalamento.ConsultarByCurso(id);
+		criarTabela(ensalado);
+
 	}
 
 	public ArrayList<Aula> getEnsalamento() {
@@ -421,4 +470,54 @@ public class EnsalamentoMBean implements Serializable {
 		this.listaProfessores = listaProfessores;
 	}
 
+	public String getTurma() {
+		return turma;
+	}
+
+	public void setTurma(String turma) {
+		this.turma = turma;
+	}
+
+	public String getCurso() {
+		return curso;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
+	public String getSala() {
+		return sala;
+	}
+
+	public void setSala(String sala) {
+		this.sala = sala;
+	}
+
+	public ArrayList<Turma> getListaTurmas() {
+		return listaTurmas;
+	}
+
+	public void setListaTurmas(ArrayList<Turma> listaTurmas) {
+		this.listaTurmas = listaTurmas;
+	}
+
+	public ArrayList<Curso> getListaCursos() {
+		return listaCursos;
+	}
+
+	public void setListaCursos(ArrayList<Curso> listaCursos) {
+		this.listaCursos = listaCursos;
+	}
+
+	public ArrayList<Sala> getListaSalas() {
+		return listaSalas;
+	}
+
+	public void setListaSalas(ArrayList<Sala> listaSalas) {
+		this.listaSalas = listaSalas;
+	}
+
+	
+	
 }

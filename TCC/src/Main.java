@@ -69,7 +69,6 @@ public class Main {
 		Sala sala7 = new Sala("sala7", 7);
 		Sala sala8 = new Sala("sala8", 8);
 		Sala sala9 = new Sala("sala9", 9);
-		Sala sala10 = new Sala("sala10", 10);
 
 		// disciplina
 		Disciplina disciplina1 = new Disciplina("POO2", 1,
@@ -146,7 +145,6 @@ public class Main {
 //		i.addListaSala(sala7);
 //		i.addListaSala(sala8);
 //		i.addListaSala(sala9);
-//		i.addListaSala(sala10);
 //		// disciplina
 //		i.addListaDisciplinas(disciplina1);
 //		i.addListaDisciplinas(disciplina2);
@@ -186,7 +184,6 @@ public class Main {
 		salaDAO.inserir(sala7);
 		salaDAO.inserir(sala8);
 		salaDAO.inserir(sala9);
-		salaDAO.inserir(sala10);
 		
 		DisciplinaDAO disciplinaDAO = new  DisciplinaDAO();
 		disciplinaDAO.inserir(disciplina1);

@@ -76,17 +76,12 @@
 
 				<!-- Filtros do ensalamento -->
 				<h:form>
-				<div style="float: left; padding-left: 10px;">
-
-					<h:selectOneMenu value="#{ensalamentoMBean.var}" onchange="submit()" valueChangeListener="#{ensalamentoMBean.valueChangeMethod}">
-					   	<f:selectItem itemLabel="QWE" itemValue="QWE" />
-					   	<f:selectItem itemLabel="ASD" itemValue="ASD" />
-					</h:selectOneMenu>
-					</div>
+				
+				
 					
 					<div style="float: left; padding-left: 10px;">
 
-						<h:selectOneMenu value="#{ensalamentoMBean.professor}" onchange="submit()"
+							<h:selectOneMenu value="#{ensalamentoMBean.professor}" onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarByProfessorSelectItem}">
 							<!-- converter="omnifaces.SelectItemsConverter" -->
 
@@ -97,33 +92,52 @@
 
 						</h:selectOneMenu>
 					</div>
-					<div style="float: left; padding-left: 10px;">
 
-						<h:selectOneMenu 
+				<div style="float: left; padding-left: 10px;">
+
+						<h:selectOneMenu value="#{ensalamentoMBean.turma}" onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarByTurmaSelectItem}">
+							<!-- converter="omnifaces.SelectItemsConverter" -->
+
 							<f:selectItem itemLabel="Turmas" itemValue="" />
-							<f:selectItems value="#{ensalamentoMBean.valuesComboBoxTurma}" var="t" itemLabel="#{t.nome}" itemValue="#{t.nome}" />
+							<f:selectItems value="#{ensalamentoMBean.listaTurmas}"
+								var="c" itemLabel="#{c.nome}" itemValue="#{c.nome}" />
+							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
 
 						</h:selectOneMenu>
 					</div>
-					<div style="float: left; padding-left: 10px;">
 
-						<p:selectOneMenu value="#{ensalamentoMBean.salaSelecionado}"
+				<div style="float: left; padding-left: 10px;">
+
+						<h:selectOneMenu value="#{ensalamentoMBean.sala}" onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarBySalaSelectItem}">
+							<!-- converter="omnifaces.SelectItemsConverter" -->
+
 							<f:selectItem itemLabel="Salas" itemValue="" />
-							<f:selectItems value="#{ensalamentoMBean.valuesComboBoxSala}" />
+							<f:selectItems value="#{ensalamentoMBean.listaSalas}"
+								var="c" itemLabel="#{c.nome}" itemValue="#{c.nome}" />
+							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
 
-						</p:selectOneMenu>
+						</h:selectOneMenu>
 					</div>
-					<div style="float: left; padding-left: 10px;">
 
-						<p:selectOneMenu value="#{ensalamentoMBean.cursoSelecionado}"
+				<div style="float: left; padding-left: 10px;">
+
+						<h:selectOneMenu value="#{ensalamentoMBean.curso}" onchange="submit()"
 							valueChangeListener="#{ensalamentoMBean.consultarByCursoSelectItem}">
-							<f:selectItem itemLabel="Cursos" itemValue="" />
-							<f:selectItems value="#{ensalamentoMBean.valuesComboBoxCurso}" />
+							<!-- converter="omnifaces.SelectItemsConverter" -->
 
-						</p:selectOneMenu>
+							<f:selectItem itemLabel="Cursos" itemValue="" />
+							<f:selectItems value="#{ensalamentoMBean.listaCursos}"
+								var="c" itemLabel="#{c.nome}" itemValue="#{c.nome}" />
+							<!-- var="prof" itemLabel="prof.nome" itemValue="prof" -->
+
+						</h:selectOneMenu>
 					</div>
+
+
+
+
 				</h:form>
 
 				<!-- Botão para ensalar -->
