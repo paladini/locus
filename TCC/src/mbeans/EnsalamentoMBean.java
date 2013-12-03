@@ -301,7 +301,7 @@ public class EnsalamentoMBean implements Serializable {
 
 	}
 
-	public void ConsultarByTurmaSelectItem(ValueChangeEvent e) {
+	public void consultarByTurmaSelectItem(ValueChangeEvent e) {
 		// turma
 
 		System.out.println("ENTROU Turma");
@@ -316,7 +316,7 @@ public class EnsalamentoMBean implements Serializable {
 		criarTabela(ensalado);
 }
 
-	public void ConsultarBySalaSelectItem(ValueChangeEvent e) {
+	public void consultarBySalaSelectItem(ValueChangeEvent e) {
 		// sala
 
 		System.out.println("ENTROU Sala");
@@ -332,7 +332,7 @@ public class EnsalamentoMBean implements Serializable {
 
 	}
 
-	public void ConsultarByCursoSelectItem(ValueChangeEvent e) {
+	public void consultarByCursoSelectItem(ValueChangeEvent e) {
 		// curso
 
 		System.out.println("ENTROU Curso");
